@@ -1,20 +1,9 @@
 ## 简介
 
-计算机软件技术专业，从事软件和游戏开发12+年，职能涉及设计、研发、架构和管理。目前创业中，主要进行游戏、游戏引擎和软件方面的制作，以及开源项目的开发维护，并坚持大量人文科技方面地阅读与写作。一直热爱编程，不忘初心，过去10年平均每天编程10小时以上，一周写代码约75小时。
+计算机科学与技术专业，嵌入式开发初学者，热爱编程，喜欢分享，擅长团队协作，职能涉及设计、研发、架构和管理。目前学习中，主要进行c
 <a href="javascript:void(showOrHideEl('#简介+p+ul'))" class="read-more">核心技术经历和技术栈</a>
 
-* j2ee（servlet、jsp、jdbc、spring、hibernate、struct2、osgi、设计模式、各种框架和自研框架）。
-* 前端（css、html、js原生API包括ajax、早期库jquery、extjs、mootools、yui等）。
-* js库实现css3选择器、动画引擎、兼容性事件处理。
-* svn、git、nodejs、lisp、maven、mysql。
-* 手游客户端（单机、网游、RPG、动作，策略、农场经营、跑酷、卡牌等）。
-  * 私有引擎（java、c，2d，引擎、工具、游戏三层编写）。
-  * cocos2dx（c++、lua，2d，纯c++和纯lua网游、cocos修改定制、游戏层框架）。
-  * gameplay3d（c++、lua，3d，定制即时策略战斗）。
-  * unity3d（c#，2d/3d，插件、游戏框架层）。
-* 自研游戏引擎（c99、opengles3.x、java、swift，2d/3d）。
-* unity3d插件、开箱即用gameplay框架、vulkan、metal（进行中）。
-* 人工智能、区块链、操作系统内核（学习中）。
+* 暂空
 * .....
 
 ## 社交网络

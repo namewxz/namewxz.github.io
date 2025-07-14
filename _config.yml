@@ -6,7 +6,11 @@ copyright  : © 2018 - 2025 scott.cgi All Rights Reserved
 nav:
  - name: 中文
    link: /
+ - name: 隐私政策
+   link: /privacy-zh/
  - name: 编程人生
    link: /code-life/
  - name: En
    link: /about/
+ - name: 赞赏支持
+   link: /donate/
