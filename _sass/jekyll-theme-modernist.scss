@@ -57,6 +57,13 @@ header {
   position:relative;
   padding:15px 20px;
   border-bottom:1px solid #B2D2E1;
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+
+  .header-content {
+    flex: 1;
+  }
 
   h1 {
     margin:0;
@@ -96,16 +103,12 @@ header {
     margin:0;
     padding:0;
     list-style:none;
-    position:absolute;
-    z-index:1;
-    right:20px;
-    top:20px;
     padding:1px 0;
     background:#5198DF;
     background: linear_gradient(#77B9FB, #3782CD);
     border-radius:8px;
     box-shadow: inset rgba(#fff, 0.45) 0 1px 0, inset rgba(#000, 0.2) 0 -1px 0;
-    width:auto;
+    width: 150px;
 
     &:before {
       content:'';
