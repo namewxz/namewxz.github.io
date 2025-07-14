@@ -10,6 +10,20 @@ nav:
    link: /privacy-zh/
  - name: 编程人生
    link: /code-life/
+ - name: 教程
+   subnav:
+    - name: WSL替代虚拟机指南
+      link: /[01-05]WSL替代虚拟机指南：ARM开发板交叉编译与TFTP通信配置/
+    - name: Git简易工作流
+      link: /[06]Git简易工作流：从本地配置到Gitee代码推送/
+    - name: Windows原生运行Linux
+      link: /[07]告别虚拟机：Windows原生运行Linux服务器代码指南/
+    - name: LVGL移植指南
+      link: /[08]【实战】LVGL 最新(9.3)移植指南：嵌入式Linux帧缓冲环境配置与开发板部署/
+    - name: LVGL官方Demo解析
+      link: /[09]【拓展】LVGL官方Demo全解析：从音乐播放器到高分辨率渲染/
+    - name: LVGL模拟器搭建
+      link: /[10]【实战】LVGL模拟器搭建指南：VSCode+MinGW构建+CMake自动化/
  - name: En
    link: /about/
  - name: 赞赏支持

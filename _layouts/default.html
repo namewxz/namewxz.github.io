@@ -23,14 +23,33 @@
        
         <ul>
         {% for item in site.nav %}
-          {% if page.url == item.link %}
-            <li style="background-color:#069">
-              <a href="{{ item.link }}">
-                <strong>{{ item.name }}</strong>
-              </a>
+          {% if item.subnav %}
+            <li class="has-subnav">
+              <a href="#">{{ item.name }}</a>
+              <ul class="subnav">
+                {% for subitem in item.subnav %}
+                  {% if page.url == subitem.link %}
+                    <li style="background-color:#069">
+                      <a href="{{ subitem.link }}">
+                        <strong>{{ subitem.name }}</strong>
+                      </a>
+                    </li>
+                  {% else %}
+                    <li><a href="{{ subitem.link }}">{{ subitem.name }}</a></li>
+                  {% endif %}
+                {% endfor %}
+              </ul>
             </li>
           {% else %}
-            <li><a href="{{ item.link }}">{{ item.name }}</a></li>
+            {% if page.url == item.link %}
+              <li style="background-color:#069">
+                <a href="{{ item.link }}">
+                  <strong>{{ item.name }}</strong>
+                </a>
+              </li>
+            {% else %}
+              <li><a href="{{ item.link }}">{{ item.name }}</a></li>
+            {% endif %}
           {% endif %}
         {% endfor %}
         </ul>
