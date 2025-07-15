@@ -1,3 +1,8 @@
+---
+description: WSL替代虚拟机指南：ARM开发板交叉编译与TFTP通信配置
+title: WSL替代虚拟机指南
+permalink: /[09]【拓展】LVGL官方Demo全解析：从音乐播放器到高分辨率渲染/
+---
 # 9.【拓展】lvgl官方demo演示
 
 ## 9.1 main.c 解析
@@ -197,7 +202,7 @@ main.c
 
 demo整合后的目录结构：
 
-![image-20250704205358614](pic/image-20250704205358614.png)
+![image-20250704205358614](pic/image-20250704205358614.webp)
 
 整合一下`lv_demos.h`
 

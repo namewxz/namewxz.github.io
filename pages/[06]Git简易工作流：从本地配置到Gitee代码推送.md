@@ -1,3 +1,8 @@
+---
+description: WSL替代虚拟机指南：ARM开发板交叉编译与TFTP通信配置
+title: WSL替代虚拟机指南
+permalink: /[06]Git简易工作流：从本地配置到Gitee代码推送/
+---
 # 6. git的简单使用
 
 ## 6.1 注册 Gitee
@@ -14,7 +19,7 @@
 填写仓库名称、描述等信息。
 选择仓库的可见性（公开或私有）。
 点击“创建”按钮，完成远程仓库的创建。
-![image-20250703190329108](pic/image-20250703190329108.png)
+![image-20250703190329108](pic/image-20250703190329108.webp)
 
 ## 6.2 git初始配置
 
@@ -266,7 +271,7 @@ git push origin master                   # 推送合并后代码
 备用链接：[Git-2.50.0.2-64-bit.exe (lanzoue.com)](https://wwae.lanzoue.com/ikwgW30ebsob)
 【密码:3iao】
 
-![image-20250706150732064](pic/image-20250706150732064.png)
+![image-20250706150732064](pic/image-20250706150732064.webp)
 
 ​							**随便问的一个AI**
 

@@ -23,7 +23,7 @@ permalink: /[01-05]WSL替代虚拟机指南：ARM开发板交叉编译与TFTP通
 
 **注**：若存在 `Hyper-V` 选项，则一同启用。
 
-![image-20250702205612294](pic/image-20250702205612294.png)
+![image-20250702205612294](pic/image-20250702205612294.webp)
 
 重启计算机。
 
@@ -44,21 +44,21 @@ WSL官网 [https://learn.microsoft.com/zh-cn/windows/wsl/install-manual#step-4--
 
 通过 Microsoft Store(微软商店) 安装 **Ubuntu 24.04.1 LTS**。
 
-![屏幕截图_20250702_203318](pic/屏幕截图_20250702_203318.png)
+![屏幕截图_20250702_203318](pic/屏幕截图_20250702_203318.webp)
 
 安装完成后启动该软件
 输入用户名和密码**（请记住（后续操作依赖）**
 密码输入没有视觉反馈，直接按Enter提交
 
-![Ubuntu Init](pic/81abc8b4a61e4d7f9a03911cb87992a5.png)
+![Ubuntu Init](pic/81abc8b4a61e4d7f9a03911cb87992a5.webp)
 
 【本张图源CSDN：[Windows Subsystem for Linux (WSL, Ubuntu) 最新安装教程（2024.11 更新）-CSDN博客](https://blog.csdn.net/wangtcCSDN/article/details/137950545)】
 
-![image-20250703083906934](pic/image-20250703083906934.png)
+![image-20250703083906934](pic/image-20250703083906934.webp)
 
 出现类似界面就表示这一步完成了，之后使用Windows终端/CMD/power shell 输入wsl启动
 
-![image-20250703084817732](pic/image-20250703084817732.png)
+![image-20250703084817732](pic/image-20250703084817732.webp)
 
 关闭wsl：在新开一个终端输入
 
@@ -70,7 +70,7 @@ wsl --shutdown
 
 **如果**因为关闭了系统更新或者是其他原因导致**微软商店不能用**，那就去Ubuntu官网下载WSL安装包。
 
-![image-20250702210735888](pic/image-20250702210735888.png)
+![image-20250702210735888](pic/image-20250702210735888.webp)
 
 根据实际CPU架构选择版本，不知道就选择第一个。
 
@@ -200,7 +200,7 @@ wsl
 arm-linux-gcc --version
 ```
 
-![image-20250702213030579](pic/image-20250702213030579.png)
+![image-20250702213030579](pic/image-20250702213030579.webp)
 
 （这是我项目使用编译器的路径）
 
@@ -230,11 +230,11 @@ sudo apt-get install cmake
 
 查看网络描述：`设置-->网络和Internet-->对应的网络【属性】`
 
-![image-20250703092113638](pic/image-20250703092113638.png)
+![image-20250703092113638](pic/image-20250703092113638.webp)
 
 ## 3.3 选择tftp传输文件夹
 
-![屏幕截图_20250703_103814](pic/屏幕截图_20250703_103814.png)
+![屏幕截图_20250703_103814](pic/屏幕截图_20250703_103814.webp)
 
 ## 3.4 开发板网络配置
 
@@ -257,13 +257,13 @@ reboot
 
 ## 4.1 新终端开启
 
-![屏幕截图_20250703_111731](pic/屏幕截图_20250703_111731.png)
+![屏幕截图_20250703_111731](pic/屏幕截图_20250703_111731.webp)
 
 ## 4.2 设置终端默认为wsl
 
 `文件 > 首选项 > 设置 > Terminal > Integrated > Default Profile`
 
-![image-20250703112648204](pic/image-20250703112648204.png)
+![image-20250703112648204](pic/image-20250703112648204.webp)
 
 # 5. 后续工具安装
 
