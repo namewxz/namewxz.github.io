@@ -1,0 +1,1175 @@
+---
+description: C语言基础复习
+title: C语言基础复习
+permalink: /C语言基础复习/
+
+other：也算是复习完了这一部分内容了，本来想把数组、函数、递归三个知识点也放这里一起复习的，但是，复习效率有些慢，又想到这三个知识点带了一点点指针内容，那就和指针放一起复习吧。
+
+最开始想的是两天复习完，但是磨磨蹭蹭花了四天才复习完。一个原因是优柔寡断，但是又不够细心，复习过一部分知识点回过头看发现还是有一些没有完全理解，导致一篇文章反反复复看了好几遍。还有一个原因是，还是想逃避，有点畏难情绪，已经有很久没有踏踏实实地写过代码了，要么就是看着别人的代码修修改改，要么就是对着AI生成的代码不停调试，虽然项目结果一般能做出来，但是真正让我从零开始写出一个项目还是不可能。
+
+关于AI，前几天看了一篇文章，讲的是AI作为赞助商参与一场人类编程比赛，结果差点拿了第一。感觉AI确实发展的得很快，写着这些低级代码真是感觉自己马上就被淘汰。实际使用AI，像这种简单代码AI基本10秒就能写完，真是单文件编程的大神，自己还得写半天。实实在在地感觉到没什么必要，不过还是得写的，基础不牢后面写项目感觉非常困难（脱离了AI就走不动路了）。至于让AI写一个实实在在的多文件工程，非常困难，调试运行试错的时间几乎能够自己写完了，而且如果对一个知识点不太连接，让AI解决的话，说不出清楚提示词的话，成功率几乎没有。
+---
+
+
+
+# Hello world
+
+程序 = 数据结构 + 算法
+
+```c
+/********HelloWorld.c**********/
+#include <stdio.h>
+int main(){
+    printf("Hello world");
+    return 0;
+}
+```
+
+```bash
+# 编译指令
+gcc main.c -o main
+```
+
+# 数据类型
+
+## 基本类型：
+
+整型，浮点型，字符型
+
+### 整型 
+
+| 类型         | int  | short | long                 | long long |
+| ------------ | ---- | ----- | -------------------- | --------- |
+| 大小（Byte） | 4    | 2     | 4（32位）/ 8（64位） | 8         |
+| 格式匹配符   | %d   | %ld   | %d                   | %d        |
+
+无符号(unsigned) 匹配符：%u
+
+```c
+/*******00数据类型大小验证.c*********/
+#include <stdio.h>
+
+int main() {
+	int type_int;
+	unsigned int type_unsinged_int;
+	short type_short;
+	unsigned short type_unsigned_short;
+	long type_long;
+	unsigned long type_unsigned_long;
+	long long type_long_long;
+	unsigned long long type_unsigned_long_long;
+	printf("type\tsize\n int:\t%ld\n unsigned int:\t%ld\n short:\t%ld\n unsigned short:\t%ld\n long:\t%ld\n unsigned long:\t%ld\n long long:\t%ld\n unsigned long long:\t%ld\n", sizeof(int), sizeof(unsigned int), sizeof(short), sizeof(unsigned short), sizeof(long), sizeof(unsigned long), sizeof(long long), sizeof(unsigned long long));
+	return 0;
+}
+```
+
+![实际运行截图](pic/2025-07-15_204633-.jpg)
+
+### 浮点型，字符型 
+
+| 类型         | char | float | double |
+| ------------ | ---- | ----- | ------ |
+| 大小（Byte） | 1    | 4     | 8      |
+| 格式匹配符   | %c   | %f    | %f     |
+
+```c
+/*******01数据类型大小验证.c*********/
+#include <stdio.h>
+
+int main() {
+    printf("type\tsize\n char:\t%ld\n float:\t%ld\n double:\t%ld\n ", sizeof(char), sizeof(float), sizeof(char));
+    return 0;
+}
+```
+
+#### 展开讲讲char 、signed char、unsigned char
+
+-   三者都占1个字节
+
+-   signed char取值范围是 -128 到 127(有符号位) unsigned char 取值范围是 0 到 255
+
+-   C标准中对char是 **Impementation Defined**，就是未明确定义
+
+-   VC编译器、x86上的GCC都把char定义为signed char，而arm-linux-gcc却把char定义为 unsigned char
+
+-   关于高位扩展
+
+    ```c
+    02char的高位扩展测试.c
+    #include <stdio.h>
+     
+    void f(unsigned char v){ 
+        char c = v; 
+        unsigned char uc = v; 
+        unsigned int a = c, b = uc; 
+        int i = c, j = uc;
+     
+        printf("----------------\n"); 
+        printf("%%c: %c, %c\n", c, uc); 
+        printf("%%X: %X, %X\n", c, uc); 
+        printf("%%u: %u, %u\n", a, b); 
+        printf("%%d: %d, %d\n", i, j); 
+    }
+     
+    int main(int argc, char *argv[]){
+        f(0x80); 
+        f(0x7F); 
+     
+        return 0; 
+    }
+    ```
+
+    说明：在 C 语言中，当把一个小整数类型（如 `char`）赋值给一个更大的整数类型（如 `int` 或 `unsigned int`）时，系统会进行 **类型扩展**：
+
+    -   如果是`char`（默认是有符号的），会进行`符号扩展`（sign extension）：
+        -   如果最高位是 1（即负数），扩展后高位全部补 1。
+    -   如果是`unsigned char`，会进行`零扩展`（zero extension）：
+        -   高位全部补 0。
+
+##  Void型
+
+##  指针类型
+
+##  构造类型
+
+# 变量和常量
+
+## 变量
+
+### 计算器代码
+
+```c
+/********04简单的运算器.c**********/
+#include <stdio.h>
+#include <stdlib.h>
+int main(int argc, const char *argv[]){
+    int add, sub, mul, div, mod;
+    int num1 = atoi(argv[1]); 
+    int num2 = atoi(argv[2]); 
+    
+    add = num1 + num2;
+    sub = num1 - num2;
+    mul = num1 * num2;
+    div = num1 / num2;
+    mod = num1 % num2;
+
+    printf("num1 = %d, num2 = %d\n", num1, num2);
+    printf("add = %d, sub = %d, mul = %d, div = %d, mod = %d\n", add, sub, mul, div, mod);
+    return 0;
+}
+```
+
+### 补码
+
+```c
+/***********05补码的简单验证.c*********/
+#include <stdio.h>
+
+void printBinary(unsigned char num) {
+    for (int i = 7; i >= 0; i--) {
+        printf("%d", (num >> i) & 1);
+    }
+}
+
+void showProcess(int original) {
+    // 原码：最高位是符号位，其余是数值
+    unsigned char original_binary = original & 0xFF;
+    printf("原码: ");
+    printBinary(original_binary);
+    printf(" (十进制: %u)\n", original_binary);
+
+    // 反码：符号位不变，其余位取反（如果是负数）
+    unsigned char inverted = ~original_binary;
+    printf("反码: ");
+    printBinary(inverted);
+    printf(" (十进制: %u)\n", inverted);
+
+    // 补码：反码 + 1
+    unsigned char complement = inverted + 1;
+    printf("补码: ");
+    printBinary(complement);
+    printf(" (十进制: %u)\n", complement);
+}
+
+int main() {
+    int original = 9; // 原始正数
+
+    printf("原始数值: -%d\n", original);
+    showProcess(original);
+
+    char num = -original; // -9，存储为补码
+    printf("\n最终补码二进制: ");
+    printBinary(num);
+    printf("\n十六进制: 0x%X\n", (unsigned char)num);
+
+    return 0;
+}
+```
+
+### **不同变量间赋值**
+
+在C标准下：
+1）长 -----》 短
+			低字节数据直接拷贝，高字节直接丢弃
+
+2）短 ——》长
+			 低字节数据直接拷贝，高位需要补数据
+			 如果，短的是有符号位的，高位就全部补符号位
+			 如果，短的没有符号位的，高位就全部补0
+
+```c
+/******06不同变量间赋值*******/
+#include <stdio.h>
+
+int main() {
+    printf("=== 测试1：char 类型赋值为 250 ===\n");
+    {
+        char c = 250;
+        printf("c = %d (有符号十进制)\n", c);
+        printf("c = %u (无符号十进制)\n", c);
+    }
+
+    printf("\n=== 测试2：char 类型溢出测试 ===\n");
+    {
+        char c = 250;
+        char d = 0;
+        d = c + 8;
+        printf("d = %d\n", d);
+    }
+
+    printf("\n=== 测试3：unsigned char 类型赋值为 250 ===\n");
+    {
+        unsigned char c = 250;
+        printf("c = %d (有符号十进制)\n", c);
+        printf("c = %u (无符号十进制)\n", c);
+    }
+
+    return 0;
+}
+```
+
+### 边边角角知识点
+
+```c
+/******07一些练习代码******/
+#include <stdio.h>
+
+int main()
+{
+    // ========== 测试1：char 类型溢出赋值 ==========
+    {
+        char c = 253;     // 253 超出 char 有符号范围 (-128 ~ 127)
+        char d;
+
+        d = c + 192;      // 会发生溢出
+        printf("测试1: d = %d\n", d);  // 以有符号十进制输出
+        printf("测试1: d = %u\n", d);  // 以无符号十进制输出
+    }
+
+    // ========== 测试2：float 类型赋值 ==========
+    {
+        float f = 2.3E3;  // 科学计数法表示 2300.0
+        printf("测试2: f = %f\n", f);  // 输出浮点数
+        // 错误写法：E5 不能单独使用，必须有基数
+    	// float e = E5;  // 编译错误
+    }
+    
+    // ========== 测试3：浮点数赋值给 int ==========
+    {
+        int c = 3.5;      // 浮点数赋值给 int，会截断小数部分
+        printf("测试3: c = %d\n", c);  // 输出 3
+    }
+
+    // ========== 测试4：变量命名规则 ==========
+    {
+        int a;
+        int asdfasdfasdf;   // 合法标识符
+        int ___aasfasfaf;   // 合法标识符
+        // int 123asdfasdf; // 非法：不能以数字开头（已注释）
+        // int int = 6;     // 非法：不能使用关键字作为变量名（已注释）
+
+        printf("测试4: 变量命名测试通过（编译错误已注释）\n");
+    }
+
+    // ========== 测试5：typeof 类型推导（GNU 扩展） ==========
+    {
+        int a;
+        typeof(a) b = 8;  // typeof 是 GCC 扩展，不是标准 C
+
+        printf("测试5: b = %d\n", b);
+        printf("测试5: b的类型长度为: %d\n", (int)sizeof(typeof(b)));
+    }
+
+    return 0;
+}
+```
+
+## 常量
+
+### 常用进制转换
+
+|      | 16进制    | 10进制 | 8进制   |
+| ---- | --------- | ------ | ------- |
+| NULL | 0x00      | 0      | 0       |
+| 0-9  | 0x30-0x39 | 48-57  | 60-71   |
+| A~Z  | 0x41~0x5A | 65~90  | 101-132 |
+| a~z  | 0x61~0x7A | 97~122 | 141-172 |
+
+‘\n’ : 换行符	‘\r’ : 回车符	‘\t’ : 制表符
+
+### 字符的各种表达方式
+
+```c
+/*******08字符A的各种表示方式.c******/
+#include <stdio.h>
+
+int main() {
+    char ch1 = 'A';           // ASCII 字符
+    char ch2 = '\101';        // 八进制转义（\101 = 65）
+    char ch3 = '\x41';        // 十六进制转义（\x41 = 65）
+    char ch4 = 0x41;          // 十六进制整型常量赋值
+    char ch5 = 0b01000001;    // 二进制整型常量赋值(仅限于__GNUC__)
+    char ch6 = 65;            // 等价写法
+
+    // 打印所有字符
+    printf("ch1 = %c\n", ch1);
+    printf("ch2 = %c\n", ch2);
+    printf("ch3 = %c\n", ch3);
+    printf("ch4 = %c\n", ch4);
+    printf("ch5 = %c\n", ch5);
+    printf("ch6 = %c\n", ch6);
+
+    return 0;
+}
+```
+
+# 运算符和表达式
+
+## 运算符总览
+
+双目算术：`+` `-` `*` `/` `%`
+单目算术：`++` `--`
+双目关系：`>` `==` `<` `>=` `<=` `!=`
+双目逻辑：`%%` `||`
+单目逻辑否：`!`
+单目位取反：`~`
+双目位：`&` `|` `^`
+单目位：`<<` `>>`
+双目赋值：`=` `+=` `-=` `/=` `%=` `<<=` `>>=`
+三目条件：`  ? : `
+双目逗号：`,`
+单目求字节：`sizeof()`
+单目指针：`*` `&`
+单目分量：`.` `->`
+单目下标：`[]`
+单目强制类型转换：`(type)`
+
+```c
+#include <stdio.h>
+
+typedef struct {
+    int x;
+    int y;
+} Point;
+
+int main() {
+    // 基础变量
+    int a = 5, b = 10, c = 0;
+    int d = 1, e = 0;
+    unsigned char u = 0b10100000, v = 0b00001111;
+    int arr[3] = {10, 20, 30};
+    int *p = arr;
+    Point pt = {10, 20};
+    Point *ppt = &pt;
+
+    printf("=== 算术运算符 ===\n");
+    printf("a + b = %d\na - b = %d\na * b = %d\na / b = %d\na %% b = %d\n", a + b, a - b, a * b, a / b, a % b);
+    printf("++a = %d\n--b = %d\n", ++a, --b);
+
+    printf("\n=== 关系与逻辑运算符 ===\n");
+    printf("a > b: %d\na < b: %d\na == b: %d\na != b: %d\na >= 0: %d\nb <= 10: %d\n", a > b, a < b, a == b, a != b, a >= 0, b <= 10);
+    printf("a && b: %d\na || b: %d\n!a: %d\n", a && b, a || b, !a);
+
+    printf("\n=== 位运算符 ===\n");
+    printf("u & v = 0x%X\nu | v = 0x%X\nu ^ v = 0x%X\n~u = 0x%X\nu << 1 = 0x%X\nu >> 1 = 0x%X\n",
+           u & v, u | v, u ^ v, ~u, u << 1, u >> 1);
+
+    printf("\n=== 赋值与三目条件运算符 ===\n");
+    a = 5, b = 10;
+    a += 2, b *= 3;
+    printf("a = %d\nb = %d\n", a, b);
+    c = (a > b) ? a : b;
+    printf("max = %d\n", c);
+    c = (a = 1, b = 2, a + b);
+    printf("c = %d\n", c);
+
+    printf("\n=== 指针、数组、结构体运算符 ===\n");
+    printf("arr[1] = %d\n*(p + 1) = %d\n&arr[0] = %p\n", arr[1], *(p + 1), (void *)&arr[0]);
+    printf("pt.x = %d\nppt->x = %d\n", ppt->x, ppt->x);
+
+    printf("\n=== 类型相关运算符 ===\n");
+    printf("sizeof(int) = %lu\nsizeof(a) = %lu\nsizeof(double) = %lu\n", sizeof(int), sizeof a, sizeof(double));
+    printf("(double)a = %f\n(int)3.14 = %d\n", (double)a, (int)3.14);
+
+    return 0;
+}
+```
+
+## 惰性运算
+
+1） a&&b&&c
+    只有当a为真时，才需要执行b
+    只有当a、b都为真，才需要执行
+     一旦a为假，b、c都不执行
+         
+2） a||b||c
+    只要a为真，不需要去执行b和c
+    只有a为假，才需要执行b
+	只有a、b都未假，才需要执行c
+
+```c
+#include <stdio.h>
+
+int main() {
+    int a = 0, b = 0, c = 0;
+
+    printf("=== 测试逻辑与 && 的惰性求值 ===\n");
+
+    // 测试1：a为0（假），b和c不应该执行
+    printf("测试 a && b && c，其中 a = 0:\n");
+    if (a && (b = 1) && (c = 1)) {
+        // 不会进入
+    }
+    printf("结果：b = %d, c = %d\n\n", b, c);
+
+    // 测试2：a为1（真），b为0（假），c不应该执行
+    a = 1, b = 0, c = 0;
+    printf("测试 a && b && c，其中 a = 1, b = 0:\n");
+    if (a && (b = 0) && (c = 1)) {
+        // 不会进入
+    }
+    printf("结果：b = %d, c = %d\n\n", b, c);
+
+    // 测试3：a、b、c都为真
+    a = 1, b = 1, c = 0;
+    printf("测试 a && b && c，其中 a = 1, b = 1:\n");
+    if (a && b && (c = 1)) {
+        // 会进入
+    }
+    printf("结果：c = %d\n\n", c);
+
+    printf("=== 测试逻辑或 || 的惰性求值 ===\n");
+
+    // 测试4：a为1（真），b和c不应该执行
+    a = 1, b = 0, c = 0;
+    printf("测试 a || b || c，其中 a = 1:\n");
+    if (a || (b = 1) || (c = 1)) {
+        // 会进入
+    }
+    printf("结果：b = %d, c = %d\n\n", b, c);
+
+    // 测试5：a为0（假），b为1（真），c不应该执行
+    a = 0, b = 0, c = 0;
+    printf("测试 a || b || c，其中 a = 0, b = 1:\n");
+    if (a || (b = 1) || (c = 1)) {
+        // 会进入
+    }
+    printf("结果：b = %d, c = %d\n\n", b, c);
+
+    // 测试6：a、b都为0（假），c应该执行
+    a = 0, b = 0, c = 0;
+    printf("测试 a || b || c，其中 a = 0, b = 0:\n");
+    if (a || b || (c = 1)) {
+        // 会进入
+    }
+    printf("结果：c = %d\n", c);
+
+    return 0;
+}
+```
+
+## 运算符的优先级
+
+`括号 >  单目优先级 > 算数运算符 > 移位运算符  > 关系运算符 > 位运算法 > 逻辑运算符 > 赋值运算符 > 复合运算符 >  逗号运算符`
+
+```c
+#include <stdio.h>
+
+int main() {
+    int a = 10, b = 20, c = 30;
+    int result;
+
+    printf("=== 运算符优先级清晰测试 ===\n");
+
+    // 1. 括号 > 所有其他运算符
+    printf("1. 括号 > 所有运算符：\n");
+    result = - (a + b); // 先加后负号
+    printf("-(a + b) = %d\n", result);
+
+    // 2. 单目 > 算术
+    printf("\n2. 单目 > 算术：\n");
+    result = - a + b; // 先负号后加法
+    printf("-a + b = %d\n", result);
+
+    // 3. 算术 > 移位
+    printf("\n3. 算术 > 移位：\n");
+    result = a + b << 2; // 先加后左移
+    printf("a + b << 2 = %d\n", result);
+
+    // 4. 移位 > 关系运算符
+    printf("\n4. 移位 > 关系：\n");
+    result = a << 2 == b; // 先左移后比较
+    printf("a << 2 == b = %d\n", result);
+
+    // 5. 关系 > 按位与
+    printf("\n5. 关系 > 按位与：\n");
+    result = (a > b) & c; // 先比较后按位与
+    printf("(a > b) & c = %d\n", result);
+
+    // 6. 按位 > 逻辑
+    printf("\n6. 按位 > 逻辑：\n");
+    result = a & b || c; // 先按位与后逻辑或
+    printf("a & b || c = %d\n", result);
+
+    // 7. 逻辑 > 赋值
+    printf("\n7. 逻辑 > 赋值：\n");
+    result = a || (b = c); // 逻辑短路，b不会被赋值
+    printf("a || (b = c) = %d, b = %d\n", result, b);
+
+    // 8. 赋值 > 逗号
+    printf("\n8. 赋值 > 逗号：\n");
+    result = (a = 10, b = 20, a += b); // 先赋值，最后执行 a += b
+    printf("(a = 10, b = 20, a += b) = %d\n", result);
+
+    // 9. 一个综合测试表达式
+    printf("\n=== 综合表达式测试 ===\n");
+    a = 5, b = 10, c = 3;
+    int d = 0x1F, e = 0, f = 0, g = 100;
+
+    // 表达式：(++a * 2) << 1 > (d & 0x0F) | (~b) && (!!c) || (e = f += 10), g += 5;
+    result = (++a * 2) << 1 > (d & 0x0F) | (~b) && (!!c) || (e = f += 10), g += 5;
+
+    printf("表达式执行后：\n");
+    printf("result = %d\n", result);
+    printf("a = %d (验证 ++a)\n", a);
+    printf("b = %d (验证 ~b)\n", b);
+    printf("c = %d (验证 !!c)\n", c);
+    printf("d & 0x0F = %d (中间值)\n", d & 0x0F);
+    printf("e = %d (验证赋值)\n", e);
+    printf("f = %d (验证复合赋值)\n", f);
+    printf("g = %d (逗号后执行)\n", g);
+
+    return 0;
+}
+```
+
+## **作业测试**（位运算测试）
+
+1）有一个int类型的变量a，写一个表达式 把a的第10位 置0，其余bit位不变
+
+```c
+方式1：
+	xxxx xxxx xxxx xxxx xxxx xxxx xxxx xxxx
+	1111 1111 1111 1111 1111 1011 1111 1111	  ----->  a&下面的数据  
+	转换为十进制数 & a
+
+方式2： 
+1:  	    0000 0000 0000 0000 0000 0000 0000 0001
+1<<10: 	    0000 0000 0000 0000 0000 0100 0000 0000
+~(1<<10): 	1111 1111 1111 1111 1111 1011 1111 1111
+& a:
+
+	要将某个数a的第x 置0
+	 a = a& (~(1<<x));
+```
+
+2）有一个int类型的变量a，写一个表达式 把a的第10位 置1，其余bit位不变
+
+```c
+a:	xxxx xxxx xxxx xxxx xxxx xxxx xxxx xxxx
+1:  0000 0000 0000 0000 0000 0000 0000 0001
+1<<10: 	0000 0000 0000 0000 0000 0100 0000 0000
+
+a | (1<<10):
+	xxxx xxxx xxxx xxxx xxxx xxxx xxxx xxxx
+	0000 0000 0000 0000 0000 0100 0000 0000
+
+	要将某个数a的第x 置1
+	 a = a | (1<<10);
+```
+
+3）有一个int类型的变量a，写一个表达式 把a的第10位 取反，其余bit位不变
+
+```c
+a:	xxxx xxxx xxxx xxxx xxxx xxxx xxxx xxxx
+1:  0000 0000 0000 0000 0000 0000 0000 0001
+1<<10: 	0000 0000 0000 0000 0000 0100 0000 0000
+
+用异或，与 0000 0000 0000 0000 0000 0100 0000 0000进行位比较，原本的数据如果为1，异或结果为0 ，原本数据为0，异或结果 为1，也就是实现了，将第10位的数据位，进行取反
+
+结果： a = a^(1<<10);
+	  a ^= 1<<10;
+
+要将某个数a的第x位  取反
+	a ^= 1<<x;
+```
+
+4）有一个int类型的变量a，写一个表达式 判断a的第10位 是否为1？
+
+```c
+将a的第十位 拿出来 与 1进行比较
+
+	a & (1<<10) --->  得到了 a的第10位数据，将其余数据位全部清0
+	直接与0 判断， 如果结果为0，则说明 第10为 0，否则，就说明第10位 有数据
+
+a:				1111 1111 1111 1111 1111 1111 1111 1111
+a & (1<<10): 	0000 0000 0000 0000 0000 0100 0000 0000
+	此时与 1做比较的话，第10位是否为0都不重要，反正这个结果绝对不等于1
+    所以与0做比较，如果第10位有数据就是非0值，没数据就是0
+  
+	如何想要单独判断某个数a的第x位 为0或为1
+	用 a & (1<<10) 位, 再比较即可。
+```
+
+5）有一个int类型的变量a，写一个表达式 把 a的 第9 到 第6 bit位   设为12的值(1100)，其余位 不变
+
+```c
+a:	xxxx xxxx xxxx xxxx xxxx xxxx xxxx xxxx
+							   11 00    --》这几个比特位 变成 1100
+
+3：									   8<<11
+	0000 0000 0000 0000 0000 0000 0000 0011
+
+3<<8
+	0000 0000 0000 0000 0000 0011 0000 0000
+先改变第9、8位:
+a = a | 3<<8;
+	xxxx xxxx xxxx xxxx xxxx xx11 xxxx xxxx
+
+
+再改变第7、6位:
+3<<6:
+	0000 0000 0000 0000 0000 0000 1100 0000
+~(3<<6):
+	1111 1111 1111 1111 1111 1111 0011 1111
+
+a = a & (~(3<<6)):
+	xxxx xxxx xxxx xxxx xxxx xxxx 00xx xxxx
+```
+
+# 分支结构和循环结构
+
+## 分支结构
+
+### if语句的三种形式
+
+```c
+#include <stdio.h>
+int main(){
+    int a = 10;
+    if(a == 10){
+        printf("测试一：单if\n");
+    }
+    
+    if(a == 11){
+        printf("Nothing\n");
+    }else{
+        printf("测试二：if + else\n");
+    }
+    
+    if(a == 12){
+        printf("Nothing\n");
+    }else if(a == 10){
+        printf("测试三：if + else if\n");
+    }else{
+        printf("Nothing\n");
+    }
+    return 0;
+}
+```
+
+#### if语句练习
+
+##### a.  【基本练习else if】
+
+从键盘上 输入两个整数，存入到 变量a、b中，按从小到大的顺序输出
+
+```c
+    #include <stdio.h>
+    int main(){
+        int a, b;
+        printf("请依次输入 a 和 b 的值:\n");
+        scanf("%d %d", &a, &b);
+        if(a < b){
+            printf("%d %d\n", a, b);
+        }else if(a > b){
+            printf("%d %d\n", b, a);
+        }else{
+            printf("a 和 b 相等，均为%d\n", a);
+        }
+        return 0;
+    }
+```
+
+##### b.  【基本练习if else】
+
+从键盘上 输入三个整数，存入变量a、b、c，判断以这三个数为三角形的边，能够构成一个三角形
+
+```c
+#include <stdio.h>
+int main(){
+	int a, b, c;
+    printf("请依次输入 a b c的值:\n");
+    scanf("%d %d %d", &a, &b, &c);
+    if(a*a+b*b==c*c || b*b+c*c==a*a || a*a+c*c==b*b){
+        printf("这三个数能够构成一个三角形\n");
+	}else{
+        printf("这三个数不能构成一个三角形\n");
+    }
+    return 0;
+}
+```
+
+##### c. 【if嵌套练习】
+
+从键盘上 输入三个整数，存入到 变量a、b、c中，按从大到小的顺序输出
+
+```c
+#include <stdio.h>
+int main(){
+	int a, b, c;
+    printf("请依次输入 a b c的值:\n");
+	scanf("%d %d %d", &a, &b, &c);
+    if(a > b){
+        if(a > c){
+            if(b > c){
+                printf("%d %d %d\n", a, b, c);
+            }else if(b < c){
+                printf("%d %d %d\n", a, c, b);
+            }else{
+                printf("a = %d, b 和 c 相等，均为%d\n", a, b);
+			}
+        }else if(a < c){
+            printf("%d %d %d\n", c, a, b);
+        }else{
+            printf("a 和 c 相等，均为%d, b = %d\n", a, b);
+        }       
+    }else if(a < b){
+        if(a > c){
+            printf("%d %d %d\n", b, a, c);
+        }else if(a < c){
+            if(b > c){
+                printf("%d %d %d\n", b, c, a);
+			}else if(c > b){
+                printf("%d %d %d\n", c, b, a);
+            }else{
+                printf("b 和 c 相等，均为%d, b = %d\n", b, a);
+            }
+        }else{
+            printf("b = %d, a 和 c 相等，均为%d\n", b, a);
+        }
+    }else{
+        if(b > c){
+            printf("a 和 b 相等，均为%d，c = %d\n", b, c);
+        }else if(b < c){
+            printf("c = %d，a 和 b 相等，均为%d\n", c, b);
+        }else{
+            printf("a、b、c相等，均为%d\n", a);
+        }
+    }
+    return 0;
+}
+```
+
+### switch的各种情况
+
+```c
+#include <stdio.h>
+int main(){
+    int test;
+    printf("====测试一：无break的switch结构====\n");
+    test = 3;
+    switch(test){
+        case 1:
+            printf("test为1\n");
+        case 2:
+            printf("test为2\n");
+        case 3:
+            printf("test为3\n");
+        case 4:
+            printf("test为4\n");
+        default:
+            printf("test不在switch范围内\n");
+    }
+    
+    printf("====测试二：无default保底的switch结构====\n");
+    test = 5;
+    switch(test){
+        case 1:
+            printf("test为1\n");
+        case 2:
+            printf("test为2\n");
+        case 3:
+            printf("test为3\n");
+        case 4:
+            printf("test为4\n");
+    }
+    
+    printf("====测试三：default放最前面且无break的switch结构====\n");
+    test = 5;
+    switch(test){
+        default:
+            printf("test不在switch范围内\n");
+        case 1:
+            printf("test为1\n");
+        case 2:
+            printf("test为2\n");
+        case 3:
+            printf("test为3\n");
+        case 4:
+            printf("test为4\n");
+    }
+    return 0;
+}
+```
+
+#### switch语句练习
+
+从键盘上 输入一个 成绩(int)，把这个成绩按对应的等级进行输出：
+成绩：`100~90: A` `89~80：B` `79~70：C` `69~60：D` `59~0：不及格 F`
+
+```c
+#include <stdio.h>
+int main(){
+	int score;
+    printf("请输入成绩：\n");
+    scanf("%d", &score);
+    score /= 10;
+    switch(score){
+        case 9:
+            printf("A\n");
+            break;
+        case 8:
+            printf("B\n");
+            break;
+        case 7:
+            printf("C\n");
+            break;
+        case 6:        
+            printf("D\n");
+            break;
+        case 5:
+        case 4:
+        case 3:
+        case 2:
+        case 1:
+        case 0:
+            printf("F，你不及格!\n");
+            break;
+        default:
+            printf("非法成绩\n");
+    }
+}
+```
+
+### 分支结构作业
+
+#### 作业1：switch+if实现简单计算器
+
+程序功能：输入一个简单的算式(+、-、*、/)，然后得到其结果
+
+```c
+#include <stdio.h>
+int main(){
+	int a, b;
+	char cal;
+	printf("请输入符合格式的计算式：A + B\n");
+	scanf("%d %c %d", &a, &cal, &b);
+	switch (cal){
+		case '+':
+			printf("%d %c %d = %d\n", a, cal, b, a+b);
+			break;
+		case '-':
+			printf("%d %c %d = %d\n", a, cal, b, a-b);
+			break;
+        case '*':
+			printf("%d %c %d = %d\n", a, cal, b, a*b);
+			break;
+		case '/':
+			if(b <= 0){
+				printf("非法计算式\n");
+			}else{
+				printf("%d %c %d = %d\n", a, cal, b, a/b);
+			}
+			break;
+		default:
+			printf("非法计算式\n");
+	}
+	return 0;
+}
+```
+
+#### 作业2：if+switch实现距离年末天数
+
+程序功能：输入日期(年月日)，求从该天起，到年末有多少天 `提示：需要判断闰年`
+
+```c
+#include <stdio.h>
+int main(){
+    int year, month, day;
+    int leap = 0, last = 0;
+    printf("输入日期，要求格式：年 月 日\n");
+    scanf("%d %d %d", &year, &month, &day);
+    if(year < 0 || month > 12 || month < 0 || day > 31 || day < 0){
+        printf("非法日期\n");
+        return -1;
+    }
+    if((year % 4 == 0 && year % 100 != 0)|| (year % 400 == 0)){
+        leap = 1;
+    }
+    switch(month){
+        case 1:
+            last += 31;
+        case 2:
+            if(leap == 0)
+                last += 28;
+            else
+                last += 29;
+        case 3:
+            last += 31;
+        case 4:
+            last += 30;
+        case 5:
+            last += 31;
+        case 6:
+            last += 30;
+        case 7:
+            last += 31;
+        case 8:
+            last += 31;
+        case 9:
+            last += 30;
+        case 10:
+            last += 31;
+        case 11:
+            last += 30;
+        case 12:
+            last += 31;
+            break;
+    }
+    last -= day;
+    printf("当前日期距离年末还有 %d 天\n", last);
+    return 0;    
+}
+```
+
+## 循环结构
+
+### goto语句
+
+首先实现一个100以内的自加，然后输出100以内的所有`3的倍数`和
+
+```c
+#include <stdio.h>
+int main(){
+    int test = 0, sum_three = 0;
+    loop:    	
+    	sum_three += test;
+    	test += 3;
+    if(test <= 100){
+        goto loop;
+    }
+    printf("test已经大于100，当前为 %d\n", test);
+    printf("100以内的所有3的倍数和为：%d\n", sum_three);
+    return 0;
+}
+```
+
+### while语句
+
+#### while在前
+
+首先实现一个100以内的自加，然后逆序输出一个正整数，如12345，输出54321
+
+```c
+#include <stdio.h>
+int main(){
+	int test = 0;
+	while(test <= 100){
+		test++;
+	}
+	printf("test已经大于100，当前为 %d\n", test);
+    int down;
+    printf("请输入一个正整数\n");
+    scanf("%d", &down);
+    while(down > 0){
+        printf("%d", down % 10);
+        down /= 10;
+    }
+    printf("\n");
+    return 0;
+}
+```
+
+#### do…while
+
+首先实现一个100以内的自加，然后求 n! 的阶乘
+
+```c
+#include <stdio.h>
+int main(){
+    int test = 0;
+    do{
+        test++;
+    }while(test <= 100);
+    printf("test已经大于100，当前为 %d\n", test);
+    
+    int fact = 0, n;
+    printf("请输入一个正整数\n");
+    scanf("%d", &n);
+    do{
+        fact += n*n;
+        n--;
+    }while(n > 0);
+    printf("阶乘结果为 %d\n", fact);
+    return 0;
+}
+```
+
+#### for语句
+
+首先实现一个100以内的自加，然后输出100以内的奇数
+
+```c
+#include <stdio.h>
+int main(){
+    int test = 0;
+    for(test; test <= 100; test++);
+    printf("test已经大于100，当前为 %d\n", test);
+    printf("接下来输出100以内的奇数：\n");
+    for(int i=1; i<=100; i+=2){
+        printf("%d\n", i);
+    }
+    return 0;
+}
+```
+
+##### for语句求“水仙花数”
+
+​	水仙花数：是3位数 100~999，水仙花数的 个位、十位、百位的立方和 等于 水仙花数本身
+
+```c
+#include <stdio.h>
+int main(){
+    for(int i=100; i<1000; i++){
+        int j = 0, k = i;
+        while(k>0){
+            j += (k%10) * (k%10) * (k%10);
+            k /= 10;
+        }
+        if(j == i){
+            printf("%d\n", i);
+        }
+    }
+    return 0;
+}
+```
+
+## break和continue
+
+首先用break实现一个100以内的自加，然后用continue实现：依次输出1~10，但是跳过 ” 5 “
+
+```c
+#include <stdio.h>
+int main(){
+	int test = 0;
+	while(1){
+		test++;
+		if(test > 100){
+			printf("test已经大于100，当前为 %d\n", test);
+			break;
+		}
+	}
+	
+	test = 1;
+	for(test; test <= 10; test++){
+		if(test == 5){
+			continue;
+		}
+		printf("%d \t", test);		
+	}
+	printf("\n");
+	return 0;
+}
+```
+
+## HomeWork
+
+1）求1000以内，带有5的数的 5，总共有多少个？？
+		`【假设】只有 55  555  45  ，  那么 5总共有 6个`
+
+```c
+#include <stdio.h>
+int main(){
+    int sum = 0;
+    for(int i = 0; i <= 1000; i++){
+        int j = i;
+        while(j>0){
+            if(j%10 == 5){
+                sum++;
+            }
+            j /= 10;
+        }
+    }
+    printf("1000以内，带有5的数，总共有 %d 个5\n", sum);
+    return 0;
+}
+```
+
+2）求两个数a、b的 “最大公约数”  和  “最小公倍数”
+
+```c
+#include <stdio.h>
+
+int main() {
+    int num1, num2;       // 用于保存输入的两个整数
+    int gcd = 1;          // Greatest Common Divisor（最大公约数）
+    int lcm = 1;          // Least Common Multiple（最小公倍数）
+
+    printf("请输入两个整数，如 18 15：\n");
+    scanf("%d %d", &num1, &num2);
+
+    // 检查输入是否为 0
+    if (num1 == 0 || num2 == 0) {
+        printf("错误：输入不能为 0。\n");
+        return 1;
+    }
+
+    // 求最大公约数（GCD）
+    for (int divisor = 1; divisor <= (num1 < num2 ? num1 : num2); divisor++) {
+        if (num1 % divisor == 0 && num2 % divisor == 0) {
+            gcd = divisor;  // 更新最大公约数
+        }
+    }
+    printf("最大公约数为: %d\n", gcd);
+
+    // 求最小公倍数（LCM）
+    for (int i = 1; i <= num1 * num2; i++) {
+        int candidate = i * gcd;
+        if (candidate % num1 == 0 && candidate % num2 == 0) {
+            lcm = candidate;
+            printf("最小公倍数为: %d\n", lcm);
+            break;
+        }
+    }
+
+    return 0;
+}
+```
+
+
+
+
+
+
+

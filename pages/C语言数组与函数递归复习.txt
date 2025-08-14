@@ -1,0 +1,558 @@
+---
+description: C语言数组与函数递归复习
+title: C语言数组与函数递归复习
+permalink: /C语言数组与函数递归复习/
+---
+# 一、数组
+
+## 一维数组
+
+### 一维数组的定义与引用
+
+```c
+#include <stdio.h>
+int main(){
+	int a[10];
+    char b[8];
+    float c[15];
+    
+    int d = 4;
+    int e[d+5];
+    double f = 5.6;
+    printf("%d\n", (typeof(a[0]))f);
+    printf("%ld\n",sizeof(typeof(a)));
+    printf("int [10] = %ld\n",sizeof(int [10]));
+    a[0] = 10;
+    printf("a[0] = %d\n",a[0]);
+    printf("&a[1] = %p\n", &a[1]);
+	printf("&a[2] = %p\n", &a[2]);
+	printf("&a[3] = %p\n", &a[3]);
+	printf("&a[4] = %p\n", &a[4]);
+	printf("&a[5] = %p\n", &a[5]);
+	printf("&a[6] = %p\n", &a[6]);
+	printf("&a[7] = %p\n", &a[7]);
+	printf("&a[8] = %p\n", &a[8]);
+    
+    int h[7] = {1,2,3,4,5};
+    int * i = h;    
+    int g[] = {1,2,3,4,5};
+    printf("sizeof(h) = %ld\n",sizeof(typeof(h)));
+    printf("sizeof(i) = %ld\n",sizeof(typeof(i)));
+    printf("sizeof(g) = %ld\n",sizeof(typeof(g)));
+    for(int i=0; i<7; i++){
+        printf("%d\t",h[i]);
+    }printf("\n");
+    return 0;
+}
+```
+
+#### 练习
+
+1）定义一个一维数组，并从键盘中输入每个元素的值，求一个int类型的数组中的 最大元素值，最小元素值，各元素之和
+		比如； int a[5] = {5,8,9,6,3};    求出：最大值为9，最小值为3，和为31（不考虑有相同元素）
+
+2）判断一个已有的一维整形数组，它里面的元素值，是否呈递增现象
+			 递增：值从小到大排列（不考虑有相同元素）
+
+```c
+#include <stdio.h>
+int main(){
+	int a[5] = {5,8,9,6,3};
+	int sum=0, min=a[0], max=a[0];
+	for(int i=0; i<5; i++){
+		sum+=a[i];
+		if(min > a[i])
+            min = a[i];
+        if(max < a[i])
+            max = a[i];
+	}
+    printf("sum=%d, min=%d, max=%d\n",sum, min, max);
+    
+    int b[5] = {1,2,3,4,5};
+    int flag = 0;
+    for(int i=0; i<5-1; i++){
+        if(a[i]>a[i+1])
+            flag = 1;
+    }
+    if(flag)
+        printf("该数组不是递增的\n");
+    else
+        printf("该数组是递增的\n");
+    return 0;
+}
+```
+
+### 时间复杂度 和 空间复杂度
+
+```
+时间复杂度O: 运行你的程序 所需要的计算时间
+空间复杂度S: 运行你的这个程序所需要的内存空间
+```
+
+### 排序算法
+
+#### 冒泡
+
+主要功能：相邻的两个元素，两两比较，把较大的往后移(两两交换)   ====》   升序过程
+
+```
+#include <stdio.h>
+int main(){
+	int a[5] = {5,8,9,6,3};
+	int temp;
+	for(int i=0; i<5-1; i++){
+		for(int j=0; j<5-i-1; j++){
+			if(a[j]>a[j+1]){
+				temp = a[j];
+				a[j] = a[j+1];
+				a[j+1] = temp;
+			}
+		}
+	}
+	for(int i=0; i<5; i++){
+        printf("%d\t",a[i]);
+    }printf("\n");
+	return 0;
+}
+```
+
+#### 选择
+
+1）从数组中，选择一个最大值
+2）把这个最大值 与 最后一个元素进行位置交换
+
+```
+#include <stdio.h>
+int main(){
+	int a[5] = {5,8,9,6,3};
+	int temp, max=a[0], max_i=0, j=0;
+	for(j = 0; j<5-1; j++){
+		max = a[0];
+		max_i = 0;
+		for(int i=0; i<5-j; i++){
+			if(max < a[i]){
+				max = a[i];
+				max_i = i;
+			}
+		}
+		if(max_i != 5-1-j){
+			temp = a[max_i];
+			a[max_i] = a[5-1-j];
+			a[5-1-j] = temp;
+		}
+	}
+	for(int i=0; i<5; i++){
+        printf("%d\t",a[i]);
+    }printf("\n");
+	return 0;
+}
+```
+
+#### 插入
+
+```
+#include <stdio.h>
+int main(){
+	int a[5] = {5,8,9,6,3};
+    for (int i = 1; i < 5; i++) {
+        int key = a[i];
+        int j = i - 1;
+
+        while (j >= 0 && a[j] > key) {
+            a[j + 1] = a[j];
+            j--;
+        }
+        a[j + 1] = key;
+    }
+	for(int i=0; i<5; i++){
+        printf("%d\t",a[i]);
+    }printf("\n");
+	return 0;
+}
+```
+
+### 一维数组作业
+
+#### 1.求一个数组中第二大的元素
+
+```
+#include <stdio.h>
+int main(){
+	int a[5] = {5,8,9,6,3};
+	for(int i=1; i<5; i++){
+		int key = a[i];
+		int j = i - 1;
+		while(j >=0 && a[j] > key){
+			a[j+1] = a[j];
+			j--;
+		}
+		a[j+1] = key;
+	}
+	printf("%d\n",a[1]);
+	return 0;
+}
+```
+
+#### 2.求斐波那契数列的前20项
+
+​		斐波那契数列：第一、第二个数都是1，从第三个数开始，包括第三个数，后面的数都是前两个数之
+
+```
+#include <stdio.h>
+int main(){
+    int n=20, temp=0, arr[n];
+    arr[0] = 1;
+    arr[1] = 1;
+    for(int i=2; i<n; i++){
+        arr[i] = arr[i-1] + arr[i-2];
+    }
+    for(int i=0; i<n; i++){
+        temp += arr[i];
+    }
+    printf("%d\n",temp);
+    return 0;
+}
+```
+
+#### 3.求连续的  子数组之和   的最大值
+
+​		a[] = {2, 3, -6, 5, -2};
+
+```
+#include <stdio.h>
+int main(){
+	int a[5] = {2, 3, -6, 5, -2};
+	int arr[(5+1)*5/2];
+	int key = 0;
+	for(int i=0; i<5; i++){
+		int temp = 0;
+		for(int j=i; j<5; j++){
+			temp += a[j];
+			arr[key] = temp;
+			key++;
+		}
+	}
+	int max = arr[0];
+	for(int i=0; i<(5+1)*5/2; i++){
+        if(max < arr[i])
+            max = arr[i];
+	}
+    printf("max=%d\n", max);
+	return 0;
+}
+```
+
+## 二维数组
+
+### 二维数组的定义与引用
+
+```
+#include <stdio.h>
+int main(){
+	int a[3][4];
+	a[1][1] = 1024;
+	int b = a[1][1];
+	printf("a[1][1] = %d\n", a[1][1]);
+	printf("b = %d\n", b);
+	int c[3][4] = {1,2,3,4,5,6,7,8,9,10,11,12};
+	int d[3][4] = {{1,2,3,4},{5,6,7,8},{9,10,11,12}};
+	int e[3][4] = {1,2,3};
+	int f[3][4] = {{1,2},{5,6,7},{9}};
+	int g[][4] = {1,2,3,4,5,6,7,8,9,10,11,12};
+	return 0;
+}
+```
+
+#### 练习
+
+1）定义一个二维数组，从键盘输入数据存入其中，再打印出来看看是否正确
+
+2）求该二维数组中的最大值、最小值、元素和
+
+3）把二维数组，行列值 互换
+
+```
+#include <stdio.h>
+int main(){
+	int arr[3][3];
+	// 输入
+	for(int i=0; i<3; i++){
+		for(int j=0; j<3; j++){
+			scanf("%d",&arr[i][j]);
+		}
+	}
+	// 输出
+	for(int i=0; i<3; i++){
+		for(int j=0; j<3; j++){
+			printf("%d\t",arr[i][j]);
+		}
+		printf("\n");
+    }
+	int sum=0, min=arr[0][0], max=arr[0][0];
+	for(int i=0; i<3; i++){
+		for(int j=0; j<3; j++){
+			sum += arr[i][j];
+			if(min > arr[i][j]){
+				min = arr[i][j];
+			}
+			if(max < arr[i][j]){
+				max = arr[i][j];
+			}
+		}
+	}
+	printf("sum=%d, min=%d, max=%d\n",sum, min, max);
+	// 转换
+	int temp = 0, k = 1;
+	for(int i=0; i<3; i++){
+		for(int j=k; j<3; j++){
+			temp = arr[i][j];
+			arr[i][j] = arr[j][i];
+			arr[j][i] = temp;
+		}
+		k++;
+	}
+	// 打印
+	for(int i=0; i<3; i++){
+		for(int j=0; j<3; j++){
+			printf("%d\t",arr[i][j]);
+		}
+		printf("\n");
+	}
+	return 0;
+}
+```
+
+### 字符数组
+
+#### 字符数组的定义与引用
+
+```
+#include <stdio.h>
+int main(){
+	char s[5] = {'a', 'b', 'c', 'd', 'f'};
+	for(int i=0; i<5; i++){
+		printf("%c\t",s[i]);
+	}printf("\n");
+    for(int i=0; i<5; i++)
+    {
+        scanf("%c", &s[i]);
+        getchar();	//getchar用来吸收掉输入字符后面的空格或回车
+    }
+	for(int i=0; i<5; i++){
+		printf("%c\t",s[i]);
+	}printf("\n");
+	printf("sizeof(a) = %ld\n", sizeof(s));
+    return 0;
+}
+```
+
+### 作业
+
+1）现有6名学生，每个学生有5门考试成绩，请计算出每个学生的平均值，用数组来做
+
+```
+#include <stdio.h>
+int main(){
+	int a[3][3] = {
+		{1,2,3},
+		{4,5,6},
+		{7,8,9}
+	};
+	int avg[3];
+	for(int i=0; i<3; i++){
+		for(int j=0; j<3; j++)
+			avg[i] += a[i][j];
+	}
+	for(int i=0; i<3; i++){
+		printf("%d\t", avg[i]/3);
+	}printf("\n");
+	return 0;
+}
+```
+
+2）求杨辉三角形
+
+```
+#include <stdio.h>
+#define ROW 15
+int main(){
+	int c[ROW][ROW]={0};
+	int temp3=0;
+	for(int i=0;i<ROW;i++)
+		c[i][0]=1;
+	for(int i=1;i<ROW;i++){
+		for(int j=1;j<ROW;j++){
+			c[i][j]=c[i-1][j-1]+c[i-1][j];
+		}
+	}
+	for(int i=0;i<ROW;i++){
+		temp3=0;
+		for(int j=0;j<ROW;j++)
+			if(c[i][j]==0){
+				temp3++;
+			}
+		for(int k=0;k<temp3;k++){
+			printf("   ");
+		}
+		for(int j=0;j<ROW;j++)
+			if(c[i][j]!=0){
+				printf("%4d  ",c[i][j]);
+			}
+		printf("\n");
+	}
+	return 0;
+}
+```
+
+# 二、函数
+
+## 基础概念
+
+1.  实现两个整数相加的函数功能
+2.  写一个函数，求三个整数的平均值
+3.  实现两个数的交换，比如：a=3, b=4，调用一个函数后，a=4， b=3
+
+```
+#include <stdio.h>
+int add(int a, int b);
+int avg(int a, int b, int c);
+int change(int a, int b);
+int main(){
+	printf("%d\n",add(2,3));
+	printf("avg: %d", avg(1,2,3));
+    return 0;
+}
+int add(int a, int b){
+	return a+b;
+}
+int avg(int a, int b, int c){
+	return (a+b+c)/3;
+}
+int change(int a, int b){
+	//暂不实现
+	int temp;
+	temp = a;
+	a = b;
+	b = temp;
+}
+```
+
+## 作用域和生存周期
+
+* 整个工程作用域：在工程的所有文件中，对象都可以起作用
+* 本文件作用域：只在当前文件(.h/.c)起作用
+* 函数作用域：只在某个函数范围内生效
+* 代码块作用域：只在某个代码块中起作用
+
+**加了extern 修饰的 全局变量，作用域为整个工程**
+
+**不加extern修饰 的全局变量，作用域只在变量本身的文件中**
+
+
+
+-   随文件系统持续性
+
+-   随程序持续性（随进程持续）
+
+**static的用法：**
+
+​	**修饰全局函数时，这个函数的作用域就变小；**
+
+​	**修饰局部变量，使被修饰的局部变量的 生存周期 变成 随进程 而持续**
+
+## 数组的传参
+
+直接传数组名
+
+```
+#include <stdio.h>
+void print_a(int a[]){
+	for(int i=0; i<5; i++)
+		printf("%d\t", a[i]);
+	printf("\n");
+}
+void print_b(int b[][3]){
+	for(int i=0; i<3; i++)
+		for(int j=0; j<3; j++)
+			printf("%d\t", b[i][j]);
+	printf("\n");
+}
+int main(){
+	int a[] = {1,2,3,4,5};
+	int b[][3] = {1,2,3,4,5,6,7,8,9};
+    print_a(a);
+    print_b(b);
+	return 0;
+}
+```
+
+## 练习
+
+1）分析如下程序执行结果
+
+```
+#include <stdio.h>
+void printf_a(void)
+{
+	int a = 5;
+	a++;
+	printf("a = %d\n", a);
+}
+void printf_b(void)
+{
+	static int b = 5;		
+	b++;					
+	printf("b = %d\n", b);
+}	
+
+void main()
+{
+	printf_a();
+	printf_a();
+	printf_b();
+	printf_b();
+}
+```
+
+2）写一个函数，判断一个一维int类型数组，是否有序(升序或降序)
+
+3）用函数，来求一个二维数组的最大元素值
+
+# 三、递归
+
+**循环能实现的事情，递归也能实现；递归能实现的，循环不一定能实现**
+
+## 示例代码：
+
+递归计算第10代年龄（首代8岁，每代+2岁）。
+
+```
+#include <stdio.h>
+
+unsigned int age(int n){
+	if(n == 1){
+		return 8;
+	}
+	else{
+		return age(n-1) + 2;
+	}
+}
+
+int main(){
+	int std_age;
+	std_age = age(10);
+	printf("年龄为: %d\n", std_age);
+}
+```
+
+## 练习：
+
+1.用递归，写一个函数 求一个整形数组的和
+
+2.写一个递归函数，来判断一维整形数组，是否递增
+
+3.用递归来实现，打印一个整数的每一位（递归）
+
+4.名名的妈妈从外地出差回来了，带了一盒巧克力回来（盒内有N块巧克力，20>N>0），妈妈告诉名名，一天只能吃一块或两块巧克力。假设名名每天都吃巧克力的话，问名名有多少种吃完巧克力的方法。（递归）
+
+5.求第n个斐波那契数（递归）

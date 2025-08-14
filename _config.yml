@@ -6,11 +6,7 @@ copyright  : © 2018 - 2025 scott.cgi All Rights Reserved
 nav:
  - name: 中文
    link: /
- - name: 隐私政策
-   link: /privacy-zh/
- - name: 编程人生
-   link: /code-life/
- - name: 教程
+ - name: 环境配置
    subnav:
     - name: WSL替代虚拟机指南
       link: /[01-05]WSL替代虚拟机指南：ARM开发板交叉编译与TFTP通信配置/
@@ -24,7 +20,43 @@ nav:
       link: /[09]【拓展】LVGL官方Demo全解析：从音乐播放器到高分辨率渲染/
     - name: LVGL模拟器搭建
       link: /[10]【实战】LVGL模拟器搭建指南：VSCode+MinGW构建+CMake自动化/
- - name: En
-   link: /about/
- - name: 赞赏支持
-   link: /donate/
+    - name: VMware网络配置（暂空）
+      link: /[指南]VMware-简单网络配置指南/
+    - name: Sqlite3配置（暂空）
+      link: /[指南]Linux与开发板安装sqlite/
+ - name: 内功修炼
+   subnav:
+   - name: C语言基础复习
+     link:
+   - name: C语言数组与函数递归复习
+     link:
+   - name: C语言指针复习
+     link:
+   - name: 正则表达式与bash
+     link:
+   - name: make和cmake编写
+     link:
+   - name: 文件IO与系统IO
+     link:
+   - name: lvgl学习
+     link:
+   - name: 进程间通信
+     link:
+   - name: 并发
+     link:
+   - name: 网络编程
+     link:
+   - name: 数据库
+     link:
+   - name: 
+     link:
+ - name: 其他内容
+   subnav:
+   - name: 隐私政策
+     link: /privacy-zh/
+   - name: 编程人生
+     link: /code-life/
+   - name: En
+     link: /about/
+   - name: 赞赏支持
+     link: /donate/

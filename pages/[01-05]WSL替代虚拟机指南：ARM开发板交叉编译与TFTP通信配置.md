@@ -137,12 +137,6 @@ cd /usr/local/
 
 # 将解压出来的这个目录的名字改短一点（一般情况下使用这个，但我的工程用的不是这个路径，如果用我的工程需要跳过这一步）
 sudo mv gcc-linaro-5.5.0-2017.10-x86_64_arm-linux-gnueabi arm-linux
-
-# 我的工程使用路径（不使用我的工程就跳过这一步）
-sudo mkdir arm
-sudo mkdir arm/5.4.0
-sudo cd arm/5.4.0
-sudo mv gcc-linaro-5.5.0-2017.10-x86_64_arm-linux-gnueabi usr
 ```
 
 3、进入到命令目录，添加软链接
@@ -202,7 +196,7 @@ arm-linux-gcc --version
 
 ![image-20250702213030579](pic/image-20250702213030579.webp)
 
-（这是我项目使用编译器的路径）
+（图片里是我自己使用编译器的路径，按教程的来最终会显示`/usr/local/arm-linux/lib/arm-linux-gcc`）
 
 ## 2.4 安装cmake
 
