@@ -27,29 +27,29 @@ nav:
  - name: 内功修炼
    subnav:
    - name: C语言基础复习
-     link:
+     link: /C语言基础复习/
    - name: C语言数组与函数递归复习
-     link:
+     link: /C语言数组与函数递归复习/
    - name: C语言指针复习
-     link:
-   - name: 正则表达式与bash
-     link:
-   - name: make和cmake编写
-     link:
-   - name: 文件IO与系统IO
-     link:
-   - name: lvgl学习
-     link:
-   - name: 进程间通信
-     link:
-   - name: 并发
-     link:
-   - name: 网络编程
-     link:
-   - name: 数据库
-     link:
-   - name: 
-     link:
+     link: /C语言指针复习/
+  #  - name: 正则表达式与bash
+  #    link:
+  #  - name: make和cmake编写
+  #    link:
+  #  - name: 文件IO与系统IO
+  #    link:
+  #  - name: lvgl学习
+  #    link:
+  #  - name: 进程间通信
+  #    link:
+  #  - name: 并发
+  #    link:
+  #  - name: 网络编程
+  #    link:
+  #  - name: 数据库
+  #    link:
+  #  - name: 
+  #    link:
  - name: 其他内容
    subnav:
    - name: 隐私政策
