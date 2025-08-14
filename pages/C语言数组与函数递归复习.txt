@@ -245,7 +245,7 @@ int main(){
 ## 二维数组
 
 ### 二维数组的定义与引用
-
+{% raw %}
 ```
 #include <stdio.h>
 int main(){
@@ -262,6 +262,7 @@ int main(){
 	return 0;
 }
 ```
+{% endraw %}
 
 #### 练习
 
