@@ -20,10 +20,12 @@ nav:
       link: /[09]【拓展】LVGL官方Demo全解析：从音乐播放器到高分辨率渲染/
     - name: LVGL模拟器搭建
       link: /[10]【实战】LVGL模拟器搭建指南：VSCode+MinGW构建+CMake自动化/
-    - name: VMware网络配置（暂空）
+    - name: VMware网络配置
       link: /[指南]VMware-简单网络配置指南/
     - name: Sqlite3配置（暂空）
       link: /[指南]Linux与开发板安装sqlite/
+    - name: 解决Qt应用界面过大问题：Windows下高DPI缩放的正确配置方法
+      link: /解决Qt应用界面过大问题：Windows下高DPI缩放的正确配置方法/
  - name: 内功修炼
    subnav:
    - name: C语言基础复习
