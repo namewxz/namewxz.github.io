@@ -24,7 +24,7 @@ nav:
       link: /[指南]VMware-简单网络配置指南/
     - name: Sqlite3配置（暂空）
       link: /[指南]Linux与开发板安装sqlite/
-    - name: 解决Qt应用界面过大问题：Windows下高DPI缩放的正确配置方法
+    - name: 解决Qt应用界面过大问题
       link: /解决Qt应用界面过大问题：Windows下高DPI缩放的正确配置方法/
  - name: 内功修炼
    subnav:
