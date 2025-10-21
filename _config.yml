@@ -4,8 +4,6 @@ description: 编程写作 / 迭代认知 / 执行计划
 copyright  : © 2018 - 2025 star_plain All Rights Reserved
 
 nav:
- - name: 中文
-   link: /
  - name: 环境配置
    subnav:
     - name: WSL替代虚拟机指南
@@ -56,4 +54,3 @@ nav:
    subnav:
    - name: 隐私政策
      link: /privacy-zh/
-     
