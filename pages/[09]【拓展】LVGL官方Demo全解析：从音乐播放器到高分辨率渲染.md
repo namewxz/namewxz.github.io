@@ -1,6 +1,6 @@
 ---
-description: WSL替代虚拟机指南：ARM开发板交叉编译与TFTP通信配置
-title: WSL替代虚拟机指南
+description: LVGL官方Demo全解析：从音乐播放器到高分辨率渲染
+title: LVGL官方Demo全解析
 permalink: /[09]【拓展】LVGL官方Demo全解析：从音乐播放器到高分辨率渲染/
 ---
 # 9.【拓展】lvgl官方demo演示

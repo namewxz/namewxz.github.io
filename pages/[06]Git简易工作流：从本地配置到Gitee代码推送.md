@@ -1,6 +1,6 @@
 ---
-description: WSL替代虚拟机指南：ARM开发板交叉编译与TFTP通信配置
-title: WSL替代虚拟机指南
+description: Git简易工作流：从本地配置到Gitee代码推送
+title: Git简易工作流：
 permalink: /[06]Git简易工作流：从本地配置到Gitee代码推送/
 ---
 # 6. git的简单使用

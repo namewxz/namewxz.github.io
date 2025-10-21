@@ -1,6 +1,6 @@
 ---
-description: WSL替代虚拟机指南：ARM开发板交叉编译与TFTP通信配置
-title: WSL替代虚拟机指南
+description: LVGL模拟器搭建指南：VSCode+MinGW构建+CMake自动化
+title: LVGL模拟器搭建
 permalink: /[10]【实战】LVGL模拟器搭建指南：VSCode+MinGW构建+CMake自动化/
 ---
 # 10.【实战】使用LVGL Simulator

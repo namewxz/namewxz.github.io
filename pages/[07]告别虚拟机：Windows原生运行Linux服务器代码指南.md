@@ -1,6 +1,6 @@
 ---
-description: WSL替代虚拟机指南：ARM开发板交叉编译与TFTP通信配置
-title: WSL替代虚拟机指南
+description: 告别虚拟机：Windows原生运行Linux服务器代码指南
+title: 嵌入式通信开发
 permalink: /[07]告别虚拟机：Windows原生运行Linux服务器代码指南/
 ---
 # 7.【实战】利用win作服务器主机与开发板通信

@@ -1,6 +1,6 @@
 ---
-description: WSL替代虚拟机指南：ARM开发板交叉编译与TFTP通信配置
-title: WSL替代虚拟机指南
+description: LVGL 最新(9.3)移植指南：嵌入式Linux帧缓冲环境配置与开发板部署
+title: LVGL 移植指南
 permalink: /[08]【实战】LVGL 最新(9.3)移植指南：嵌入式Linux帧缓冲环境配置与开发板部署/
 ---
 # 8.【实战】从零开始移植lvgl
