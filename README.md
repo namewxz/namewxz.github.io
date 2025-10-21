@@ -2,63 +2,14 @@
 
 计算机科学与技术专业，嵌入式开发初学者，热爱编程，喜欢分享，擅长团队协作，职能涉及设计、研发、架构和管理。目前学习中，主要进行c
 <a href="javascript:void(showOrHideEl('#简介+p+ul'))" class="read-more">核心技术经历和技术栈</a>
-
-* 暂空
-* .....
-
-## 社交网络
-
-所有文章会随着信息的积累和认知的改变，而不断地修订（增删改）。
-
-* 技术分享
-  * [知乎专栏（又在写代码）](https://zhuanlan.zhihu.com/p/52864752)
-  * [csdn博客（同步技术文章）](https://scottcgi.blog.csdn.net)
-* 认知系统
-  * [闪念与认知（知乎专栏频繁迭代）](https://zhuanlan.zhihu.com/p/52957523)  
-    ——用闪念拼图，构建认知宇宙（类似漫威宇宙）
-  * [微信公众号（同步知乎专栏但只发稳定版）](https://mp.weixin.qq.com/s/QBLCEVxAbsTgxdfiW5MmdA)：搜索“闪念与认知”或“SNyuRZ”    
-    ——深刻有趣，颠覆想象，力荐一看
-* 闪念记录
-  * [知乎想法](https://www.zhihu.com/people/scott.cgi/pins)
-  * [微博想法](https://weibo.com/scottcgi)
-  
-通常情况下，如果你并不真正关心你在某领域的表现时，你就会对别人在这些领域的高水平表现，感到好奇、高兴和赞赏。如果你很在意自己在某领域的表现时，你就会对别人在这些领域的高水平表现，感到不悦、不爽和心烦。——深受启发的：[原理解读](https://zhuanlan.zhihu.com/p/31392093)
-
-## 开源项目 
-
-* [[Mojoc]](https://github.com/scottcgi/Mojoc) 纯c自研游戏引擎（c99，opengles3.x，android/ios）。
-
-* [[MojoJS-Query]](https://github.com/scottcgi/MojoJS-Query) 使用js实现了css3标准选择器，及更多自定义选择器。
-
-* [[MojoJS-Animation]](https://github.com/scottcgi/MojoJS-Animation) 使用js实现了动画引擎，支持并发、队列、延迟和transform属性。
-
-* [[MojoJson]](https://github.com/scottcgi/MojoJson) 简单快速的json解析器，这是一个通用高效的解析算法，目前有C#、C的实现版本。
-
-* [[MojoTweenEase]](https://github.com/scottcgi/MojoTweenEase) 经过优化的标准缓动补间动画算法，并进行了扩展，有C#、C、JS的实现版本。
-
-* [[MojoUnity-Packages]](https://github.com/scottcgi/MojoUnity-Packages) 一系列Unity游戏引擎的功能插件（高效、简洁、实用），包括不限于：编辑器扩展、震动特效、图文混排、Tween动画、UI框架，等。
-
-* [[MojoTween]](https://github.com/scottcgi/MojoTween) 一个用于Unity平台的快速、强大、优雅、高效且易于使用的Tween动画引擎（付费但超值）。
-
-更多的开源项目和产品，以及unity3d的插件正在路上……
-
-## 游戏作品
-
-* [Super Little Red（Apk）](https://github.com/scottcgi/Mojoc/tree/master/Samples/Apk)  
-——测试Mojoc引擎可用性的游戏，有难度、考验操作、小清新。
-
-## 科幻作品
-
-* [我，斐星人（微信公众号）](https://mp.weixin.qq.com/s/dFgogBggP1P4MjA0Jkd3_w)  
-——短篇（3.3万字），强人工智能的诞生，时间穿越，因果链，多次反转。
-
-* [时间穿越之谜（微信公众号）](https://mp.weixin.qq.com/s/SYlBuFFjcN9ze6l4RAS-kg)  
-——长篇（18.6万字），这是解密时间的人生之旅，也是解密人生的时间之旅，亦是关于时间旅行和宇宙奥秘的终极构想。
-
-## 联系交流
-
-* [GitHub](https://github.com/scottcgi)主页上的邮箱。
-
-```
-过程就是奖励，旅途就是回报，行动即是答案。
-```
+1. 拥有扎实的**C****语言基础**，熟练运用**数组、指针、结构体**等关键特性进行程序开发。能够使用**VSCode和gcc编译工具链**高效编写代码，并注重代码的可读性和维护性。
+2. 熟悉**C++编程**语言，理解面向对象编程思想，熟练运用**类、继承、多态**等核心特性进行复杂系统的设计与开发。能够高效利用**STL（标准模板库）**中的容器与算法优化代码结构，并注重**异常处理与内存管理**，确保程序的健壮性和性能。
+3. 对**Linux操作系统**有深刻的理解，熟悉**APT软件包管理、make工程管理**等基础操作。
+4. 熟悉Linux下文件系统的组织结构，掌握**标准I/O与系统I/O**的区别与应用场景，能够熟练使用**open、read、write、lseek、** **close**等系统调用完成文件的**读写、定位与管理**操作。
+5. 在多进程和多线程环境下具有丰富的实践经验，能够有效利用**互斥锁、条件变量**等机制处理同步问题。掌握**SystemV和Posix信号量**的使用，确保并发环境下的程序稳定运行。
+6. 掌握基于**TCP/IP**协议的**Socket编程**技术，能够设计**客户端-服务器**模型，实现可靠的数据传输。
+7. 熟练使用SQL语句对**SQLite**和**MySQL**数据库执行**增删改查**操作。具备根据业务需求优化查询性能的能力，提高数据库访问效率。
+8. 有使用**STM32****系列MCU**的经验，熟悉**KEIL**等开发环境。掌握了**GPIO配置、定时器使用、PWM信号生成**等基本技能，能够独立完成嵌入式项目的开发。
+9. 熟练掌握**UART、I²C、SPI**等常用串行通信协议的原理与编程实现，能够在STM32等MCU平台上配置并驱动**各类传感器**模块。
+10. 熟练掌握**Qt框架**，具备使用**Qt** **Creato****r**进行跨平台GUI应用程序开发的能力。能够设计响应式用户界面，灵活运用**信号与槽**机制实现组件间的交互逻辑。能够通过**Qt网络模块**实现客户端-服务器通信功能，增强应用的互联性与扩展性。
+11. 英语：**CET-4**（大学英语四级），具备良好的读写能力，可进行日常交流与技术文档阅读
