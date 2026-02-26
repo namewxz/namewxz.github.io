@@ -50,6 +50,12 @@ nav:
   #    link:
   #  - name: 
   #    link:
+ - name: 项目实践
+   subnav:
+   - name: 2048（c|ARM|Linux|底层开发）
+     link: /privacy-zh/
+   - name: 2048（c|ARM|Linux|LVGL）
+     link: /privacy-zh/
  - name: 其他内容
    subnav:
    - name: 隐私政策
