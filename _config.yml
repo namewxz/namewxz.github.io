@@ -56,6 +56,12 @@ nav:
      link: /privacy-zh/
    - name: 2048（c|ARM|Linux|LVGL）
      link: /privacy-zh/
+ - name: 行动积炭
+   subnave:
+   - name: 本版块来源说明
+     link: /[鸡汤]本版块来源说明/
+   - name: 把行动设置成你的默认模式
+     link: /[鸡汤]把行动设置成你的默认模式/
  - name: 其他内容
    subnav:
    - name: 隐私政策
