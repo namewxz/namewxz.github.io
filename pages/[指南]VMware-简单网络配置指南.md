@@ -1,6 +1,6 @@
 ---
 description: \[指南\]VMware-简单网络配置指南
-title: \[指南\]VMware-简单网络配置指南
+title: VMware-简单网络配置指南
 permalink: /[指南]VMware-简单网络配置指南/
 ---
 # VMware配置
