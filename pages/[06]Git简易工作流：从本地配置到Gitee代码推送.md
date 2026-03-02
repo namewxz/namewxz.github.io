@@ -211,7 +211,7 @@ git push -f origin master
 
 【没有解决，最后的方法是，从GitHub下载源码压缩包手动整合到一起，然后再上传到gitee】
 
-试了一下把github的仓库移到gitee，发现有一些子模块还是引用的github链接，这怎么行呢，从gitee下载源码压缩包的时候下不了这些引用子模块，解决一下
+试了一下把github的仓库移到gitee，发现有一些子模块还是引用的github链接，这会导致一个问题：从gitee下载源码压缩包的时候下不了这些引用子模块
 
 ### 6.7.1 删除子模块配置
 
@@ -240,7 +240,7 @@ find . -type f -name ".git" | xargs rm -f
 在某些情况下，子模块目录中可能会保留自己的 .git 文件（其实是一个指向 .git/modules/xxx 的符号链接），例如：
 lvgl/.git
 FreeRTOS/.git
-这个文件的存在会让 Git 认为该目录仍然是一个子模块（即使你已经运行了 deinit）。所以这一行是为了彻底清理这些残留引用。
+这个文件的存在会让 Git 认为该目录仍然是一个子模块（即使已经运行了 deinit）。所以这一行是为了彻底清理这些残留引用。
 注意：这个命令只会删除 .git 文件，不会删除普通 .git 目录（如主仓库的 .git）。
 */
 ```
@@ -282,8 +282,24 @@ git push origin master                   # 推送合并后代码
 ```
 # 关闭自动换行符转换(在powershell中执行)
 git config --global core.autocrlf false
+#禁用了 Git 自动转换换行符的功能，让文件在 Windows 上保持原样（通常是 CRLF）
+#提交和检出，不再自动转换为 Linux 格式（LF）
+
 # 复制公钥(在wsl中执行)
 cp ~/.ssh/* /mnt/c/Users/<你的名字>/.ssh	
+
+#查看最近几次提交
+git log --oneline -3
+
+#发布release
+# 1. 创建一个名为 v1.0.0 的标签
+git tag -a v1.0.0 -m "Release version 1.0.0"
+# 2. 将标签推送到远程 GitHub 仓库
+git push origin v1.0.0
+# 3. 在GitHub网页在线上传可执行文件
+
+#获取在线最新代码
+git pull
 ```
 
 备选标题
