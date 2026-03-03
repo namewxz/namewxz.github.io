@@ -754,40 +754,64 @@
             }
             
             // 添加左右滑动切换题目功能
+            // 定义触摸事件相关变量
             let touchStartX = 0;
             let touchEndX = 0;
+            let isSwiping = false; // 防止连续滑动的标志
             
-            questionContainer.addEventListener('touchstart', (e) => {
+            // 定义触摸事件处理函数
+            function handleTouchStart(e) {
+                if (isSwiping) return; // 如果正在滑动，忽略新的触摸事件
                 touchStartX = e.changedTouches[0].screenX;
-            });
+            }
             
-            questionContainer.addEventListener('touchend', (e) => {
+            function handleTouchEnd(e) {
+                if (isSwiping) return; // 如果正在滑动，忽略新的触摸事件
                 touchEndX = e.changedTouches[0].screenX;
                 handleSwipe();
-            });
+            }
             
             function handleSwipe() {
                 const swipeThreshold = 50; // 滑动阈值
                 const diff = touchEndX - touchStartX;
                 
                 if (Math.abs(diff) > swipeThreshold) {
+                    isSwiping = true; // 开始滑动，设置标志
+                    
                     if (diff > 0) {
                         // 向右滑动，切换到上一题
                         if (currentQuestionIndex > 0) {
                             showQuestion(currentQuestionIndex - 1);
+                        } else {
+                            isSwiping = false; // 如果已经是第一题，取消标志
                         }
                     } else {
                         // 向左滑动，切换到下一题
                         if (currentQuestionIndex < originalQuestions.length - 1) {
                             showQuestion(currentQuestionIndex + 1);
+                        } else {
+                            isSwiping = false; // 如果已经是最后一题，取消标志
                         }
                     }
                 }
             }
+            
+            // 移除之前的触摸事件监听器（如果存在）
+            questionContainer.removeEventListener('touchstart', handleTouchStart);
+            questionContainer.removeEventListener('touchend', handleTouchEnd);
+            
+            // 添加触摸事件监听器
+            questionContainer.addEventListener('touchstart', handleTouchStart);
+            questionContainer.addEventListener('touchend', handleTouchEnd);
 
             // 更新按钮状态和题目导航
             updateButtonStates();
             renderQuestionNav();
+            
+            // 重置滑动标志，允许下一次滑动
+            setTimeout(() => {
+                isSwiping = false;
+            }, 300); // 300毫秒的延迟，确保题目切换完成
         }
 
         // 渲染选项
