@@ -1,15 +1,85 @@
 {
-  "name": "40套题库第一部分-错题本",
+  "name": "40套题库第一部分",
   "questions": [
+    {
+      "题干": "1. [C语言][指针]以下错误的语句是( )",
+      "类型": "单选",
+      "答案": "A",
+      "解析": "char str[7]= \"apple!\";才正确",
+      "选项A": "A. char str[5]= \"apple!\";",
+      "选项B": "B. char *str[] = {\"apple!\"};",
+      "选项C": "C. char str[ ]= \"apple!\";",
+      "选项D": "D. char *str = \"apple!\";"
+    },
+    {
+      "题干": "2. [C语言][链表]双向链表中，在节点p的前面插入新节点new的正确语句是( )",
+      "类型": "单选",
+      "答案": "B",
+      "解析": "相应的，如果在节点p的后面插入新节点的语句是：new->prev = p; new->next = p->next; p->next->prev = new; p->next = new;",
+      "选项A": "A. p->prev->next = new; p->prev = new; new->prev = p->prev; new->next = p;",
+      "选项B": "B. new->prev = p->prev; new->next = p; p->prev->next = new; p->prev = new;",
+      "选项C": "C. p->prev = new; new->next = p; p->prev->next = new;new->prev = p->prev;",
+      "选项D": "D. p->prev = new; new->next=p->prev; p->prev->next=new;new->prev = p->prev;"
+    },
+    {
+      "题干": "3. [Linux][文件IO]以下说法正确的是( )",
+      "类型": "单选",
+      "答案": "D",
+      "解析": "文件指针指向的是进程中FILE*的结构体，其中 __fileno 的数值对应进程中表示的文件描述符编号。文件描述符是文件句柄。只能调整文件光标 lseek或者 fseek来读取文件中的某个字节",
+      "选项A": "A. 文件指针指向了文件的第一个字节",
+      "选项B": "B. 文件描述符代表了文件的大小",
+      "选项C": "C. 可以通过调节文件指针的指向来读取文件中间的某个字节",
+      "选项D": "D. 文件描述符是系统IO访问文件的句柄"
+    },
+    {
+      "题干": "4. [Linux][并发]进程有三种状态( )",
+      "类型": "单选",
+      "答案": "C",
+      "解析": "等待态也可以写成阻塞态",
+      "选项A": "A. 准备态、执行态和退出态",
+      "选项B": "B. 精确态、模糊态和随机态",
+      "选项C": "C. 运行态、就绪态和等待态",
+      "选项D": "D. 手工态、自动态和自由态"
+    },
     {
       "题干": "5. [Linux][并发]不是进程和程序的区别( )",
       "类型": "单选",
       "答案": "B",
-      "解析": "",
+      "解析": "程序是静态的代码，不存在运行的概念。",
       "选项A": "A. 程序是一组有序的静态指令，进程是一次程序的执行过程",
       "选项B": "B. 程序只能在前台运行，而进程可以在前台或后台运行",
       "选项C": "C. 程序可以长期保存，进程是暂时的",
       "选项D": "D. 程序没有状态，而进程有状态"
+    },
+    {
+      "题干": "6. [C][数据库]下面哪个用于查询数据库中数据( )",
+      "类型": "单选",
+      "答案": "A",
+      "解析": "",
+      "选项A": "A. SELECT",
+      "选项B": "B. INSERT",
+      "选项C": "C. DELETE",
+      "选项D": "D. DROP"
+    },
+    {
+      "题干": "7. [C++][面向对象]以下代码是否完全正确，执行可能得到的结果是( )<div class=\"highlight\" style=\"background: #eeeedd\"><pre style=\"font-family: Consolas, Monaco, monospace; font-size: 14px; background: #f8f8f8; padding: 10px; border-radius: 4px;; line-height: 125%;\"><span></span><span style=\"color: #8B008B; font-weight: bold\">class</span><span style=\"color: #BBB\"> </span><span style=\"color: #008B45; font-weight: bold\">A</span>{<br><span style=\"color: #BBB\">   </span><span style=\"color: #00688B; font-weight: bold\">int</span><span style=\"color: #BBB\"> </span>i;<br>};<br><span style=\"color: #8B008B; font-weight: bold\">class</span><span style=\"color: #BBB\"> </span><span style=\"color: #008B45; font-weight: bold\">B</span>{<br><span style=\"color: #BBB\">   </span>A<span style=\"color: #BBB\"> </span>*p;<br><span style=\"color: #8B008B; font-weight: bold\">public</span>:<br><span style=\"color: #BBB\">   </span>B(){p=<span style=\"color: #8B008B; font-weight: bold\">new</span><span style=\"color: #BBB\"> </span>A;}<br><span style=\"color: #BBB\">   </span>~B(){<span style=\"color: #8B008B; font-weight: bold\">delete</span><span style=\"color: #BBB\"> </span>p;}<br>};<br><span style=\"color: #00688B; font-weight: bold\">void</span><span style=\"color: #BBB\"> </span><span style=\"color: #008B45\">sayHello</span>(B<span style=\"color: #BBB\"> </span>b){<br>}<br><span style=\"color: #00688B; font-weight: bold\">int</span><span style=\"color: #BBB\"> </span><span style=\"color: #008B45\">main</span>(){<br><span style=\"color: #BBB\">   </span>B<span style=\"color: #BBB\"> </span>b;<br><span style=\"color: #BBB\">   </span>sayHello(b);<br>}<br></pre></div>",
+      "类型": "单选",
+      "答案": "C",
+      "解析": "程序中的是默认拷贝构造函数，是浅拷贝。当sayHello函数调用时，形参发生了拷贝构造，导致函数结束时，堆空间已经被释放，所以当main函数结束，再次销毁 main::b 对象时，发生堆空间的重复释放，程序崩溃",
+      "选项A": "A. 程序正常运行",
+      "选项B": "B. 程序编译错误",
+      "选项C": "C. 程序奔溃",
+      "选项D": "D. 程序死循环"
+    },
+    {
+      "题干": "8. [C++][面向对象]面向对象程序设计中，对象=( )",
+      "类型": "单选",
+      "答案": "A",
+      "解析": "",
+      "选项A": "A. 对象+消息",
+      "选项B": "B. 数据结构+算法",
+      "选项C": "C. 函数+调用",
+      "选项D": "D. 输入+处理+输出"
     },
     {
       "题干": "9. [C++][面向对象]对于构造函数的特性，下面哪一种说法是错误的？( )",
@@ -35,21 +105,1357 @@
       "题干": "11. 现一脚本setVal.sh，权限为664，关于其说法不正确的是( )？",
       "类型": "单选",
       "答案": "A",
-      "解析": "6是110， 4是100， 分别是可读可写可执行权限。 当前用户没有可执行权限。A选项错误。sh是shell指令，当前用户有权限,是可以运行的。bash同样是shell指令。chmod +x +文件名 , 表示赋予该文件可执行权限， 然后再运行",
+      "解析": "6是110， 4是100， 分别是可读可写可执行权限。 当前用户没有可执行权限。A选项错误。sh是shell指令，当前用户有权限,是可以运行的。bash同样是shell指令。chmod +x +文件名 , 表示赋予该文件可执行权限， 然后再运行【关于BC：这里是通过调用解释器 sh/bash 来运行脚本。sh/bash 程序本身具有执行权限，它被启动后，只需要读取 (r) 脚本文件的内容即可执行。当前权限 664 包含读权限 (r)，所以可以成功执行。",
       "选项A": "A. 执行命令：./setVal.sh，可执行脚本",
       "选项B": "B. 执行命令：sh ./setVal.sh，可执行脚本",
       "选项C": "C. 执行命令：bash ./setVal.sh，可执行脚本",
       "选项D": "D. 执行命令：chmod +x ./setVal.sh && ./setVal.sh，可执行脚本"
     },
     {
+      "题干": "12. int a=1,b=2,c=3,d=4,e=5; printf(“%d\\n”,a>b?b:c>d?d:e);以上结果是( )",
+      "类型": "单选",
+      "答案": "A",
+      "解析": "首先是 a>b? b : (X) , a>b是逻辑假，执行条件语句(X) (X)是 c>d?d:e , c>d 也是逻辑假，所以结果为 e 那么printf打印的是 5 ",
+      "选项A": "A. 5",
+      "选项B": "B. 2",
+      "选项C": "C. 1",
+      "选项D": "D. 4"
+    },
+    {
+      "题干": "13. 有如下程序段<div class=\"highlight\" style=\"background: #eeeedd\"><pre style=\"font-family: Consolas, Monaco, monospace; font-size: 14px; background: #f8f8f8; padding: 10px; border-radius: 4px;; line-height: 125%;\"><span></span><span style=\"color: #1E889B\">#define CVTE_MIN(x, y) (x) &lt; (y) ? (x) : (y)</span><br><span style=\"color: #00688B; font-weight: bold\">int</span><span style=\"color: #BBB\"> </span><span style=\"color: #008B45\">main</span>(<span style=\"color: #00688B; font-weight: bold\">void</span>)<br>{<br><span style=\"color: #BBB\">   </span>printf(<span style=\"color: #CD5555\">&quot;MIN = % d&quot;</span>,<span style=\"color: #BBB\"> </span><span style=\"color: #B452CD\">1</span><span style=\"color: #BBB\"> </span>+<span style=\"color: #BBB\"> </span>CVTE_MIN(<span style=\"color: #B452CD\">1</span>,<span style=\"color: #BBB\"> </span><span style=\"color: #B452CD\">2</span>))<span style=\"color: #BBB\"> </span><span style=\"color: #8B008B; font-weight: bold\">return</span><span style=\"color: #BBB\"> </span><span style=\"color: #B452CD\">0</span>;<br>}<br></pre></div>输出结果是多少：（ ）",
+      "类型": "单选",
+      "答案": "B",
+      "解析": "这道题无论如何判断都是2，但如果a和b是2、3就会结果不同",
+      "选项A": "A. 1",
+      "选项B": "B. 2",
+      "选项C": "C. 3",
+      "选项D": "D. 4"
+    },
+    {
+      "题干": "14. 进程间通信，效率最高的是？（ ）",
+      "类型": "单选",
+      "答案": "C",
+      "解析": "",
+      "选项A": "A. 管道",
+      "选项B": "B. 套接字",
+      "选项C": "C. 共享内存",
+      "选项D": "D. 信号量"
+    },
+    {
+      "题干": "15. linux用来卸载一个内核模块命令是哪个？（ ）",
+      "类型": "单选",
+      "答案": "A",
+      "解析": "安装内核模块  insmod 查看当前安装的内核模块  lsmod 卸载内核模块  rmmod ",
+      "选项A": "A. rmmod",
+      "选项B": "B. unmod",
+      "选项C": "C. delmod",
+      "选项D": "D. modprobe"
+    },
+    {
       "题干": "16. 关于UART、I2C、SPI、USB说法正确的是（ ）",
-      "类型": "多选",
+      "类型": "单选",
       "答案": "AD",
-      "解析": "UART即通用异步收发器，可用于全双工串行异步通信 串行外设接口总线(SPI)最早由Motorola首先提出的全双工三线同步串行外围接口 I2C总线是由Philips公司开发的一种简单、双向二线制同步串行总线 USB，是英文Universal Serial Bus（通用串行总线）的缩写",
+      "解析": "UART即通用异步收发器，可用于全双工串行异步通信 串行外设接口总线(SPI)最早由Motorola首先提出的全双工三线同步串行外围接口 I2C总线是由Philips公司开发的一种简单、双向二线制同步串行总线 USB，是英文Universal Serial Bus（通用串行总线）的缩写 ",
       "选项A": "A. UART、SPI是全双工通信总线",
       "选项B": "B. 都是同步通信方式",
       "选项C": "C. I2C、USB是半双工通信总线",
       "选项D": "D. 都是串行数据总线"
+    },
+    {
+      "题干": "17. 在vim编辑器命令模式下，使用什么命令来删除当前行？（ ）",
+      "类型": "单选",
+      "答案": "A",
+      "解析": "",
+      "选项A": "A. dd",
+      "选项B": "B. yy",
+      "选项C": "C. pp",
+      "选项D": "D. cc"
+    },
+    {
+      "题干": "18. 关于NOR flash与NAND flash,说法正确的是（ ）",
+      "类型": "单选",
+      "答案": "D",
+      "解析": "flash闪存是非易失存储器，可以对称为块的存储器单元块进行擦写和再编程。任何flash器件的写入操作只能在空或已擦除的单元内进行，所以大多数情况下，在进行写入操作之前必须先执行擦除。NAND器件执行擦除 操作是十分简单的，而NOR则要求在进行擦除前 先要将目标块内所有的位都写为0。● NOR的读速度比NAND稍快一些。● NAND的写入速度比NOR快很多。● NAND的擦除速度远比NOR快。 ● NAND的擦除单元更小，相应的擦除电路更加简单。 ● NAND的实际应用方式要比NOR复杂的多。 ● NOR可以直接使用，并在上面直接运行代码，而NAND需要I/O接口，因此使用时需要驱动。",
+      "选项A": "A. NAND的擦除单元更大，相应擦除电路更多",
+      "选项B": "B. 所有写入操作需要先进行擦除操作",
+      "选项C": "C. NOR的读速度比NAND的慢一些",
+      "选项D": "D. NAND的写入速度比NOR快很多"
+    },
+    {
+      "题干": "19. <div class=\"highlight\" style=\"background: #eeeedd\"><pre style=\"font-family: Consolas, Monaco, monospace; font-size: 14px; background: #f8f8f8; padding: 10px; border-radius: 4px;; line-height: 125%;\"><span></span><span style=\"color: #00688B; font-weight: bold\">int</span><span style=\"color: #BBB\"> </span><span style=\"color: #008B45\">func</span>(<span style=\"color: #00688B; font-weight: bold\">int</span><span style=\"color: #BBB\"> </span>a){<br><span style=\"color: #BBB\">   </span><span style=\"color: #00688B; font-weight: bold\">int</span><span style=\"color: #BBB\"> </span>u16TempID;<br><span style=\"color: #BBB\">   </span>Switch(a)<br><span style=\"color: #BBB\">   </span>{<br><span style=\"color: #BBB\">   </span><span style=\"color: #8B008B; font-weight: bold\">case</span><span style=\"color: #BBB\"> </span><span style=\"color: #B452CD\">1</span>:<span style=\"color: #BBB\">   </span>u16TempID<span style=\"color: #BBB\"> </span>=<span style=\"color: #BBB\"> </span><span style=\"color: #B452CD\">3</span>;<br><span style=\"color: #BBB\">   </span><span style=\"color: #8B008B; font-weight: bold\">case</span><span style=\"color: #BBB\"> </span><span style=\"color: #B452CD\">2</span>:<span style=\"color: #BBB\">   </span>u16TempID<span style=\"color: #BBB\"> </span>=<span style=\"color: #BBB\"> </span><span style=\"color: #B452CD\">2</span>;<br><span style=\"color: #BBB\">   </span><span style=\"color: #8B008B; font-weight: bold\">case</span><span style=\"color: #BBB\"> </span><span style=\"color: #B452CD\">3</span>:<span style=\"color: #BBB\">   </span>u16TempID<span style=\"color: #BBB\"> </span>=<span style=\"color: #BBB\"> </span><span style=\"color: #B452CD\">1</span>;<br><span style=\"color: #BBB\">   </span>Default:<span style=\"color: #BBB\">  </span>u16TempID<span style=\"color: #BBB\"> </span>=<span style=\"color: #BBB\"> </span><span style=\"color: #B452CD\">0</span>;<br><span style=\"color: #BBB\">   </span>}<br><span style=\"color: #BBB\">   </span><span style=\"color: #8B008B; font-weight: bold\">return</span><span style=\"color: #BBB\"> </span>u16TempID;<br>}<br>func(<span style=\"color: #B452CD\">2</span>)<span style=\"color: #BBB\"> </span>+<span style=\"color: #BBB\"> </span>func(<span style=\"color: #B452CD\">3</span>)<br></pre></div>的结果是？（ ）",
+      "类型": "单选",
+      "答案": "B",
+      "解析": "Switch语句没有break，会一直往下运行 func(2)+func(3) ----  func(2) 返回的是 0 ，  func(3) 返回的也是0 所以结果为0 ",
+      "选项A": "A. 1",
+      "选项B": "B. 0",
+      "选项C": "C. 5",
+      "选项D": "D. 3"
+    },
+    {
+      "题干": "20. 下面程序输出结果为：（ ）<div class=\"highlight\" style=\"background: #eeeedd\"><pre style=\"font-family: Consolas, Monaco, monospace; font-size: 14px; background: #f8f8f8; padding: 10px; border-radius: 4px;; line-height: 125%;\"><span></span><span style=\"color: #00688B; font-weight: bold\">int</span><span style=\"color: #BBB\"> </span><span style=\"color: #008B45\">foo</span>(<span style=\"color: #00688B; font-weight: bold\">int</span><span style=\"color: #BBB\"> </span>x,<span style=\"color: #BBB\"> </span><span style=\"color: #00688B; font-weight: bold\">int</span><span style=\"color: #BBB\"> </span>y)<br>{<br><span style=\"color: #BBB\">   </span><span style=\"color: #8B008B; font-weight: bold\">if</span><span style=\"color: #BBB\"> </span>(x<span style=\"color: #BBB\"> </span>&lt;=<span style=\"color: #BBB\"> </span><span style=\"color: #B452CD\">0</span><span style=\"color: #BBB\"> </span>||<span style=\"color: #BBB\"> </span>y<span style=\"color: #BBB\"> </span>&lt;=<span style=\"color: #BBB\"> </span><span style=\"color: #B452CD\">0</span>)<br><span style=\"color: #BBB\">      </span><span style=\"color: #8B008B; font-weight: bold\">return</span><span style=\"color: #BBB\"> </span><span style=\"color: #B452CD\">0</span>;<br><span style=\"color: #BBB\">   </span><span style=\"color: #8B008B; font-weight: bold\">return</span><span style=\"color: #BBB\"> </span><span style=\"color: #B452CD\">3</span><span style=\"color: #BBB\"> </span>+<span style=\"color: #BBB\"> </span>foo(x<span style=\"color: #BBB\"> </span>-<span style=\"color: #BBB\"> </span><span style=\"color: #B452CD\">1</span>,<span style=\"color: #BBB\"> </span>y<span style=\"color: #BBB\"> </span>/<span style=\"color: #BBB\"> </span><span style=\"color: #B452CD\">2</span>);<br>}<br>printf(<span style=\"color: #CD5555\">&quot;%d\\n&quot;</span>,<span style=\"color: #BBB\"> </span>foo(<span style=\"color: #B452CD\">3</span>,<span style=\"color: #BBB\"> </span><span style=\"color: #B452CD\">5</span>));<br></pre></div>",
+      "类型": "单选",
+      "答案": "B",
+      "解析": "foo(3,5) ------ 3 + foo(2,2) ------ 3+ 3+foo(1,1) ----- 3+3 +3+foo(0,0); 结果为9 ",
+      "选项A": "A. 3",
+      "选项B": "B. 9",
+      "选项C": "C. 27",
+      "选项D": "D. 81"
+    },
+    {
+      "题干": "21. 想在vector容器中预分配空间使用说明函数？（ ）",
+      "类型": "单选",
+      "答案": "A",
+      "解析": "",
+      "选项A": "A. reserve",
+      "选项B": "B. begin",
+      "选项C": "C. resize",
+      "选项D": "D. rend"
+    },
+    {
+      "题干": "22. 以下不是Linux文件系统的为：（ ）",
+      "类型": "单选",
+      "答案": "D",
+      "解析": "FAT32是windows或者 STM32移植文件系统时的，现在64位windows基本上不用FAT32了，是NTFS",
+      "选项A": "A. ext2",
+      "选项B": "B. ext3",
+      "选项C": "C. ext4",
+      "选项D": "D. fat32"
+    },
+    {
+      "题干": "23. 在32位系统中，有如下结构体：（ ）<div class=\"highlight\" style=\"background: #eeeedd\"><pre style=\"font-family: Consolas, Monaco, monospace; font-size: 14px; background: #f8f8f8; padding: 10px; border-radius: 4px;; line-height: 125%;\"><span></span><span style=\"color: #8B008B; font-weight: bold\">struct</span><span style=\"color: #BBB\"> </span><span style=\"color: #008B45; font-weight: bold\">CVTE</span><br>{<br><span style=\"color: #BBB\">   </span><span style=\"color: #00688B; font-weight: bold\">char</span><span style=\"color: #BBB\"> </span>c<span style=\"color: #BBB\"> </span>:<span style=\"color: #BBB\"> </span><span style=\"color: #B452CD\">4</span>;<br><span style=\"color: #BBB\">   </span><span style=\"color: #00688B; font-weight: bold\">char</span><span style=\"color: #BBB\"> </span>v<span style=\"color: #BBB\"> </span>:<span style=\"color: #BBB\"> </span><span style=\"color: #B452CD\">4</span>;<br><span style=\"color: #BBB\">   </span><span style=\"color: #00688B; font-weight: bold\">unsigned</span><span style=\"color: #BBB\"> </span><span style=\"color: #00688B; font-weight: bold\">short</span><span style=\"color: #BBB\"> </span>T<span style=\"color: #BBB\"> </span>:<span style=\"color: #BBB\"> </span><span style=\"color: #B452CD\">8</span>;<br><span style=\"color: #BBB\">   </span><span style=\"color: #00688B; font-weight: bold\">unsigned</span><span style=\"color: #BBB\"> </span><span style=\"color: #00688B; font-weight: bold\">long</span><span style=\"color: #BBB\"> </span>E;<br>}<br></pre></div>sizeof(CVTE)的值是多少？",
+      "类型": "单选",
+      "答案": "D",
+      "解析": "char c : 4  表示位域，即定义了一个char类型的变量，但是其中的 0~3 bit被命名为变量c,它只占4个bit。如果下一个变量与前一个位域表示的变量是同类型，且可以在一个变量中分配空间，则不会获取新的内存，而是在原变量基础上获取。 例如体重的 char v:4 也是占4个bit，但是前面一个变量c是4bit， char类型还剩下4bit空间足够包含变量v，那么变量v 就会和变量c 公用同一个char类型的内存。 即 c表示 0~3bit， v表示4~7bit。 一共占1个字节。 那么结构体中就是 1个char,1个unsigned short, 1个unsigned long ,在32位系统下，占8字节。 ",
+      "选项A": "A. 10",
+      "选项B": "B. 12",
+      "选项C": "C. 6",
+      "选项D": "D. 8"
+    },
+    {
+      "题干": "24. 以下哪些不是C++ STL提供的智能指针？（ ）",
+      "类型": "单选",
+      "答案": "A",
+      "解析": "",
+      "选项A": "A. sudo_ptr",
+      "选项B": "B. week_ptr",
+      "选项C": "C. shared_ptr",
+      "选项D": "D. unique_ptr"
+    },
+    {
+      "题干": "25. 关于虚函数，以下说法正确的是？（ ）",
+      "类型": "单选",
+      "答案": "D",
+      "解析": "虚指针指向虚表，虚表的内容是可以被改变的。 虚表内容的生成时机是运行时。 虚指针的生成是在编译时。指向的虚表（此时只有基类虚函数）也是在编译期。 只有当派生类重写虚函数的时候，虚函数表中会增加派生类重写后的虚函数，这个是运行时被添加进去。 ",
+      "选项A": "A. 虚指针指向对象起始位置",
+      "选项B": "B. 虚函数表的内容不能被修改",
+      "选项C": "C. 虚指针的生成时机是编译期",
+      "选项D": "D. 虚函数表的构建时机是编译期"
+    },
+    {
+      "题干": "26. [C][数组]下面程序中b的值是（）。int a[15] = { 1,2,3,4,5,6,7,8,9,10,11,12,13,14,15 };int *p = &a[5];int b = p[7];",
+      "类型": "单选",
+      "答案": "B",
+      "解析": "指针p指向的是 &a[5] ,那么 p[0]就是 a[5] 。所以 b 是p[7] ,相当于 a[12] ,结果是 13",
+      "选项A": "A. 14",
+      "选项B": "B. 13",
+      "选项C": "C. 11",
+      "选项D": "D. 12"
+    },
+    {
+      "题干": "27. [C][数组]下列代码中数组data最终的数据是哪个（）。<div class=\"highlight\" style=\"background: #eeeedd\"><pre style=\"font-family: Consolas, Monaco, monospace; font-size: 14px; background: #f8f8f8; padding: 10px; border-radius: 4px;; line-height: 125%;\"><span></span><span style=\"color: #1E889B\">#define MAX_DATA_SIZE</span><br><span style=\"color: #BBB\">   </span>(<span style=\"color: #B452CD\">10</span>)<span style=\"color: #BBB\"> </span><span style=\"color: #00688B; font-weight: bold\">int</span><span style=\"color: #BBB\"> </span>main()<br><span style=\"color: #BBB\">   </span>{<br><span style=\"color: #BBB\">      </span><span style=\"color: #00688B; font-weight: bold\">unsigned</span><span style=\"color: #BBB\"> </span><span style=\"color: #00688B; font-weight: bold\">int</span><span style=\"color: #BBB\"> </span>i<span style=\"color: #BBB\"> </span>=<span style=\"color: #BBB\"> </span><span style=\"color: #B452CD\">0</span>;<br><span style=\"color: #BBB\">      </span><span style=\"color: #00688B; font-weight: bold\">unsigned</span><span style=\"color: #BBB\"> </span><span style=\"color: #00688B; font-weight: bold\">char</span><span style=\"color: #BBB\"> </span>data[MAX_DATA_SIZE]<span style=\"color: #BBB\"> </span>=<span style=\"color: #BBB\"> </span>{<span style=\"color: #B452CD\">1</span>,<span style=\"color: #BBB\"> </span><span style=\"color: #B452CD\">2</span>,<span style=\"color: #BBB\"> </span><span style=\"color: #B452CD\">3</span>,<span style=\"color: #BBB\"> </span><span style=\"color: #B452CD\">4</span>,<span style=\"color: #BBB\"> </span><span style=\"color: #B452CD\">5</span>,<span style=\"color: #BBB\"> </span><span style=\"color: #B452CD\">6</span>,<span style=\"color: #BBB\"> </span><span style=\"color: #B452CD\">7</span>,<span style=\"color: #BBB\"> </span><span style=\"color: #B452CD\">8</span>,<span style=\"color: #BBB\"> </span><span style=\"color: #B452CD\">9</span>,<span style=\"color: #BBB\"> </span><span style=\"color: #B452CD\">0</span>};<br><span style=\"color: #BBB\">      </span>memcpy(&amp;data[<span style=\"color: #B452CD\">2</span>],<span style=\"color: #BBB\"> </span>data,<span style=\"color: #BBB\"> </span>MAX_DATA_SIZE<span style=\"color: #BBB\"> </span>/<span style=\"color: #BBB\"> </span><span style=\"color: #B452CD\">2</span>);<br><span style=\"color: #BBB\">      </span><span style=\"color: #8B008B; font-weight: bold\">return</span><span style=\"color: #BBB\"> </span><span style=\"color: #B452CD\">0</span>;<br><span style=\"color: #BBB\">   </span>}<br></pre></div>",
+      "类型": "单选",
+      "答案": "C",
+      "解析": "相当于 memcpy( &data[2] , data, 10/2) 拷贝5个字节的内存 1,2,1,2,3,4,5,8,9,0 ",
+      "选项A": "A. 1234567890",
+      "选项B": "B. 1212121890",
+      "选项C": "C. 1212345890",
+      "选项D": "D. 其他结果都不对"
+    },
+    {
+      "题干": "28. [Linux][进程间通信]关于互斥锁的如下表述错误的是（）。",
+      "类型": "单选",
+      "答案": "C",
+      "解析": "互斥锁的解锁必须是有先后顺序的，否则容易发生异常。",
+      "选项A": "A. 互斥锁的加锁和解锁必须由同一线程分别对应使用",
+      "选项B": "B. 互斥锁只能为0/1",
+      "选项C": "C. 互斥锁的解锁过程不需要关心顺序，只需要成对使用即可",
+      "选项D": "D. 互斥锁用于线程的互斥"
+    },
+    {
+      "题干": "29. [Linux][Shell命令]Linux在某文件中查找某字符串通常如下哪个指令？",
+      "类型": "单选",
+      "答案": "B",
+      "解析": "grep “struct sockaddr_in”  /usr/include  -R",
+      "选项A": "A. find",
+      "选项B": "B. grep",
+      "选项C": "C. cat",
+      "选项D": "D. 其他都不对"
+    },
+    {
+      "题干": "30. [Linux][进程] 多个进程按照顺序逐一来访问某个资源，这种制约关系称之为（）。",
+      "类型": "单选",
+      "答案": "D",
+      "解析": "同步:  多个线程或者进程并发运行，其中某些进程或者线程继续运行下去需要等待其他任务释放或者发送某种资源，这种情况被称为同步。互斥:  多个线程或者进程并发运行，同一时刻，有且只允许有1个线程或者进程访问共享资源。",
+      "选项A": "A. 调度",
+      "选项B": "B. 协同",
+      "选项C": "C. 互斥",
+      "选项D": "D. 同步"
+    },
+    {
+      "题干": "31. [Linux][进程]支持多道程序的操作系统在运行过程中，不断地选择新进程运行来实现CPU的共享，但其中（）不是引起操作系统选择新进程的直接原因。",
+      "类型": "单选",
+      "答案": "C",
+      "解析": "A选项是进程进入阻塞态，当前进程阻塞，必须选择新进程 B选项是进程时间片运行完，当前进程进入就绪态。CPU会选择动态优先级最高或者就绪态等待时间最长的进程。D选项是当前进程出错退出，一定切换新进程。",
+      "选项A": "A. 运行进程要等待某一事件发生",
+      "选项B": "B. 运行进程的时间片用完",
+      "选项C": "C. 有新进程进入就绪状态",
+      "选项D": "D. 运行进程出错"
+    },
+    {
+      "题干": "32. [Linux][进程]（）是操作系统分配资源的基本单位。",
+      "类型": "单选",
+      "答案": "A",
+      "解析": "在操作系统中，进程是资源分配的基本单位，而线程是cpu调度的基本单位",
+      "选项A": "A. 进程",
+      "选项B": "B. 程序",
+      "选项C": "C. 线程",
+      "选项D": "D. 指令"
+    },
+    {
+      "题干": "33. [C][运算符与表达式]执行下述的main函数后，输出结果是多少？<div class=\"highlight\" style=\"background: #eeeedd\"><pre style=\"font-family: Consolas, Monaco, monospace; font-size: 14px; background: #f8f8f8; padding: 10px; border-radius: 4px;; line-height: 125%;\"><span></span><span style=\"color: #00688B; font-weight: bold\">int</span><span style=\"color: #BBB\"> </span><span style=\"color: #008B45\">main</span>()<br>{<br><span style=\"color: #BBB\">   </span><span style=\"color: #00688B; font-weight: bold\">int</span><span style=\"color: #BBB\"> </span>i<span style=\"color: #BBB\"> </span>=<span style=\"color: #BBB\"> </span><span style=\"color: #B452CD\">10</span>;<br><span style=\"color: #BBB\">   </span><span style=\"color: #8B008B; font-weight: bold\">switch</span><span style=\"color: #BBB\"> </span>(i)<br><span style=\"color: #BBB\">   </span>{<br><span style=\"color: #BBB\">   </span><span style=\"color: #8B008B; font-weight: bold\">case</span><span style=\"color: #BBB\"> </span><span style=\"color: #B452CD\">9</span>:<span style=\"color: #BBB\">     </span>i++;<br><span style=\"color: #BBB\">   </span><span style=\"color: #8B008B; font-weight: bold\">case</span><span style=\"color: #BBB\"> </span><span style=\"color: #B452CD\">10</span>:<span style=\"color: #BBB\">    </span>i++;<br><span style=\"color: #BBB\">   </span><span style=\"color: #8B008B; font-weight: bold\">case</span><span style=\"color: #BBB\"> </span><span style=\"color: #B452CD\">11</span>:<span style=\"color: #BBB\">    </span>i++;<br><span style=\"color: #BBB\">   </span><span style=\"color: #8B008B; font-weight: bold\">default</span>:<span style=\"color: #BBB\">    </span>i++;<br><span style=\"color: #BBB\">   </span>}<br><span style=\"color: #BBB\">   </span>printf(<span style=\"color: #CD5555\">&quot;result= %dn&quot;</span>,<span style=\"color: #BBB\"> </span>i);<br><span style=\"color: #BBB\">   </span><span style=\"color: #8B008B; font-weight: bold\">return</span><span style=\"color: #BBB\"> </span><span style=\"color: #B452CD\">0</span>;<br>}<br></pre></div>",
+      "类型": "单选",
+      "答案": "B",
+      "解析": "switch中没有break语句，进入后从case 10 一直往下运行",
+      "选项A": "A. 12",
+      "选项B": "B. 13",
+      "选项C": "C. 11",
+      "选项D": "D. 14"
+    },
+    {
+      "题干": "34. [C][数组]以下能对二维数组a进行完整初始化的语句是（）。",
+      "类型": "单选",
+      "答案": "B",
+      "解析": "",
+      "选项A": "A. int a[2][3]=((0,1,2),(3,4,5));",
+      "选项B": "B. int a[2][3]={{0,1,2},{3,4,5}};",
+      "选项C": "C. int a[2][3]={{0,1},{2,3},{4,5}};",
+      "选项D": "D. int a[2][3]={0,1,2,3,4};"
+    },
+    {
+      "题干": "35. [C][程序组成]下面程序的输出值，正确的是（）。<div class=\"highlight\" style=\"background: #eeeedd\"><pre style=\"font-family: Consolas, Monaco, monospace; font-size: 14px; background: #f8f8f8; padding: 10px; border-radius: 4px;; line-height: 125%;\"><span></span><span style=\"color: #1E889B\">#define CALC(x, y) x * y + x</span><br><span style=\"color: #00688B; font-weight: bold\">int</span><span style=\"color: #BBB\"> </span><span style=\"color: #008B45\">main</span>()<br>{<br><span style=\"color: #BBB\">   </span><span style=\"color: #00688B; font-weight: bold\">int</span><span style=\"color: #BBB\"> </span>a<span style=\"color: #BBB\"> </span>=<span style=\"color: #BBB\"> </span>CALC(<span style=\"color: #B452CD\">2</span><span style=\"color: #BBB\"> </span>*<span style=\"color: #BBB\"> </span><span style=\"color: #B452CD\">3</span>,<span style=\"color: #BBB\"> </span><span style=\"color: #B452CD\">3</span><span style=\"color: #BBB\"> </span>+<span style=\"color: #BBB\"> </span><span style=\"color: #B452CD\">2</span>);<br><span style=\"color: #BBB\">   </span>printf(<span style=\"color: #CD5555\">&quot;result= %d\\n&quot;</span>,<span style=\"color: #BBB\"> </span>a);<br><span style=\"color: #BBB\">   </span><span style=\"color: #8B008B; font-weight: bold\">return</span><span style=\"color: #BBB\"> </span><span style=\"color: #B452CD\">0</span>;<br>}<br></pre></div>",
+      "类型": "单选",
+      "答案": "A",
+      "解析": "",
+      "选项A": "A. 26",
+      "选项B": "B. 30",
+      "选项C": "C. 24",
+      "选项D": "D. 36"
+    },
+    {
+      "题干": "36. [C][指针]假如test指针的值为0x12345678，则表达式test_p[1]的指针地址值是多少？char test[8] = { 0x01,0x02, 0x03, 0x04, 0x05, 0x06, 0x07, 0x08 };int *test_p = (int*)test;",
+      "类型": "单选",
+      "答案": "B",
+      "解析": "test指针 指向 &test[0] ,也就是数组首元素地址。 首元素地址是 0x12345678。int *test_p = (int*)test , test_p 是int类型的指针。test_p[1] 会偏移4个字节，来到 &test[4] 的位置。所以 test_p[1]的指针地址值是  0x12345678+4 = 0x1234567C。",
+      "选项A": "A. 0x12345678",
+      "选项B": "B. 0x1234567C",
+      "选项C": "C. 0x12345679",
+      "选项D": "D. 0x1234567A"
+    },
+    {
+      "题干": "37. [C][运算符与表达式]在C语言程序中，下面程序运行后，n的值是多少？<br> int n = 0;int f = 17;n = 4 * f % 3 + 1;",
+      "类型": "单选",
+      "答案": "A",
+      "解析": "4 * f % 3 + 1 ----- 4*17%3 + 1 --- 68%3 +1--- 2+1 = 3",
+      "选项A": "A. 3",
+      "选项B": "B. 9",
+      "选项C": "C. 2",
+      "选项D": "D. 0"
+    },
+    {
+      "题干": "38. [C][运算符与表达式]下面那个操作可以将flag的bit[2]（假定bit[31...0]对应flag的32位）置0？",
+      "类型": "单选",
+      "答案": "C",
+      "解析": "",
+      "选项A": "A. flag|=4",
+      "选项B": "B. flag^=4",
+      "选项C": "C. flag&=~4",
+      "选项D": "D. flag|=~4"
+    },
+    {
+      "题干": "39. [C][数组]以下对字符数组test赋值方式错误的是（）。",
+      "类型": "单选",
+      "答案": "B",
+      "解析": "数组名在单独使用时表示首元素的地址",
+      "选项A": "A. char test[10]; strcpy(test,\"test\");",
+      "选项B": "B. char test[10]; test=\"test\";",
+      "选项C": "C. char test[]={'t','e','s','t'};",
+      "选项D": "D. char test[10]={'t','e','s','t'};"
+    },
+    {
+      "题干": "40. [STM32][中断系统]可用于中断下半段处理的处理机制有（）。",
+      "类型": "单选",
+      "答案": "ABC",
+      "解析": "",
+      "选项A": "A. tasklet",
+      "选项B": "B. 工作队列",
+      "选项C": "C. 软中断",
+      "选项D": "D. 双向链表"
+    },
+    {
+      "题干": "41. 下面说明不正确的是（ ）",
+      "类型": "单选",
+      "答案": "D",
+      "解析": "数组a在使用时只表示&a[0], 拷贝字符串进去需要用strcpy或者memcpy",
+      "选项A": "A. char a[10] = “china”;",
+      "选项B": "B. char a[10],*p=a,p=”china”;",
+      "选项C": "C. char*a;a=”china”",
+      "选项D": "D. char a[10],*p; p=a=”china”;"
+    },
+    {
+      "题干": "42. 变量 void (*s[5])(int) 表示意思为 （ ）",
+      "类型": "单选",
+      "答案": "B",
+      "解析": "",
+      "选项A": "A. 函数指针",
+      "选项B": "B. 函数指针数组",
+      "选项C": "C. 数组指针函数",
+      "选项D": "D. 语法错误"
+    },
+    {
+      "题干": "43. 下面的程序中，int32_t 表示一个有符号的32位整数，程序的入口是main函数，问最终res的结果是多少? [C语言][整数的表示]<div class=\"highlight\" style=\"background: #eeeedd\"><pre style=\"font-family: Consolas, Monaco, monospace; font-size: 14px; background: #f8f8f8; padding: 10px; border-radius: 4px;; line-height: 125%;\"><span></span><span style=\"color: #1E889B\">#include</span><span style=\"color: #BBB\"> </span><span style=\"color: #228B22\">&lt;stdint.h&gt;</span><br><span style=\"color: #1E889B\">#include</span><span style=\"color: #BBB\"> </span><span style=\"color: #228B22\">&lt;stdio.h&gt;</span><br><span style=\"color: #00688B; font-weight: bold\">int32_t</span><span style=\"color: #BBB\"> </span><span style=\"color: #008B45\">f</span>(<span style=\"color: #00688B; font-weight: bold\">int32_t</span><span style=\"color: #BBB\"> </span>a,<span style=\"color: #BBB\"> </span><span style=\"color: #00688B; font-weight: bold\">int32_t</span><span style=\"color: #BBB\"> </span>b){<br><span style=\"color: #BBB\">   </span><span style=\"color: #8B008B; font-weight: bold\">while</span><span style=\"color: #BBB\"> </span>(a<span style=\"color: #BBB\"> </span>+<span style=\"color: #BBB\"> </span>b<span style=\"color: #BBB\"> </span>&gt;<span style=\"color: #BBB\"> </span><span style=\"color: #B452CD\">0</span>){<br><span style=\"color: #BBB\">      </span>a<span style=\"color: #BBB\"> </span>=<span style=\"color: #BBB\"> </span>a<span style=\"color: #BBB\"> </span>+<span style=\"color: #BBB\"> </span><span style=\"color: #B452CD\">1</span>;<br><span style=\"color: #BBB\">      </span>b<span style=\"color: #BBB\"> </span>=<span style=\"color: #BBB\"> </span>b<span style=\"color: #BBB\"> </span>-<span style=\"color: #BBB\"> </span><span style=\"color: #B452CD\">1</span>;<br><span style=\"color: #BBB\">   </span>}<br><span style=\"color: #BBB\">   </span><span style=\"color: #8B008B; font-weight: bold\">return</span><span style=\"color: #BBB\"> </span>a<span style=\"color: #BBB\"> </span>+<span style=\"color: #BBB\"> </span>b;<br>}<br><span style=\"color: #00688B; font-weight: bold\">int32_t</span><span style=\"color: #BBB\"> </span><span style=\"color: #008B45\">main</span>(){<br><span style=\"color: #BBB\">   </span><span style=\"color: #00688B; font-weight: bold\">int32_t</span><span style=\"color: #BBB\"> </span>res<span style=\"color: #BBB\"> </span>=<span style=\"color: #BBB\"> </span>f(<span style=\"color: #B452CD\">1</span>,<span style=\"color: #BBB\"> </span><span style=\"color: #B452CD\">0</span>);<br><span style=\"color: #BBB\">   </span><span style=\"color: #8B008B; font-weight: bold\">return</span><span style=\"color: #BBB\"> </span><span style=\"color: #B452CD\">0</span>;<br>}<br></pre></div>",
+      "类型": "单选",
+      "答案": "B",
+      "解析": "C语言整数溢出陷阱题-20260301150811.md",
+      "选项A": "A. 0",
+      "选项B": "B. 1",
+      "选项C": "C. -1",
+      "选项D": "D. 程序会死循环"
+    },
+    {
+      "题干": "44. 单向链表不满足的描述是（ ）",
+      "类型": "单选",
+      "答案": "AD",
+      "解析": "",
+      "选项A": "A. 可以随机访问任意结点",
+      "选项B": "B. 删除头节点的时间复杂性是O（1）",
+      "选项C": "C. 空间开销与链表长度成正比",
+      "选项D": "D. 插入数据的时间开销比数组更大"
+    },
+    {
+      "题干": "45. 关于双链表的搜索给定元素操作的说法正确的是?( )",
+      "类型": "单选",
+      "答案": "C",
+      "解析": "",
+      "选项A": "A. 从两个方向搜索双链表，比从一个方向搜索双链表的速度慢",
+      "选项B": "B. 从两个方向搜索双链表，比从一个方向搜索双链表的方差要小",
+      "选项C": "C. 从两个方向搜索双链表，比从一个方向搜索双链表速度要快",
+      "选项D": "D. 以上说法都不正确"
+    },
+    {
+      "题干": "46. 设指针变量p指向双向链表中结点A，指针变量s指向被插入的结点X，则在结点A的后面插入结点X的操作序列为（ ）。",
+      "类型": "单选",
+      "答案": "D",
+      "解析": "",
+      "选项A": "A. p->right=s； s->left=p； p->right->left=s； s->right=p->right；",
+      "选项B": "B. s->left=p；s->right=p->right；p->right=s； p->right->left=s；",
+      "选项C": "C. p->right=s； p->right->left=s； s->left=p； s->right=p->right；",
+      "选项D": "D. s->left=p；s->right=p->right；p->right->left=s； p->right=s；"
+    },
+    {
+      "题干": "47. 关于以下数据寻址方式说法错误的是？ ( )",
+      "类型": "单选",
+      "答案": "A",
+      "解析": "MOV指令，左边是源操作数，右边是目标操作数",
+      "选项A": "A. MOV指令，右边是目标操作数，左边是源操作数",
+      "选项B": "B. MOV指令把源操作数复制目标操作数，不取走源操作数数据",
+      "选项C": "C. 立即寻址是将源立即数字节或字传送到目标寄存器或存储单元",
+      "选项D": "D. 源操作数和目标操作数通常称为操作数"
+    },
+    {
+      "题干": "48. I²C (Inter-Integrated Circuit)协议说法错误的是？( )",
+      "类型": "单选",
+      "答案": "C",
+      "解析": "终止信号: SCL为高电平。SDA由低到高跳变。",
+      "选项A": "A. 其总线通过上拉电阻与电源相连接",
+      "选项B": "B. 开始信号：SCL为高电平，SDA的电平由高跳到低表示开始信号。",
+      "选项C": "C. 终止信号：SDA为高电平，SCL的电平由低跳到高表示终止信号。",
+      "选项D": "D. 数据传输开始时，需要发送一个起始信号；数据传输结束后，需要发送一个终止信号"
+    },
+    {
+      "题干": "49. 关于SPI协议和I2C协议对比，以下说法错误的是？( )",
+      "类型": "单选",
+      "答案": "A",
+      "解析": "I2C是半双工",
+      "选项A": "A. I2C是全双工，SPI是全双工。",
+      "选项B": "B. I2C支持多主多从模式，而SPI只能有一个主机",
+      "选项C": "C. I2C有应答响应机制，数据可靠性更高，SPI没有应答机制",
+      "选项D": "D. I2C通过器件地址来选择从机，从机数量的增加不会导致GPIO的增加，而SPI通过CS选择从机，每增加一个从机就要多占用一个GPIOI2C是半双工。"
+    },
+    {
+      "题干": "50. 对于RS485通信的特点，下列描述错误的是（ ）",
+      "类型": "单选",
+      "答案": "B",
+      "解析": "RS485是远距离传输总线，通过双绞线的差分信号传输。<br>RS485总线上的驱动器与接收器取决于它的负载特性。<br>为了避免信号反射，RS485必须由终点，并且分支长度尽可能的短。",
+      "选项A": "A. 使用高数据速率时，只能使用较短线缆。使用低数据速率时，可以使用较长的线缆。",
+      "选项B": "B. 当线缆长度很长时数据传输线可以不需要有终点，但是分支长度尽可能的短。",
+      "选项C": "C. RS-485总线上的驱动器和接收器最大数量取决于它们的负载特性。",
+      "选项D": "D. RS-485能够进行远距离传输主要得益于使用差分信号进行传输，当有噪声干扰时仍可以使用线路上两者差值进行判断，使传输数据不受噪声干扰。"
+    },
+    {
+      "题干": "51. 针对Cortex-M3和Cortex-M4的PC描述不正确的是（ ）",
+      "类型": "单选",
+      "答案": "C",
+      "解析": "\"PC\"是指程序计数器（Program Counter），也叫指令计数器（Instruction Counter），是CPU中的一个寄存器，PC指向的地址一般是当前指令的下一条指令地址。所以选项C描述不正确。",
+      "选项A": "A. 因流水线的原因，PC指向的是预取指令",
+      "选项B": "B. 当采用三级流水线时，其PC指向的地址和执行的地址相差8",
+      "选项C": "C. PC永远指向当前执行的地址",
+      "选项D": "D. 当采用三级流水线时，其PC指向的地址和译码的地址相差4"
+    },
+    {
+      "题干": "52. 下列叙述哪些是对的? ( )",
+      "类型": "单选",
+      "答案": "CD",
+      "解析": "(栈就不需要搜索)<br>A选项中，链表的逻辑顺序与物理顺序不一定是一致的。因为堆空间是申请的。<br>B选项， 顺序存储与链式存储各有优劣。<br>C选项，链式存储中，都是不连续的",
+      "选项A": "A. 线性表的逻辑顺序与物理顺序总是一致的。",
+      "选项B": "B. 线性表的顺序存储表示优于链式存储表示。",
+      "选项C": "C. 线性表若采用链式存储表示时所有结点之间的存储单元地址可连续可不连续。",
+      "选项D": "D. 二维数组是每个元素都为线性表的线性表 .",
+      "选项E": "E. 每种数据结构都应具备三种基本运算：插入、删除和搜索。"
+    },
+    {
+      "题干": "53. 便于插入和删除的容器有哪些（ ）",
+      "类型": "单选",
+      "答案": "ACD",
+      "解析": "便于插入和删除的就是非连续内存。vector是动态数组。",
+      "选项A": "A. list",
+      "选项B": "B. vector",
+      "选项C": "C. map",
+      "选项D": "D. set"
+    },
+    {
+      "题干": "54. 某线性表中最常用的操作是在最后一个元素之后插入一个元素和删除第一个元素,则采用（ ）存储方式最节省运算时间。",
+      "类型": "单选",
+      "答案": "D",
+      "解析": "",
+      "选项A": "A. 单链表",
+      "选项B": "B. 仅有头指针的单循环链表",
+      "选项C": "C. 双链表",
+      "选项D": "D. 仅有尾指针的单循环链表"
+    },
+    {
+      "题干": "55. 二维数组X按行顺序存储，其中每个元素占1个存储单元。若X[4][4]的存储地址为0xf8b82140,X[9][9]的存储地址为0xf8b8221c,则X[7][7]的存储地址为( )。",
+      "类型": "单选",
+      "答案": "A",
+      "解析": "",
+      "选项A": "A. 0xf8b821c4",
+      "选项B": "B. 0xf8b821a6",
+      "选项C": "C. 0xf8b82198",
+      "选项D": "D. 0xf8b821c0"
+    },
+    {
+      "题干": "56. [C++][构造函数]以下关于构造方法的描述错误的是 。( )",
+      "类型": "单选",
+      "答案": "A",
+      "解析": "构造函数是没有返回值的",
+      "选项A": "A. 构造方法的返回类型只能是void型。",
+      "选项B": "B. 构造方法是类的一种特殊方法，它的方法名必须与类名相同。",
+      "选项C": "C. 构造方法的主要作用是完成对类的对象的初始化工作。",
+      "选项D": "D. 一个类可以定义多个构造方法。"
+    },
+    {
+      "题干": "57. [STM32][中断]如果有多个中断同时发生，系统将根据中断优先级响应优先级最高的中断请求。若要调整响应事件的中断次序，可以利用（ ）",
+      "类型": "单选",
+      "答案": "D",
+      "解析": "",
+      "选项A": "A. 中断禁止",
+      "选项B": "B. 中断嵌套",
+      "选项C": "C. 中断响应",
+      "选项D": "D. 中断屏蔽"
+    },
+    {
+      "题干": "58. [Linux][操作系统]UNIX操作系统是著名的（ ）",
+      "类型": "单选",
+      "答案": "B",
+      "解析": "",
+      "选项A": "A. 多道批处理系统",
+      "选项B": "B. 分时系统",
+      "选项C": "C. 实时系统",
+      "选项D": "D. 分布式系统。"
+    },
+    {
+      "题干": "59. [Linux][文件系统]索引式文件组织的一个主要优点是:（ ）",
+      "类型": "单选",
+      "答案": "A",
+      "解析": "索引式文件组织，是存储空间分成了”索引目录”和”文件存储空间”。 类似书本的目录和正文，查找内容时可以通过索引目录直接跳转到对应的正文。因为是索引式文件组织，所以linux下查看目录大小时，它与目录中文件的总体积是无关的。",
+      "选项A": "A. 不需要链接指针",
+      "选项B": "B. 能实现物理块的动态分配",
+      "选项C": "C. 用户存取方便",
+      "选项D": "D. 回收实现比较简单"
+    },
+    {
+      "题干": "60. [Linux][文件系统]下列描述不是文件系统功能的是（ ）。",
+      "类型": "单选",
+      "答案": "C",
+      "解析": "对驱动的调度是kernel内核的功能。",
+      "选项A": "A. 建立文件目录和维护",
+      "选项B": "B. 提供一组可供用户使用的文件操作",
+      "选项C": "C. 实现对磁盘的驱动调度",
+      "选项D": "D. 实现从逻辑文件到物理文件间的转换"
+    },
+    {
+      "题干": "61. [Linux][文件系统]在UNIX系统中，某文件的使用权限设置为754，则表示（ ）。",
+      "类型": "单选",
+      "答案": "A",
+      "解析": "754 ---> 111  101  100<br>文件主 可读，可写，可执行<br>同组用户 可读，不可写，可执行<br>其他用户  可读，不可写，不可执行<br>",
+      "选项A": "A. 文件主可读、写、执行",
+      "选项B": "B. 同组用户仅能读",
+      "选项C": "C. 其他用户可读、写、执行",
+      "选项D": "D. 同组用户仅能写"
+    },
+    {
+      "题干": "62. [C/C++][数据结构]设一个栈的输入序列为A，B,C，D则借助一个栈所得到的输出序列不可能是( )",
+      "类型": "单选",
+      "答案": "D",
+      "解析": "选项D:因为D第一个出来，说明ABC都进去了，那么下一个一定是C出。",
+      "选项A": "A. A、B、C、D",
+      "选项B": "B. D、C、B、A",
+      "选项C": "C. A、C、D、B",
+      "选项D": "D. D、A、B、C"
+    },
+    {
+      "题干": "63. [Linux][Shell命令]在 Linux系统中,显示当前正在运行的进程应该使用什么命令( )",
+      "类型": "单选",
+      "答案": "D",
+      "解析": "",
+      "选项A": "A. df",
+      "选项B": "B. du",
+      "选项C": "C. pd",
+      "选项D": "D. ps"
+    },
+    {
+      "题干": "64. [C][结构体/枚举]对枚举类型进行定义，不正确的是( )",
+      "类型": "单选",
+      "答案": "A",
+      "解析": "",
+      "选项A": "A. enum b{1，2，3};",
+      "选项B": "B. enum a{A，B, C};",
+      "选项C": "C. enum c {D=3，E，F};",
+      "选项D": "D. enum d {X=0，Y=5，Z=9} ;"
+    },
+    {
+      "题干": "65. [C][运算符与表达式]若有定义: int k,i=2，j=4;则表达式 k=(++i)*(j--)的值是( )",
+      "类型": "单选",
+      "答案": "B",
+      "解析": "前缀++, 先加后用，所以运算时 i=3<br>后缀--，先用后减，所以运算时 j=4",
+      "选项A": "A. 8",
+      "选项B": "B. 12",
+      "选项C": "C. 6",
+      "选项D": "D. 9"
+    },
+    {
+      "题干": "66. [C][运算符与表达式]若有定义:int a=1, b=2,c=3;则语句++a||++b&&++c;运行后b的值为( )",
+      "类型": "单选",
+      "答案": "C",
+      "解析": " X || Y 。若X为逻辑真，则Y不运行；若X为逻辑假，则Y运行<br>X && Y。 若X为逻辑假，则Y不运行； 若X为逻辑真，则Y运行。<br>因为 ++a 是逻辑真，所以 || 后面的 ++b 是不运行的，所以 b的值仍然为 2<br>",
+      "选项A": "A. 1",
+      "选项B": "B. 0",
+      "选项C": "C. 2",
+      "选项D": "D. 3"
+    },
+    {
+      "题干": "67. [C][数据类型]以下程序的运行结果是( )void main(){ int a=65;char c='A’;printf(\"%x，%d\" , a, c);}",
+      "类型": "单选",
+      "答案": "D",
+      "解析": "%x是十六进制打印，所以 十进制的65转十六进制是 0x41,%d是十进制打印， ‘A’对应的ASCII值为65",
+      "选项A": "A. 65,a",
+      "选项B": "B. 41,a",
+      "选项C": "C. 65,65",
+      "选项D": "D. 41,65"
+    },
+    {
+      "题干": "68. [C][运算符与表达式]若有定义:int i=7，j=8;则表达式i>=j||i<j的值为",
+      "类型": "单选",
+      "答案": "A",
+      "解析": "逻辑假为0， 逻辑真是非0。 但是直接用语句输出逻辑真的数值，一直输出 1。",
+      "选项A": "A. 1",
+      "选项B": "B. 变量i的值",
+      "选项C": "C. 0",
+      "选项D": "D. 变量j的值"
+    },
+    {
+      "题干": "69. [C][预处理命令]以下叙述中，正确的是( )",
+      "类型": "单选",
+      "答案": "B",
+      "解析": "",
+      "选项A": "A. “#define PRICE=30”定义了与30等价的符号常量PRICE",
+      "选项B": "B. 预编译处理命令行都必须以“#”开头",
+      "选项C": "C. 宏名只能包含大写字母和数字字符",
+      "选项D": "D. 在程序的一行上可以书写几个有效的宏定义"
+    },
+    {
+      "题干": "70. [C][预处理命令]下面程序的输出结果是( )<div class=\"highlight\" style=\"background: #eeeedd\"><pre style=\"font-family: Consolas, Monaco, monospace; font-size: 14px; background: #f8f8f8; padding: 10px; border-radius: 4px;; line-height: 125%;\"><span></span><span style=\"color: #1E889B\">#include</span><span style=\"color: #BBB\"> </span><span style=\"color: #228B22\">&lt;stdio.h&gt;</span><br><span style=\"color: #1E889B\">#define ONE 1</span><br><span style=\"color: #1E889B\">#define TWO ONE + 1</span><br><span style=\"color: #1E889B\">#define THREE TWO + 1</span><br><span style=\"color: #00688B; font-weight: bold\">void</span><span style=\"color: #BBB\"> </span><span style=\"color: #008B45\">main</span>(){<br><span style=\"color: #BBB\">   </span>printf(<span style=\"color: #CD5555\">&quot;%d\\n&quot;</span><span style=\"color: #A61717; background-color: #E3D2D2\">，</span>THREE<span style=\"color: #BBB\"> </span>-<span style=\"color: #BBB\"> </span>ONE);<br>}<br></pre></div>",
+      "类型": "单选",
+      "答案": "C",
+      "解析": "THREE-ONE = TWO+1 - ONE = ONE+1 +1 -ONE  = 2",
+      "选项A": "A. 产生错误",
+      "选项B": "B. 1",
+      "选项C": "C. 2",
+      "选项D": "D. 3"
+    },
+    {
+      "题干": "71. [C][排序]在排序方法中，关键码比较次数与记录的初始排列无关的是 （ ）",
+      "类型": "单选",
+      "答案": "D",
+      "解析": "选择排序是一定会全部比较一遍。希尔排序，归并排序和插入排序，若是本身就是按顺序排列好的，那么只会相邻的比较依一次。",
+      "选项A": "A. shell排序",
+      "选项B": "B. 归并排序",
+      "选项C": "C. 直接插入排序",
+      "选项D": "D. 选择排序"
+    },
+    {
+      "题干": "72. [C][内存分配] 代码 （ ）Void func(){Static int val;...}中，变量val的内存地址位于：",
+      "类型": "单选",
+      "答案": "B",
+      "解析": "没有被初始化的静态局部变量和全局变量，放在未初始化数据段；已经被初始化的静态局部变量和全局变量，放在初始化完成的数据段",
+      "选项A": "A. 已初始化数据段",
+      "选项B": "B. 未初始化数据段",
+      "选项C": "C. 堆",
+      "选项D": "D. 栈"
+    },
+    {
+      "题干": "73. [C][指针]有语句:int a[] ={ 1,2,3,4,5};int *p = a;那么下面那个表达式的值为3 ( )",
+      "类型": "单选",
+      "答案": "A",
+      "解析": "初始时指针 p 指向数组首元素（值1）。选项A中，p+=2 使 p 指向值为3的元素（a[2]），随后的 *(p++) 是后缀自增，意为“先取当前指针指向的值（即3）作为表达式结果，再将指针后移”，因此结果为3；而选项B和C因指针先移动或起始偏移量大，取到的值均为4，选项D则是对指向的内容进行自增（3变4），结果也是4。故选 A。",
+      "选项A": "A. p+=2,*(p++)",
+      "选项B": "B. p+=2,*++p",
+      "选项C": "C. p+=3,*p++",
+      "选项D": "D. p+=2,++*p"
+    },
+    {
+      "题干": "74. [C][控制结构]若int i；则以下循环语句句的循环执行次数是( ）for (i=2;i=0;) printf(“%d”,i--);",
+      "类型": "单选",
+      "答案": "B",
+      "解析": "for (i=2;i==0;) printf(“%d”,i--); 是循环0次。并且for (i=2;i=0;) printf(“%d”,i--); 也是循环0次。因为判断逻辑真假的语句是 i=0 , 这个语句是成功执行，结果为0， for循环语句的第二条是逻辑判断，所以这里判断的是 0 ， 视为逻辑假。相当于 for( i=2 ; 0 ; )  ",
+      "选项A": "A. 无限次",
+      "选项B": "B. 0次",
+      "选项C": "C. 1次",
+      "选项D": "D. 2次"
+    },
+    {
+      "题干": "75. [C][数组]以下定义定义语句中错误的是( ）",
+      "类型": "单选",
+      "答案": "D",
+      "解析": "必须先定义完成n=5 以后，才能再定义 a[n]",
+      "选项A": "A. int a[]={1,2};",
+      "选项B": "B. int a[][3]= {1,2,3,4,5};",
+      "选项C": "C. char s[10] = “test”",
+      "选项D": "D. int n = 5，a[n];"
+    },
+    {
+      "题干": "76. [C][数组]己定义char a[8];int i;为了给a数组赋值,以下正确的语句是( ）",
+      "类型": "单选",
+      "答案": "D",
+      "解析": "数组只有在定义的时候才能一次性初始化所有数值，在定义后，只能逐个元素的赋值",
+      "选项A": "A. a[8] = “Longsys”;",
+      "选项B": "B. a= “Longsys”;",
+      "选项C": "C. a[]= “Longsys”;",
+      "选项D": "D. for(i=O; i<7; i++) a[i]=getchar();",
+      "选项E": "E. ,以上都正确"
+    },
+    {
+      "题干": "77. [C][指针]在C吾言中,定义一个函数指针( )",
+      "类型": "单选",
+      "答案": "B",
+      "解析": "",
+      "选项A": "A. int *p(void);",
+      "选项B": "B. int (*p）（void);",
+      "选项C": "C. int（*）p（void）",
+      "选项D": "D. 以上错误"
+    },
+    {
+      "题干": "78. [C][程序组成] 一个C语言程序总是从( )",
+      "类型": "单选",
+      "答案": "B",
+      "解析": "",
+      "选项A": "A. 主过程开始执行",
+      "选项B": "B. 主函数开始执行",
+      "选项C": "C. 子程序开始执行",
+      "选项D": "D. 主程序开始执行"
+    },
+    {
+      "题干": "79. [Linux][进程]在Linux系统上父子进程继承了哪些资源 （ ）",
+      "类型": "单选",
+      "答案": "BCD",
+      "解析": "不会被子进程继承的有:进程号， 父进程号 ，文件锁",
+      "选项A": "A. PID",
+      "选项B": "B. 共享内存",
+      "选项C": "C. 信号掩码",
+      "选项D": "D. 已打开的文件描述符"
+    },
+    {
+      "题干": "80. [C++][类与对象]面向对象中以下说法正确的是 （ ）",
+      "类型": "单选",
+      "答案": "AD",
+      "解析": "",
+      "选项A": "A. 多态可以通过虚函数表实现",
+      "选项B": "B. 构造函数可以实现为虚函数",
+      "选项C": "C. 析构函数不能是虚函数",
+      "选项D": "D. 抽象类中至少包含一个纯虚函数"
+    },
+    {
+      "题干": "81. [C][数据类型] 64位CPU计算机上，一个结构体中有char,short,int三种类型的字段，不指定对齐策略的情况下，结构体的大小（byte）可能是下面那些值？ ( )",
+      "类型": "单选",
+      "答案": "ACD",
+      "解析": "题目中没有说明这三种类型各有多少个变量",
+      "选项A": "A. 12",
+      "选项B": "B. 7",
+      "选项C": "C. 8",
+      "选项D": "D. 16"
+    },
+    {
+      "题干": "82. [C][数据类型]在IEEE754浮点数标准中，一个浮点数包含 ( )",
+      "类型": "单选",
+      "答案": "ABC",
+      "解析": "",
+      "选项A": "A. 符号位",
+      "选项B": "B. 分数值（尾数）",
+      "选项C": "C. 指数偏移值（指数）",
+      "选项D": "D. 有效数位值"
+    },
+    {
+      "题干": "83. [Linux][网络编程] TCP在什么情况下会进入CLOSE_WAIT状态 ( )",
+      "类型": "单选",
+      "答案": "ABD",
+      "解析": "",
+      "选项A": "A. 连接异常时",
+      "选项B": "B. 被动关闭时",
+      "选项C": "C. 连接关闭后",
+      "选项D": "D. 主动关闭时"
+    },
+    {
+      "题干": "84. [Linux][网络编程] 关于UDP的说法正确的是 ( )",
+      "类型": "单选",
+      "答案": "A",
+      "解析": "",
+      "选项A": "A. UDP是一种无连接的数据报协议",
+      "选项B": "B. UDP提供可靠的数据报传输服务",
+      "选项C": "C. 如果应用对可靠性要求较高,可以使用UDP协议",
+      "选项D": "D. UDP用户数据报的首部中包含源IP地址和目的IP地址"
+    },
+    {
+      "题干": "85. [C][数据类型] .int a = 0x12345678，在小端序CPU上，其内存中的内容从低地址到高地址内容分别为（ ）",
+      "类型": "单选",
+      "答案": "B",
+      "解析": "小端序是低位保存在低字节。 所以选B。例如 123 ， 1是百位，2是十位，3是个位。",
+      "选项A": "A. 0x12、0x34、0x56、0x78",
+      "选项B": "B. 0x78、0x56、0x34、0x12",
+      "选项C": "C. 0x78、0x56、0x12、0x34",
+      "选项D": "D. 0x56、0x780、x12、0x34"
+    },
+    {
+      "题干": "86. [C++][函数重载]覆盖与重载的关系是( )",
+      "类型": "单选",
+      "答案": "A",
+      "解析": "",
+      "选项A": "A. 覆盖只有发生在父类与子类之间，而重载可以发生在同一个类中",
+      "选项B": "B. 覆盖方法可以不同名，而重载方法必须同名",
+      "选项C": "C. final修饰的方法可以被覆盖,但不能被重载",
+      "选项D": "D. 覆盖与重载是同一回事"
+    },
+    {
+      "题干": "87. [C++][运算符重载]若要对 Data类中重载的加法运算符成员函数进行声明，下列选项中正确的是( )",
+      "类型": "单选",
+      "答案": "A",
+      "解析": "",
+      "选项A": "A. Data operator+（Data da)",
+      "选项B": "B. Data & operator+ (Data & da)",
+      "选项C": "C. Data +operator(Data da)",
+      "选项D": "D. operator+ ( Data da1，Data da2)"
+    },
+    {
+      "题干": "88. [C][指针]以下程序的打印结果是( )<div class=\"highlight\" style=\"background: #eeeedd\"><pre style=\"font-family: Consolas, Monaco, monospace; font-size: 14px; background: #f8f8f8; padding: 10px; border-radius: 4px;; line-height: 125%;\"><span></span><span style=\"color: #1E889B\">#include</span><span style=\"color: #BBB\"> </span><span style=\"color: #228B22\">&lt;stdio.h&gt;</span><br><span style=\"color: #00688B; font-weight: bold\">void</span><span style=\"color: #BBB\"> </span><span style=\"color: #008B45\">swap_int</span>(<span style=\"color: #00688B; font-weight: bold\">int</span><span style=\"color: #BBB\"> </span>a,<span style=\"color: #BBB\"> </span><span style=\"color: #00688B; font-weight: bold\">int</span><span style=\"color: #BBB\"> </span>b)<br>{<br><span style=\"color: #BBB\">   </span><span style=\"color: #00688B; font-weight: bold\">int</span><span style=\"color: #BBB\"> </span>temp<span style=\"color: #BBB\"> </span>=<span style=\"color: #BBB\"> </span>a;<br><span style=\"color: #BBB\">   </span>a<span style=\"color: #BBB\"> </span>=<span style=\"color: #BBB\"> </span>b;<br><span style=\"color: #BBB\">   </span>b<span style=\"color: #BBB\"> </span>=<span style=\"color: #BBB\"> </span>temp;<br>}<br><span style=\"color: #00688B; font-weight: bold\">void</span><span style=\"color: #BBB\"> </span><span style=\"color: #008B45\">swap_str</span>(<span style=\"color: #00688B; font-weight: bold\">char</span><span style=\"color: #BBB\"> </span>*a,<span style=\"color: #BBB\"> </span><span style=\"color: #00688B; font-weight: bold\">char</span><span style=\"color: #BBB\"> </span>*b)<br>{<br><span style=\"color: #BBB\">   </span><span style=\"color: #00688B; font-weight: bold\">char</span><span style=\"color: #BBB\"> </span>*temp<span style=\"color: #BBB\"> </span>=<span style=\"color: #BBB\"> </span>a;<br><span style=\"color: #BBB\">   </span>a<span style=\"color: #BBB\"> </span>=<span style=\"color: #BBB\"> </span>b;<br><span style=\"color: #BBB\">   </span>b<span style=\"color: #BBB\"> </span>=<span style=\"color: #BBB\"> </span>temp;<br>}<br><span style=\"color: #00688B; font-weight: bold\">void</span><span style=\"color: #BBB\"> </span><span style=\"color: #008B45\">main</span>(<span style=\"color: #00688B; font-weight: bold\">void</span>)<br>{<br><span style=\"color: #BBB\">   </span><span style=\"color: #00688B; font-weight: bold\">int</span><span style=\"color: #BBB\"> </span>a<span style=\"color: #BBB\"> </span>=<span style=\"color: #BBB\"> </span><span style=\"color: #B452CD\">10</span>;<br><span style=\"color: #BBB\">   </span><span style=\"color: #00688B; font-weight: bold\">int</span><span style=\"color: #BBB\"> </span>b<span style=\"color: #BBB\"> </span>=<span style=\"color: #BBB\"> </span><span style=\"color: #B452CD\">5</span>;<br><span style=\"color: #BBB\">   </span><span style=\"color: #00688B; font-weight: bold\">char</span><span style=\"color: #BBB\"> </span>*str_a<span style=\"color: #BBB\"> </span>=<span style=\"color: #BBB\"> </span><span style=\"color: #CD5555\">&quot;hello world&quot;</span>;<br><span style=\"color: #BBB\">   </span><span style=\"color: #00688B; font-weight: bold\">char</span><span style=\"color: #BBB\"> </span>*str_b<span style=\"color: #BBB\"> </span>=<span style=\"color: #BBB\"> </span><span style=\"color: #CD5555\">&quot;world hello&quot;</span>;<br><span style=\"color: #BBB\">   </span>swap_int(a,<span style=\"color: #BBB\"> </span>b);<br><span style=\"color: #BBB\">   </span>swap_str(str_a,<span style=\"color: #BBB\"> </span>str_b);<br><br><span style=\"color: #BBB\">   </span>printf(<span style=\"color: #CD5555\">&quot;%d %d %s %s\\n&quot;</span>,<span style=\"color: #BBB\"> </span>a,<span style=\"color: #BBB\"> </span>b,<span style=\"color: #BBB\"> </span>str_a,<span style=\"color: #BBB\"> </span>str_b);<br>}<br></pre></div>",
+      "类型": "单选",
+      "答案": "B",
+      "解析": "swap_int 是值传递，不会修饰实参。swap_str 是地址传递，但是在函数中没有解引用使用，也没有修饰实参",
+      "选项A": "A. 10 5 world hello hello world",
+      "选项B": "B. 10 5 hello world world hello",
+      "选项C": "C. 5 10 hello world world hello",
+      "选项D": "D. 5 10 world hello hello world"
+    },
+    {
+      "题干": "89. [C++][继承]c++类体系中。不能被派生类承的有( )",
+      "类型": "单选",
+      "答案": "B",
+      "解析": "",
+      "选项A": "A. 常成员函数",
+      "选项B": "B. 构造函数",
+      "选项C": "C. 虚函致",
+      "选项D": "D. 静态成员函数"
+    },
+    {
+      "题干": "90. [C++][静态成员]静态成员的数不能说明为( )",
+      "类型": "单选",
+      "答案": "C",
+      "解析": "静态成员函数是在该类的所有对象公有，在对象被编译成功就创建了内存空间。虚函数在发生动态多态时，要在运行时才能确定调用的对象。",
+      "选项A": "A. 整型函数",
+      "选项B": "B. 浮点函数",
+      "选项C": "C. 虚函数",
+      "选项D": "D. 字符型函数"
+    },
+    {
+      "题干": "91. [C++][多态]所谓多态性是指( )",
+      "类型": "单选",
+      "答案": "B",
+      "解析": "",
+      "选项A": "A. 不同的对象调用不同名称的函数",
+      "选项B": "B. 不同的对象调用相同名称的函数",
+      "选项C": "C. 一个对象调用不同名称的函数",
+      "选项D": "D. 一个对象调用不同名称的对象"
+    },
+    {
+      "题干": "92. [C++][内联]一个函数功能不太复杂，但要求被频繁调用,则应把它定义为( )",
+      "类型": "单选",
+      "答案": "A",
+      "解析": "内联函数在编译时展开，在代码中形成嵌套，减少函数跳转的时间。--->内联函数是不能声明为虚函数的",
+      "选项A": "A. 内联函数",
+      "选项B": "B. 重载函数",
+      "选项C": "C. 递归函数",
+      "选项D": "D. 嵌套函数"
+    },
+    {
+      "题干": "93. [C++][析构函数]下面对析构函数的正确描述是 ( )",
+      "类型": "单选",
+      "答案": "C",
+      "解析": "",
+      "选项A": "A. 系统不能提供默认的析构函数",
+      "选项B": "B. 析构函数必须由用户定义",
+      "选项C": "C. 析构函数没有参数",
+      "选项D": "D. 析构函数可以设置默认参数"
+    },
+    {
+      "题干": "94. [C][循环]以下程序段的输出结果是( ) <div class=\"highlight\" style=\"background: #eeeedd\"><pre style=\"font-family: Consolas, Monaco, monospace; font-size: 14px; background: #f8f8f8; padding: 10px; border-radius: 4px;; line-height: 125%;\"><span></span><span style=\"color: #00688B; font-weight: bold\">int</span><span style=\"color: #BBB\"> </span>i,<span style=\"color: #BBB\"> </span>j,<span style=\"color: #BBB\"> </span>m<span style=\"color: #BBB\"> </span>=<span style=\"color: #BBB\"> </span><span style=\"color: #B452CD\">0</span>;<br><span style=\"color: #8B008B; font-weight: bold\">for</span><span style=\"color: #BBB\"> </span>(i<span style=\"color: #BBB\"> </span>=<span style=\"color: #BBB\"> </span><span style=\"color: #B452CD\">1</span>;<span style=\"color: #BBB\"> </span>i<span style=\"color: #BBB\"> </span>&lt;=<span style=\"color: #BBB\"> </span><span style=\"color: #B452CD\">15</span>;<span style=\"color: #BBB\"> </span>i<span style=\"color: #BBB\"> </span>+=<span style=\"color: #BBB\"> </span><span style=\"color: #B452CD\">4</span>)<span style=\"color: #BBB\">    </span><span style=\"color: #228B22\">// i=1,5,9,13</span><br><span style=\"color: #BBB\">   </span><span style=\"color: #8B008B; font-weight: bold\">for</span><span style=\"color: #BBB\"> </span>(j<span style=\"color: #BBB\"> </span>=<span style=\"color: #BBB\"> </span><span style=\"color: #B452CD\">3</span>;<span style=\"color: #BBB\"> </span>j<span style=\"color: #BBB\"> </span>&lt;=<span style=\"color: #BBB\"> </span><span style=\"color: #B452CD\">19</span>;<span style=\"color: #BBB\"> </span>j<span style=\"color: #BBB\"> </span>+=<span style=\"color: #BBB\"> </span><span style=\"color: #B452CD\">4</span>)<span style=\"color: #BBB\"> </span><span style=\"color: #228B22\">// j=3,7,11,15,19</span><br><span style=\"color: #BBB\">      </span>m++;<br>printf(<span style=\"color: #CD5555\">&quot;%d\\n&quot;</span>,<span style=\"color: #BBB\"> </span>m);<br></pre></div>",
+      "类型": "单选",
+      "答案": "C",
+      "解析": "",
+      "选项A": "A. 15",
+      "选项B": "B. 12",
+      "选项C": "C. 20",
+      "选项D": "D. 25"
+    },
+    {
+      "题干": "95. [C++][类和对象]关于类和对象不正确的说法是( )",
+      "类型": "单选",
+      "答案": "C",
+      "解析": "",
+      "选项A": "A. 类是一种类型，它封装了数据和操作",
+      "选项B": "B. 对象是类的实例",
+      "选项C": "C. 一个类的对象只有一个",
+      "选项D": "D. 一个对象必属于某个类"
+    },
+    {
+      "题干": "96. [C][循环]以下不是无限循环语句为( )",
+      "类型": "单选",
+      "答案": "C",
+      "解析": "",
+      "选项A": "A. for(;;x++=i);",
+      "选项B": "B. while(1){x++;}",
+      "选项C": "C. for(y=O,x=1;x>++y;x=x++) i=x;",
+      "选项D": "D. for(i=10;;i--) sum+=i;"
+    },
+    {
+      "题干": "97. [C++][友元]一个类的友元函数可以访问该类的( )",
+      "类型": "单选",
+      "答案": "D",
+      "解析": "",
+      "选项A": "A. 私有成员",
+      "选项B": "B. 公有成员",
+      "选项C": "C. 保护成员",
+      "选项D": "D. 私有成员、公有成员和保护成员"
+    },
+    {
+      "题干": "98. [C++][继承]下列关于公有继承产生的派生类描述中,不正确的是( )",
+      "类型": "单选",
+      "答案": "C",
+      "解析": "",
+      "选项A": "A. 派生类除了包含它自己的成员外，还包含基类的成员",
+      "选项B": "B. 派生类中继承的基类的成员的访问权限在派生类中保持不变",
+      "选项C": "C. 派生类最多只有一个基类",
+      "选项D": "D. 派生类可以作为另一个派生类的基类"
+    },
+    {
+      "题干": "99. [C][循环]以下程序段的输出结果是( )<div class=\"highlight\" style=\"background: #eeeedd\"><pre style=\"font-family: Consolas, Monaco, monospace; font-size: 14px; background: #f8f8f8; padding: 10px; border-radius: 4px;; line-height: 125%;\"><span></span><span style=\"color: #00688B; font-weight: bold\">int</span><span style=\"color: #BBB\"> </span>k,<span style=\"color: #BBB\"> </span>j,<span style=\"color: #BBB\"> </span>s;<br><span style=\"color: #8B008B; font-weight: bold\">for</span><span style=\"color: #BBB\"> </span>(k<span style=\"color: #BBB\"> </span>=<span style=\"color: #BBB\"> </span><span style=\"color: #B452CD\">2</span>;<span style=\"color: #BBB\"> </span>k<span style=\"color: #BBB\"> </span>&lt;<span style=\"color: #BBB\"> </span><span style=\"color: #B452CD\">6</span>;<span style=\"color: #BBB\"> </span>k++,<span style=\"color: #BBB\"> </span>k++)<br>{<br><span style=\"color: #BBB\">   </span>s<span style=\"color: #BBB\"> </span>=<span style=\"color: #BBB\"> </span><span style=\"color: #B452CD\">1</span>;<br><span style=\"color: #BBB\">   </span><span style=\"color: #8B008B; font-weight: bold\">for</span><span style=\"color: #BBB\"> </span>(j<span style=\"color: #BBB\"> </span>=<span style=\"color: #BBB\"> </span>k;<span style=\"color: #BBB\"> </span>j<span style=\"color: #BBB\"> </span>&lt;<span style=\"color: #BBB\"> </span><span style=\"color: #B452CD\">6</span>;<span style=\"color: #BBB\"> </span>j++)<br><span style=\"color: #BBB\">      </span>s<span style=\"color: #BBB\"> </span>+=<span style=\"color: #BBB\"> </span>j;<br>}<br>printf(<span style=\"color: #CD5555\">&quot;%d\\n&quot;</span>,<span style=\"color: #BBB\"> </span>s);<br></pre></div>",
+      "类型": "单选",
+      "答案": "B",
+      "解析": "[s=1在执行]最外层循环 k=2,4 ,循环两次。当k=2时， s=1, 循环j=2，3，4，5 。所以s=15。当k=4时， s=1, 循环 j=4,5 。所以 s=10",
+      "选项A": "A. 15",
+      "选项B": "B. 10",
+      "选项C": "C. 24",
+      "选项D": "D. 9"
+    },
+    {
+      "题干": "100. [C][数组]有以下程序，以下叙述中正确的是（ ）。 <div class=\"highlight\" style=\"background: #eeeedd\"><pre style=\"font-family: Consolas, Monaco, monospace; font-size: 14px; background: #f8f8f8; padding: 10px; border-radius: 4px;; line-height: 125%;\"><span></span><span style=\"color: #1E889B\">#include</span><span style=\"color: #BBB\"> </span><span style=\"color: #228B22\">&lt;string.h&gt;</span><br>main(){<br><span style=\"color: #BBB\">   </span><span style=\"color: #00688B; font-weight: bold\">char</span><span style=\"color: #BBB\"> </span>p[]<span style=\"color: #BBB\"> </span>=<span style=\"color: #BBB\"> </span>{<span style=\"color: #CD5555\">&#39;a&#39;</span>,<span style=\"color: #BBB\"> </span><span style=\"color: #CD5555\">&#39;b&#39;</span>,<span style=\"color: #BBB\"> </span><span style=\"color: #CD5555\">&#39;c&#39;</span>},<span style=\"color: #BBB\"> </span>q[<span style=\"color: #B452CD\">10</span>]<span style=\"color: #BBB\"> </span>=<span style=\"color: #BBB\"> </span>{<span style=\"color: #CD5555\">&#39;a&#39;</span>,<span style=\"color: #BBB\"> </span><span style=\"color: #CD5555\">&#39;b&#39;</span>,<span style=\"color: #BBB\"> </span><span style=\"color: #CD5555\">&#39;c&#39;</span>};<br><span style=\"color: #BBB\">   </span>printf(<span style=\"color: #CD5555\">&quot;%d %d\\n&quot;</span>,<span style=\"color: #BBB\"> </span>strlen(p),<span style=\"color: #BBB\"> </span>strlen(q));<br>}<br></pre></div>",
+      "类型": "单选",
+      "答案": "B",
+      "解析": "char p[] ={'a', 'b', 'c'} 会被编译器优化成 char p[3] , 也就是末尾没有加’\\0’,那么strlen在获取字符串长度的时候，会因为找到’\\0’ 而无法准确判断字符串长度。char  q[10]={'a', 'b', 'c'}; 编译器会识别到数组q有10个元素，没有被赋值的地方为0。‘\\0’ 对应的 ASCII值就是 数字0",
+      "选项A": "A. 在给p和q数组置初值时，系统会自动添加字符串结束符，故输出的长度都为3",
+      "选项B": "B. 由于p数组中没有字符串结束符，长度不能确定；但q数组中字符串长度为3",
+      "选项C": "C. 由于q数组中没有字符串结束符，长度不能确定；但p数组中字符串长度为3",
+      "选项D": "D. 由于p和q数组中都没有字符串结束符，故长度都不能确定"
+    },
+    {
+      "题干": "101. [Linux][shell命令]下面哪条命令可以把f1.txt复制到f2.txt? ( )",
+      "类型": "单选",
+      "答案": "C",
+      "解析": "|  表示的是管道,将左侧指令的结果作为右侧指令的输入; >   覆盖写入,cat f1.txt获取文本内容,然后覆盖写入到f2.txt",
+      "选项A": "A. cp f1.txt | f2.txt",
+      "选项B": "B. cat f1.txt | f2.txt",
+      "选项C": "C. cat f1.txt > f2.txt",
+      "选项D": "D. copy f1.txt | f2.txt。"
+    },
+    {
+      "题干": "102. [Linux][并发]调用fork函数的返回值可能是___。",
+      "类型": "单选",
+      "答案": "ABC",
+      "解析": "fork() 的返回值有三种情况：> 0 (A)：在父进程中返回，值为子进程的 PID。= 0 (B)：在子进程中返回，值为 0。= -1 (C)：创建失败时返回，值为 -1。D 错误，因为 fork 返回的是 pid_t (整型)，失败时返回 -1 而非 NULL。",
+      "选项A": "A. 子进程进程ID",
+      "选项B": "B. 0",
+      "选项C": "C. -1",
+      "选项D": "D. NULL"
+    },
+    {
+      "题干": "103. [Linux][进程间通信]以下信号默认被系统忽略的是______。",
+      "类型": "单选",
+      "答案": "D",
+      "解析": "SIGCHLD是父子进程间的信号,默认忽略。SIGALRM 是闹钟信号,定时信号。SIGUSR1 是自定义信号。SIGPIPE 管道信号",
+      "选项A": "A. SIGALRM",
+      "选项B": "B. SIGUSR1",
+      "选项C": "C. SIGPIPE",
+      "选项D": "D. SIGCHLD"
+    },
+    {
+      "题干": "104. [Linux][并发]pthread_detach函数的作用是____。",
+      "类型": "单选",
+      "答案": "D",
+      "解析": "分离线程在结束时不会向父进程要求资源回收,会被系统回收资源",
+      "选项A": "A. 等待一个线程的结束",
+      "选项B": "B. 终止执行当前的线程",
+      "选项C": "C. 取消一个正在执行的线程",
+      "选项D": "D. 使线程处于分离状态"
+    },
+    {
+      "题干": "105. [Linux][并发]常用的进程间通信方法有_____",
+      "类型": "单选",
+      "答案": "ABCD",
+      "解析": "",
+      "选项A": "A. 消息队列",
+      "选项B": "B. 管道",
+      "选项C": "C. 共享内存",
+      "选项D": "D. 条件变量和互斥量"
+    },
+    {
+      "题干": "106. [Linux][并发]程序在执行完如下一系列fork调用后会产生多少新进程(假定没有调用失败) ? fork();fork();fork();",
+      "类型": "单选",
+      "答案": "A",
+      "解析": "如果题目问的是“总进程数”，则是8个；问“新产生”的进程数，则是7个。选项D是8，通常这类题若选D，题目问法应为“共有多少进程”。若题目严格问“新进程”，答案应为7。",
+      "选项A": "A. 7",
+      "选项B": "B. 3",
+      "选项C": "C. 6",
+      "选项D": "D. 8"
+    },
+    {
+      "题干": "107. [Linux][并发]子进程的父进程终止时，调用getppid()的返回值是___________。",
+      "类型": "单选",
+      "答案": "B",
+      "解析": "子进程的父进程先结束时,子进程会变成孤儿进程,统一由系统进程 1 来管理",
+      "选项A": "A. 0",
+      "选项B": "B. 1",
+      "选项C": "C. 2",
+      "选项D": "D. -1"
+    },
+    {
+      "题干": "108. [Linux][文件IO]以下字符串中是执行write后文件中的内容的是____。<div class='highlight' style='background: #eeeedd'><pre style='font-family: Consolas, Monaco, monospace; font-size: 14px; background: #f8f8f8; padding: 10px; border-radius: 4px;; line-height: 125%;'><span></span><span style='color: #BBB'>   </span>fd1<span style='color: #BBB'> </span>=<span style='color: #BBB'> </span>open(file,<span style='color: #BBB'> </span>O_RDWR<span style='color: #BBB'> </span>I<span style='color: #BBB'> </span>O_CREAT<span style='color: #BBB'> </span>I<span style='color: #BBB'> </span>O_TRUNC,<span style='color: #BBB'> </span>S_IRUSR<span style='color: #BBB'> </span>I<span style='color: #BBB'> </span>S_IWUSR);<br><span style='color: #BBB'>   </span>fd2<span style='color: #BBB'> </span>=<span style='color: #BBB'> </span>dup(fd1);<br><span style='color: #BBB'>   </span>fd3<span style='color: #BBB'> </span>=<span style='color: #BBB'> </span>open(file,<span style='color: #BBB'> </span>O_RDWR);<br><span style='color: #BBB'>   </span>write(fd1,<span style='color: #BBB'> </span><span style='color: #CD5555'>&quot;Hello,&quot;</span>,<span style='color: #BBB'> </span><span style='color: #B452CD'>6</span>);<br><span style='color: #BBB'>   </span>write(fd2,<span style='color: #BBB'> </span><span style='color: #CD5555'>&quot;world&quot;</span>,<span style='color: #BBB'> </span><span style='color: #B452CD'>6</span>);<br><span style='color: #BBB'>   </span>lseek(fd2,<span style='color: #BBB'> </span><span style='color: #B452CD'>0</span>,<span style='color: #BBB'> </span>SEEK_SET);<br><span style='color: #BBB'>   </span>write(fd1,<span style='color: #BBB'> </span><span style='color: #CD5555'>&quot;HELLO,&quot;</span>,<span style='color: #BBB'> </span><span style='color: #B452CD'>6</span>);<br><span style='color: #BBB'>   </span>write(fd3,<span style='color: #BBB'> </span><span style='color: #CD5555'>&quot;Gidday&quot;</span><span style='color: #A61717; background-color: #E3D2D2'>，</span><span style='color: #B452CD'>6</span>);<br></pre></div>",
+      "类型": "单选",
+      "答案": "C",
+      "解析": "<div class=\"highlight\" style=\"background: #eeeedd\"><pre style=\"font-family: Consolas, Monaco, monospace; font-size: 14px; background: #f8f8f8; padding: 10px; border-radius: 4px;; line-height: 125%;\"><span></span>fd1<span style=\"color: #BBB\"> </span>=<span style=\"color: #BBB\"> </span>open(file,<span style=\"color: #BBB\"> </span>O_RDWR<span style=\"color: #BBB\"> </span>I<span style=\"color: #BBB\"> </span>O_CREAT<span style=\"color: #BBB\"> </span>I<span style=\"color: #BBB\"> </span>O_TRUNC,<span style=\"color: #BBB\"> </span>S_IRUSR<span style=\"color: #BBB\"> </span>I<span style=\"color: #BBB\"> </span>S_IWUSR);<br>fd2<span style=\"color: #BBB\"> </span>=<span style=\"color: #BBB\"> </span>dup(fd1);<span style=\"color: #BBB\"> </span><span style=\"color: #228B22\">// 复制文件描述符,fd2和fd1会指向同一个文件,共用同一个文件光标   dup2</span><br>fd3<span style=\"color: #BBB\"> </span>=<span style=\"color: #BBB\"> </span>open(file,<span style=\"color: #BBB\"> </span>O_RDWR);<br>write(fd1,<span style=\"color: #BBB\"> </span><span style=\"color: #CD5555\">&quot;Hello,&quot;</span>,<span style=\"color: #BBB\"> </span><span style=\"color: #B452CD\">6</span>);<br>write(fd2,<span style=\"color: #BBB\"> </span><span style=\"color: #CD5555\">&quot;world&quot;</span>,<span style=\"color: #BBB\"> </span><span style=\"color: #B452CD\">6</span>);<span style=\"color: #BBB\">  </span><span style=\"color: #228B22\">// 此时world是接着 &quot;Hello&quot;的文件光标写入</span><br>lseek(fd2,<span style=\"color: #BBB\"> </span><span style=\"color: #B452CD\">0</span>,<span style=\"color: #BBB\"> </span>SEEK_SET);<span style=\"color: #BBB\"> </span><span style=\"color: #228B22\">// 偏移文件光标到文件开头</span><br>write(fd1,<span style=\"color: #BBB\"> </span><span style=\"color: #CD5555\">&quot;HELLO,&quot;</span>,<span style=\"color: #BBB\"> </span><span style=\"color: #B452CD\">6</span>);<span style=\"color: #BBB\"> </span><span style=\"color: #228B22\">// 此时&quot;HELLO,&quot; 覆盖&quot;Hello,&quot;</span><br>write(fd3,<span style=\"color: #BBB\"> </span><span style=\"color: #CD5555\">&quot;Gidday&quot;</span><span style=\"color: #A61717; background-color: #E3D2D2\">，</span><span style=\"color: #B452CD\">6</span>);<span style=\"color: #BBB\"> </span><span style=\"color: #228B22\">// fd3是新的文件描述符,光标处于文件开头,所以写入Gidday&quot;会覆盖 &quot;HELLO,&quot;</span><br></pre></div>",
+      "选项A": "A. Hello,world",
+      "选项B": "B. Hello, Gidday",
+      "选项C": "C. Giddayworld",
+      "选项D": "D. HELLO,world"
+    },
+    {
+      "题干": "109. [Linux][网络编程]在OSI七层模型中，ARP协议工作在（ ）层",
+      "类型": "单选",
+      "答案": "F",
+      "解析": "ARP协议: 把虚拟IP地址转换成物理IP地址的协议",
+      "选项A": "A. 应用",
+      "选项B": "B. 表示",
+      "选项C": "C. 会话",
+      "选项D": "D. 传输",
+      "选项E": "E. 网络",
+      "选项F": "F. 数据链路",
+      "选项G": "G. 物理层"
+    },
+    {
+      "题干": "110. [Linux][网络编程]在TCP/IP五层模型中，经典意义上的路由器工作在（ ）层。",
+      "类型": "单选",
+      "答案": "C",
+      "解析": "",
+      "选项A": "A. 应用",
+      "选项B": "B. 传输",
+      "选项C": "C. 网络",
+      "选项D": "D. 数据链路",
+      "选项E": "E. 物理层"
+    },
+    {
+      "题干": "111. [Linux][网络编程]Telnet使用的是传输层的协议和端口号为（ ）。",
+      "类型": "单选",
+      "答案": "D",
+      "解析": "",
+      "选项A": "A. UDP，21",
+      "选项B": "B. TCP，21",
+      "选项C": "C. UDP，23",
+      "选项D": "D. TCP，23"
+    },
+    {
+      "题干": "112. [C++][友元]有如下程序段：<div class=\"highlight\" style=\"background: #eeeedd\"><pre style=\"font-family: Consolas, Monaco, monospace; font-size: 14px; background: #f8f8f8; padding: 10px; border-radius: 4px;; line-height: 125%;\"><span></span><span style=\"color: #8B008B; font-weight: bold\">class</span><span style=\"color: #BBB\"> </span><span style=\"color: #008B45; font-weight: bold\">A</span><br>{<br><span style=\"color: #BBB\">   </span><span style=\"color: #00688B; font-weight: bold\">int</span><span style=\"color: #BBB\"> </span>_a;<br><br><span style=\"color: #8B008B; font-weight: bold\">public</span>:<br><span style=\"color: #BBB\">   </span>A(<span style=\"color: #00688B; font-weight: bold\">int</span><span style=\"color: #BBB\"> </span>a)<span style=\"color: #BBB\"> </span>:<span style=\"color: #BBB\"> </span>_a(a)<br><span style=\"color: #BBB\">   </span>{<br><span style=\"color: #BBB\">   </span>}<br><span style=\"color: #BBB\">   </span><span style=\"color: #8B008B; font-weight: bold\">friend</span><span style=\"color: #BBB\"> </span><span style=\"color: #00688B; font-weight: bold\">int</span><span style=\"color: #BBB\"> </span>f1(A<span style=\"color: #BBB\"> </span>&amp;);<br><span style=\"color: #BBB\">   </span><span style=\"color: #8B008B; font-weight: bold\">friend</span><span style=\"color: #BBB\"> </span><span style=\"color: #00688B; font-weight: bold\">int</span><span style=\"color: #BBB\"> </span><span style=\"color: #008B45\">f2</span>(<span style=\"color: #8B008B; font-weight: bold\">const</span><span style=\"color: #BBB\"> </span>A<span style=\"color: #BBB\"> </span>&amp;);<br><span style=\"color: #BBB\">   </span><span style=\"color: #8B008B; font-weight: bold\">friend</span><span style=\"color: #BBB\"> </span><span style=\"color: #00688B; font-weight: bold\">int</span><span style=\"color: #BBB\"> </span><span style=\"color: #008B45\">f3</span>(A);<br><span style=\"color: #BBB\">   </span><span style=\"color: #8B008B; font-weight: bold\">friend</span><span style=\"color: #BBB\"> </span><span style=\"color: #00688B; font-weight: bold\">int</span><span style=\"color: #BBB\"> </span><span style=\"color: #008B45\">f4</span>(<span style=\"color: #8B008B; font-weight: bold\">const</span><span style=\"color: #BBB\"> </span>A);<br>};<br></pre></div>以下调用哪个是错误的：( )",
+      "类型": "单选",
+      "答案": "A",
+      "解析": "常量的引用要加const修饰",
+      "选项A": "A. f1(0)",
+      "选项B": "B. f2(0)",
+      "选项C": "C. f3(0)",
+      "选项D": "D. f4(0)"
+    },
+    {
+      "题干": "113. [C++][引用]“引用”与指针的区别是什么？( )",
+      "类型": "单选",
+      "答案": "A",
+      "解析": "",
+      "选项A": "A. 指针通过某个指针变量指向一个对象后，对它所指向的变量间接操作。程序中使用指针，程序的可读性差；而引用本身就是目标变量的别名，对引用的操作就是对目标变量的操作。",
+      "选项B": "B. 引用通过某个引用变量指向一个对象后，对它所指向的变量间接操作。程序中使用引用，程序的可读性差；而指针本身就是目标变量的别名，对指针的操作就是对目标变量的操作。",
+      "选项C": "C. 指针比引用更节省存储空间",
+      "选项D": "D. 以上都不正确"
+    },
+    {
+      "题干": "114. [C++][构造函数]若MyClass是一个类名，其有如下语句序列：<div class=\"highlight\" style=\"background: #eeeedd\"><pre style=\"font-family: Consolas, Monaco, monospace; font-size: 14px; background: #f8f8f8; padding: 10px; border-radius: 4px;; line-height: 125%;\"><span></span>MyClass<span style=\"color: #BBB\"> </span>c1<span style=\"color: #A61717; background-color: #E3D2D2\">，</span><span style=\"color: #BBB\"> </span>*c2;<span style=\"color: #BBB\">          </span><span style=\"color: #228B22\">// c1调用,c2不调用</span><br>MyClass<span style=\"color: #BBB\"> </span>*c3<span style=\"color: #BBB\"> </span>=<span style=\"color: #BBB\"> </span><span style=\"color: #8B008B; font-weight: bold\">new</span><span style=\"color: #BBB\"> </span>MyClass;<span style=\"color: #BBB\"> </span><span style=\"color: #228B22\">// c3调用</span><br>MyClass<span style=\"color: #BBB\"> </span>&amp;c4<span style=\"color: #BBB\"> </span>=<span style=\"color: #BBB\"> </span>c1;<span style=\"color: #BBB\">          </span><span style=\"color: #228B22\">// c4是引用,不会创建新的对象</span><br></pre></div>上面的语句序列调用构造函数个数是( )。",
+      "类型": "单选",
+      "答案": "B",
+      "解析": "",
+      "选项A": "A. 1",
+      "选项B": "B. 2",
+      "选项C": "C. 3",
+      "选项D": "D. 4"
+    },
+    {
+      "题干": "115. [C++][const]下列关于const关键字的说法错误的是：( )",
+      "类型": "单选",
+      "答案": "D",
+      "解析": "A:宏定义不参与编译,在预处理时展开, const修饰都是变量,会参与编译,所以正确;B:正确. const在类中的用法;C:正确, const成员函数属于重载",
+      "选项A": "A. 用const常量代替宏定义可以让编译器进行安全性检查",
+      "选项B": "B. 类的const成员函数不能修改类的成员变量，而且一个const类对象只能调用其const 成员函数，不能调用非const成员函数",
+      "选项C": "C. const成员函数与同名、同返回值、同参数列表的非const成员函数属于重载现象",
+      "选项D": "D. 推荐使用以下方面定义类成员数组：class A{const size_t SIZE=100;int _array[SIZE];};"
+    },
+    {
+      "题干": "116. [Linux][SHELL命令]在Linux命令中，一行命令结束位置加上什么符号，表示未结束，下一行继续？( )",
+      "类型": "单选",
+      "答案": "B",
+      "解析": "",
+      "选项A": "A. /",
+      "选项B": "B. \\",
+      "选项C": "C. ;",
+      "选项D": "D. |"
+    },
+    {
+      "题干": "117. [Linux][SHELL命令]用来杀死一组同名进程的命令是 ( )",
+      "类型": "单选",
+      "答案": "D",
+      "解析": "Kill  -9 + 进程的PID号    ---->只杀死一个进程号为 PID的进程;Killall + 进程名称        ---->杀死所有进程名为 xxx 的进程",
+      "选项A": "A. kill -9 $(PID)",
+      "选项B": "B. killall $(PID)",
+      "选项C": "C. kill -9 $(CMD_NAME)",
+      "选项D": "D. killall $(CMD_NAME)"
+    },
+    {
+      "题干": "118. [C][结构体]给定结构<div class=\"highlight\" style=\"background: #eeeedd\"><pre style=\"font-family: Consolas, Monaco, monospace; font-size: 14px; background: #f8f8f8; padding: 10px; border-radius: 4px;; line-height: 125%;\"><span></span>{<br><span style=\"color: #BBB\">   </span><span style=\"color: #00688B; font-weight: bold\">char</span><span style=\"color: #BBB\"> </span>t<span style=\"color: #BBB\"> </span>:<span style=\"color: #BBB\"> </span><span style=\"color: #B452CD\">4</span>;<br><span style=\"color: #BBB\">   </span><span style=\"color: #00688B; font-weight: bold\">char</span><span style=\"color: #BBB\"> </span>k<span style=\"color: #BBB\"> </span>:<span style=\"color: #BBB\"> </span><span style=\"color: #B452CD\">4</span>;<br><span style=\"color: #BBB\">   </span><span style=\"color: #00688B; font-weight: bold\">unsigned</span><span style=\"color: #BBB\"> </span><span style=\"color: #00688B; font-weight: bold\">short</span><span style=\"color: #BBB\"> </span>i<span style=\"color: #BBB\"> </span>:<span style=\"color: #BBB\"> </span><span style=\"color: #B452CD\">8</span>;<br><span style=\"color: #BBB\">   </span><span style=\"color: #00688B; font-weight: bold\">unsigned</span><span style=\"color: #BBB\"> </span><span style=\"color: #00688B; font-weight: bold\">long</span><span style=\"color: #BBB\"> </span>m;<br>};<br></pre></div> 问sizeof(A) = ? ( )",
+      "类型": "单选",
+      "答案": "C",
+      "解析": "Char t:4 表示位域,它是以 bit 为单位.这里表示一个char类型的8bit变量,其中 0~3bit被命名为t, Char k:4 ,表示位域,因为它和变量t连在一起,所以 变量k 表示 char类型变量的 4~7bit.合并在一起, t和k一共1字节.Unsigned short i:8 ,表示定义一个short类型的变量, 0~7bit是变量i,unsigned long m 是正常变量,4字节.",
+      "选项A": "A. 4",
+      "选项B": "B. 6",
+      "选项C": "C. 8",
+      "选项D": "D. 10"
+    },
+    {
+      "题干": "119. [C++][this指针]下列有关this指针使用方法的叙述正确的是（ ）",
+      "类型": "单选",
+      "答案": "D",
+      "解析": "",
+      "选项A": "A. 保证基类保护成员在子类中可以被访问",
+      "选项B": "B. 保证基类私有成员在子类中可以被访问",
+      "选项C": "C. 保证基类共有成员在子类中可以被访问",
+      "选项D": "D. 保证每个对象拥有自己的数据成员，但共享处理这些数据的代码"
+    },
+    {
+      "题干": "120. [C++][抽象类]假设A为抽象类，下列声明（ ）是正确的。",
+      "类型": "单选",
+      "答案": "D",
+      "解析": "抽象类不能创建对象",
+      "选项A": "A. int fun(A);",
+      "选项B": "B. A Obj;",
+      "选项C": "C. A fun(int);",
+      "选项D": "D. A *p;。"
+    },
+    {
+      "题干": "121. [C++][智能指针]以下方法中哪个是C++中的内存管理方法（ ）?",
+      "类型": "单选",
+      "答案": "A",
+      "解析": "",
+      "选项A": "A. 垃圾回收（GC）",
+      "选项B": "B. 反射",
+      "选项C": "C. 多态",
+      "选项D": "D. 引用计数"
+    },
+    {
+      "题干": "122. [Linux][网络编程]网络编程中常用的字节序转换函数有____。",
+      "类型": "单选",
+      "答案": "AB",
+      "解析": "<div class=\"highlight\" style=\"background: #eeeedd\"><pre style=\"font-family: Consolas, Monaco, monospace; font-size: 14px; background: #f8f8f8; padding: 10px; border-radius: 4px;; line-height: 125%;\"><span></span>h--host<span style=\"color: #BBB\"> </span>主机<span style=\"color: #BBB\">  </span><br>to--转换<br>n--net<span style=\"color: #BBB\"> </span>网络<br>s--<span style=\"color: #00688B; font-weight: bold\">short</span><span style=\"color: #BBB\"> </span>短整型<br>l--<span style=\"color: #00688B; font-weight: bold\">long</span><span style=\"color: #BBB\">  </span>长整型<br><br>htons<span style=\"color: #BBB\">    </span>主机<span style=\"color: #BBB\"> </span>转换<span style=\"color: #BBB\"> </span>网络<span style=\"color: #BBB\"> </span>短整型<br>htonl<span style=\"color: #BBB\">    </span>主机<span style=\"color: #BBB\"> </span>转换<span style=\"color: #BBB\">  </span>网络<span style=\"color: #BBB\"> </span>长整型<br>ntohs<span style=\"color: #BBB\">   </span>网络<span style=\"color: #BBB\"> </span>转换<span style=\"color: #BBB\">  </span>主机<span style=\"color: #BBB\"> </span>短整型<br>ntohl<span style=\"color: #BBB\">   </span>网络<span style=\"color: #BBB\"> </span>转换<span style=\"color: #BBB\">  </span>主机<span style=\"color: #BBB\"> </span>长整型<br></pre></div>",
+      "选项A": "A. htons/htonl",
+      "选项B": "B. ntohs/ntohl",
+      "选项C": "C. inet_ntoa",
+      "选项D": "D. inet_ntop"
+    },
+    {
+      "题干": "123. [Linux][网络编程]下列套接字类型编程中可以调用connect函数的是____。",
+      "类型": "单选",
+      "答案": "B",
+      "解析": "",
+      "选项A": "A. UDP",
+      "选项B": "B. TCP",
+      "选项C": "C. ICMP",
+      "选项D": "D. UNIX域"
+    },
+    {
+      "题干": "124. [C++][动态内存分配]下面说法正确的是（ ）",
+      "类型": "单选",
+      "答案": "D",
+      "解析": "A:New会调用构造函数,mallo不会;B:重写才是指子类重新定义父类的虚函数",
+      "选项A": "A. 在C++语言中new和malloc都是在堆（heap）上进行动态的内存操作，可以互相代替。",
+      "选项B": "B. C++语言重载（over load）是指子类重新定义父类的虚函数的方法。",
+      "选项C": "C. C++语言函数既可以嵌套定义又可以递归调用。",
+      "选项D": "D. 在C++语言中调用函数时，只能把实参的值传给形参，形参的值不能传送给实参（不考虑引用、指针等情况）。"
+    },
+    {
+      "题干": "125. [Linux][SHELL命令]显示/etc/下面所有包含yum的文件命令是：( )",
+      "类型": "单选",
+      "答案": "A",
+      "解析": "ll 表示的是 ls -l",
+      "选项A": "A. ll /etc | grep yum",
+      "选项B": "B. ll /etc > grep yum",
+      "选项C": "C. ll /etc >> grep yum",
+      "选项D": "D. grep yum | ll /etc"
+    },
+    {
+      "题干": "126. [Linux][网络编程]bind调用在UNIX socket编程中的作用是__。",
+      "类型": "单选",
+      "答案": "C",
+      "解析": "",
+      "选项A": "A. 绑定通信时对端的端口和地址",
+      "选项B": "B. 为通信关联一个绝对路径名",
+      "选项C": "C. 绑定通信时本地的端口和地址 `",
+      "选项D": "D. 绑定通信时本地的网络设备"
+    },
+    {
+      "题干": "127. [Linux][网络编程]网络编程中select可用于___。",
+      "类型": "单选",
+      "答案": "A",
+      "解析": "",
+      "选项A": "A. 允许进程指示内核等待多个事件中的任何一个发生",
+      "选项B": "B. 作为高精度的延时函数使用",
+      "选项C": "C. 选中需要通信的网络设备名",
+      "选项D": "D. 处理套接字异常"
+    },
+    {
+      "题干": "128. [Linux][网络编程]在OSI参考模型的物理层、数据链路层、网络层传送的数据单位分别为( )。",
+      "类型": "单选",
+      "答案": "A",
+      "解析": "",
+      "选项A": "A. 比特、帧、分组",
+      "选项B": "B. 比特、分组、帧",
+      "选项C": "C. 帧、分组、比特",
+      "选项D": "D. 分组、比特、帧"
+    },
+    {
+      "题干": "129. [C++][类型转换]下面哪种情况下,B不能隐式转换为A?",
+      "类型": "单选",
+      "答案": "B",
+      "解析": "父类不能转换成子类",
+      "选项A": "A. class B:public A{}",
+      "选项B": "B. class A:public B{}",
+      "选项C": "C. class B{operator A();}",
+      "选项D": "D. class A{A(const B&);}"
+    },
+    {
+      "题干": "130. [C++][模板]关于函数模板,描述错误的是？",
+      "类型": "单选",
+      "答案": "A",
+      "解析": "由编译器实例化",
+      "选项A": "A. 函数模板必须由程序员实例化为可执行的函数模板",
+      "选项B": "B. 函数模板的实例化由编译器实现",
+      "选项C": "C. 一个类定义中，只要有一个函数模板，则这个类是类模板",
+      "选项D": "D. 类模板的成员函数都是函数模板，类模板实例化后，成员函数也随之实例化"
+    },
+    {
+      "题干": "131. [STM32][ADC]哪个不是影响A/D采样精度的（ ）。",
+      "类型": "单选",
+      "答案": "D",
+      "解析": "位数决定 精度，参考电源同样决定精度，采样速率决定快慢，采样顺序无所谓",
+      "选项A": "A. 位数",
+      "选项B": "B. 参考电源",
+      "选项C": "C. 采样速率",
+      "选项D": "D. 采样顺序"
+    },
+    {
+      "题干": "132. [模拟电路][三极管]在某放大电路中，测得三极管三个电极的静态电位分别为0 V，-4.7V，-5 V，则这只三极管是（ ）。",
+      "类型": "单选",
+      "答案": "B",
+      "解析": "硅导通压降0.7  锗 0.3V ，根据电压分布推到 c=0  b=-4.7  e=-5",
+      "选项A": "A. NPN 型硅管",
+      "选项B": "B. NPN 型锗管",
+      "选项C": "C. PNP 型硅管",
+      "选项D": "D. PNP 型锗管"
+    },
+    {
+      "题干": "133. [C][循环]请问如下代码执行的结果是（ ）<div class=\"highlight\" style=\"background: #eeeedd\"><pre style=\"font-family: Consolas, Monaco, monospace; font-size: 14px; background: #f8f8f8; padding: 10px; border-radius: 4px;; line-height: 125%;\"><span></span><span style=\"color: #00688B; font-weight: bold\">int</span><span style=\"color: #BBB\"> </span>i,<span style=\"color: #BBB\"> </span>a[<span style=\"color: #B452CD\">5</span>];<br><span style=\"color: #8B008B; font-weight: bold\">for</span><span style=\"color: #BBB\"> </span>(i<span style=\"color: #BBB\"> </span>=<span style=\"color: #BBB\"> </span><span style=\"color: #B452CD\">0</span>;<span style=\"color: #BBB\"> </span>i<span style=\"color: #BBB\"> </span>&lt;=<span style=\"color: #BBB\"> </span><span style=\"color: #B452CD\">30</span>;<span style=\"color: #BBB\"> </span>i++)<br>{<br><span style=\"color: #BBB\">   </span>a[i]<span style=\"color: #BBB\"> </span>=<span style=\"color: #BBB\"> </span><span style=\"color: #B452CD\">0</span>;<br><span style=\"color: #BBB\">   </span>printf(<span style=\"color: #CD5555\">&quot;%d:hello world!&quot;</span>,<span style=\"color: #BBB\"> </span>i);<br>}<br>printf(<span style=\"color: #CD5555\">&quot;%d:hello world!&quot;</span>,<span style=\"color: #BBB\"> </span>i);<br></pre></div>",
+      "类型": "单选",
+      "答案": "B",
+      "解析": "没有\n 作为换行符,printf打印的内容会在缓冲区中堆积,for循环中堆积0~30,一共31行,最后跳出循环,再打印一次,i=31。 所有语句在同一行输出。",
+      "选项A": "A. 打印 30行 i:hallo world! (i∈[0,30]) 和 一行 30:hello world",
+      "选项B": "B. 打印 30行 i:hallo world! (i∈[0,30]) 和 一行 31:hello world",
+      "选项C": "C. 打印多行i:hallo world! (i∈[0,30])",
+      "选项D": "D. 打印多行i:hallo world! (i∈[0,31])"
+    },
+    {
+      "题干": "134. [C][格式化输出]有如下程序，数据输入 12345K678<回车> ，则x的输出结果为（ ）<div class=\"highlight\" style=\"background: #eeeedd\"><pre style=\"font-family: Consolas, Monaco, monospace; font-size: 14px; background: #f8f8f8; padding: 10px; border-radius: 4px;; line-height: 125%;\"><span></span><span style=\"color: #1E889B\">#include</span><span style=\"color: #BBB\"> </span><span style=\"color: #228B22\">&lt;stdio.h&gt;</span><br><span style=\"color: #00688B; font-weight: bold\">int</span><span style=\"color: #BBB\"> </span><span style=\"color: #008B45\">main</span>(){<br><span style=\"color: #BBB\">   </span><span style=\"color: #00688B; font-weight: bold\">int</span><span style=\"color: #BBB\"> </span>x;<br><span style=\"color: #BBB\">   </span><span style=\"color: #00688B; font-weight: bold\">float</span><span style=\"color: #BBB\"> </span>y;<br><span style=\"color: #BBB\">   </span>scanf(<span style=\"color: #CD5555\">&quot;%3d%f&quot;</span>,<span style=\"color: #BBB\"> </span>&amp;x,<span style=\"color: #BBB\"> </span>&amp;y);<br><span style=\"color: #BBB\">   </span><span style=\"color: #8B008B; font-weight: bold\">return</span><span style=\"color: #BBB\"> </span><span style=\"color: #B452CD\">0</span>;<br>}<br></pre></div>",
+      "类型": "单选",
+      "答案": "B",
+      "解析": "这里相当于 12345被输入给变量x，但是%3d只取前3位， 字符K被输入给变量y，但是只有x才输入成功，后面的678被丢弃。",
+      "选项A": "A. 12345",
+      "选项B": "B. 123",
+      "选项C": "C. 345",
+      "选项D": "D. 45"
+    },
+    {
+      "题干": "135. [C][宏定义]以下程序的打印结果是（ ）<div class=\"highlight\" style=\"background: #eeeedd\"><pre style=\"font-family: Consolas, Monaco, monospace; font-size: 14px; background: #f8f8f8; padding: 10px; border-radius: 4px;; line-height: 125%;\"><span></span><span style=\"color: #1E889B\">#include</span><span style=\"color: #BBB\"> </span><span style=\"color: #228B22\">&lt;stdio.h&gt;</span><br><span style=\"color: #1E889B\">#define N 2</span><br><span style=\"color: #1E889B\">#define M N + 1</span><br><span style=\"color: #1E889B\">#define NUM (M + 1) * M / 2</span><br><span style=\"color: #00688B; font-weight: bold\">int</span><span style=\"color: #BBB\"> </span><span style=\"color: #008B45\">main</span>(<span style=\"color: #00688B; font-weight: bold\">void</span>)<br>{<br><span style=\"color: #BBB\">   </span><span style=\"color: #00688B; font-weight: bold\">int</span><span style=\"color: #BBB\"> </span>i<span style=\"color: #BBB\"> </span>=<span style=\"color: #BBB\"> </span><span style=\"color: #B452CD\">0</span>;<br><span style=\"color: #BBB\">   </span><span style=\"color: #8B008B; font-weight: bold\">while</span><span style=\"color: #BBB\"> </span>(i<span style=\"color: #BBB\"> </span>&lt;<span style=\"color: #BBB\"> </span>NUM)<br><span style=\"color: #BBB\">   </span>{<br><span style=\"color: #BBB\">      </span>print(<span style=\"color: #CD5555\">&quot;%d&quot;</span>,<span style=\"color: #BBB\"> </span>i++);<br><span style=\"color: #BBB\">   </span>}<br><span style=\"color: #BBB\">   </span>printf(<span style=\"color: #CD5555\">&quot;\\n&quot;</span>);<br><span style=\"color: #BBB\">   </span><span style=\"color: #8B008B; font-weight: bold\">return</span><span style=\"color: #BBB\"> </span><span style=\"color: #B452CD\">0</span>;<br>}<br></pre></div>",
+      "类型": "单选",
+      "答案": "C",
+      "解析": "NUM  直接替换是   (M+1)*M/2 ---> (N+1+1)*N+1/2  ---> 8",
+      "选项A": "A. 123456",
+      "选项B": "B. 012345",
+      "选项C": "C. 01234567",
+      "选项D": "D. 01"
+    },
+    {
+      "题干": "136. [C][浮点型存储]如下代码运行的结果是什么（ ）<div class=\"highlight\" style=\"background: #eeeedd\"><pre style=\"font-family: Consolas, Monaco, monospace; font-size: 14px; background: #f8f8f8; padding: 10px; border-radius: 4px;; line-height: 125%;\"><span></span><span style=\"color: #1E889B\">#include</span><span style=\"color: #BBB\"> </span><span style=\"color: #228B22\">&lt;stdio.h&gt;</span><br><span style=\"color: #00688B; font-weight: bold\">int</span><span style=\"color: #BBB\"> </span><span style=\"color: #008B45\">main</span>(<span style=\"color: #00688B; font-weight: bold\">void</span>)<br>{<br><span style=\"color: #BBB\">   </span><span style=\"color: #00688B; font-weight: bold\">float</span><span style=\"color: #BBB\"> </span>x<span style=\"color: #BBB\"> </span>=<span style=\"color: #BBB\"> </span><span style=\"color: #B452CD\">0.1</span>;<br><span style=\"color: #BBB\">   </span><span style=\"color: #8B008B; font-weight: bold\">if</span><span style=\"color: #BBB\"> </span>(x<span style=\"color: #BBB\"> </span>==<span style=\"color: #BBB\"> </span><span style=\"color: #B452CD\">0.1</span>)<br><span style=\"color: #BBB\">      </span>printf(<span style=\"color: #CD5555\">&quot;Equal&quot;</span>);<br><span style=\"color: #BBB\">   </span><span style=\"color: #8B008B; font-weight: bold\">else</span><br><span style=\"color: #BBB\">      </span>printf(<span style=\"color: #CD5555\">&quot;Not equal&quot;</span>);<br><span style=\"color: #BBB\">   </span><span style=\"color: #8B008B; font-weight: bold\">return</span><span style=\"color: #BBB\"> </span><span style=\"color: #B452CD\">0</span>;<br>}<br></pre></div>",
+      "类型": "单选",
+      "答案": "B",
+      "解析": "浮点数是近似数值，不能够直接比较。当浮点数和0值比较时，只能使用 x>-0.000001 && x<0.000001",
+      "选项A": "A. Equal",
+      "选项B": "B. Not Equal",
+      "选项C": "C. 运行错误",
+      "选项D": "D. 输出依赖于编译器"
+    },
+    {
+      "题干": "137. [C][数组]已知声明：int a[10]={1,2,3,4,5,6,7,8,9,10}, *p=a;则不能表示数组a中元素的表达式是（ ）",
+      "类型": "单选",
+      "答案": "D",
+      "解析": "",
+      "选项A": "A. *p",
+      "选项B": "B. a[3]",
+      "选项C": "C. *a",
+      "选项D": "D. a[p]"
+    },
+    {
+      "题干": "138. [C++][拷贝构造函数]下列情况中，哪一种情况不会调用拷贝构造函数（ ）",
+      "类型": "单选",
+      "答案": "C",
+      "解析": "解析：调用拷贝构造函数的3种情况： 1、用一个对象去初始化同一个类的另一个新对象时2、函数的形参对象，调用函数进行形参和实参结合时 3、函数的返回值是类的对象，函数执行返回调用时 将一个对象赋值给另一个对象，两个对象都存在，调用的是赋值构造函数，不涉及内存的分配。当被赋值的对象不存在调用的是拷贝构造函数。C选项是赋值运算符重载",
+      "选项A": "A. 用派生类的对象去初始化基类对象时",
+      "选项B": "B. 函数的形参是类的对象，调用函数参数进行形参和实参结合时",
+      "选项C": "C. 将类的一个对象赋值给该类的另一个对象时",
+      "选项D": "D. 函数的返回值时类的对象，函数执行返回调用者时"
+    },
+    {
+      "题干": "139. [数据库][sql语句]SQL语言中，删除一个表的命令是（ ）",
+      "类型": "单选",
+      "答案": "B",
+      "解析": "drop table删除表；delete from table 删除表里面的数据，表结构依然存在；truncate table 表数据与结构一并删除，且不可恢复",
+      "选项A": "A. DELETE",
+      "选项B": "B. DROP",
+      "选项C": "C. CLEAR",
+      "选项D": "D. REMOVE"
+    },
+    {
+      "题干": "140. [数据结构][二叉树]下列AVL树（平衡二叉查找树）  <img src=\"data:image/png;base64,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\">插入元素65后变为（ ）",
+      "类型": "单选",
+      "答案": "C",
+      "解析": "<img src=\"data:image/png;base64,iVBORw0KGgoABq5A/\">",
+      "选项A": "A. <img src=\"data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAQMAAACdCAIAAAA/qIobAAAAA3NCSVQICAjb4U/gAAAACXBIWXMAAA7EAAAOxAGVKw4bAAAJDUlEQVR4nO2dP5LiOBSHn7fmKLgDihOYE8AkkwxpZyaEZJItwq5NNjEhZJMSTdL4BM0JKIK20z2HNxD4H8ZtwJKepN8XdSNPr/ykT3qyvMjLsowAcJ6/dFcAABbABACIYAIAApgAABFMAEAAEwAgggkACGACAEQwAQABTACACCYAIIAJABDBBAAEMAEAIpgAgAAmAEAEEwAQwAQAiGACAAKYoIp47uXM44YPqyVAMTBBBfHc86a0zy5sJqXCIEqy5hKgEJggn3g+3YZ7dHLefNNdAfuJ/2yDKIEGzMGcIJv4z5ZGL7QeX5YC43VaueCw9LFI0A9MUMF2+kq/xUIgiWjp5zJMNvkKIYmC7RQy6CMDUkmioLYoTqKAKNw3XLsPa5cCdWBOkMzgZUQ0ehl0udYfBrKrA24BE2TjDwM6flaXBhQM/YZLk9OhqzSgd3RPSg6wD6lIh2q/FMnQdRoFVIKnqLLwPI+IsiyjySZLhmPf80RBaWthsln98S6fE/YcdOJl+NZ4CRTdW8jw0D9H06gE64SeETsDT/6F2g9AAZgTeuO64z4c29qfQhspACb0Q48aSPqDoB2Y8CzyuixkUAlMeAoFaQx8UANMeBDFHRQrB9nAhLvRNUhjcpAKTLgP7d1RewVsBSZ0hVUXRLLUOzChEwx7HiszLQAmfAHzDse8egYBE25iSiczpZ7MgQnNMEyH2oEPTwIT6hjdpYwTmA8wocBoB3LsuAv1wIQzlnUgy25HATDB5k6DZKk7rptgfV+x2PN+cdcEp7qIUzf7GC6a4Ga3cPOuu+OcCY53CMdvvwWHTEAnyLF+dfQArpiAtq+BcaGG/SagyVtAcHIsNwFTQRcQJbLbhCe/iM4pMDnYbALhaxXvxOXJwahvg2w/s7VUmp9ZI74GWUtlTaQWq+e/2dIgjDKB6OaZrfHcmx7PRdUDnMBdXI8djshgnAmNpOu3LYWrhTiEY7D4HQWH3TtUeJiaDy7IYIUJ6fvuQOGP4uyBwcuIoMLTJFFx2lX9KMSmXNRojDPh1pmt1fOacGLZ08Rzz1+O8sN/KueCWpmLXp2yYwZiuDqf0nR9ZuXt8y1BN/ZhNYClGNeDm0SBBcdiGTcnnBksPvYhbd9axqLmU/1AJ9LPYzWAkx8hHU4JWZuLmmoClTMgfxicW+lCcjroqJJdVEKafh5LRRbmogabUJzZOvg+q570mn4eKZh9x3muDzNYrELaTi9Lg3T9uryMLc2jTHUkMhCTTIjnxcIsXY+n2yD6JebowWIVHpav59J0/bo85M9UwWNMNmKd7Hme5/mn1T5svdz8XFT3QuUuyq1RXw+XH/lhrdw7xbL4+mnE9RMLA7H8vSPQE+l67J9WYlM/XY/93Sz5uEy69d8NRbeKgCn7MB/mkyioDvrlScCWB9YwAdyiyEWvUx/7clGTsiO8Yg3kYcyzIxdeAgMaMcMEaABk8013Bb4G/xOmccxms/Kvu91OV026w90EaKCF55dkee+vWcEWM7IjggYKcTMXZW2Cm02iF2djzjc7Ql6knh5jbkpSlMN0PwEaqKf3mJvViKyzIzIhgvbRV8zNajuOJjibqmpEUsxzGfi3KTsTzJpS7UBNzJnLwMsEaKAe2TE3pR15mZBjSvhMR/HQw3laYGQC5zBZj1QNjBjXuJiAvEg9WoYetuMdCxOggXoUx5x/s7IwIYd/vOxA79DDc1rQbwLPuDiCSg2YD3OaTUBepB4OQw+HOtTQaQI0UI/emHNuZf3ZEfEOkE1wGHrYvn+hzQRugXAKJkMPqz6gxwQOg5Nr5DHXHnDtFWhEgwnQQD2sRt8yfCqmc50ADdTAcOhhUo0yqk3gMwY4AkMNajDpEkpN4N8qFsMt4Nzqo84EaKAeJsPtl3Cop4Z1AjRQA/+hh1WtFJnAQXqn4K9BDe09RIUJxrWKTTAPOJ/qSTcBGqiHzyZaF5i8f6FunWBEq1iA9jTjGTRWXq4JRreKiRg6A3OoqkQTDG0Vc7Ej4LpGT1km2NEqhmJiwLXXWfo6QfsdOoJNiaiWe5Figk2tYgR2zMB6a96/CXa0ikFYGXD1g2nPJljZKqZgQcA13oKsdYIFrWIEZm2i3YXiaaFPE7A8UIyVAdeldG8mIC9SjMUB1/L+RT8mWNwqPHEn4Mpk6HmdYHerMMTWgKu/rx5MsDJb5YxrAVdzvzdNSNdjz/PG67TyaTz3rsgLbR2fWOFOwBXfXYMJorf7y8ONfxJESSYof2p3qzDBHQ1qKJgWGkyYbEQ/34ed/4pTrcIBRwKu8jZZfEMw6IJry4Masm//ARMOS/+8Qgj3DWkSkIGzeZGym73ThEvmlGVZEgXbqTeP5dQLlHBWgxpSp4XHs6PB4mMf0vat9nQJ9Aw0KN+1PBmeWif4w6CveoAvcVMDgYJ7f8qE5HSg0cugr7o4SNP+TLGLE8/LQ6DnIRclkjYtfLvr6ng+/vz1sRgQEaXr8XQbRMlERrVcYbLJsk35g3juTWm1KEaXIEo+FhhsiLIsm81m4mfxw2636/k/UCOJrnOe/ClReZMh/xD0RBIF5bDuw/I+Jvj582fjz73QkB0NFh9Xl20uI3/p4VHxIeiH9H13CKJfCOutl32qtLwK1P4PG8HOGh/if5eHYPa9mgoVuzeOLBK+etmnxNIvenw896bH8/yZRJWibniZw08kWJGux/5ytL8x06brsb88hLeKLeTctUuLpHQ2+7t8xT/j//zdLPlYDK6Cl67Hl6LO9JtsgUdJouCLNYFjq4ar260tosqXtBR1BtkRDxozoyrYvSEKhn7pt0pEWoo6ARM4kK7fthSu2udy13dvklPT0uFwSlqLOgMTGJC+7w4U/qivAOJ5seo7797guVKd6lTQtagBmKCf+N9l48PTyWZ1ujw48pejfeb2Fps/DGrDfD4VtBR1BiboZ7LJbnRy7N6UGHyfBXT8LJ6Npp9HEmurlqLuPLiyB0AuTU9/yp+17MdfP0rqAEwAvGh92adSWuvrLUVdwM4aAERYJwAggAkAEMEEAAQwAQAimACAACYAQAQTABDABACIYAIAApgAABFMAEAAEwAgggkACGACAERE/wN+vJ8kjoN4xgAAAABJRU5ErkJggg==\">",
+      "选项B": "B. <img src=\"data:image/png;base64,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\">",
+      "选项C": "C. <img src=\"data:image/png;base64,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\">",
+      "选项D": "D. <img src=\"data:image/png;base64,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\">"
+    },
+    {
+      "题干": "141. [数据结构][链表]链表不具有的特点是( )。",
+      "类型": "单选",
+      "答案": "B",
+      "解析": "链表必须遍历才能访问中间的元素",
+      "选项A": "A. 插入、删除不需要移动元素",
+      "选项B": "B. 可随机访问任一元素",
+      "选项C": "C. 不必事先估计存储空间",
+      "选项D": "D. 所需空间与线性长度成正比链表必须遍历才能访问中间的元素"
+    },
+    {
+      "题干": "142. [数据结构][链表]在一个单链表 HL 中，若要在当前由指针 p 指向的结点后面插入一个由 q 指向的结点，则执行如下 ( ) 语句序列。",
+      "类型": "单选",
+      "答案": "D",
+      "解析": "",
+      "选项A": "A. p=q; p->next=q;",
+      "选项B": "B. p->next=q; q->next=p;",
+      "选项C": "C. p->next=q->next; p=q;",
+      "选项D": "D. q->next=p->next; p->next=q;"
+    },
+    {
+      "题干": "143. [C][数组]在长度为n的顺序表的第i (1≤i≤n)个位置上删除一个元素，元素的移动次数为( )",
+      "类型": "单选",
+      "答案": "B",
+      "解析": "",
+      "选项A": "A. n-i+1",
+      "选项B": "B. n-i",
+      "选项C": "C. i",
+      "选项D": "D. i-1"
+    },
+    {
+      "题干": "144. [数据结构][链表]如果最常用的操作是取第i个结点及其前驱，则采用（ ）存储方式最节省时间。",
+      "类型": "单选",
+      "答案": "D",
+      "解析": "",
+      "选项A": "A. 单链表",
+      "选项B": "B. 双链表",
+      "选项C": "C. 单循环链表",
+      "选项D": "D. 顺序表"
+    },
+    {
+      "题干": "145. [数据结构][链表]设指针变量p指向双向链表中结点A，指针变量s指向被插入的结点X，则在结点A的后面插入结点X的操作序列为（ ）。",
+      "类型": "单选",
+      "答案": "D",
+      "解析": "",
+      "选项A": "A. p->right=s； s->left=p； p->right->left=s； s->right=p->right；",
+      "选项B": "B. s->left=p；s->right=p->right；p->right=s； p->right->left=s；",
+      "选项C": "C. p->right=s； p->right->left=s； s->left=p； s->right=p->right；",
+      "选项D": "D. s->left=p；s->right=p->right；p->right->left=s； p->right=s；"
     }
   ]
 }
