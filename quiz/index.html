@@ -198,11 +198,11 @@
         <aside class="w-full lg:w-1/6">
             <!-- 进度统计卡片 -->
             <div class="bg-white rounded-lg shadow-card p-6 mb-6">
-                <h3 class="text-lg font-semibold text-gray-800 mb-4">进度统计</h3>
+                <h3 class="text-lg font-semibold text-gray-800 mb-4" id="progress-title">进度统计</h3>
                 <div class="space-y-4">
                     <div>
                         <div class="flex justify-between text-sm mb-1">
-                            <span>完成率</span>
+                            <span id="completion-rate-label">完成率</span>
                             <span id="completion-rate">0%</span>
                         </div>
                         <div class="w-full bg-gray-200 rounded-full h-2.5">
@@ -211,21 +211,21 @@
                     </div>
                     <div class="grid grid-cols-2 gap-4 text-center">
                         <div class="bg-green-50 p-3 rounded-lg">
-                            <p class="text-sm text-gray-600">正确</p>
+                            <p class="text-sm text-gray-600" id="correct-label">正确</p>
                             <p id="correct-count" class="text-xl font-bold text-success">0</p>
                         </div>
                         <div class="bg-red-50 p-3 rounded-lg">
-                            <p class="text-sm text-gray-600">错误</p>
+                            <p class="text-sm text-gray-600" id="wrong-label">错误</p>
                             <p id="wrong-count" class="text-xl font-bold text-danger">0</p>
                         </div>
                     </div>
                     <div class="grid grid-cols-2 gap-4 text-center">
                         <div class="bg-blue-50 p-3 rounded-lg">
-                            <p class="text-sm text-gray-600">收藏</p>
+                            <p class="text-sm text-gray-600" id="collected-label">收藏</p>
                             <p id="collected-count" class="text-xl font-bold text-primary">0</p>
                         </div>
                         <div class="bg-yellow-50 p-3 rounded-lg">
-                            <p class="text-sm text-gray-600">跳过</p>
+                            <p class="text-sm text-gray-600" id="skipped-label">跳过</p>
                             <p id="skipped-count" class="text-xl font-bold text-warning">0</p>
                         </div>
                     </div>
@@ -234,7 +234,7 @@
 
             <!-- 题目导航卡片 -->
             <div class="bg-white rounded-lg shadow-card p-6">
-                <h3 class="text-lg font-semibold text-gray-800 mb-4">题目导航</h3>
+                <h3 class="text-lg font-semibold text-gray-800 mb-4" id="question-nav-title">题目导航</h3>
                 <div id="question-nav" class="grid grid-cols-5 gap-2">
                     <!-- 题目导航按钮将通过JavaScript动态插入 -->
                 </div>
@@ -278,7 +278,8 @@
                 practice: '开始练习',
                 review: '错题复习',
                 custom: '导题练习',
-                edit: '题库管理',
+                edit: '编辑题目',
+                editMode: '题库管理',
                 orderToggle: '顺序',
                 randomToggle: '乱序',
                 collect: '收藏',
@@ -330,14 +331,17 @@
                 editMode: '题库管理',
                 singleChoice: '单选',
                 multipleChoice: '多选',
-                trueFalse: '判断'
+                trueFalse: '判断',
+                lightMode: '浅色模式',
+                darkMode: '暗黑模式'
             },
             en: {
                 appTitle: 'Smart Quiz App',
                 practice: 'Start Practice',
                 review: 'Review Mistakes',
                 custom: 'Import Quiz',
-                edit: 'Quiz Management',
+                edit: 'Edit Questions',
+                editMode: 'Quiz Management',
                 orderToggle: 'Order',
                 randomToggle: 'Random',
                 collect: 'Collect',
@@ -389,7 +393,9 @@
                 editMode: 'Management Mode',
                 singleChoice: 'Single Choice',
                 multipleChoice: 'Multiple Choice',
-                trueFalse: 'True/False'
+                trueFalse: 'True/False',
+                lightMode: 'Light Mode',
+                darkMode: 'Dark Mode'
             }
         };
 
@@ -422,6 +428,7 @@
         let unAnsweredQuestions = []; // 未做的题目索引
         let currentLanguage = 'zh'; // 当前语言，默认为中文
         let isDarkMode = false; // 是否开启暗黑模式
+        let isSwiping = false; // 防止连续滑动的标志
         
         // 题库管理系统
         let quizBanks = [];
@@ -757,7 +764,6 @@
             // 定义触摸事件相关变量
             let touchStartX = 0;
             let touchEndX = 0;
-            let isSwiping = false; // 防止连续滑动的标志
             
             // 定义触摸事件处理函数
             function handleTouchStart(e) {
@@ -1215,11 +1221,17 @@
             
             // 直接切换标签样式，避免重复调用initializeQuiz
             [practiceTab, reviewTab, customTab, editTab].forEach(tab => {
-                tab.classList.remove('tab-active');
+                tab.classList.remove('tab-active', 'tab-active-dark');
                 tab.classList.add('tab-inactive');
+                if (isDarkMode) {
+                    tab.classList.add('tab-inactive-dark');
+                }
             });
-            practiceTab.classList.remove('tab-inactive');
+            practiceTab.classList.remove('tab-inactive', 'tab-inactive-dark');
             practiceTab.classList.add('tab-active');
+            if (isDarkMode) {
+                practiceTab.classList.add('tab-active-dark');
+            }
             quizMode = 'random';
         }
 
@@ -1243,17 +1255,23 @@
             loadQuizBanks();
             
             // 渲染题库列表
+            // 渲染题库列表
+            const textColor = isDarkMode ? 'text-white' : 'text-gray-800';
+            const textSecondaryColor = isDarkMode ? 'text-gray-300' : 'text-gray-500';
+            const borderColor = isDarkMode ? 'border-gray-700' : 'border';
+            const bgColor = isDarkMode ? 'bg-gray-800' : 'bg-white';
+            
             questionContainer.innerHTML = `
                 <div class="mb-6">
-                    <h2 class="text-xl font-semibold text-gray-800 mb-4">${t('edit')}</h2>
-                    <p class="text-gray-600 mb-6">${t('selectOption')}</p>
+                    <h2 class="text-xl font-semibold ${textColor} mb-4">${t('editMode')}</h2>
+                    <p class="${textSecondaryColor} mb-6">${t('selectOption')}</p>
                     
                     <div class="space-y-4">
                         ${quizBanks.map((bank, index) => `
-                            <div class="flex items-center justify-between p-4 rounded-lg border option-hover">
+                            <div class="flex items-center justify-between p-4 rounded-lg ${borderColor} ${bgColor} option-hover">
                                 <div>
-                                    <h3 class="font-medium text-gray-800">${bank.name}</h3>
-                                    <p class="text-sm text-gray-500">${bank.questions ? bank.questions.length : 0}${t('question')} · ${bank.source === 'local' ? t('local') : t('uploaded')}</p>
+                                    <h3 class="font-medium ${textColor}">${bank.name}</h3>
+                                    <p class="text-sm ${textSecondaryColor}">${bank.questions ? bank.questions.length : 0}${t('question')} · ${bank.source === 'local' ? t('local') : t('uploaded')}</p>
                                 </div>
                                 <div class="flex space-x-2">
                                     <button class="btn-primary px-3 py-1 text-sm" onclick="switchToQuizBank(${index})">
@@ -1290,13 +1308,20 @@
         function switchTab(tabName) {
             // 重置所有标签样式
             [practiceTab, reviewTab, customTab, editTab].forEach(tab => {
-                tab.classList.remove('tab-active');
+                tab.classList.remove('tab-active', 'tab-active-dark');
                 tab.classList.add('tab-inactive');
+                if (isDarkMode) {
+                    tab.classList.add('tab-inactive-dark');
+                }
             });
             
             // 设置选中标签样式
-            document.getElementById(`${tabName}-tab`).classList.remove('tab-inactive');
-            document.getElementById(`${tabName}-tab`).classList.add('tab-active');
+            const activeTab = document.getElementById(`${tabName}-tab`);
+            activeTab.classList.remove('tab-inactive', 'tab-inactive-dark');
+            activeTab.classList.add('tab-active');
+            if (isDarkMode) {
+                activeTab.classList.add('tab-active-dark');
+            }
             
             // 根据标签切换模式
             switch (tabName) {
@@ -1465,15 +1490,15 @@
             // 导航按钮
             prevBtn.addEventListener('click', () => {
                 if (currentQuestionIndex > 0) {
+                    isSwiping = false; // 重置滑动标志
                     currentQuestionIndex--;
                     showQuestion(currentQuestionIndex);
-                    updateButtonStates();
-                    renderQuestionNav();
                 }
             });
             
             nextBtn.addEventListener('click', () => {
                 if (unAnsweredQuestions.length > 0) {
+                    isSwiping = false; // 重置滑动标志
                     let nextIndex;
                     if (isRandomOrder) {
                         // 乱序模式：从未做的题目中随机选择一个
@@ -1487,8 +1512,6 @@
                         }
                     }
                     showQuestion(nextIndex);
-                    updateButtonStates();
-                    renderQuestionNav();
                 }
             });
             
@@ -1546,6 +1569,26 @@
             currentLanguage = currentLanguage === 'zh' ? 'en' : 'zh';
             updateUI();
             document.getElementById('language-text').textContent = currentLanguage === 'zh' ? '中文' : 'English';
+            
+            // 根据当前模式重新渲染页面内容
+            if (quizMode === 'custom' || quizMode === 'edit') {
+                // 导题练习或编辑模式，重新渲染题库列表
+                showQuizBankList();
+            } else if (quizMode === 'review') {
+                // 错题复习模式，重新渲染错题列表
+                reviewMistakes();
+            } else if (quizMode === 'random' && originalQuestions.length > 0) {
+                // 练习模式，重新渲染题目和导航
+                renderQuestionNav();
+                showQuestion(currentQuestionIndex);
+            } else if (quizMode === 'random') {
+                // 练习模式，重新渲染题目和导航
+                renderQuestionNav();
+                showQuestion(currentQuestionIndex);
+            }
+            
+            // 重新渲染题目导航（无论当前是什么模式）
+            renderQuestionNav();
         }
 
         // 暗黑模式切换功能
@@ -1684,15 +1727,33 @@
                 // 调整进度统计卡片内的文本颜色
                 const statsTexts = statsCard.querySelectorAll('h3, p, span');
                 statsTexts.forEach(text => {
+                    // 检查是否是特殊颜色的元素（正确、错误、收藏、跳过）
+                    const isSpecialColor = text.id === 'correct-count' || text.id === 'wrong-count' || text.id === 'collected-count' || text.id === 'skipped-count';
+                    
                     if (isDarkMode) {
-                        text.classList.add('text-white');
-                        text.classList.remove('text-gray-800', 'text-gray-600');
+                        if (!isSpecialColor) {
+                            text.classList.add('text-white');
+                            text.classList.remove('text-gray-800', 'text-gray-600');
+                        }
                     } else {
-                        text.classList.remove('text-white');
-                        if (text.tagName === 'H3') {
-                            text.classList.add('text-gray-800');
+                        if (!isSpecialColor) {
+                            text.classList.remove('text-white');
+                            if (text.tagName === 'H3') {
+                                text.classList.add('text-gray-800');
+                            } else {
+                                text.classList.add('text-gray-600');
+                            }
                         } else {
-                            text.classList.add('text-gray-600');
+                            // 对于特殊颜色的元素，确保它们的颜色类被保留
+                            if (text.id === 'correct-count') {
+                                text.classList.add('text-success');
+                            } else if (text.id === 'wrong-count') {
+                                text.classList.add('text-danger');
+                            } else if (text.id === 'collected-count') {
+                                text.classList.add('text-primary');
+                            } else if (text.id === 'skipped-count') {
+                                text.classList.add('text-warning');
+                            }
                         }
                     }
                 });
@@ -1812,13 +1873,33 @@
             
             // 更新文本
             document.getElementById('language-text').textContent = currentLanguage === 'zh' ? '中文' : 'English';
-            document.getElementById('theme-text').textContent = isDarkMode ? '浅色模式' : '暗黑模式';
+            document.getElementById('theme-text').textContent = isDarkMode ? t('lightMode') : t('darkMode');
             
             // 更新主题切换按钮，保持响应式设计
-            document.getElementById('theme-toggle').innerHTML = isDarkMode ? '<i class="fa fa-sun-o"></i><span id="theme-text" class="hidden md:inline ml-2">浅色模式</span>' : '<i class="fa fa-moon-o"></i><span id="theme-text" class="hidden md:inline ml-2">暗黑模式</span>';
+            document.getElementById('theme-toggle').innerHTML = isDarkMode ? `<i class="fa fa-sun-o"></i><span id="theme-text" class="hidden md:inline ml-2">${t('lightMode')}</span>` : `<i class="fa fa-moon-o"></i><span id="theme-text" class="hidden md:inline ml-2">${t('darkMode')}</span>`;
             
             // 更新UI
             updateUI();
+            
+            // 根据当前模式重新渲染页面内容
+            if (quizMode === 'custom' || quizMode === 'edit') {
+                // 导题练习或编辑模式，重新渲染题库列表
+                showQuizBankList();
+            } else if (quizMode === 'review') {
+                // 错题复习模式，重新渲染错题列表
+                reviewMistakes();
+            } else if (quizMode === 'random' && originalQuestions.length > 0) {
+                // 练习模式，重新渲染题目和导航
+                renderQuestionNav();
+                showQuestion(currentQuestionIndex);
+            } else if (quizMode === 'random') {
+                // 练习模式，重新渲染题目和导航
+                renderQuestionNav();
+                showQuestion(currentQuestionIndex);
+            }
+            
+            // 重新渲染题目导航（无论当前是什么模式）
+            renderQuestionNav();
             
             // 重新应用暗黑模式样式
             setTimeout(() => {
@@ -1908,6 +1989,16 @@
                     <span class="block md:hidden">${getMobileText(t('practice'))}</span>
                     <span class="hidden md:block">${t('practice')}</span>
                 `;
+                // 保持标签样式
+                if (practiceTab.classList.contains('tab-active')) {
+                    if (isDarkMode) {
+                        practiceTab.classList.add('tab-active-dark');
+                    }
+                } else {
+                    if (isDarkMode) {
+                        practiceTab.classList.add('tab-inactive-dark');
+                    }
+                }
             }
             const reviewTab = document.getElementById('review-tab');
             if (reviewTab) {
@@ -1915,6 +2006,16 @@
                     <span class="block md:hidden">${getMobileText(t('review'))}</span>
                     <span class="hidden md:block">${t('review')}</span>
                 `;
+                // 保持标签样式
+                if (reviewTab.classList.contains('tab-active')) {
+                    if (isDarkMode) {
+                        reviewTab.classList.add('tab-active-dark');
+                    }
+                } else {
+                    if (isDarkMode) {
+                        reviewTab.classList.add('tab-inactive-dark');
+                    }
+                }
             }
             const customTab = document.getElementById('custom-tab');
             if (customTab) {
@@ -1922,6 +2023,16 @@
                     <span class="block md:hidden">${getMobileText(t('custom'))}</span>
                     <span class="hidden md:block">${t('custom')}</span>
                 `;
+                // 保持标签样式
+                if (customTab.classList.contains('tab-active')) {
+                    if (isDarkMode) {
+                        customTab.classList.add('tab-active-dark');
+                    }
+                } else {
+                    if (isDarkMode) {
+                        customTab.classList.add('tab-inactive-dark');
+                    }
+                }
             }
             const editTab = document.getElementById('edit-tab');
             if (editTab) {
@@ -1929,9 +2040,19 @@
                     <span class="block md:hidden">${getMobileText(t('edit'))}</span>
                     <span class="hidden md:block">${t('edit')}</span>
                 `;
+                // 保持标签样式
+                if (editTab.classList.contains('tab-active')) {
+                    if (isDarkMode) {
+                        editTab.classList.add('tab-active-dark');
+                    }
+                } else {
+                    if (isDarkMode) {
+                        editTab.classList.add('tab-inactive-dark');
+                    }
+                }
             }
             
-            // 更新按钮
+            // 更新按钮、顺序/乱序按钮、统计信息和题目导航
             collectBtn.innerHTML = collectedQuestions.includes(currentQuestionIndex) 
                 ? `<i class="fa fa-star mr-2 text-warning"></i>${t('collected')}` 
                 : `<i class="fa fa-star-o mr-2"></i>${t('collect')}`;
@@ -1940,18 +2061,24 @@
             prevBtn.innerHTML = `<i class="fa fa-arrow-left mr-2"></i>${t('prev')}`;
             nextBtn.innerHTML = `<i class="fa fa-arrow-right mr-2"></i>${t('next')}`;
             
-            // 更新顺序/乱序按钮
             updateOrderButton();
             
-            // 更新统计信息
-            document.getElementById('question-count').textContent = `${t('totalQuestions')}: ${originalQuestions.length}`;
-            document.getElementById('current-question-index').textContent = `${t('currentQuestion')}: ${currentQuestionIndex + 1}/${originalQuestions.length}`;
+            // 仅在练习模式下更新统计信息和题目导航
+            if (quizMode === 'random') {
+                document.getElementById('question-count').textContent = `${t('totalQuestions')}: ${originalQuestions.length}`;
+                document.getElementById('current-question-index').textContent = `${t('currentQuestion')}: ${currentQuestionIndex + 1}/${originalQuestions.length}`;
+                renderQuestionNav();
+                showQuestion(currentQuestionIndex);
+            }
             
-            // 更新题目导航
-            renderQuestionNav();
-            
-            // 更新当前题目
-            showQuestion(currentQuestionIndex);
+            // 更新进度统计和题目导航的文本
+            document.getElementById('progress-title').textContent = t('progress');
+            document.getElementById('completion-rate-label').textContent = t('completionRate');
+            document.getElementById('correct-label').textContent = t('correct');
+            document.getElementById('wrong-label').textContent = t('wrong');
+            document.getElementById('collected-label').textContent = t('collected');
+            document.getElementById('skipped-label').textContent = t('skipped');
+            document.getElementById('question-nav-title').textContent = t('questionNav');
         }
 
         // 启动应用
