@@ -1314,7 +1314,7 @@
             const quizData = {
                 name: selectedBank.name,
                 source: selectedBank.source,
-                questions: selectedBank.questions || []
+                questions: selectedBank.source === 'local' ? originalQuestions : (selectedBank.questions || [])
             };
             
             // 将题库数据转换为JSON字符串
@@ -1416,7 +1416,7 @@
                             <div class="flex items-center justify-between p-4 rounded-lg ${borderColor} ${bgColor} option-hover">
                                 <div>
                                     <h3 class="font-medium ${textColor}">${bank.name}</h3>
-                                    <p class="text-sm ${textSecondaryColor}">${bank.questions ? bank.questions.length : 0}${t('question')} · ${bank.source === 'local' ? t('local') : t('uploaded')}</p>
+                                    <p class="text-sm ${textSecondaryColor}">${bank.source === 'local' ? (originalQuestions ? originalQuestions.length : 0) : (bank.questions ? bank.questions.length : 0)}${t('question')} · ${bank.source === 'local' ? t('local') : t('uploaded')}</p>
                                 </div>
                                 <div class="flex space-x-2">
                                     <button class="btn-primary px-3 py-1 text-sm" onclick="switchToQuizBank(${index})">
