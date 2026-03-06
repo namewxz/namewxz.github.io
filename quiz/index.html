@@ -359,6 +359,8 @@
                         currentQuestion: '当前',
                         completionRate: '完成率',
                         noExplanation: '暂无解析',
+                        noWrongAnswers: '太棒了！目前没有错题需要复习。',
+                        backToPractice: '返回练习',
                         correctAnswer: '回答正确！',
                         wrongAnswer: '回答错误，你的答案是 {userAnswer}，正确答案是 {correctAnswer}',
                         selectOption: '请选择至少一个选项',
@@ -394,7 +396,8 @@
                         darkMode: '暗黑模式',
                         copy: '复制',
                         download: '下载',
-                        close: '关闭'
+                        close: '关闭',
+                        resetProgress: '重置进度'
                     },
                     en: {
                         appTitle: 'Smart Quiz App',
@@ -425,6 +428,8 @@
                         currentQuestion: 'Current',
                         completionRate: 'Completion Rate',
                         noExplanation: 'No explanation',
+                        noWrongAnswers: 'Great! No wrong answers to review at the moment.',
+                        backToPractice: 'Back to Practice',
                         correctAnswer: 'Correct!',
                         wrongAnswer: 'Wrong, your answer is {userAnswer}, correct answer is {correctAnswer}',
                         selectOption: 'Please select at least one option',
@@ -460,7 +465,8 @@
                         darkMode: 'Dark Mode',
                         copy: 'Copy',
                         download: 'Download',
-                        close: 'Close'
+                        close: 'Close',
+                        resetProgress: 'Reset Progress'
                     }
                 };
             }
@@ -493,6 +499,7 @@
         let quizMode = 'random'; // 'random', 'review', 'custom'
         let isRandomOrder = false; // 控制顺序/乱序
         let unAnsweredQuestions = []; // 未做的题目索引
+        let answeredQuestions = []; // 已回答的题目索引，用于乱序模式下的上一题导航
         let currentLanguage = 'zh'; // 当前语言，默认为中文
         let isDarkMode = false; // 是否开启暗黑模式
         let isSwiping = false; // 防止连续滑动的标志
@@ -599,21 +606,56 @@
 
         // 初始化测验
         function initializeQuiz() {
-            // 重置状态
-            currentQuestionIndex = 0;
-            userAnswers = new Array(questions.length).fill(null);
-            collectedQuestions = JSON.parse(localStorage.getItem('collectedQuestions') || '[]');
-            quizStats = {
-                total: questions.length,
-                completed: 0,
-                correct: 0,
-                wrong: 0,
-                collected: collectedQuestions.length,
-                skipped: 0
-            };
+            // 尝试加载保存的进度
+            const savedProgress = localStorage.getItem('quizProgress');
+            let loadedProgress = false;
             
-            // 初始化未做的题目索引
-            unAnsweredQuestions = Array.from({length: questions.length}, (_, i) => i);
+            if (savedProgress) {
+                try {
+                    const progressData = JSON.parse(savedProgress);
+                    // 检查进度是否有效（题目数量是否匹配）
+                    if (progressData.userAnswers && progressData.userAnswers.length === questions.length) {
+                        // 加载保存的状态
+                        currentQuestionIndex = progressData.currentQuestionIndex || 0;
+                        userAnswers = progressData.userAnswers;
+                        quizStats = progressData.quizStats || {
+                            total: questions.length,
+                            completed: 0,
+                            correct: 0,
+                            wrong: 0,
+                            collected: 0,
+                            skipped: 0
+                        };
+                        unAnsweredQuestions = progressData.unAnsweredQuestions || Array.from({length: questions.length}, (_, i) => i);
+                        answeredQuestions = progressData.answeredQuestions || [];
+                        isRandomOrder = progressData.isRandomOrder || false;
+                        currentQuizBankIndex = progressData.currentQuizBankIndex || 0;
+                        loadedProgress = true;
+                    }
+                } catch (error) {
+                    console.error('加载进度失败:', error);
+                }
+            }
+            
+            // 如果没有加载到有效进度，重置状态
+            if (!loadedProgress) {
+                currentQuestionIndex = 0;
+                userAnswers = new Array(questions.length).fill(null);
+                collectedQuestions = JSON.parse(localStorage.getItem('collectedQuestions') || '[]');
+                quizStats = {
+                    total: questions.length,
+                    completed: 0,
+                    correct: 0,
+                    wrong: 0,
+                    collected: collectedQuestions.length,
+                    skipped: 0
+                };
+                
+                // 初始化未做的题目索引
+                unAnsweredQuestions = Array.from({length: questions.length}, (_, i) => i);
+                // 清空已回答的题目索引
+                answeredQuestions = [];
+            }
 
             // 更新UI
             updateStats();
@@ -662,15 +704,41 @@
 
         // 渲染当前题目
         function showQuestion(index) {
-            if (index < 0 || index >= originalQuestions.length) return;
-
+            let question;
+            let userAnswer;
+            let isAnswered;
+            let isCollected;
+            let originalIndex;
+            
             // 更新全局的currentQuestionIndex变量
             currentQuestionIndex = index;
             
-            const question = originalQuestions[index];
-            const userAnswer = userAnswers[index];
-            const isAnswered = userAnswer !== null && userAnswer !== 'skipped';
-            const isCollected = collectedQuestions.includes(index);
+            if (quizMode === 'review') {
+                // 错题复习模式
+                if (index < 0 || index >= questions.length) return;
+                
+                question = questions[index];
+                userAnswer = userAnswers[index];
+                isAnswered = userAnswer !== null && userAnswer !== 'skipped';
+                
+                // 获取原始索引
+                originalIndex = wrongIndexMap[index];
+                isCollected = collectedQuestions.includes(originalIndex);
+            } else {
+                // 练习模式
+                if (index < 0 || index >= originalQuestions.length) return;
+                
+                // 如果当前题目不在已回答数组中，添加进去（避免重复添加）
+                if (!answeredQuestions.includes(index)) {
+                    answeredQuestions.push(index);
+                }
+                
+                question = originalQuestions[index];
+                userAnswer = userAnswers[index];
+                isAnswered = userAnswer !== null && userAnswer !== 'skipped';
+                isCollected = collectedQuestions.includes(index);
+                originalIndex = index;
+            }
             
             // 检查题目类型，如果答案长度大于1，即使类型是单选也视为多选
             let questionType = question.类型;
@@ -679,7 +747,13 @@
             }
 
             // 更新当前题目索引显示
-            currentQuestionIndexEl.textContent = `${t('currentQuestion')}: ${index + 1}/${originalQuestions.length}`;
+            let totalQuestions;
+            if (quizMode === 'review') {
+                totalQuestions = questions.length;
+            } else {
+                totalQuestions = originalQuestions.length;
+            }
+            currentQuestionIndexEl.textContent = `${t('currentQuestion')}: ${index + 1}/${totalQuestions}`;
 
             // 渲染题目内容
             const questionTypeClass = isDarkMode ? 'bg-gray-700 text-white' : 'bg-gray-100 text-gray-600';
@@ -692,7 +766,7 @@
                 </div>
                 
                 <div class="space-y-3 mb-6">
-                    ${renderOptions(question, userAnswer, isAnswered, questionType)}
+                    ${renderOptions(question, userAnswer, isAnswered, questionType, quizMode, currentQuestionIndex)}
                 </div>
             `;
             
@@ -729,15 +803,25 @@
                 ? `<i class="fa fa-star mr-2 text-warning"></i>${t('collected')}` 
                 : `<i class="fa fa-star-o mr-2"></i>${t('collect')}`;
 
-            // 如果已经回答过且不是跳过，显示解析
-            if (isAnswered && userAnswer !== 'skipped') {
+            // 显示解析的条件：
+            // 1. 练习模式下已回答
+            // 2. 错题复习模式下已提交答案
+            let showExpl = false;
+            if (quizMode === 'review') {
+                showExpl = reviewSubmittedQuestions.includes(currentQuestionIndex);
+            } else {
+                showExpl = isAnswered && userAnswer !== 'skipped';
+            }
+            
+            if (showExpl) {
                 showExplanation(question, userAnswer);
             } else {
                 explanationContainer.classList.add('hidden');
             }
 
             // 添加选项点击事件
-            if (!isAnswered) {
+            // 只有在未回答或在错题复习模式下且题目未被锁定时才允许点击选项
+            if (!isAnswered || (quizMode === 'review' && !lockedQuestions.includes(currentQuestionIndex))) {
                 const options = questionContainer.querySelectorAll('.option-item');
                 options.forEach(option => {
                     // 应用暗黑模式样式
@@ -751,75 +835,78 @@
                             options.forEach(opt => opt.classList.remove('ring-2', 'ring-primary'));
                             option.classList.add('ring-2', 'ring-primary');
                             
-                            // 检查是否是正确答案
-                            const selectedOption = option.dataset.option;
-                            // 检查之前是否是跳过的题目
-                            const wasSkipped = userAnswers[currentQuestionIndex] === 'skipped';
-                            
-                            if (selectedOption === question.答案) {
-                                // 记录用户答案
-                                userAnswers[currentQuestionIndex] = selectedOption;
+                            // 在练习模式下才自动提交答案
+                            if (quizMode !== 'review') {
+                                // 检查是否是正确答案
+                                const selectedOption = option.dataset.option;
+                                // 检查之前是否是跳过的题目
+                                const wasSkipped = userAnswers[currentQuestionIndex] === 'skipped';
                                 
-                                // 从unAnsweredQuestions数组中移除当前题目索引
-                                const currentIndex = unAnsweredQuestions.indexOf(currentQuestionIndex);
-                                if (currentIndex > -1) {
-                                    unAnsweredQuestions.splice(currentIndex, 1);
-                                }
-                                
-                                // 更新统计
-                                if (!wasSkipped) {
-                                    quizStats.completed++;
-                                } else {
-                                    // 如果之前是跳过的题目，减少跳过计数
-                                    quizStats.skipped--;
-                                }
-                                quizStats.correct++;
-                                updateStats();
-                                
-                                // 保存到本地存储
-                                saveProgress();
-                                
-                                // 跳转到下一题
-                                if (unAnsweredQuestions.length > 0) {
-                                    let nextIndex;
-                                    if (isRandomOrder) {
-                                        // 乱序模式：从未做的题目中随机选择一个
-                                        const randomIndex = Math.floor(Math.random() * unAnsweredQuestions.length);
-                                        nextIndex = unAnsweredQuestions[randomIndex];
-                                    } else {
-                                        // 顺序模式：按顺序选择下一个
-                                        nextIndex = currentQuestionIndex + 1;
-                                        if (nextIndex >= originalQuestions.length) {
-                                            nextIndex = originalQuestions.length - 1;
-                                        }
+                                if (selectedOption === question.答案) {
+                                    // 记录用户答案
+                                    userAnswers[currentQuestionIndex] = selectedOption;
+                                    
+                                    // 从unAnsweredQuestions数组中移除当前题目索引
+                                    const currentIndex = unAnsweredQuestions.indexOf(currentQuestionIndex);
+                                    if (currentIndex > -1) {
+                                        unAnsweredQuestions.splice(currentIndex, 1);
                                     }
-                                    showQuestion(nextIndex);
-                                }
-                            } else {
-                                // 记录用户答案
-                                userAnswers[currentQuestionIndex] = selectedOption;
-                                
-                                // 从unAnsweredQuestions数组中移除当前题目索引
-                                const currentIndex = unAnsweredQuestions.indexOf(currentQuestionIndex);
-                                if (currentIndex > -1) {
-                                    unAnsweredQuestions.splice(currentIndex, 1);
-                                }
-                                
-                                // 更新统计
-                                if (!wasSkipped) {
-                                    quizStats.completed++;
+                                    
+                                    // 更新统计
+                                    if (!wasSkipped) {
+                                        quizStats.completed++;
+                                    } else {
+                                        // 如果之前是跳过的题目，减少跳过计数
+                                        quizStats.skipped--;
+                                    }
+                                    quizStats.correct++;
+                                    updateStats();
+                                    
+                                    // 保存到本地存储
+                                    saveProgress();
+                                    
+                                    // 跳转到下一题
+                                    if (unAnsweredQuestions.length > 0) {
+                                        let nextIndex;
+                                        if (isRandomOrder) {
+                                            // 乱序模式：从未做的题目中随机选择一个
+                                            const randomIndex = Math.floor(Math.random() * unAnsweredQuestions.length);
+                                            nextIndex = unAnsweredQuestions[randomIndex];
+                                        } else {
+                                            // 顺序模式：按顺序选择下一个
+                                            nextIndex = currentQuestionIndex + 1;
+                                            if (nextIndex >= originalQuestions.length) {
+                                                nextIndex = originalQuestions.length - 1;
+                                            }
+                                        }
+                                        showQuestion(nextIndex);
+                                    }
                                 } else {
-                                    // 如果之前是跳过的题目，减少跳过计数
-                                    quizStats.skipped--;
+                                    // 记录用户答案
+                                    userAnswers[currentQuestionIndex] = selectedOption;
+                                    
+                                    // 从unAnsweredQuestions数组中移除当前题目索引
+                                    const currentIndex = unAnsweredQuestions.indexOf(currentQuestionIndex);
+                                    if (currentIndex > -1) {
+                                        unAnsweredQuestions.splice(currentIndex, 1);
+                                    }
+                                    
+                                    // 更新统计
+                                    if (!wasSkipped) {
+                                        quizStats.completed++;
+                                    } else {
+                                        // 如果之前是跳过的题目，减少跳过计数
+                                        quizStats.skipped--;
+                                    }
+                                    quizStats.wrong++;
+                                    updateStats();
+                                    
+                                    // 保存到本地存储
+                                    saveProgress();
+                                    
+                                    // 显示当前题目（带有答案的状态）
+                                    showQuestion(currentQuestionIndex);
                                 }
-                                quizStats.wrong++;
-                                updateStats();
-                                
-                                // 保存到本地存储
-                                saveProgress();
-                                
-                                // 显示当前题目（带有答案的状态）
-                                showQuestion(currentQuestionIndex);
                             }
                         } 
                         // 多选逻辑
@@ -892,7 +979,7 @@
         }
 
         // 渲染选项
-        function renderOptions(question, userAnswer, isAnswered, questionType) {
+        function renderOptions(question, userAnswer, isAnswered, questionType, quizMode, index) {
             let optionsHtml = '';
             const options = [];
             
@@ -914,14 +1001,44 @@
 
             // 渲染每个选项
             options.forEach(option => {
-                const isSelected = userAnswer && userAnswer.includes(option.letter);
-                const isCorrect = actualIsAnswered && question.答案.includes(option.letter);
-                const isWrong = actualIsAnswered && isSelected && !question.答案.includes(option.letter);
+                let isSelected;
+                let isCorrect;
+                let isWrong;
+                
+                if (quizMode === 'review') {
+                    // 在错题复习模式下
+                    const isSubmitted = reviewSubmittedQuestions.includes(index);
+                    if (isSubmitted) {
+                        // 已提交答案，显示答案状态
+                        isSelected = userAnswer && userAnswer.includes(option.letter);
+                        isCorrect = question.答案.includes(option.letter);
+                        isWrong = isSelected && !question.答案.includes(option.letter);
+                    } else {
+                        // 未提交答案，不显示上一次的选择状态
+                        isSelected = false;
+                        isCorrect = false;
+                        isWrong = false;
+                    }
+                } else {
+                    // 练习模式
+                    isSelected = userAnswer && userAnswer.includes(option.letter);
+                    isCorrect = actualIsAnswered && question.答案.includes(option.letter);
+                    isWrong = actualIsAnswered && isSelected && !question.答案.includes(option.letter);
+                }
 
-                let optionClass = 'option-item p-4 rounded-lg border option-hover cursor-pointer ';
+                let optionClass = 'option-item p-4 rounded-lg border option-hover ';
+                
+                // 只有在未回答或在错题复习模式下且题目未被锁定时才允许点击
+                if (!actualIsAnswered || (quizMode === 'review' && !lockedQuestions.includes(index))) {
+                    optionClass += 'cursor-pointer ';
+                } else {
+                    optionClass += 'cursor-default ';
+                }
                 
                 if (isDarkMode) {
-                    if (actualIsAnswered) {
+                    let isReviewSubmitted = quizMode === 'review' && reviewSubmittedQuestions.includes(index);
+                    if ((actualIsAnswered && quizMode !== 'review') || isReviewSubmitted) {
+                        // 在练习模式下已回答或在错题复习模式下已提交
                         if (isCorrect) {
                             optionClass += 'bg-green-900 border-green-700 text-white';
                         } else if (isWrong) {
@@ -930,10 +1047,13 @@
                             optionClass += 'bg-gray-800 border-gray-700 text-white';
                         }
                     } else {
+                        // 未回答或在错题复习模式下未提交
                         optionClass += isSelected ? 'bg-blue-900 border-blue-700 text-white' : 'bg-gray-800 border-gray-700 text-white';
                     }
                 } else {
-                    if (actualIsAnswered) {
+                    let isReviewSubmitted = quizMode === 'review' && reviewSubmittedQuestions.includes(index);
+                    if ((actualIsAnswered && quizMode !== 'review') || isReviewSubmitted) {
+                        // 在练习模式下已回答或在错题复习模式下已提交
                         if (isCorrect) {
                             optionClass += 'bg-success-light border-success';
                         } else if (isWrong) {
@@ -942,19 +1062,30 @@
                             optionClass += 'bg-white border-gray-200';
                         }
                     } else {
+                        // 未回答或在错题复习模式下未提交
                         optionClass += isSelected ? 'bg-primary-light border-primary' : 'bg-white border-gray-300';
                     }
                 }
 
                 let circleClass = '';
                 if (isDarkMode) {
-                    circleClass = actualIsAnswered 
-                        ? (isCorrect ? 'bg-green-700 text-white' : isWrong ? 'bg-red-700 text-white' : 'bg-gray-700 text-gray-300')
-                        : isSelected ? 'bg-primary text-white' : 'bg-gray-300 text-gray-700';
+                    let isReviewSubmitted = quizMode === 'review' && reviewSubmittedQuestions.includes(index);
+                    if ((actualIsAnswered && quizMode !== 'review') || isReviewSubmitted) {
+                        // 在练习模式下已回答或在错题复习模式下已提交
+                        circleClass = isCorrect ? 'bg-green-700 text-white' : isWrong ? 'bg-red-700 text-white' : 'bg-gray-700 text-gray-300';
+                    } else {
+                        // 未回答或在错题复习模式下未提交
+                        circleClass = isSelected ? 'bg-primary text-white' : 'bg-gray-300 text-gray-700';
+                    }
                 } else {
-                    circleClass = actualIsAnswered 
-                        ? (isCorrect ? 'bg-success text-white' : isWrong ? 'bg-danger text-white' : 'bg-gray-200 text-gray-600')
-                        : isSelected ? 'bg-primary text-white' : 'bg-gray-300 text-gray-700';
+                    let isReviewSubmitted = quizMode === 'review' && reviewSubmittedQuestions.includes(index);
+                    if ((actualIsAnswered && quizMode !== 'review') || isReviewSubmitted) {
+                        // 在练习模式下已回答或在错题复习模式下已提交
+                        circleClass = isCorrect ? 'bg-success text-white' : isWrong ? 'bg-danger text-white' : 'bg-gray-200 text-gray-600';
+                    } else {
+                        // 未回答或在错题复习模式下未提交
+                        circleClass = isSelected ? 'bg-primary text-white' : 'bg-gray-300 text-gray-700';
+                    }
                 }
 
                 optionsHtml += `
@@ -1004,13 +1135,28 @@
 
         // 更新按钮状态
         function updateButtonStates() {
-            prevBtn.disabled = currentQuestionIndex === 0;
-            nextBtn.disabled = currentQuestionIndex === originalQuestions.length - 1;
+            // 上一题按钮状态
+            if (isRandomOrder) {
+                // 乱序模式：基于已回答的题目数量
+                prevBtn.disabled = answeredQuestions.length <= 1;
+            } else {
+                // 顺序模式：基于当前索引
+                prevBtn.disabled = currentQuestionIndex === 0;
+            }
+            
+            // 下一题按钮状态：基于未回答的题目数量
+            nextBtn.disabled = unAnsweredQuestions.length === 0;
             
             prevBtn.classList.toggle('opacity-50', prevBtn.disabled);
             nextBtn.classList.toggle('opacity-50', nextBtn.disabled);
             
-            const isAnswered = userAnswers[currentQuestionIndex] !== null && userAnswers[currentQuestionIndex] !== 'skipped';
+            let isAnswered;
+            if (quizMode === 'review') {
+                // 在错题复习模式下，检查是否在当前模式下提交过答案
+                isAnswered = reviewSubmittedQuestions.includes(currentQuestionIndex);
+            } else {
+                isAnswered = userAnswers[currentQuestionIndex] !== null && userAnswers[currentQuestionIndex] !== 'skipped';
+            }
             submitBtn.disabled = isAnswered;
             submitBtn.classList.toggle('opacity-50', submitBtn.disabled);
             
@@ -1036,12 +1182,34 @@
         function renderQuestionNav() {
             questionNavEl.innerHTML = '';
             
-            for (let i = 0; i < originalQuestions.length; i++) {
-                const isAnswered = userAnswers[i] !== null;
-                const isSkipped = userAnswers[i] === 'skipped';
-                const isCorrect = isAnswered && !isSkipped && userAnswers[i] === originalQuestions[i].答案;
-                const isCurrent = i === currentQuestionIndex;
-                const isCollected = collectedQuestions.includes(i);
+            let totalQuestions;
+            if (quizMode === 'review') {
+                totalQuestions = questions.length;
+            } else {
+                totalQuestions = originalQuestions.length;
+            }
+            
+            for (let i = 0; i < totalQuestions; i++) {
+                let isAnswered;
+                let isSkipped;
+                let isCorrect;
+                let isCurrent = i === currentQuestionIndex;
+                let isCollected;
+                
+                if (quizMode === 'review') {
+                    // 错题复习模式
+                    isAnswered = userAnswers[i] !== null;
+                    isSkipped = userAnswers[i] === 'skipped';
+                    isCorrect = isAnswered && !isSkipped && userAnswers[i] === questions[i].答案;
+                    const originalIndex = wrongIndexMap[i];
+                    isCollected = collectedQuestions.includes(originalIndex);
+                } else {
+                    // 练习模式
+                    isAnswered = userAnswers[i] !== null;
+                    isSkipped = userAnswers[i] === 'skipped';
+                    isCorrect = isAnswered && !isSkipped && userAnswers[i] === originalQuestions[i].答案;
+                    isCollected = collectedQuestions.includes(i);
+                }
                 
                 let btnClass = 'w-8 h-8 rounded-full flex items-center justify-center text-sm font-medium transition-all duration-300 ';
                 
@@ -1097,6 +1265,12 @@
 
         // 提交答案
         function submitAnswer() {
+            // 检查是否已经回答过且不在错题复习模式
+            const isAnswered = userAnswers[currentQuestionIndex] !== null && userAnswers[currentQuestionIndex] !== 'skipped';
+            if (isAnswered && quizMode !== 'review') {
+                return; // 在练习模式下已经回答过的题目不允许重新提交
+            }
+            
             const selectedOptions = Array.from(questionContainer.querySelectorAll('.option-item.ring-2')).map(opt => opt.dataset.option);
             
             if (selectedOptions.length === 0) {
@@ -1106,8 +1280,22 @@
             
             // 对选项进行排序以确保顺序一致（针对多选题）
             const userAnswer = selectedOptions.sort().join('');
-            const correctAnswer = originalQuestions[currentQuestionIndex].答案;
-            let questionType = originalQuestions[currentQuestionIndex].类型;
+            
+            let correctAnswer;
+            let questionType;
+            let originalIndex;
+            
+            if (quizMode === 'review') {
+                // 错题复习模式
+                correctAnswer = questions[currentQuestionIndex].答案;
+                questionType = questions[currentQuestionIndex].类型;
+                originalIndex = wrongIndexMap[currentQuestionIndex];
+            } else {
+                // 练习模式
+                correctAnswer = originalQuestions[currentQuestionIndex].答案;
+                questionType = originalQuestions[currentQuestionIndex].类型;
+                originalIndex = currentQuestionIndex;
+            }
             
             // 检查题目类型，如果答案长度大于1，即使类型是单选也视为多选
             if (questionType === '单选' && correctAnswer.length > 1) {
@@ -1117,55 +1305,153 @@
             // 检查之前是否是跳过的题目
             const wasSkipped = userAnswers[currentQuestionIndex] === 'skipped';
             
+            // 检查之前是否已经回答过
+            const wasAnswered = userAnswers[currentQuestionIndex] !== null && userAnswers[currentQuestionIndex] !== 'skipped';
+            
+            // 保存之前的答案，用于错题复习模式下的统计更新
+            const previousAnswer = userAnswers[currentQuestionIndex];
+            
             userAnswers[currentQuestionIndex] = userAnswer;
             
             // 更新统计
             if (wasSkipped) {
                 // 如果之前是跳过的题目，减少跳过计数
                 quizStats.skipped--;
-            } else {
+            } else if (!wasAnswered) {
                 // 否则增加完成计数
                 quizStats.completed++;
+            } else if (quizMode === 'review') {
+                // 在错题复习模式下重新回答，更新统计
+                const wasCorrect = previousAnswer === correctAnswer;
+                if (wasCorrect) {
+                    quizStats.correct--;
+                } else {
+                    quizStats.wrong--;
+                }
             }
             
             const isCorrect = userAnswer === correctAnswer;
-            if (isCorrect) {
-                quizStats.correct++;
+            
+            if (quizMode === 'review') {
+                // 错题复习模式，标记当前题目为已提交
+                if (!reviewSubmittedQuestions.includes(currentQuestionIndex)) {
+                    reviewSubmittedQuestions.push(currentQuestionIndex);
+                }
+                
+                if (isCorrect) {
+                    // 选对了，先更新原始数据
+                    if (originalState) {
+                        originalState.userAnswers[originalIndex] = userAnswer;
+                        // 更新原始统计
+                        const wasWrong = originalState.userAnswers[originalIndex] !== originalQuestions[originalIndex].答案;
+                        if (wasWrong) {
+                            originalState.quizStats.wrong--;
+                            originalState.quizStats.correct++;
+                        }
+                        
+                        // 同步更新当前 quizStats 显示统计数据
+                        quizStats = {...originalState.quizStats};
+                        
+                        // 立即保存到本地存储，确保刷新页面后数据不丢失
+                        const progressData = {
+                            currentQuestionIndex: originalState.currentQuestionIndex,
+                            userAnswers: originalState.userAnswers,
+                            quizStats: originalState.quizStats,
+                            unAnsweredQuestions: unAnsweredQuestions,
+                            answeredQuestions: answeredQuestions,
+                            isRandomOrder: isRandomOrder,
+                            currentQuizBankIndex: currentQuizBankIndex,
+                            timestamp: Date.now()
+                        };
+                        localStorage.setItem('quizProgress', JSON.stringify(progressData));
+                    }
+                    
+                    // 保存当前要移除的索引
+                    const removedIndex = currentQuestionIndex;
+                    
+                    // 从错题列表中移除这道题
+                    questions.splice(removedIndex, 1);
+                    userAnswers.splice(removedIndex, 1);
+                    wrongIndexMap.splice(removedIndex, 1);
+                    
+                    // 调整 reviewSubmittedQuestions 数组中大于 removedIndex 的索引
+                    reviewSubmittedQuestions = reviewSubmittedQuestions
+                        .filter(idx => idx !== removedIndex)
+                        .map(idx => idx > removedIndex ? idx - 1 : idx);
+                    
+                    // 调整 lockedQuestions 数组中大于 removedIndex 的索引
+                    lockedQuestions = lockedQuestions
+                        .filter(idx => idx !== removedIndex)
+                        .map(idx => idx > removedIndex ? idx - 1 : idx);
+                    
+                    // 更新进度统计显示
+                    updateStats();
+                    
+                    // 检查是否还有错题
+                    if (questions.length === 0) {
+                        // 没有错题了，显示提示信息
+                        showNoWrongAnswersMessage();
+                        return;
+                    } else {
+                        // 还有错题，调整当前索引
+                        if (currentQuestionIndex >= questions.length) {
+                            currentQuestionIndex = questions.length - 1;
+                        }
+                        quizStats.total = questions.length;
+                    }
+                } else {
+                    // 在错题复习模式下又选错了，锁定这道题
+                    if (!lockedQuestions.includes(currentQuestionIndex)) {
+                        lockedQuestions.push(currentQuestionIndex);
+                    }
+                    quizStats.wrong++;
+                }
             } else {
-                quizStats.wrong++;
+                // 练习模式
+                if (isCorrect) {
+                    quizStats.correct++;
+                } else {
+                    quizStats.wrong++;
+                }
             }
             
             updateStats();
-            showQuestion(currentQuestionIndex);
+            if (quizMode !== 'review' || questions.length > 0) {
+                showQuestion(currentQuestionIndex);
+            }
             updateButtonStates();
             renderQuestionNav();
             
-            // 保存到本地存储
-            saveProgress();
-            
-            // 从unAnsweredQuestions数组中移除当前题目索引
-            const currentIndex = unAnsweredQuestions.indexOf(currentQuestionIndex);
-            if (currentIndex > -1) {
-                unAnsweredQuestions.splice(currentIndex, 1);
+            // 保存到本地存储（只在练习模式下保存）
+            if (quizMode !== 'review') {
+                saveProgress();
             }
             
-            // 功能优化：当选对了（只有多选题无论对错都要点“提交答案”）的时候，直接跳转到下一题
-            if (isCorrect && questionType !== '多选') {
-                if (unAnsweredQuestions.length > 0) {
-                    // 跳转到下一题
-                    let nextIndex;
-                    if (isRandomOrder) {
-                        // 乱序模式：从未做的题目中随机选择一个
-                        const randomIndex = Math.floor(Math.random() * unAnsweredQuestions.length);
-                        nextIndex = unAnsweredQuestions[randomIndex];
-                    } else {
-                        // 顺序模式：按顺序选择下一个
-                        nextIndex = currentQuestionIndex + 1;
-                        if (nextIndex >= originalQuestions.length) {
-                            nextIndex = originalQuestions.length - 1;
+            // 从unAnsweredQuestions数组中移除当前题目索引（只在练习模式下）
+            if (quizMode !== 'review') {
+                const currentIndex = unAnsweredQuestions.indexOf(currentQuestionIndex);
+                if (currentIndex > -1) {
+                    unAnsweredQuestions.splice(currentIndex, 1);
+                }
+                
+                // 功能优化：当选对了（只有多选题无论对错都要点“提交答案”）的时候，直接跳转到下一题
+                if (isCorrect && questionType !== '多选') {
+                    if (unAnsweredQuestions.length > 0) {
+                        // 跳转到下一题
+                        let nextIndex;
+                        if (isRandomOrder) {
+                            // 乱序模式：从未做的题目中随机选择一个
+                            const randomIndex = Math.floor(Math.random() * unAnsweredQuestions.length);
+                            nextIndex = unAnsweredQuestions[randomIndex];
+                        } else {
+                            // 顺序模式：按顺序选择下一个
+                            nextIndex = currentQuestionIndex + 1;
+                            if (nextIndex >= originalQuestions.length) {
+                                nextIndex = originalQuestions.length - 1;
+                            }
                         }
+                        showQuestion(nextIndex);
                     }
-                    showQuestion(nextIndex);
                 }
             }
         }
@@ -1189,6 +1475,7 @@
             
             // 保存到本地存储
             localStorage.setItem('collectedQuestions', JSON.stringify(collectedQuestions));
+            saveProgress();
         }
 
         // 跳过当前题目
@@ -1228,8 +1515,37 @@
 
         // 保存进度到本地存储
         function saveProgress() {
-            localStorage.setItem('userAnswers', JSON.stringify(userAnswers));
-            localStorage.setItem('quizStats', JSON.stringify(quizStats));
+            // 只有在非错题复习模式下才保存进度
+            if (quizMode !== 'review') {
+                const progressData = {
+                    currentQuestionIndex: currentQuestionIndex,
+                    userAnswers: userAnswers,
+                    quizStats: quizStats,
+                    unAnsweredQuestions: unAnsweredQuestions,
+                    answeredQuestions: answeredQuestions,
+                    isRandomOrder: isRandomOrder,
+                    currentQuizBankIndex: currentQuizBankIndex,
+                    // 添加时间戳，用于判断进度是否过期
+                    timestamp: Date.now()
+                };
+                localStorage.setItem('quizProgress', JSON.stringify(progressData));
+            }
+        }
+        
+        // 重置题库进度
+        function resetProgress(bankIndex) {
+            if (confirm('确定要重置这个题库的进度吗？这将清除所有已回答的记录。')) {
+                // 清除本地存储中的进度数据
+                localStorage.removeItem('quizProgress');
+                localStorage.removeItem('userAnswers');
+                localStorage.removeItem('quizStats');
+                
+                // 显示重置成功提示
+                alert('进度已重置');
+                
+                // 重新渲染题库列表
+                showQuizBankList();
+            }
         }
         
         // 加载题库列表
@@ -1422,6 +1738,9 @@
                                     <button class="btn-primary px-3 py-1 text-sm" onclick="switchToQuizBank(${index})">
                                         ${t('startQuiz')}
                                     </button>
+                                    <button class="btn-secondary px-3 py-1 text-sm" onclick="resetProgress(${index})">
+                                        ${t('resetProgress')}
+                                    </button>
                                     <button class="btn-secondary px-3 py-1 text-sm" onclick="exportQuizBank(${index})">
                                         ${t('exportBank')}
                                     </button>
@@ -1514,40 +1833,81 @@
         }
 
         // 加载复习模式（错题集）
+        // 保存原始状态
+        let originalState = null;
+        // 保存锁定的题目索引
+        let lockedQuestions = [];
+        // 保存错题索引映射
+        let wrongIndexMap = [];
+        // 保存在错题复习模式下已经提交过答案的题目索引
+        let reviewSubmittedQuestions = [];
+        
+        // 显示没有错题的提示信息
+        function showNoWrongAnswersMessage() {
+            const textColor = isDarkMode ? 'text-white' : 'text-gray-700';
+            
+            questionContainer.innerHTML = `
+                <div class="text-center py-8">
+                    <i class="fa fa-check-circle text-success text-4xl mb-4"></i>
+                    <p class="${textColor}">` + t('noWrongAnswers') + `</p>
+                    <button id="back-to-practice" class="btn-primary mt-4">` + t('backToPractice') + `</button>
+                </div>
+            `;
+            const backBtn = document.getElementById('back-to-practice');
+            if (backBtn) {
+                backBtn.addEventListener('click', () => switchTab('practice'));
+            }
+            explanationContainer.classList.add('hidden');
+            renderQuestionNav();
+            updateButtonStates();
+        }
+        
         function loadReviewMode() {
+            // 重置锁定的题目数组
+            lockedQuestions = [];
+            // 重置错题索引映射
+            wrongIndexMap = [];
+            // 重置已提交答案的题目数组
+            reviewSubmittedQuestions = [];
+            
             const wrongQuestions = [];
             const wrongIndices = [];
             
             // 找出所有答错的题目
             userAnswers.forEach((answer, index) => {
-                if (answer !== null && answer !== 'skipped' && answer !== questions[index].答案) {
-                    wrongQuestions.push(questions[index]);
+                if (answer !== null && answer !== 'skipped' && answer !== originalQuestions[index].答案) {
+                    wrongQuestions.push(originalQuestions[index]);
                     wrongIndices.push(index);
+                    // 建立错题索引映射
+                    wrongIndexMap.push(index);
                 }
             });
             
             if (wrongQuestions.length === 0) {
-                questionContainer.innerHTML = `
-                    <div class="text-center py-8">
-                        <i class="fa fa-check-circle text-success text-4xl mb-4"></i>
-                        <p class="text-gray-700">太棒了！目前没有错题需要复习。</p>
-                        <button id="back-to-practice" class="btn-primary mt-4">返回练习</button>
-                    </div>
-                `;
-                document.getElementById('back-to-practice').addEventListener('click', () => switchTab('practice'));
-                explanationContainer.classList.add('hidden');
+                showNoWrongAnswersMessage();
                 return;
             }
             
-            // 临时保存原题库
-            const originalQuestions = [...questions];
+            // 保存原始状态
+            originalState = {
+                questions: [...questions],
+                userAnswers: [...userAnswers],
+                quizStats: {...quizStats},
+                currentQuestionIndex: currentQuestionIndex
+            };
             
             // 使用错题集
             questions = wrongQuestions;
             
+            // 创建错题专用的用户答案数组，保留原始答案
+            const reviewUserAnswers = new Array(wrongQuestions.length).fill(null);
+            wrongIndices.forEach((originalIndex, i) => {
+                reviewUserAnswers[i] = userAnswers[originalIndex];
+            });
+            
             // 重置状态
             currentQuestionIndex = 0;
-            userAnswers = new Array(wrongQuestions.length).fill(null);
+            userAnswers = reviewUserAnswers;
             quizStats = {
                 total: wrongQuestions.length,
                 completed: 0,
@@ -1570,13 +1930,28 @@
             // 添加返回按钮
             const backButton = document.createElement('button');
             backButton.className = 'btn-secondary absolute top-4 right-4';
-            backButton.innerHTML = '<i class="fa fa-arrow-left mr-2"></i>返回练习';
+            backButton.innerHTML = `<i class="fa fa-arrow-left mr-2"></i>${t('backToPractice')}`;
             backButton.addEventListener('click', () => {
-                // 恢复原题库
-                questions = originalQuestions;
-                loadProgress(); // 加载之前的进度
+                // 恢复原始状态
+                if (originalState) {
+                    // 将错题复习模式下剩余题目的答题结果保存到原始userAnswers数组
+                    userAnswers.forEach((answer, i) => {
+                        if (i < wrongIndexMap.length && answer !== null) {
+                            const originalIndex = wrongIndexMap[i];
+                            originalState.userAnswers[originalIndex] = answer;
+                        }
+                    });
+                    
+                    questions = originalState.questions;
+                    userAnswers = originalState.userAnswers;
+                    quizStats = originalState.quizStats;
+                    currentQuestionIndex = originalState.currentQuestionIndex;
+                    originalState = null;
+                    
+                    // 保存进度到本地存储
+                    saveProgress();
+                }
                 switchTab('practice');
-                initializeQuiz();
             });
             
             questionContainer.style.position = 'relative';
@@ -1637,10 +2012,22 @@
             
             // 导航按钮
             prevBtn.addEventListener('click', () => {
-                if (currentQuestionIndex > 0) {
-                    isSwiping = false; // 重置滑动标志
-                    currentQuestionIndex--;
-                    showQuestion(currentQuestionIndex);
+                isSwiping = false; // 重置滑动标志
+                if (isRandomOrder) {
+                    // 乱序模式：从已回答的题目中找到上一个
+                    const currentIndexInHistory = answeredQuestions.indexOf(currentQuestionIndex);
+                    if (currentIndexInHistory > 0) {
+                        const prevIndex = answeredQuestions[currentIndexInHistory - 1];
+                        showQuestion(prevIndex);
+                        saveProgress();
+                    }
+                } else {
+                    // 顺序模式：按顺序返回上一题
+                    if (currentQuestionIndex > 0) {
+                        currentQuestionIndex--;
+                        showQuestion(currentQuestionIndex);
+                        saveProgress();
+                    }
                 }
             });
             
@@ -1652,14 +2039,22 @@
                         // 乱序模式：从未做的题目中随机选择一个
                         const randomIndex = Math.floor(Math.random() * unAnsweredQuestions.length);
                         nextIndex = unAnsweredQuestions[randomIndex];
+                        // 从unAnsweredQuestions数组中移除选中的题目
+                        unAnsweredQuestions.splice(randomIndex, 1);
                     } else {
                         // 顺序模式：按顺序选择下一个
                         nextIndex = currentQuestionIndex + 1;
                         if (nextIndex >= originalQuestions.length) {
                             nextIndex = originalQuestions.length - 1;
                         }
+                        // 从unAnsweredQuestions数组中移除选中的题目
+                        const indexInUnanswered = unAnsweredQuestions.indexOf(nextIndex);
+                        if (indexInUnanswered > -1) {
+                            unAnsweredQuestions.splice(indexInUnanswered, 1);
+                        }
                     }
                     showQuestion(nextIndex);
+                    saveProgress();
                 }
             });
             
@@ -1784,7 +2179,7 @@
                 showQuizBankList();
             } else if (quizMode === 'review') {
                 // 错题复习模式，重新渲染错题列表
-                reviewMistakes();
+                loadReviewMode();
             } else if (quizMode === 'random' && originalQuestions.length > 0) {
                 // 练习模式，重新渲染题目和导航
                 renderQuestionNav();
