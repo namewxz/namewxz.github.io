@@ -103,10 +103,31 @@
                     <span id="question-count" class="text-gray-600">总题数: 0</span>
                     <span id="current-question-index" class="text-gray-600">当前: 0/0</span>
                 </div>
-                <button id="language-toggle" class="btn-secondary flex items-center px-2 py-1 rounded-md text-sm">
-                    <i class="fa fa-globe"></i>
-                    <span id="language-text" class="hidden md:inline ml-2">中文</span>
-                </button>
+                <div class="relative">
+                    <div class="flex items-center">
+                        <button id="language-toggle" class="btn-secondary flex items-center px-2 py-1 rounded-l-md text-sm border-r-0">
+                            <i class="fa fa-globe"></i>
+                            <span id="language-text" class="hidden md:inline ml-2">中文</span>
+                        </button>
+                        <button id="language-dropdown-toggle" class="btn-secondary flex items-center justify-center w-8 h-full rounded-r-md text-sm border-l-0">
+                            <i class="fa fa-chevron-down"></i>
+                        </button>
+                    </div>
+                    <div id="language-dropdown" class="absolute right-0 mt-1 w-48 bg-white rounded-md shadow-lg hidden z-50">
+                        <div class="py-1">
+                            <button class="language-option block w-full text-left px-4 py-2 text-sm hover:bg-gray-100" data-lang="zh">简体中文</button>
+                            <button class="language-option block w-full text-left px-4 py-2 text-sm hover:bg-gray-100" data-lang="zh-TW">繁體中文</button>
+                            <button class="language-option block w-full text-left px-4 py-2 text-sm hover:bg-gray-100" data-lang="en">English</button>
+                            <button class="language-option block w-full text-left px-4 py-2 text-sm hover:bg-gray-100" data-lang="ru">Русский</button>
+                            <button class="language-option block w-full text-left px-4 py-2 text-sm hover:bg-gray-100" data-lang="fr">Français</button>
+                            <button class="language-option block w-full text-left px-4 py-2 text-sm hover:bg-gray-100" data-lang="pt">Português</button>
+                            <button class="language-option block w-full text-left px-4 py-2 text-sm hover:bg-gray-100" data-lang="es">Español</button>
+                            <button class="language-option block w-full text-left px-4 py-2 text-sm hover:bg-gray-100" data-lang="ar">العربية</button>
+                            <button class="language-option block w-full text-left px-4 py-2 text-sm hover:bg-gray-100" data-lang="ko">한국어</button>
+                            <button class="language-option block w-full text-left px-4 py-2 text-sm hover:bg-gray-100" data-lang="ja">日本語</button>
+                        </div>
+                    </div>
+                </div>
                 <button id="theme-toggle" class="btn-secondary flex items-center px-2 py-1 rounded-md text-sm">
                     <i class="fa fa-moon-o"></i>
                     <span id="theme-text" class="hidden md:inline ml-2">暗黑模式</span>
@@ -292,141 +313,162 @@
 
     <script>
         // 语言翻译对象
-        const translations = {
-            zh: {
-                appTitle: '智能刷题器',
-                practice: '开始练习',
-                review: '错题复习',
-                custom: '导题练习',
-                edit: '编辑题目',
-                editMode: '题库管理',
-                orderToggle: '顺序',
-                randomToggle: '乱序',
-                collect: '收藏',
-                collected: '已收藏',
-                skip: '跳过',
-                submit: '提交答案',
-                submitted: '已提交',
-                prev: '上一题',
-                next: '下一题',
-                question: '题目',
-                options: '选项',
-                answer: '答案',
-                explanation: '解析',
-                correct: '正确',
-                wrong: '错误',
-                skipped: '跳过',
-                collected: '收藏',
-                totalQuestions: '总题数',
-                wrongQuestions: '错题数',
-                currentQuestion: '当前',
-                completionRate: '完成率',
-                noExplanation: '暂无解析',
-                correctAnswer: '回答正确！',
-                wrongAnswer: '回答错误，你的答案是 {userAnswer}，正确答案是 {correctAnswer}',
-                selectOption: '请选择至少一个选项',
-                importQuiz: '导入题库',
-                selectJson: '选择JSON文件',
-                cancel: '取消',
-                confirm: '确认',
-                importSuccess: '成功导入{count}道题目',
-                importFailed: '导入失败: {error}',
-                invalidFormat: '无效的题库格式：缺少questions数组',
-                missingFields: '第{index}题缺少必要字段（题干、类型或答案）',
-                fileReadError: '文件读取失败，请重试',
-                defaultBank: '本地默认题库',
-                uploadBank: '上传的题库',
-                deleteBank: '删除',
-                exportBank: '导出题库',
-                useBank: '使用',
-                bankName: '题库名称',
-                source: '来源',
-                local: '本地',
-                uploaded: '上传',
-                questionNav: '题目导航',
-                progress: '进度统计',
-                startQuiz: '开始练习',
-                randomQuiz: '随机练习',
-                reviewMode: '错题复习',
-                customMode: '导题练习',
-                editMode: '题库管理',
-                singleChoice: '单选',
-                multipleChoice: '多选',
-                trueFalse: '判断',
-                lightMode: '浅色模式',
-                darkMode: '暗黑模式'
-            },
-            en: {
-                appTitle: 'Smart Quiz App',
-                practice: 'Start Practice',
-                review: 'Review Mistakes',
-                custom: 'Import Quiz',
-                edit: 'Edit Questions',
-                editMode: 'Quiz Management',
-                orderToggle: 'Order',
-                randomToggle: 'Random',
-                collect: 'Collect',
-                collected: 'Collected',
-                skip: 'Skip',
-                submit: 'Submit Answer',
-                submitted: 'Submitted',
-                prev: 'Previous',
-                next: 'Next',
-                question: 'Question',
-                options: 'Options',
-                answer: 'Answer',
-                explanation: 'Explanation',
-                correct: 'Correct',
-                wrong: 'Wrong',
-                skipped: 'Skipped',
-                collected: 'Collected',
-                totalQuestions: 'Total Questions',
-                wrongQuestions: 'Wrong Questions',
-                currentQuestion: 'Current',
-                completionRate: 'Completion Rate',
-                noExplanation: 'No explanation',
-                correctAnswer: 'Correct!',
-                wrongAnswer: 'Wrong, your answer is {userAnswer}, correct answer is {correctAnswer}',
-                selectOption: 'Please select at least one option',
-                importQuiz: 'Import Quiz',
-                selectJson: 'Select JSON File',
-                cancel: 'Cancel',
-                confirm: 'Confirm',
-                importSuccess: 'Successfully imported {count} questions',
-                importFailed: 'Import failed: {error}',
-                invalidFormat: 'Invalid quiz format: missing questions array',
-                missingFields: 'Question {index} is missing required fields (question, type, or answer)',
-                fileReadError: 'File read failed, please try again',
-                defaultBank: 'Local Default Quiz',
-                uploadBank: 'Uploaded Quiz',
-                deleteBank: 'Delete',
-                exportBank: 'Export Quiz',
-                useBank: 'Use',
-                bankName: 'Quiz Name',
-                source: 'Source',
-                local: 'Local',
-                uploaded: 'Uploaded',
-                questionNav: 'Question Navigation',
-                progress: 'Progress Statistics',
-                startQuiz: 'Start Practice',
-                randomQuiz: 'Random Practice',
-                reviewMode: 'Review Mode',
-                customMode: 'Import Mode',
-                editMode: 'Management Mode',
-                singleChoice: 'Single Choice',
-                multipleChoice: 'Multiple Choice',
-                trueFalse: 'True/False',
-                lightMode: 'Light Mode',
-                darkMode: 'Dark Mode',
-                copy: 'Copy',
-                download: 'Download',
-                close: 'Close'
+        let translations = {};
+
+        // 加载翻译文件
+        async function loadTranslations() {
+            try {
+                const response = await fetch('translations.json');
+                if (!response.ok) {
+                    throw new Error('Failed to load translations');
+                }
+                translations = await response.json();
+                console.log('Translations loaded successfully');
+                // 加载完成后更新UI
+                updateUI();
+            } catch (error) {
+                console.error('Error loading translations:', error);
+                // 加载失败时使用默认翻译
+                translations = {
+                    zh: {
+                        appTitle: '智能刷题器',
+                        practice: '开始练习',
+                        review: '错题复习',
+                        custom: '导题练习',
+                        edit: '编辑题目',
+                        editMode: '题库管理',
+                        orderToggle: '顺序',
+                        randomToggle: '乱序',
+                        collect: '收藏',
+                        collected: '已收藏',
+                        skip: '跳过',
+                        submit: '提交答案',
+                        submitted: '已提交',
+                        prev: '上一题',
+                        next: '下一题',
+                        question: '题目',
+                        options: '选项',
+                        answer: '答案',
+                        explanation: '解析',
+                        correct: '正确',
+                        wrong: '错误',
+                        skipped: '跳过',
+                        collected: '收藏',
+                        totalQuestions: '总题数',
+                        wrongQuestions: '错题数',
+                        currentQuestion: '当前',
+                        completionRate: '完成率',
+                        noExplanation: '暂无解析',
+                        correctAnswer: '回答正确！',
+                        wrongAnswer: '回答错误，你的答案是 {userAnswer}，正确答案是 {correctAnswer}',
+                        selectOption: '请选择至少一个选项',
+                        importQuiz: '导入题库',
+                        selectJson: '选择JSON文件',
+                        cancel: '取消',
+                        confirm: '确认',
+                        importSuccess: '成功导入{count}道题目',
+                        importFailed: '导入失败: {error}',
+                        invalidFormat: '无效的题库格式：缺少questions数组',
+                        missingFields: '第{index}题缺少必要字段（题干、类型或答案）',
+                        fileReadError: '文件读取失败，请重试',
+                        defaultBank: '本地默认题库',
+                        uploadBank: '上传的题库',
+                        deleteBank: '删除',
+                        exportBank: '导出题库',
+                        useBank: '使用',
+                        bankName: '题库名称',
+                        source: '来源',
+                        local: '本地',
+                        uploaded: '上传',
+                        questionNav: '题目导航',
+                        progress: '进度统计',
+                        startQuiz: '开始练习',
+                        randomQuiz: '随机练习',
+                        reviewMode: '错题复习',
+                        customMode: '导题练习',
+                        editMode: '题库管理',
+                        singleChoice: '单选',
+                        multipleChoice: '多选',
+                        trueFalse: '判断',
+                        lightMode: '浅色模式',
+                        darkMode: '暗黑模式',
+                        copy: '复制',
+                        download: '下载',
+                        close: '关闭'
+                    },
+                    en: {
+                        appTitle: 'Smart Quiz App',
+                        practice: 'Start Practice',
+                        review: 'Review Mistakes',
+                        custom: 'Import Quiz',
+                        edit: 'Edit Questions',
+                        editMode: 'Quiz Management',
+                        orderToggle: 'Order',
+                        randomToggle: 'Random',
+                        collect: 'Collect',
+                        collected: 'Collected',
+                        skip: 'Skip',
+                        submit: 'Submit Answer',
+                        submitted: 'Submitted',
+                        prev: 'Previous',
+                        next: 'Next',
+                        question: 'Question',
+                        options: 'Options',
+                        answer: 'Answer',
+                        explanation: 'Explanation',
+                        correct: 'Correct',
+                        wrong: 'Wrong',
+                        skipped: 'Skipped',
+                        collected: 'Collected',
+                        totalQuestions: 'Total Questions',
+                        wrongQuestions: 'Wrong Questions',
+                        currentQuestion: 'Current',
+                        completionRate: 'Completion Rate',
+                        noExplanation: 'No explanation',
+                        correctAnswer: 'Correct!',
+                        wrongAnswer: 'Wrong, your answer is {userAnswer}, correct answer is {correctAnswer}',
+                        selectOption: 'Please select at least one option',
+                        importQuiz: 'Import Quiz',
+                        selectJson: 'Select JSON File',
+                        cancel: 'Cancel',
+                        confirm: 'Confirm',
+                        importSuccess: 'Successfully imported {count} questions',
+                        importFailed: 'Import failed: {error}',
+                        invalidFormat: 'Invalid quiz format: missing questions array',
+                        missingFields: 'Question {index} is missing required fields (question, type, or answer)',
+                        fileReadError: 'File read failed, please try again',
+                        defaultBank: 'Local Default Quiz',
+                        uploadBank: 'Uploaded Quiz',
+                        deleteBank: 'Delete',
+                        exportBank: 'Export Quiz',
+                        useBank: 'Use',
+                        bankName: 'Quiz Name',
+                        source: 'Source',
+                        local: 'Local',
+                        uploaded: 'Uploaded',
+                        questionNav: 'Question Navigation',
+                        progress: 'Progress Statistics',
+                        startQuiz: 'Start Practice',
+                        randomQuiz: 'Random Practice',
+                        reviewMode: 'Review Mode',
+                        customMode: 'Import Mode',
+                        editMode: 'Management Mode',
+                        singleChoice: 'Single Choice',
+                        multipleChoice: 'Multiple Choice',
+                        trueFalse: 'True/False',
+                        lightMode: 'Light Mode',
+                        darkMode: 'Dark Mode',
+                        copy: 'Copy',
+                        download: 'Download',
+                        close: 'Close'
+                    }
+                };
             }
-        };
+        }
 
         // 获取翻译文本的函数
         function t(key, params = {}) {
-            let text = translations[currentLanguage][key] || key;
+            let text = (translations[currentLanguage] && translations[currentLanguage][key]) || key;
             // 替换参数
             for (const [key, value] of Object.entries(params)) {
                 text = text.replace(`{${key}}`, value);
@@ -492,6 +534,9 @@
         // 初始化函数
         async function init() {
             try {
+                // 加载翻译文件
+                await loadTranslations();
+                
                 // 加载本地题库
                 const response = await fetch('questions.json');
                 const data = await response.json();
@@ -1693,10 +1738,44 @@
                     }
                 });
             }
+            
+            // 语言下拉菜单
+            const languageDropdownToggle = document.getElementById('language-dropdown-toggle');
+            const languageDropdown = document.getElementById('language-dropdown');
+            const languageOptions = document.querySelectorAll('.language-option');
+            
+            if (languageDropdownToggle) {
+                languageDropdownToggle.addEventListener('click', (e) => {
+                    e.stopPropagation();
+                    languageDropdown.classList.toggle('hidden');
+                });
+            }
+            
+            if (languageOptions.length > 0) {
+                languageOptions.forEach(option => {
+                    option.addEventListener('click', (e) => {
+                        e.stopPropagation();
+                        const lang = option.getAttribute('data-lang');
+                        if (lang) {
+                            currentLanguage = lang;
+                            updateUI();
+                            languageDropdown.classList.add('hidden');
+                        }
+                    });
+                });
+            }
+            
+            // 点击页面其他地方关闭语言下拉菜单
+            document.addEventListener('click', () => {
+                if (languageDropdown) {
+                    languageDropdown.classList.add('hidden');
+                }
+            });
         }
 
         // 语言切换功能
         function toggleLanguage() {
+            // 只在中文和英文之间切换
             currentLanguage = currentLanguage === 'zh' ? 'en' : 'zh';
             
             // 根据当前模式重新渲染页面内容
@@ -2218,9 +2297,53 @@
             document.getElementById('close-export').textContent = t('close');
             
             // 更新语言和主题切换按钮
-            document.getElementById('language-text').textContent = currentLanguage === 'zh' ? '中文' : 'English';
+            const languageText = document.getElementById('language-text');
+            if (languageText) {
+                if (currentLanguage === 'zh') {
+                    languageText.textContent = '中文';
+                } else if (currentLanguage === 'en') {
+                    languageText.textContent = 'English';
+                } else {
+                    // 对于其他语言，显示语言代码或名称
+                    const languageNames = {
+                        'ru': 'Русский',
+                        'fr': 'Français',
+                        'pt': 'Português',
+                        'es': 'Español',
+                        'ar': 'العربية',
+                        'ko': '한국어',
+                        'ja': '日本語'
+                    };
+                    languageText.textContent = languageNames[currentLanguage] || currentLanguage;
+                }
+            }
+            
             document.getElementById('theme-text').textContent = isDarkMode ? t('lightMode') : t('darkMode');
             document.getElementById('theme-toggle').innerHTML = isDarkMode ? `<i class="fa fa-sun-o"></i><span id="theme-text" class="hidden md:inline ml-2">${t('lightMode')}</span>` : `<i class="fa fa-moon-o"></i><span id="theme-text" class="hidden md:inline ml-2">${t('darkMode')}</span>`;
+            
+            // 更新语言下拉菜单的暗黑模式样式
+            const languageDropdown = document.getElementById('language-dropdown');
+            if (languageDropdown) {
+                if (isDarkMode) {
+                    languageDropdown.classList.add('bg-gray-800', 'text-white');
+                    languageDropdown.classList.remove('bg-white');
+                    
+                    const languageOptions = languageDropdown.querySelectorAll('.language-option');
+                    languageOptions.forEach(option => {
+                        option.classList.add('text-white', 'hover:bg-gray-700');
+                        option.classList.remove('hover:bg-gray-100');
+                    });
+                } else {
+                    languageDropdown.classList.remove('bg-gray-800', 'text-white');
+                    languageDropdown.classList.add('bg-white');
+                    
+                    const languageOptions = languageDropdown.querySelectorAll('.language-option');
+                    languageOptions.forEach(option => {
+                        option.classList.remove('text-white', 'hover:bg-gray-700');
+                        option.classList.add('hover:bg-gray-100');
+                    });
+                }
+            }
         }
 
         // 启动应用
