@@ -150,8 +150,8 @@
                     <span class="hidden md:block">导题练习</span>
                 </button>
                 <button id="edit-tab" class="py-3 px-1 tab-inactive font-medium">
-                    <span class="block md:hidden">编辑</span>
-                    <span class="hidden md:block">编辑题目</span>
+                    <span class="block md:hidden">随机</span>
+                    <span class="hidden md:block">随机出题</span>
                 </button>
             </nav>
         </div>
@@ -331,12 +331,12 @@
                 // 加载失败时使用默认翻译
                 translations = {
                     zh: {
-                        appTitle: '智能刷题器',
-                        practice: '开始练习',
-                        review: '错题复习',
-                        custom: '导题练习',
-                        edit: '编辑题目',
-                        editMode: '题库管理',
+                    appTitle: '智能刷题器',
+                    practice: '开始练习',
+                    review: '错题复习',
+                    custom: '导题练习',
+                    edit: '随机出题',
+                    editMode: '随机出题',
                         orderToggle: '顺序',
                         randomToggle: '乱序',
                         collect: '收藏',
@@ -400,12 +400,12 @@
                         resetProgress: '重置进度'
                     },
                     en: {
-                        appTitle: 'Smart Quiz App',
-                        practice: 'Start Practice',
-                        review: 'Review Mistakes',
-                        custom: 'Import Quiz',
-                        edit: 'Edit Questions',
-                        editMode: 'Quiz Management',
+                    appTitle: 'Smart Quiz App',
+                    practice: 'Start Practice',
+                    review: 'Review Mistakes',
+                    custom: 'Import Quiz',
+                    edit: 'Random Quiz',
+                    editMode: 'Random Quiz',
                         orderToggle: 'Order',
                         randomToggle: 'Random',
                         collect: 'Collect',
@@ -1739,12 +1739,11 @@
             }
         }
 
-        // 显示题库列表
+        // 显示题库列表（导题练习）
         function showQuizBankList() {
             // 加载题库列表
             loadQuizBanks();
             
-            // 渲染题库列表
             // 渲染题库列表
             const textColor = isDarkMode ? 'text-white' : 'text-gray-800';
             const textSecondaryColor = isDarkMode ? 'text-gray-300' : 'text-gray-500';
@@ -1753,7 +1752,7 @@
             
             questionContainer.innerHTML = `
                 <div class="mb-6">
-                    <h2 class="text-xl font-semibold ${textColor} mb-4">${t('editMode')}</h2>
+                    <h2 class="text-xl font-semibold ${textColor} mb-4">${t('customMode')}</h2>
                     <p class="${textSecondaryColor} mb-6">${t('selectOption')}</p>
                     
                     <div class="space-y-4">
@@ -1798,6 +1797,128 @@
             document.getElementById('import-new-bank').addEventListener('click', () => {
                 uploadModal.classList.remove('hidden');
             });
+        }
+        
+        // 显示随机出题界面
+        function showRandomQuiz() {
+            // 加载题库列表
+            loadQuizBanks();
+            
+            // 渲染随机出题界面
+            const textColor = isDarkMode ? 'text-white' : 'text-gray-800';
+            const textSecondaryColor = isDarkMode ? 'text-gray-300' : 'text-gray-500';
+            const borderColor = isDarkMode ? 'border-gray-700' : 'border';
+            const bgColor = isDarkMode ? 'bg-gray-800' : 'bg-white';
+            
+            questionContainer.innerHTML = `
+                <div class="mb-6">
+                    <h2 class="text-xl font-semibold ${textColor} mb-4">${t('editMode')}</h2>
+                    <p class="${textSecondaryColor} mb-6">请选择题库和题目数量，生成随机卷子</p>
+                    
+                    <div class="space-y-6">
+                        <!-- 题目数量选择 -->
+                        <div>
+                            <label class="block ${textColor} mb-2">题目数量</label>
+                            <input type="number" id="question-count-input" class="w-full p-2 ${borderColor} rounded-lg ${bgColor} ${textColor}" value="10" min="1" max="100">
+                            <p class="text-sm ${textSecondaryColor} mt-1">默认10道题，如选中题库题目不足则使用所有题目</p>
+                        </div>
+                        
+                        <!-- 题库选择 -->
+                        <div>
+                            <label class="block ${textColor} mb-2">选择题库</label>
+                            <div class="space-y-3">
+                                ${quizBanks.map((bank, index) => {
+                                    const questionCount = bank.source === 'local' ? (originalQuestions ? originalQuestions.length : 0) : (bank.questions ? bank.questions.length : 0);
+                                    return `
+                                        <div class="flex items-center p-3 rounded-lg ${borderColor} ${bgColor} option-hover cursor-pointer" onclick="document.getElementById('bank-${index}').checked = true;">
+                                            <input type="radio" id="bank-${index}" name="quiz-bank" value="${index}" class="mr-3">
+                                            <div>
+                                                <label for="bank-${index}" class="font-medium ${textColor}">${bank.name}</label>
+                                                <p class="text-sm ${textSecondaryColor}">${questionCount}${t('question')} · ${bank.source === 'local' ? t('local') : t('uploaded')}</p>
+                                            </div>
+                                        </div>
+                                    `;
+                                }).join('')}
+                            </div>
+                        </div>
+                        
+                        <!-- 生成按钮 -->
+                        <div class="mt-6">
+                            <button id="generate-quiz" class="btn-primary w-full flex items-center justify-center">
+                                <i class="fa fa-random mr-2"></i>生成随机卷子
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            `;
+            
+            // 隐藏解析区域
+            explanationContainer.classList.add('hidden');
+            
+            // 添加生成随机卷子按钮的事件监听器
+            document.getElementById('generate-quiz').addEventListener('click', generateRandomQuiz);
+        }
+        
+        // 生成随机卷子
+        function generateRandomQuiz() {
+            // 获取选中的题库
+            const selectedBankRadio = document.querySelector('input[name="quiz-bank"]:checked');
+            if (!selectedBankRadio) {
+                alert('请选择一个题库');
+                return;
+            }
+            
+            const bankIndex = parseInt(selectedBankRadio.value);
+            const selectedBank = quizBanks[bankIndex];
+            
+            // 获取题目数量
+            const questionCountInput = document.getElementById('question-count-input');
+            let questionCount = parseInt(questionCountInput.value);
+            
+            // 获取题库中的题目
+            let bankQuestions;
+            if (selectedBank.source === 'local') {
+                bankQuestions = originalQuestions || [];
+            } else {
+                bankQuestions = selectedBank.questions || [];
+            }
+            
+            // 如果题库题目不足，使用所有题目
+            if (questionCount > bankQuestions.length) {
+                questionCount = bankQuestions.length;
+            }
+            
+            // 随机选择题目
+            const shuffledQuestions = shuffleArray([...bankQuestions]);
+            const randomQuestions = shuffledQuestions.slice(0, questionCount);
+            
+            // 切换到练习模式并使用随机生成的题目
+            originalQuestions = randomQuestions;
+            questions = [...randomQuestions];
+            currentQuizBankIndex = bankIndex;
+            quizMode = 'random';
+            
+            // 清除本地存储中的进度数据，确保不会加载之前的进度
+            localStorage.removeItem('quizProgress');
+            
+            // 初始化测验
+            initializeQuiz();
+            
+            // 手动设置标签样式，避免调用 switchTab('practice') 重新加载所有题目
+            [practiceTab, reviewTab, customTab, editTab].forEach(tab => {
+                tab.classList.remove('tab-active', 'tab-active-dark');
+                tab.classList.add('tab-inactive');
+                if (isDarkMode) {
+                    tab.classList.add('tab-inactive-dark');
+                }
+            });
+            
+            // 设置练习标签为活动状态
+            practiceTab.classList.remove('tab-inactive', 'tab-inactive-dark');
+            practiceTab.classList.add('tab-active');
+            if (isDarkMode) {
+                practiceTab.classList.add('tab-active-dark');
+            }
         }
         
         // 切换标签
@@ -1853,10 +1974,8 @@
                     break;
                 case 'edit':
                     quizMode = 'edit';
-                    // 显示编辑界面（简化版，实际应用中可能需要更复杂的实现）
-                    alert('编辑功能正在开发中，敬请期待！');
-                    // 切换回练习标签
-                    switchTab('practice');
+                    // 显示随机出题界面
+                    showRandomQuiz();
                     break;
             }
         }
