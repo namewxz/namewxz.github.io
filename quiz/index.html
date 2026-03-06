@@ -499,7 +499,9 @@
         let quizMode = 'random'; // 'random', 'review', 'custom'
         let isRandomOrder = false; // 控制顺序/乱序
         let unAnsweredQuestions = []; // 未做的题目索引
-        let answeredQuestions = []; // 已回答的题目索引，用于乱序模式下的上一题导航
+        let answeredQuestions = []; // 已回答的题目索引
+        let navigationHistory = []; // 导航历史记录，用于上一题/下一题导航
+        let historyIndex = -1; // 当前在导航历史中的位置
         let currentLanguage = 'zh'; // 当前语言，默认为中文
         let isDarkMode = false; // 是否开启暗黑模式
         let isSwiping = false; // 防止连续滑动的标志
@@ -656,6 +658,10 @@
                 // 清空已回答的题目索引
                 answeredQuestions = [];
             }
+            
+            // 重置导航历史
+            navigationHistory = [];
+            historyIndex = -1;
 
             // 更新UI
             updateStats();
@@ -712,6 +718,29 @@
             
             // 更新全局的currentQuestionIndex变量
             currentQuestionIndex = index;
+            
+            // 更新导航历史
+            if (quizMode !== 'review') { // 只在练习模式下跟踪导航历史
+                // 检查当前索引是否已经在导航历史中，并且是通过上一题/下一题按钮导航的
+                const isNavigatingHistory = navigationHistory.includes(index) && Math.abs(navigationHistory.indexOf(index) - historyIndex) <= 1;
+                
+                if (!isNavigatingHistory) {
+                    // 不是在导航历史，添加新记录
+                    if (historyIndex === navigationHistory.length - 1) {
+                        // 正常前进，添加到历史记录
+                        navigationHistory.push(index);
+                        historyIndex++;
+                    } else {
+                        // 从历史记录中返回，截断历史记录
+                        navigationHistory = navigationHistory.slice(0, historyIndex + 1);
+                        navigationHistory.push(index);
+                        historyIndex++;
+                    }
+                } else {
+                    // 是在导航历史中导航，只更新历史索引
+                    historyIndex = navigationHistory.indexOf(index);
+                }
+            }
             
             if (quizMode === 'review') {
                 // 错题复习模式
@@ -2013,48 +2042,64 @@
             // 导航按钮
             prevBtn.addEventListener('click', () => {
                 isSwiping = false; // 重置滑动标志
-                if (isRandomOrder) {
-                    // 乱序模式：从已回答的题目中找到上一个
-                    const currentIndexInHistory = answeredQuestions.indexOf(currentQuestionIndex);
-                    if (currentIndexInHistory > 0) {
-                        const prevIndex = answeredQuestions[currentIndexInHistory - 1];
-                        showQuestion(prevIndex);
-                        saveProgress();
-                    }
-                } else {
-                    // 顺序模式：按顺序返回上一题
+                if (quizMode === 'review') {
+                    // 错题复习模式：按顺序返回上一题
                     if (currentQuestionIndex > 0) {
                         currentQuestionIndex--;
                         showQuestion(currentQuestionIndex);
+                        saveProgress();
+                    }
+                } else {
+                    // 练习模式：使用导航历史
+                    if (historyIndex > 0) {
+                        historyIndex--;
+                        const prevIndex = navigationHistory[historyIndex];
+                        showQuestion(prevIndex);
                         saveProgress();
                     }
                 }
             });
             
             nextBtn.addEventListener('click', () => {
-                if (unAnsweredQuestions.length > 0) {
-                    isSwiping = false; // 重置滑动标志
-                    let nextIndex;
-                    if (isRandomOrder) {
-                        // 乱序模式：从未做的题目中随机选择一个
-                        const randomIndex = Math.floor(Math.random() * unAnsweredQuestions.length);
-                        nextIndex = unAnsweredQuestions[randomIndex];
-                        // 从unAnsweredQuestions数组中移除选中的题目
-                        unAnsweredQuestions.splice(randomIndex, 1);
-                    } else {
-                        // 顺序模式：按顺序选择下一个
-                        nextIndex = currentQuestionIndex + 1;
-                        if (nextIndex >= originalQuestions.length) {
-                            nextIndex = originalQuestions.length - 1;
-                        }
-                        // 从unAnsweredQuestions数组中移除选中的题目
-                        const indexInUnanswered = unAnsweredQuestions.indexOf(nextIndex);
-                        if (indexInUnanswered > -1) {
-                            unAnsweredQuestions.splice(indexInUnanswered, 1);
-                        }
+                if (quizMode === 'review') {
+                    // 错题复习模式：按顺序前进到下一题
+                    if (currentQuestionIndex < questions.length - 1) {
+                        currentQuestionIndex++;
+                        showQuestion(currentQuestionIndex);
+                        saveProgress();
                     }
-                    showQuestion(nextIndex);
-                    saveProgress();
+                } else if (unAnsweredQuestions.length > 0 || historyIndex < navigationHistory.length - 1) {
+                    isSwiping = false; // 重置滑动标志
+                    if (historyIndex < navigationHistory.length - 1) {
+                        // 有历史记录可以前进
+                        historyIndex++;
+                        const nextIndex = navigationHistory[historyIndex];
+                        showQuestion(nextIndex);
+                        saveProgress();
+                    } else {
+                        // 没有历史记录，需要选择新题目
+                        let nextIndex;
+                        if (isRandomOrder) {
+                            // 乱序模式：从未做的题目中随机选择一个
+                            const randomIndex = Math.floor(Math.random() * unAnsweredQuestions.length);
+                            nextIndex = unAnsweredQuestions[randomIndex];
+                            // 从unAnsweredQuestions数组中移除选中的题目
+                            unAnsweredQuestions.splice(randomIndex, 1);
+                        } else {
+                            // 顺序模式：按顺序选择下一个
+                            nextIndex = currentQuestionIndex + 1;
+                            if (nextIndex >= originalQuestions.length) {
+                                nextIndex = originalQuestions.length - 1;
+                            }
+                            // 从unAnsweredQuestions数组中移除选中的题目
+                            const indexInUnanswered = unAnsweredQuestions.indexOf(nextIndex);
+                            if (indexInUnanswered > -1) {
+                                unAnsweredQuestions.splice(indexInUnanswered, 1);
+                            }
+                        }
+                        showQuestion(nextIndex);
+                        saveProgress();
+                    }
                 }
             });
             
