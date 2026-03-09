@@ -1,7 +1,7 @@
 ---
 description: 解决Qt应用界面过大问题：Windows下高DPI缩放的正确配置方法
 title: 解决Qt应用界面过大问题
-permalink: /解决Qt应用界面过大问题：Windows下高DPI缩放的正确配置方法/
+permalink: /[12]解决Qt应用界面过大问题：Windows下高DPI缩放的正确配置方法/
 ---
 使用QT时，碰到了一个问题，程序界面元素显得异常巨大，布局错乱，严重影响界面设计。
 
