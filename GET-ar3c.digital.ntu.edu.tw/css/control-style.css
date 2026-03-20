@@ -1,0 +1,260 @@
+
+/* ----- WEB SETTING ----- */
+
+body {
+	overflow: hidden;
+}
+
+body > span {
+	display: none;
+}
+
+#controlBtn {
+	width: 60px;
+	height: 60px;
+	position: fixed;
+	z-index: 5;
+	color: white;
+	font-size: 26px;
+	display: grid;
+	align-items: center;
+	text-align: center;
+	cursor: pointer;
+}
+
+#controlBtn:hover {
+	color: #E2E5E7;
+}
+
+/* ----- NAVIGATION ----- */
+
+#nav.showNav, #nav.open, #nav.close {
+	display: grid;
+	opacity: 1;
+}
+
+.animating {
+	transition: all .3s ease-in-out;
+}
+
+.close {
+	transform: translateX(0%);
+}
+.animating.close {
+	transform: translateX(-100%);
+}
+
+.open {
+	transform: translateX(-100%);
+}
+.animating.open {
+	transform: translateX(0%);
+}
+
+#nav {
+	width: 30%;
+	height: 100%;
+	position: absolute;
+	z-index: 10;
+	background-color: white;
+	border: solid 5px #51595F;
+	display: none;
+	grid-template-columns: 9fr 1fr;
+	grid-template-rows: 1fr 9fr;
+	grid-template-areas: "header btn"
+						 "tabBlock tabBlock";
+}
+
+#navTitle {
+	grid-area: header;
+	font-size: 30px;
+	display: grid;
+	align-items: center;	/* vertical */
+	text-align: center;  	/* horizontal */
+	color: #51595F;
+	margin: 0;
+}
+
+#navBtn {
+	grid-area: btn;
+	width: 60px;
+	height: 60px;
+	color: #51595F;
+	font-size: 26px;
+	display: grid;
+	text-align: center;
+	align-self: center;
+	align-items: center;
+	cursor: pointer;
+}
+
+#navBtn:hover {
+	color: #6F7982;
+}
+
+.tabBlock {
+	height: 90%;
+	grid-area: tabBlock;
+	display: grid;
+	grid-template-rows: 1fr 14fr;
+	grid-template-areas: "tabBtn"
+						 "tabContent";
+}
+
+/* ----- TAB BUTTON & PAGE SWITCHING ----- */
+
+.tabBtn {
+	grid-area: tabBtn;
+	display: grid;
+	grid-template-columns: repeat(3, 1fr);
+	font-size: 
+}
+
+.tabBtn a {
+	background-color: #51595F;
+	border-top: solid 10px #51595F;
+	padding: 2% 0;
+	text-decoration: none;
+	font-size: 20px;
+	color: white;
+	display: grid;
+	align-items: center;
+	text-align: center;	
+	font-size: x-large;
+}
+
+/* first render to basic background color */
+span:target ~ nav .tabBlock .tabBtn a:first-of-type {
+	background-color: #51595F;
+	font-weight: normal;
+	color: white;
+}
+
+/* highlight target or default target */
+span ~ nav .tabBlock .tabBtn a:first-of-type,
+#compareTab:target ~ nav .tabBlock .tabBtn a[href="#compareTab"],
+#searchTab:target ~ nav .tabBlock .tabBtn a[href="#searchTab"],
+#explainTab:target ~ nav .tabBlock .tabBtn a[href="#explainTab"] {
+	background-color: white;
+	font-weight: bold;
+	color: #51595F;
+}
+
+/* highlight when hover */
+span ~ nav .tabBlock .tabBtn a:hover,
+#compareTab:target ~ nav .tabBlock .tabBtn a:hover,
+#searchTab:target ~ nav .tabBlock .tabBtn a:hover,
+#explainTab:target ~ nav .tabBlock .tabBtn a:hover {
+	text-decoration: none;
+	background-color: #6F7982;
+	color: white;
+}
+
+/* ----- TAB CONTENT & SWITCHING ----- */
+
+.tabContent {
+	grid-area: tabContent; 
+	overflow: scroll;
+}
+
+.tabContent > div {
+	display: none;
+}
+
+.compareController, .searchController {
+	height: 100%;
+}
+
+/* first render to basic setting */
+span:target ~ nav .tabBlock .tabContent > div:first-of-type {
+	display: none;
+}
+
+/* display content or default content */
+span ~ nav .tabBlock .tabContent > div:first-of-type,
+#compareTab:target ~ nav .tabBlock .tabContent .compareController,
+#searchTab:target ~ nav .tabBlock .tabContent .searchController,
+#explainTab:target ~ nav .tabBlock .tabContent .explainController {
+	display: block;
+}
+
+/* ----- CONTROLLER SETTING ----- */
+
+.controlTitleBlock {
+	background-color: #51595F;
+	margin: 5% 2% 0 2%;
+	padding: 2%;
+	border-radius: 10px;
+	font-size: large;
+	color: white;
+	text-align: center;
+	cursor: pointer;
+}
+
+.controlTitleBlock:hover {
+	background-color: #6F7982;
+}
+
+.controlContentBlock {
+	background-color: #E2E5E7;
+	margin: 1% 4%;
+	padding: 2%;
+	border-radius: 10px;
+	font-size: medium;
+}
+
+.controlContentBlock label {
+	border-bottom: 1px dashed #51595F;
+	padding: 3px;
+	margin: 0;
+	align-items: center;
+	text-align: center;
+	font-weight: normal;
+	cursor: pointer;
+}
+
+.controlContentBlock label:hover {
+	background-color: #CED1D2;
+}
+
+/* icon button */
+.controlContentBlock span {
+	border: 0;
+	color: #51595F;
+	background-color: rgba(0, 0, 0, 0);
+	display: grid;
+	align-items: center;
+	text-align: center;
+	cursor: pointer;
+}
+
+.controlContentBlock span:hover {
+	color: #FCB0B3;
+}
+
+.controlContentBlock .notHover:hover {
+	color: #51595F;
+	cursor: default;
+}
+
+.controlContentBlock ol {
+	display: grid;
+	grid-template-columns: 9fr 1fr;
+	grid-row-gap: 1px;
+	margin: 0;
+	padding-left: 10%;
+}
+
+#compare-manage ol {
+	grid-template-columns: 9fr 1fr;
+}
+
+#search-input {
+	display: grid;
+	grid-template-columns: 9fr 1fr;
+}
+
+#search-input input {
+	margin: 0 3%;
+}
+

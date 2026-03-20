@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+
+	<title>春秋三傳對讀系統</title>
+
+	<!-- ASSETS -->
+	<script src="assets/jquery.min.js"></script>
+
+	<!-- CSS FILE -->
+	<link href="css/main-style.css" type="text/css" rel="stylesheet">
+	<link href="css/control-style.css" type="text/css" rel="stylesheet">
+	<!--<link href="bootstrap-3.3.7/dist/css/bootstrap.min.css" rel="stylesheet">
+	<script src="bootstrap-3.3.7/dist/js/bootstrap.min.js"></script>
+	 <link href="https://cdn.staticfile.org/twitter-bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
+	<script src="https://cdn.staticfile.org/twitter-bootstrap/3.3.7/js/bootstrap.min.js"></script>-->
+
+	<!-- DOCUSKY WIDGET API: https://docusky.org.tw/Docusky v.s. ../.. -->
+	<!-- <script src="https://docusky.org.tw/Docusky/js.ui/docusky.ui.getDbCorpusDocumentsSimpleUI.js"></script>-->
+	<script src="js/docusky.ui.getDbCorpusDocumentsSimpleUI.js"></script>
+</head>
+
+<body>
+
+	<!-- tab setting -->
+	<span id="compareTab"></span>
+	<span id="searchTab"></span>
+	<span id="explainTab"></span>
+
+	<!-- control board button -->
+	<span id="controlBtn" class="glyphicon glyphicon-align-justify" onclick="toggleControlBoard('open')"></span>
+
+	<!-- control board -->
+	<nav id="nav" class="showNav">
+
+		<!-- system header -->
+		<h1 id="navTitle">春秋三傳對讀系統</h1>
+		<span id="navBtn" class="glyphicon glyphicon-chevron-left" onclick="toggleControlBoard('close')"></span>
+
+		<div class="tabBlock">
+
+			<!-- tab button -->
+			<div class="tabBtn">
+				<a href="#compareTab">對讀</a>
+				<a href="#searchTab">檢索</a>
+				<a href="#explainTab" onclick="toggleControlBoard('close')">說明</a>
+			</div>
+
+			<!-- tab content -->
+			<div class="tabContent">
+
+				<!-- compare control -->
+				<div class="compareController">
+					<div class="controlTitleBlock" onclick="collapse('#compare-manage')">文本管理</div>
+					<div class="controlContentBlock" id="compare-manage">
+						<ol>
+						</ol>
+					</div>
+				</div>
+
+				<!-- search control -->
+				<div class="searchController">
+					<div class="controlTitleBlock" onclick="collapse('#search-input')">全文檢索</div>
+					<div class="controlContentBlock" id="search-input">
+						<input type="text" name="searchQuery">
+						<span class="glyphicon glyphicon-search" onclick="search(this.parentElement.firstElementChild.value)"></span>
+					</div>
+
+					<div class="controlTitleBlock" onclick="collapse('#search-corpus')">顯示文本</div>
+					<div class="controlContentBlock" id="search-corpus">
+						<ol>
+						</ol>
+					</div>
+				</div>
+
+			</div>
+
+		</div>
+
+	</nav>
+
+	<!-- compare interface -->
+	<div class="compareInterface">
+
+		<!-- corpus name -->
+		<div class="compareTitleBlock">
+			<h1>文本名稱</h1>
+		</div>
+
+		<!-- corpus content -->
+		<div class="compareContentBlock">
+			<div class="corpusBlock">
+				<div>
+					<div>
+						<div class="titleBlock">
+							<span class="docuCompareBtn">文件標題</span>
+							<span class="glyphicon glyphicon-chevron-up" onclick="collapseMetadata('metadata', this)"></span>
+						</div>
+
+						<div class="metadataBlock" key="metadata">
+							<li class="metadata1 pinned">metadata1: 1</li>
+							<li class="metadata2">metadata2: 2</li>
+						</div>
+
+						<div class="textBlock">內文1</div>
+						<div class="textBlock">內文2</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<!-- search interface -->
+	<div class="searchInterface">
+
+		<!-- corpus name -->
+		<h1>檢索結果</h1>
+
+		<!-- search content -->
+		<div class="searchContentBlock">
+
+			<!-- search analysis -->
+			<div class="searchAnalysis">
+				<h2>文件順序</h2>
+
+				<div class="titleBlock" onclick="collapse('.searchInterface div[name=blocktoggle]')">
+					<span>文件標題</span><span>5</span>
+				</div>
+
+				<div class="textBlock" name="blocktoggle">
+					<div><span>區塊1</span><span>2</span></div>
+					<div><span>區塊2</span><span>3</span></div>
+				</div>
+			</div>
+
+			<!-- search result -->
+			<div class="searchResult">
+				<div class="titleBlock">
+					<span>文件標題</span>
+				</div>
+				<div class="textBlock">
+					<span class="glyphicon glyphicon-chevron-left"></span>
+					<span>內文1</span>
+				</div>
+				<div class="textBlock">
+					<span class="glyphicon glyphicon-chevron-left"></span>
+					<span>內文2</span>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<!-- explain interface -->
+	<div class="explainInterface"></div>
+
+	<!-- JAVASCRIPT FILE -->
+	<script src="js/globalVar.js"></script>
+	<script src="js/fileLoading.js"></script>
+	<script src="js/parsing.js"></script>
+	<script src="js/display.js"></script>
+	<script src="js/checkergetter.js"></script>
+	<script src="js/controlFunc.js"></script>
+	<script src="js/mainFunc.js"></script>
+
+</body>
+
+</html>
