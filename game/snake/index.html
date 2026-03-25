@@ -1,0 +1,312 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <title>顺滑曲线贪吃蛇（玩家 vs AI敌对蛇）</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            min-height: 100vh;
+            background: #121212;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            gap: 16px;
+        }
+        .score {
+            color: #fff;
+            font-size: 26px;
+            font-family: Arial, sans-serif;
+        }
+        #game {
+            background: #000;
+            border: 3px solid #4ade80;
+            border-radius: 8px;
+        }
+    </style>
+</head>
+<body>
+    <div style="display: flex; align-items: center; gap: 16px;">
+        <div class="score" id="score">得分：0</div>
+        <button id="modeToggle" style="padding: 8px 16px; font-size: 16px; background: #4ade80; color: white; border: none; border-radius: 4px; cursor: pointer;">切换模式</button>
+    </div>
+    <canvas id="game" width="600" height="600"></canvas>
+
+    <script>
+        const canvas = document.getElementById('game');
+        const ctx = canvas.getContext('2d');
+        const scoreEl = document.getElementById('score');
+
+        // 配置
+        const size = 12;
+        let speed = 120;
+        let score = 0;
+        let gameOver = false;
+        let mode = 'bug'; // 'bug' 或 'normal'
+
+        // 玩家蛇
+        let snake = [{ x: 300, y: 300 }];
+        let mouse = { x: 300, y: 300 };
+
+        // 食物列表
+        let foods = [];
+        const MAX_FOODS = 10;
+
+        // 敌对AI蛇
+        let enemySnake = [];
+        let enemySpeed = 7;
+
+        let gameLoop;
+
+        // 鼠标追踪
+        canvas.addEventListener('mousemove', (e) => {
+            if(gameOver) return;
+            const rect = canvas.getBoundingClientRect();
+            mouse.x = e.clientX - rect.left;
+            mouse.y = e.clientY - rect.top;
+        });
+
+        // 模式切换按钮
+        const modeToggle = document.getElementById('modeToggle');
+        modeToggle.addEventListener('click', () => {
+            mode = mode === 'bug' ? 'normal' : 'bug';
+            modeToggle.textContent = mode === 'bug' ? '切换模式' : '切换到Bug模式';
+            // 正常模式下立即补充食物
+            if (mode === 'normal') {
+                while (foods.length < MAX_FOODS) {
+                    spawnRandomFood();
+                }
+            }
+        });
+
+        // 生成单个食物
+        function spawnSingleFood(x, y) {
+            foods.push({ x, y });
+        }
+
+        // 随机生成1个食物
+        function spawnRandomFood() {
+            const x = Math.random() * (canvas.width - 20) + 10;
+            const y = Math.random() * (canvas.height - 20) + 10;
+            spawnSingleFood(x, y);
+        }
+
+        // 敌对蛇死亡 → 掉落一长串食物
+        function spawnFoodFromEnemyBody() {
+            for (let p of enemySnake) {
+                spawnSingleFood(p.x, p.y);
+            }
+        }
+
+        // 生成敌对蛇（长度10）
+        function spawnEnemy() {
+            enemySnake = [];
+            const startX = Math.random() * 400 + 100;
+            const startY = Math.random() * 400 + 100;
+            for (let i = 0; i < 10; i++) {
+                enemySnake.push({ x: startX - i * 2, y: startY });
+            }
+        }
+
+        // 绘制玩家蛇
+        function drawSnake() {
+            ctx.beginPath();
+            ctx.lineWidth = size;
+            ctx.lineCap = 'round';
+            ctx.lineJoin = 'round';
+            ctx.strokeStyle = '#60a5fa';
+            ctx.fillStyle = '#3b82f6';
+            ctx.moveTo(snake[0].x, snake[0].y);
+            for (let i = 1; i < snake.length; i++) {
+                ctx.lineTo(snake[i].x, snake[i].y);
+            }
+            ctx.stroke();
+            ctx.beginPath();
+            ctx.arc(snake[0].x, snake[0].y, size / 2 + 1, 0, Math.PI * 2);
+            ctx.fill();
+        }
+
+        // 绘制敌对蛇
+        function drawEnemy() {
+            ctx.beginPath();
+            ctx.lineWidth = size;
+            ctx.lineCap = 'round';
+            ctx.lineJoin = 'round';
+            ctx.strokeStyle = '#ef4444';
+            ctx.fillStyle = '#dc2626';
+            ctx.moveTo(enemySnake[0].x, enemySnake[0].y);
+            for (let i = 1; i < enemySnake.length; i++) {
+                ctx.lineTo(enemySnake[i].x, enemySnake[i].y);
+            }
+            ctx.stroke();
+            ctx.beginPath();
+            ctx.arc(enemySnake[0].x, enemySnake[0].y, size / 2 + 1, 0, Math.PI * 2);
+            ctx.fill();
+        }
+
+        // 绘制所有食物
+        function drawFoods() {
+            for (let f of foods) {
+                ctx.beginPath();
+                ctx.arc(f.x, f.y, 6, 0, Math.PI * 2);
+                ctx.fillStyle = '#facc15';
+                ctx.fill();
+            }
+        }
+
+        // AI敌对蛇移动 ✅ 彻底修复缩成一团 + 卡顿
+        function updateEnemy() {
+            // 无食物时随机移动
+            if (foods.length === 0) {
+                const head = { ...enemySnake[0] };
+                head.x += (Math.random() - 0.5) * enemySpeed;
+                head.y += (Math.random() - 0.5) * enemySpeed;
+                enemySnake.unshift(head);
+                enemySnake.pop();
+                return;
+            }
+
+            const head = { ...enemySnake[0] };
+
+            // 找最近食物
+            let target = foods[0];
+            for (let f of foods) {
+                const distCurrent = Math.hypot(head.x - target.x, head.y - target.y);
+                const distNew = Math.hypot(head.x - f.x, head.y - f.y);
+                if (distNew < distCurrent) target = f;
+            }
+
+            // 向食物移动
+            const dx = target.x - head.x;
+            const dy = target.y - head.y;
+            const dist = Math.hypot(dx, dy);
+            if (dist > 3) {
+                head.x += (dx / dist) * enemySpeed;
+                head.y += (dy / dist) * enemySpeed;
+            }
+
+            enemySnake.unshift(head);
+
+            // 吃食物
+            let ate = false;
+            for (let i = 0; i < foods.length; i++) {
+                if (Math.hypot(head.x - foods[i].x, head.y - foods[i].y) < 14) {
+                    foods.splice(i, 1);
+                    ate = true;
+                    if (mode === 'bug') {
+                        spawnRandomFood(); // bug模式：吃了立刻刷新新食物
+                    }
+                    break;
+                }
+            }
+
+            // 不吃才缩短，吃了就变长！
+            if (!ate) enemySnake.pop();
+        }
+
+        // 碰撞检测（已取消自撞判定）
+        function checkCollisions() {
+            if(gameOver) return;
+            const pHead = snake[0];
+            const eHead = enemySnake[0];
+
+            // 1. 玩家撞墙
+            if (pHead.x < 0 || pHead.x > canvas.width || pHead.y < 0 || pHead.y > canvas.height) {
+                gameOver = true;
+                alert('游戏结束！撞墙 | 得分：' + score);
+                window.location.reload();
+                return;
+            }
+
+            // 2. 玩家自撞 → 已取消 ❌
+
+            // 3. 玩家撞敌对身体 → 玩家死
+            for (let i = 1; i < enemySnake.length; i++) {
+                if (Math.hypot(pHead.x - enemySnake[i].x, pHead.y - enemySnake[i].y) < size / 1.5) {
+                    gameOver = true;
+                    alert('游戏结束！碰到敌对蛇 | 得分：' + score);
+                    window.location.reload();
+                    return;
+                }
+            }
+
+            // 4. 敌对撞玩家身体 → 敌对死+掉落食物
+            for (let i = 1; i < snake.length; i++) {
+                if (Math.hypot(eHead.x - snake[i].x, eHead.y - snake[i].y) < size / 1.5) {
+                    score += 50;
+                    scoreEl.textContent = '得分：' + score;
+                    spawnFoodFromEnemyBody();
+                    spawnEnemy();
+                    return;
+                }
+            }
+        }
+
+        // 游戏主更新
+        function update() {
+            if(gameOver) return;
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+            // 正常模式：保证食物数量
+            if (mode === 'normal' && foods.length < MAX_FOODS) {
+                const neededFoods = MAX_FOODS - foods.length;
+                for (let i = 0; i < neededFoods; i++) {
+                    spawnRandomFood();
+                }
+            }
+
+            // 玩家移动
+            const head = { ...snake[0] };
+            const dx = mouse.x - head.x;
+            const dy = mouse.y - head.y;
+            const dist = Math.hypot(dx, dy);
+            if (dist > 5) {
+                head.x += (dx / dist) * 8;
+                head.y += (dy / dist) * 8;
+            }
+            snake.unshift(head);
+
+            // 玩家吃食物
+            let atePlayer = false;
+            for (let i = 0; i < foods.length; i++) {
+                const f = foods[i];
+                if (Math.hypot(head.x - f.x, head.y - f.y) < 18) {
+                    foods.splice(i, 1);
+                    score += 10;
+                    scoreEl.textContent = '得分：' + score;
+                    speed = Math.max(60, speed - 2);
+                    clearInterval(gameLoop);
+                    gameLoop = setInterval(update, speed);
+                    atePlayer = true;
+                    if (mode === 'bug') {
+                        spawnRandomFood();
+                    }
+                    break;
+                }
+            }
+            if (!atePlayer) snake.pop();
+
+            // AI移动
+            updateEnemy();
+
+            // 碰撞判定
+            checkCollisions();
+
+            // 绘制
+            drawSnake();
+            drawEnemy();
+            drawFoods();
+        }
+
+        // 启动游戏
+        spawnRandomFood();
+        spawnEnemy();
+        gameLoop = setInterval(update, speed);
+    </script>
+</body>
+</html>
