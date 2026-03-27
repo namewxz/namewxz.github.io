@@ -1,0 +1,66 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN"
+"http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+<meta name="generator" content="Halibut, unidentified version">
+<title>洪水</title>
+<link rel="previous" href="unruly.html">
+<link rel="ToC" href="index.html">
+<link rel="up" href="index.html">
+<link rel="index" href="indexpage.html">
+<link rel="next" href="tracks.html">
+</head>
+<body>
+<p><a href="unruly.html">上一篇</a> | <a href="index.html">目录</a> | <a href="indexpage.html">索引</a> | <a href="tracks.html">下一篇</a></p>
+<h1><a name="flood"></a>第 39 章：<a name="i0"></a>洪水</h1>
+<p>
+你会得到一个方格网格，用多种颜色随机着色。在每一步中，你可以用你选择的颜色 flood-fill 左上角的方格（即，通过所有相同颜色的方格的正交连接路径从起始方格可到达的每个方格都将用新颜色填充）。当你这样做时，越来越多的网格连接到起始方格。
+</p>
+<p>
+你的目标是用尽可能少的步骤使整个网格成为相同的颜色。游戏会根据运行其内部求解器来设置步数限制。如果你能在该步数或更少的步数内使整个网格成为相同的颜色，你就赢了。
+</p>
+<p>
+我在 http://floodit.appspot.com（不再可访问）上看到了这个游戏（具有固定的网格大小、固定的颜色数量和固定的移动限制）。
+</p>
+<h2><a name="flood-controls"></a>39.1 <a name="i1"></a>洪水控制</h2>
+<p>
+要玩洪水，用鼠标点击一个方格。左上角和所有连接到它的东西将被你点击的方格的颜色 flood-fill。点击与左上角颜色相同的方格没有效果，因此不算作一步。
+</p>
+<p>
+你也可以使用光标键在网格周围移动光标（黑色轮廓方块）。按回车键将用光标下方方格的颜色填充左上角。
+</p>
+<p>
+（<a href="common.html#common-actions">第 2.1 节</a> 中描述的所有操作也可用。）
+</p>
+<h2><a name="flood-parameters"></a>39.2 <a name="i2"></a>洪水参数</h2>
+<p>
+这些参数可从“类型”菜单的“自定义...”选项获得。
+</p>
+<dl><dt>
+<em>宽度</em>，<em>高度</em>
+</dt>
+<dd>
+网格的大小，以方块为单位。
+</dd>
+<dt>
+<em>颜色</em>
+</dt>
+<dd>
+用于填充网格的颜色数量。必须至少为 3（使用两种颜色时，任何阶段只有一种合法移动，因此根本没有选择），最多为 10。
+</dd>
+<dt>
+<em>允许的额外移动</em>
+</dt>
+<dd>
+通过增加移动限制来控制拼图的难度。在每个新网格中，Flood 将运行内部求解器生成自己的解决方案，然后此字段中的值将添加到 Flood 解决方案的长度中，以生成游戏的移动限制。因此，值为 0 要求你与 Flood 的自动求解器一样高效，而更大的值则使其更容易。
+<p>
+（请注意，Flood 的内部求解器不一定会找到最短的可能解决方案，尽管我相信它非常接近。对于真正的挑战，将此值设置为 0，然后尝试以<em>严格少于</em>给定限制的移动来解决网格！）
+</p>
+
+</dd>
+</dl>
+
+<hr><address>
+[Simon Tatham's Portable Puzzle Collection, version 20260309.06e37f1]</address></body>
+</html>

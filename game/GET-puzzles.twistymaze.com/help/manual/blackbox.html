@@ -1,0 +1,133 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta http-equiv="content-type" content="text/html; charset=US-ASCII">
+<title>Black Box</title>
+<link rel="previous" href="untangle">
+<link rel="ToC" href="./">
+<link rel="up" href="./">
+<link rel="index" href="docindex">
+<link rel="next" href="slant">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<script>(function(){let e=!1;try{e=localStorage.colorScheme===void 0?!1:{dark:!0,light:!1,system:null}[localStorage.colorScheme]??null}catch{}e===null&&(e=window.matchMedia("(prefers-color-scheme: dark)").matches),document.documentElement.classList.toggle("wa-dark",e)})();</script>
+  <link rel="stylesheet" crossorigin href="/assets/help-page-5GTs0WJF.css">
+  <link rel="sitemap" type="application/xml" title="Sitemap" href="/sitemap.xml">
+<link rel="manifest" href="/manifest.webmanifest">
+<meta name="theme-color" content="#d1e8ff">
+<link rel="icon" href="/favicon.ico" sizes="48x48">
+<link rel="icon" href="/favicon.svg" sizes="any" type="image/svg+xml">
+<link rel="apple-touch-icon" href="/apple-touch-icon-180x180.png"></head>
+<body>
+<p><a href="untangle">Previous</a> | <a href="./">Contents</a> | <a href="docindex">Index</a> | <a href="slant">Next</a></p>
+<h1><a name="blackbox"></a><a name="i0"></a>Black Box<img class="screenshot" src="data:image/png;base64,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" alt="Puzzle screenshot"></h1>
+<p>
+A number of balls are hidden in a rectangular arena. You have to deduce the positions of the balls by firing lasers positioned at the edges of the arena and observing how their beams are deflected.
+</p>
+<p>
+Beams will travel straight from their origin until they hit the opposite side of the arena (at which point they emerge), unless affected by balls in one of the following ways:
+</p>
+<ul><li>
+A beam that hits a ball head-on is absorbed and will never re-emerge. This includes beams that meet a ball on the first rank of the arena.
+</li>
+<li>
+A beam with a ball in its front-left square and no ball ahead of it gets deflected 90 degrees to the right.
+</li>
+<li>
+A beam with a ball in its front-right square and no ball ahead of it gets similarly deflected to the left.
+</li>
+<li>
+A beam that would re-emerge from its entry location is considered to be &#8216;reflected&#8217;.
+</li>
+<li>
+A beam which would get deflected before entering the arena by a ball to the front-left or front-right of its entry point is also considered to be &#8216;reflected&#8217;.
+</li>
+</ul>
+<p>
+Beams that are reflected appear as a &#8216;R&#8217;; beams that hit balls head-on appear as &#8216;H&#8217;. Otherwise, a number appears at the firing point and the location where the beam emerges (this number is unique to that shot).
+</p>
+<p>
+You can place guesses as to the location of the balls, based on the entry and exit patterns of the beams; once you have placed enough balls a button appears enabling you to have your guesses checked.
+</p>
+<p>
+Here is a diagram showing how the positions of balls can create each of the beam behaviours shown above:
+</p>
+<pre><code> 1RHR---- 
+|..O.O...|
+2........3
+|........|
+|........|
+3........|
+|......O.|
+H........|
+|.....O..|
+ 12-RR---
+</code></pre>
+<p>
+As shown, it is possible for a beam to receive multiple reflections before re-emerging (see turn 3). Similarly, a beam may be reflected (possibly more than once) before receiving a hit (the &#8216;H&#8217; on the left side of the example).
+</p>
+<p>
+Note that any layout with more than 4 balls may have a non-unique solution. The following diagram illustrates this; if you know the board contains 5 balls, it is impossible to determine where the fifth ball is (possible positions marked with an <code>x</code>):
+</p>
+<pre><code> -------- 
+|........|
+|........|
+|..O..O..|
+|...xx...|
+|...xx...|
+|..O..O..|
+|........|
+|........|
+ --------
+</code></pre>
+<p>
+For this reason, when you have your guesses checked, the game will check that your solution <em>produces the same results</em> as the computer's, rather than that your solution is identical to the computer's. So in the above example, you could put the fifth ball at <em>any</em> of the locations marked with an <code>x</code>, and you would still win.
+</p>
+<p>
+Black Box was created by Eric Solomon and originally published as a board game by Waddingtons in 1977. Acornsoft published versions for the Acorn Atom and the BBC Microcomputer in the early 1980s. The puzzle was contributed to this collection by James Harvey.
+</p>
+<h2><a name="blackbox-controls"></a><a name="i1"></a>Black Box controls</h2>
+<p>
+To fire a laser beam, left-click in a square around the edge of the arena. The results will be displayed immediately. Clicking or holding the left button on one of these squares will highlight the current go (or a previous go) to confirm the exit point for that laser, if applicable.
+</p>
+<p>
+To guess the location of a ball, left-click within the arena and a black circle will appear marking the guess; click again to remove the guessed ball.
+</p>
+<p>
+Locations in the arena may be locked against modification by right-clicking; whole rows and columns may be similarly locked by right-clicking in the laser square above/below that column, or to the left/right of that row.
+</p>
+<p>
+The cursor keys may also be used to move around the grid. Pressing the Enter key will fire a laser or add a new ball-location guess, and pressing Space will lock a cell, row, or column.
+</p>
+<p>
+When an appropriate number of balls have been guessed, a button will appear at the top-left corner of the grid; clicking that (with mouse or cursor) will check your guesses.
+</p>
+<p>
+If you click the &#8216;check&#8217; button and your guesses are not correct, the game will show you the minimum information necessary to demonstrate this to you, so you can try again. If your ball positions are not consistent with the beam paths you already know about, one beam path will be circled to indicate that it proves you wrong. If your positions match all the existing beam paths but are still wrong, one new beam path will be revealed (written in red) which is not consistent with your current guesses.
+</p>
+<p>
+If you decide to give up completely, you can select Solve to reveal the actual ball positions. At this point, correctly-placed balls will be displayed as filled black circles, incorrectly-placed balls as filled black circles with red crosses, and missing balls as filled red circles. In addition, a red circle marks any laser you had already fired which is not consistent with your ball layout (just as when you press the &#8216;check&#8217; button), and red text marks any laser you <em>could</em> have fired in order to distinguish your ball layout from the correct one.
+</p>
+<p>
+(All the actions described in <a href="common#common-actions">section 2.1</a> are also available.)
+</p>
+<h2><a name="blackbox-parameters"></a><a name="i2"></a>Black Box parameters</h2>
+<p>
+These parameters are available from the &#8216;Custom...&#8217; option on the &#8216;Type&#8217; menu.
+</p>
+<dl><dt>
+<em>Width</em>, <em>Height</em>
+</dt>
+<dd>
+Size of grid in squares. There are 2 &#215; <em>Width</em> &#215; <em>Height</em> lasers per grid, two per row and two per column.
+</dd>
+<dt>
+<em>No. of balls</em>
+</dt>
+<dd>
+Number of balls to place in the grid. This can be a single number, or a range (separated with a hyphen, like &#8216;2-6&#8217;), and determines the number of balls to place on the grid. The &#8216;reveal&#8217; button is only enabled if you have guessed an appropriate number of balls; a guess using a different number to the original solution is still acceptable, if all the beam inputs and outputs match.
+</dd>
+</dl>
+
+<hr><address></address><script defer src='https://static.cloudflareinsights.com/beacon.min.js' data-cf-beacon='{"token": "a5c8762bf7a148698e3926dda94ccd16"}'></script></body>
+</html>

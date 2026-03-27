@@ -1,0 +1,56 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN"
+"http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+<meta name="generator" content="Halibut, unidentified version">
+<title>翻转</title>
+<link rel="previous" href="samegame.html">
+<link rel="ToC" href="index.html">
+<link rel="up" href="index.html">
+<link rel="index" href="indexpage.html">
+<link rel="next" href="guess.html">
+</head>
+<body>
+<p><a href="samegame.html">上一篇</a> | <a href="index.html">目录</a> | <a href="indexpage.html">索引</a> | <a href="guess.html">下一篇</a></p>
+<h1><a name="flip"></a>第 14 章：<a name="i0"></a>翻转</h1>
+<p>
+你有一个方格网格，有些是亮的，有些是暗的。你的目标是同时点亮所有方格。你可以选择任何方格并将其状态从亮翻转为暗或从暗翻转为亮，但当你这样做时，它周围的其他方格也会改变状态。
+</p>
+<p>
+每个方格都包含一个小图表，显示当你翻转它时哪些其他方格会改变。
+</p>
+<h2><a name="flip-controls"></a>14.1 <a name="i1"></a>翻转控制</h2>
+<p>
+这个游戏可以用键盘或鼠标玩。
+</p>
+<p>
+左键点击方格以翻转它及其相关方格，或使用光标键选择方格，然后按空格键或回车键翻转。
+</p>
+<p>
+如果你在这个游戏上使用“解决”功能，它会用红色标记一些方格。如果你在每个有红色标记的方格中点击一次，游戏应该就解决了。（如果你在<em>没有</em>红色标记的方格中点击，会在其中出现一个红色标记，表明你需要反转该操作才能达到解决方案。）
+</p>
+<p>
+（<a href="common.html#common-actions">第 2.1 节</a> 中描述的所有操作也可用。）
+</p>
+<h2><a name="flip-parameters"></a>14.2 <a name="i2"></a>翻转参数</h2>
+<p>
+这些参数可从“类型”菜单的“自定义...”选项获得。
+</p>
+<dl><dt>
+<em>宽度</em>，<em>高度</em>
+</dt>
+<dd>
+网格的大小（以方块为单位）。
+</dd>
+<dt>
+<em>形状类型</em>
+</dt>
+<dd>
+此控件确定通过点击任何给定方格翻转的区域的形状。默认设置“十字”使每个方格翻转自身及其四个直接邻居（如果在边缘或角落则为三个或两个）。另一个设置“随机”为每个方格选择随机形状，因此游戏每次都不同。
+</dd>
+</dl>
+
+<hr><address>
+[Simon Tatham's Portable Puzzle Collection, version 20260309.06e37f1]</address></body>
+</html>

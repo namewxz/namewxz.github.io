@@ -1,0 +1,103 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN"
+"http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+<meta name="generator" content="Halibut, unidentified version">
+<title>珍珠</title>
+<link rel="previous" href="range.html">
+<link rel="ToC" href="index.html">
+<link rel="up" href="index.html">
+<link rel="index" href="indexpage.html">
+<link rel="next" href="undead.html">
+</head>
+<body>
+<p><a href="range.html">上一章</a> | <a href="index.html">目录</a> | <a href="indexpage.html">索引</a> | <a href="undead.html">下一章</a></p>
+
+<ul>
+<li><a href="#pearl">第36章：珍珠</a>
+<ul>
+<li><a href="#pearl-controls">36.1 珍珠的操作</a></li>
+<li><a href="#pearl-parameters">36.2 珍珠的参数</a></li>
+<li><a href="#pearl-prefs">36.3 珍珠的用户偏好</a></li>
+</ul></li>
+</ul>
+<h1><a name="pearl"></a>第36章：<a name="i0"></a>珍珠</h1>
+<p>
+你有一个方格网格。你的任务是在水平或垂直相邻的方格中心之间绘制线条，使线条形成一个单一的闭合环。在生成的网格中，环经过的一些方格会包含拐角，而另一些则是水平或垂直的直线。（有些方格可以完全为空——环不必经过每个方格。）
+</p>
+<p>
+一些方格包含黑白圆圈，这些是环必须满足的线索。
+</p>
+<p>
+方格中的黑圆圈表示该方格是一个拐角，但环中与它相邻的两个方格都不是拐角。
+</p>
+<p>
+白圆圈表示该方格是一条直线边，但环中与它相邻的方格中至少有一个是拐角。
+</p>
+<p>
+（在这两种情况下，线索只约束环中<em>相邻</em>的两个方格，即环离开线索方格后进入的方格。仅在网格中<em>相邻</em>的方格不受约束。）
+</p>
+<p>
+这个谜题的功劳归功于 <a name="i1"></a>Nikoli，他们称之为“Masyu”。<a href="#p0">[19]</a>
+</p>
+<p>
+感谢 James Harvey 对实现的帮助。
+</p>
+<p><a name="p0"></a>
+[19] <a href="https://www.nikoli.co.jp/en/puzzles/masyu/"><code>https://www.nikoli.co.jp/en/puzzles/masyu/</code></a>
+</p>
+<h2><a name="pearl-controls"></a>36.1 <a name="i2"></a>珍珠的操作</h2>
+<p>
+用左键单击网格边缘，绘制环的一段穿过该边缘，或移除已绘制的线段。
+</p>
+<p>
+用左键拖动通过一系列方格，一次绘制环的多个线段。或者，拖动穿过环的现有部分以取消绘制它，或取消绘制它的一部分然后向不同方向移动。
+</p>
+<p>
+用右键单击网格边缘，用十字标记它，表示你确定环不穿过该边缘。（例如，如果你已经决定与白色线索相邻的哪个方格必须是拐角，但还不知道拐角转向哪个方向，你可能会用十字标记它<em>不能</em>走的那个方向。）
+</p>
+<p>
+或者，使用光标键移动光标。使用 Enter 键开始和结束键盘“拖动”操作。使用 Space、Escape 或 Backspace 键取消拖动。或者，在使用光标键拖动时按住 Control 键，在移动方格之间切换线段。
+</p>
+<p>
+按 Control-Shift-方向键或 Shift-方向键分别模拟在键方向的边缘上左键或右键单击。
+</p>
+<p>
+（<a href="common.html#common-actions">第2.1节</a>中描述的所有操作也可用。）
+</p>
+<h2><a name="pearl-parameters"></a>36.2 <a name="i3"></a>珍珠的参数</h2>
+<p>
+这些参数可从“类型”菜单上的“自定义...”选项获得。
+</p>
+<dl><dt>
+<em>宽度</em>、<em>高度</em>
+</dt>
+<dd>
+网格的大小（以方格为单位）。
+</dd>
+<dt>
+<em>难度</em>
+</dt>
+<dd>
+控制生成谜题的难度。
+</dd>
+<dt>
+<em>允许不可解</em>
+</dt>
+<dd>
+如果设置了此选项，游戏将以最简单的方式生成：显示所有可能提供的线索方格，生成器不会检查谜题是否可以唯一解决。
+<p>
+这加快了游戏生成速度，并允许玩更大的网格。至少仍然总是存在一个可能的解决方案，但不能保证它是唯一的，或者可以逐步推导出它。
+</p>
+
+</dd>
+</dl>
+<h2><a name="pearl-prefs"></a>36.3 <a name="i4"></a>珍珠的用户偏好</h2>
+<p>
+在支持用户偏好的平台上，“游戏”菜单上的“偏好”选项允许你配置游戏显示的风格。“传统”是默认模式，其中环在网格方格中心之间运行，每个线索占据一个方格。“Loopy 风格”是一种替代模式，看起来更像 Loopy（<a href="loopy.html#loopy">第23章</a>），其中环在网格<em>顶点</em>之间运行，线索也占据顶点。
+</p>
+
+<hr><address>
+[Simon Tatham's Portable Puzzle Collection, version 20260309.06e37f1]</address></body>
+</html>

@@ -1,0 +1,910 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN"
+"http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+<meta name="generator" content="Halibut, unidentified version">
+<title>绘图 API</title>
+<link rel="previous" href="backend.html">
+<link rel="ToC" href="index.html">
+<link rel="up" href="index.html">
+<link rel="next" href="midend.html">
+</head>
+<body>
+<p><a href="backend.html">上一章</a> | <a href="index.html">目录</a> | <a href="midend.html">下一章</a></p>
+
+<ul>
+<li><a href="#drawing">第3章：绘图 API</a>
+<ul>
+<li><a href="#drawing-backend">3.1 后端看到的绘图 API</a>
+<ul>
+<li><a href="#drawing-draw-rect">3.1.1 <code>draw_rect()</code></a></li>
+<li><a href="#drawing-draw-rect-outline">3.1.2 <code>draw_rect_outline()</code></a></li>
+<li><a href="#drawing-draw-rect-corner">3.1.3 <code>draw_rect_corners()</code></a></li>
+<li><a href="#drawing-draw-line">3.1.4 <code>draw_line()</code></a></li>
+<li><a href="#drawing-draw-polygon">3.1.5 <code>draw_polygon()</code></a></li>
+<li><a href="#drawing-draw-circle">3.1.6 <code>draw_circle()</code></a></li>
+<li><a href="#drawing-draw-thick-line">3.1.7 <code>draw_thick_line()</code></a></li>
+<li><a href="#drawing-draw-text">3.1.8 <code>draw_text()</code></a></li>
+<li><a href="#drawing-text-fallback">3.1.9 <code>text_fallback()</code></a></li>
+<li><a href="#drawing-clip">3.1.10 <code>clip()</code></a></li>
+<li><a href="#drawing-unclip">3.1.11 <code>unclip()</code></a></li>
+<li><a href="#drawing-draw-update">3.1.12 <code>draw_update()</code></a></li>
+<li><a href="#drawing-status-bar">3.1.13 <code>status_bar()</code></a></li>
+<li><a href="#drawing-blitter">3.1.14 Blitter 函数</a></li>
+<li><a href="#print-mono-colour">3.1.15 <code>print_mono_colour()</code></a></li>
+<li><a href="#print-grey-colour">3.1.16 <code>print_grey_colour()</code></a></li>
+<li><a href="#print-hatched-colour">3.1.17 <code>print_hatched_colour()</code></a></li>
+<li><a href="#print-rgb-mono-colour">3.1.18 <code>print_rgb_mono_colour()</code></a></li>
+<li><a href="#print-rgb-grey-colour">3.1.19 <code>print_rgb_grey_colour()</code></a></li>
+<li><a href="#print-rgb-hatched-colour">3.1.20 <code>print_rgb_hatched_colour()</code></a></li>
+<li><a href="#print-line-width">3.1.21 <code>print_line_width()</code></a></li>
+<li><a href="#print-line-dotted">3.1.22 <code>print_line_dotted()</code></a></li>
+</ul></li>
+<li><a href="#drawing-frontend">3.2 前端实现的绘图 API</a>
+<ul>
+<li><a href="#drawingapi-version">3.2.1 <code>version</code></a></li>
+<li><a href="#drawingapi-draw-text">3.2.2 <code>draw_text()</code></a></li>
+<li><a href="#drawingapi-draw-rect">3.2.3 <code>draw_rect()</code></a></li>
+<li><a href="#drawingapi-draw-line">3.2.4 <code>draw_line()</code></a></li>
+<li><a href="#drawingapi-draw-polygon">3.2.5 <code>draw_polygon()</code></a></li>
+<li><a href="#drawingapi-draw-circle">3.2.6 <code>draw_circle()</code></a></li>
+<li><a href="#drawingapi-draw-thick-line">3.2.7 <code>draw_thick_line()</code></a></li>
+<li><a href="#drawingapi-draw-update">3.2.8 <code>draw_update()</code></a></li>
+<li><a href="#drawingapi-clip">3.2.9 <code>clip()</code></a></li>
+<li><a href="#drawingapi-unclip">3.2.10 <code>unclip()</code></a></li>
+<li><a href="#drawingapi-start-draw">3.2.11 <code>start_draw()</code></a></li>
+<li><a href="#drawingapi-end-draw">3.2.12 <code>end_draw()</code></a></li>
+<li><a href="#drawingapi-status-bar">3.2.13 <code>status_bar()</code></a></li>
+<li><a href="#drawingapi-blitter-new">3.2.14 <code>blitter_new()</code></a></li>
+<li><a href="#drawingapi-blitter-free">3.2.15 <code>blitter_free()</code></a></li>
+<li><a href="#drawingapi-blitter-save">3.2.16 <code>blitter_save()</code></a></li>
+<li><a href="#drawingapi-blitter-load">3.2.17 <code>blitter_load()</code></a></li>
+<li><a href="#drawingapi-begin-doc">3.2.18 <code>begin_doc()</code></a></li>
+<li><a href="#drawingapi-begin-page">3.2.19 <code>begin_page()</code></a></li>
+<li><a href="#drawingapi-begin-puzzle">3.2.20 <code>begin_puzzle()</code></a></li>
+<li><a href="#drawingapi-end-puzzle">3.2.21 <code>end_puzzle()</code></a></li>
+<li><a href="#drawingapi-end-page">3.2.22 <code>end_page()</code></a></li>
+<li><a href="#drawingapi-end-doc">3.2.23 <code>end_doc()</code></a></li>
+<li><a href="#drawingapi-line-width">3.2.24 <code>line_width()</code></a></li>
+<li><a href="#drawingapi-line-dotted">3.2.25 <code>line_dotted()</code></a></li>
+<li><a href="#drawingapi-text-fallback">3.2.26 <code>text_fallback()</code></a></li>
+</ul></li>
+<li><a href="#drawingapi-frontend">3.3 前端调用的绘图 API</a>
+<ul>
+<li><a href="#drawing-new">3.3.1 <code>drawing_new()</code></a></li>
+<li><a href="#drawing-free">3.3.2 <code>drawing_free()</code></a></li>
+<li><a href="#drawing-print-get-colour">3.3.3 <code>print_get_colour()</code></a></li>
+<li><a href="#drawing-draw-polygon-fallback">3.3.4 <code>draw_polygon_fallback()</code></a></li>
+</ul></li>
+</ul></li>
+</ul>
+<h1><a name="drawing"></a>第3章：绘图 API</h1>
+<p>
+后端函数 <code>redraw()</code>（<a href="backend.html#backend-redraw">第2.8.11节</a>）需要在窗口的绘图区域上绘制拼图的图形。后端函数 <code>print()</code> 类似地在纸上绘制拼图（如果拼图可打印）。为了可移植地执行此操作，后端提供了一个绘图 API，允许它直接与前端通信。在本章中，我记录了这个 API，既为了尝试使用它的后端作者，也为了尝试实现它的前端作者。
+</p>
+<p>
+后端看到的绘图 API 是一组全局函数的集合，每个函数都接受一个指向 <code>drawing</code> 结构（“绘图对象”）的指针。这些对象作为参数提供给后端的 <code>redraw()</code> 和 <code>print()</code> 函数。
+</p>
+<p>
+实际上，这些全局函数不是由前端直接实现的；相反，它们在 <code>drawing.c</code> 中集中实现，形成一个小的中间件。前端提供的绘图 API 是一个包含一组函数指针的结构，加上一个“<code>void *</code>”句柄，该句柄作为后端使用的同一个绘图对象的成员间接传递给这些函数中的每一个。这使得单个前端能够在必要时在绘图 API 的多个实现之间切换。例如，Windows API 提供了一个集成到处理窗口绘图的同一个 GDI 中的打印机制，因此同一个 API 实现可以处理绘图和打印；但在 Unix 上，应用程序打印的最常见方式是直接生成 PostScript 输出，尽管编写一个单一的（例如）<code>draw_rect()</code> 函数是<em>可能的</em>，该函数检查全局标志以决定是执行 GTK 绘图操作还是向文件输出 PostScript，但拥有两个单独的函数并在适当的时候在它们之间切换会好得多。
+</p>
+<p>
+绘图时，拼图窗口由像素坐标索引，左上角像素定义为 <code>(0,0)</code>，右下角像素定义为 <code>(w-1,h-1)</code>，其中 <code>w</code> 和 <code>h</code> 是后端函数 <code>compute_size()</code>（<a href="backend.html#backend-compute-size">第2.8.4节</a>）返回的宽度和高度值。
+</p>
+<p>
+坐标系使用的像素可能与显示器的物理像素大小不同。在高分辨率显示器上，绘图 API 中的一个像素可能对应于多个物理像素。然而，保证 API 像素可以被准确覆盖而不影响其相邻像素，因此一般来说，API 像素将对应于设备像素的整数边矩形。除非另有说明，本文档中的“像素”一词指的是绘图 API 的逻辑像素，而不一定是显示设备的物理像素。
+</p>
+<p>
+打印时，拼图的打印区域以完全相同的方式索引（由打印模块 <code>printing.c</code> 提供任意的瓦片大小），以方便在绘图和打印例程之间共享代码。然而，打印时，拼图可能不再假设坐标单位与像素有任何关系；打印机的实际分辨率在打印时可能甚至不知道，因此坐标单位可能比像素小或大。拼图的打印函数应该限制自己绘制几何形状，而不是繁琐的像素操作。
+</p>
+<p>
+<em>拼图的重绘函数可以假设它们绘制的表面是持久的</em>。每个前端都有责任在面对 GUI 窗口暴露问题等情况时保留拼图的窗口内容。不允许请求后端重绘它已经绘制的窗口的任何部分，除非由于在拼图中进行移动而实际发生了变化。
+</p>
+<p>
+大多数前端通过让绘图例程在存储的位图上绘制而不是直接在窗口上绘制，并在每次需要重绘窗口的一部分时将位图复制到窗口来实现这一点。因此，后端每次进行绘图时，必须通知前端它访问了窗口的哪些部分，从而哪些部分需要重绘，这一点至关重要。这是通过调用 <code>draw_update()</code>（<a href="#drawing-draw-update">第3.1.12节</a>）来完成的。
+</p>
+<p>
+旧绘图的持久性是方便的。然而，拼图在如何更新其绘图区域方面应该非常小心。问题是一些前端执行抗锯齿绘图：抗锯齿绘图函数不是简单地在保持每个像素不变或用指定颜色绘制它之间进行选择，而是会根据图形占用像素的比例（可能由一些启发式调整因子修改）在图形边界的像素中<em>混合</em>原始颜色和新颜色。所有这些都会为曲线和对角线产生更平滑的外观。
+</p>
+<p>
+反复绘制抗锯齿图形的一个不幸效果是，图形边界周围的像素会逐渐被“墨水”饱和，边界似乎会“扩散”。更糟糕的是，用不同颜色重绘图形不会完全覆盖旧的边界像素，因此最终结果是相当丑陋的污迹。
+</p>
+<p>
+避免令人不愉快的抗锯齿伪影的好策略是识别需要重绘的多个矩形区域，将它们清除为背景颜色，然后从头开始重绘它们的内容，同时小心不要超出原始矩形的边界。<code>clip()</code> 函数（<a href="#drawing-clip">第3.1.10节</a>）在这里非常有用。基于方格网格的游戏通常可以相当容易地做到这一点。其他游戏可能需要更加小心。例如，Loopy 的重绘函数首先识别需要更新的显示部分。然后，如果更改相当局部化，它会清除并重新绘制包含每个更改区域的矩形。否则，它会放弃并从头开始重绘整个网格。
+</p>
+<p>
+如果非常小心使用的绘图函数，就可以避免清除背景并从头开始重绘：如果一个函数被记录为在某些情况下不进行抗锯齿，你可以依赖绘图中的每个像素要么完全保持不变，要么被设置为请求的颜色，而不执行任何混合。
+</p>
+<p>
+在以下各节中，我首先讨论后端看到的绘图 API，然后讨论前端看到的<em>几乎</em>相同的函数指针形式。
+</p>
+<h2><a name="drawing-backend"></a>3.1 后端看到的绘图 API</h2>
+<p>
+本节记录后端绘图 API，形式为接受 <code>drawing</code> 对象作为参数的函数。
+</p>
+<h3><a name="drawing-draw-rect"></a>3.1.1 <code>draw_rect()</code></h3>
+<pre><code>void draw_rect(drawing *dr, int x, int y, int w, int h,
+               int colour);
+</code></pre>
+<p>
+在拼图窗口中绘制一个填充的矩形。
+</p>
+<p>
+<code>x</code> 和 <code>y</code> 给出矩形左上角像素的坐标。<code>w</code> 和 <code>h</code> 给出其宽度和高度。因此，矩形的水平范围从 <code>x</code> 到 <code>x+w-1</code>（含），垂直范围从 <code>y</code> 到 <code>y+h-1</code>（含）。
+</p>
+<p>
+<code>colour</code> 是后端函数 <code>colours()</code>（<a href="backend.html#backend-colours">第2.8.6节</a>）返回的颜色数组的整数索引。
+</p>
+<p>
+没有单独的像素绘制函数。如果你想绘制单个像素，推荐的方法是使用 <code>draw_rect()</code>，宽度和高度设置为 1。
+</p>
+<p>
+与许多其他绘图函数不同，此函数保证是像素完美的：矩形将被清晰定义，不会被抗锯齿或类似处理。
+</p>
+<p>
+此函数可用于绘图和打印。
+</p>
+<h3><a name="drawing-draw-rect-outline"></a>3.1.2 <code>draw_rect_outline()</code></h3>
+<pre><code>void draw_rect_outline(drawing *dr, int x, int y, int w, int h,
+                       int colour);
+</code></pre>
+<p>
+在拼图窗口中绘制一个轮廓矩形。
+</p>
+<p>
+<code>x</code> 和 <code>y</code> 给出矩形左上角像素的坐标。<code>w</code> 和 <code>h</code> 给出其宽度和高度。因此，矩形的水平范围从 <code>x</code> 到 <code>x+w-1</code>（含），垂直范围从 <code>y</code> 到 <code>y+h-1</code>（含）。
+</p>
+<p>
+<code>colour</code> 是后端函数 <code>colours()</code>（<a href="backend.html#backend-colours">第2.8.6节</a>）返回的颜色数组的整数索引。
+</p>
+<p>
+从后端的角度来看，此函数可能被视为绘图 API 的一部分。然而，前端不需要实现它，因为它实际上是作为 <code>draw_polygon()</code> 的包装器在 <code>misc.c</code> 中集中实现的。
+</p>
+<p>
+此函数可用于绘图和打印。
+</p>
+<h3><a name="drawing-draw-rect-corner"></a>3.1.3 <code>draw_rect_corners()</code></h3>
+<pre><code>void draw_rect_corners(drawing *dr, int cx, int cy, int r, int col);
+</code></pre>
+<p>
+在正方形的角落绘制四个 L 形，以目标分划板的方式。这是后端用来显示键盘光标的便利函数（如果他们想要那种风格的光标）。
+</p>
+<p>
+<code>cx</code> 和 <code>cy</code> 给出正方形中心的坐标。<code>r</code> 是正方形边长的一半，因此角落位于 <code>(cx-r,cy-r)</code>、<code>(cx+r,cy-r)</code>、<code>(cx-r,cy+r)</code> 和 <code>(cx+r,cy+r)</code>。
+</p>
+<p>
+<code>colour</code> 是后端函数 <code>colours()</code>（<a href="backend.html#backend-colours">第2.8.6节</a>）返回的颜色数组的整数索引。
+</p>
+<h3><a name="drawing-draw-line"></a>3.1.4 <code>draw_line()</code></h3>
+<pre><code>void draw_line(drawing *dr, int x1, int y1, int x2, int y2,
+               int colour);
+</code></pre>
+<p>
+在拼图窗口中绘制一条直线。
+</p>
+<p>
+<code>x1</code> 和 <code>y1</code> 给出线的一端的坐标。<code>x2</code> 和 <code>y2</code> 给出线的另一端的坐标。绘制的线包括这两个点。
+</p>
+<p>
+<code>colour</code> 是后端函数 <code>colours()</code>（<a href="backend.html#backend-colours">第2.8.6节</a>）返回的颜色数组的整数索引。
+</p>
+<p>
+一些平台可能对此函数执行抗锯齿。因此，不要假设你可以通过在背景颜色中绘制相同的线来擦除一条线；抗锯齿可能会导致消失线周围出现可感知的幽灵伪影。然而，水平和垂直线是像素完美的，不会被抗锯齿。
+</p>
+<p>
+此函数可用于绘图和打印。
+</p>
+<h3><a name="drawing-draw-polygon"></a>3.1.5 <code>draw_polygon()</code></h3>
+<pre><code>void draw_polygon(drawing *dr, const int *coords, int npoints,
+                  int fillcolour, int outlinecolour);
+</code></pre>
+<p>
+在拼图窗口中绘制一个轮廓或填充的多边形。
+</p>
+<p>
+<code>coords</code> 是一个 <code>(2*npoints)</code> 整数的数组，包含 <code>npoints</code> 个顶点的 <code>x</code> 和 <code>y</code> 坐标。<code>x</code> 和 <code>y</code> 坐标以交错顺序存储，每个顶点的 <code>x</code> 坐标在其 <code>y</code> 坐标之前。例如，第一个顶点的 <code>x</code> 和 <code>y</code> 坐标分别是 <code>coords[0]</code> 和 <code>coords[1]</code>。
+</p>
+<p>
+<code>fillcolour</code> 和 <code>outlinecolour</code> 是后端函数 <code>colours()</code>（<a href="backend.html#backend-colours">第2.8.6节</a>）返回的颜色数组的整数索引。<code>fillcolour</code> 也可以是 <code>-1</code>，表示多边形应该只绘制轮廓。
+</p>
+<p>
+由指定顶点列表定义的多边形首先用 <code>fillcolour</code> 填充（如果指定），然后用 <code>outlinecolour</code> 绘制轮廓。
+</p>
+<p>
+<code>outlinecolour</code> 可能<em>不</em>是 <code>-1</code>；它必须是有效的颜色（前端允许通过断言强制执行这一点）。这是因为不同平台对填充多边形是否应包含其边界线存在分歧，因此绘制<em>仅</em>填充的多边形会产生不可移植的效果。如果你希望填充的多边形没有可见的轮廓，你必须将 <code>outlinecolour</code> 设置为与 <code>fillcolour</code> 相同。
+</p>
+<p>
+一些平台可能对此函数执行抗锯齿。因此，不要假设你可以通过在背景颜色中绘制相同的多边形来擦除多边形。此外，准备好多边形由于这一点而超出其明显边界框一个像素；如果你真的需要它不这样做以避免干扰其他精细图形，你可能应该使用 <code>clip()</code>（<a href="#drawing-clip">第3.1.10节</a>）。你可以依赖水平和垂直线不被抗锯齿。
+</p>
+<p>
+此函数可用于绘图和打印。
+</p>
+<h3><a name="drawing-draw-circle"></a>3.1.6 <code>draw_circle()</code></h3>
+<pre><code>void draw_circle(drawing *dr, int cx, int cy, int radius,
+                 int fillcolour, int outlinecolour);
+</code></pre>
+<p>
+在拼图窗口中绘制一个轮廓或填充的圆。
+</p>
+<p>
+<code>cx</code> 和 <code>cy</code> 给出圆心的坐标。<code>radius</code> 给出其半径。圆的总水平像素范围从 <code>cx-radius+1</code> 到 <code>cx+radius-1</code>（含），垂直范围类似地围绕 <code>cy</code>。
+</p>
+<p>
+<code>fillcolour</code> 和 <code>outlinecolour</code> 是后端函数 <code>colours()</code>（<a href="backend.html#backend-colours">第2.8.6节</a>）返回的颜色数组的整数索引。<code>fillcolour</code> 也可以是 <code>-1</code>，表示圆应该只绘制轮廓。
+</p>
+<p>
+圆首先用 <code>fillcolour</code> 填充（如果指定），然后用 <code>outlinecolour</code> 绘制轮廓。
+</p>
+<p>
+<code>outlinecolour</code> 可能<em>不</em>是 <code>-1</code>；它必须是有效的颜色（前端允许通过断言强制执行这一点）。这是因为不同平台对填充圆是否应包含其边界线存在分歧，因此绘制<em>仅</em>填充的圆会产生不可移植的效果。如果你希望填充的圆没有可见的轮廓，你必须将 <code>outlinecolour</code> 设置为与 <code>fillcolour</code> 相同。
+</p>
+<p>
+一些平台可能对此函数执行抗锯齿。因此，不要假设你可以通过在背景颜色中绘制相同的圆来擦除圆。此外，准备好圆由于这一点而超出其明显边界框一个像素；如果你真的需要它不这样做以避免干扰其他精细图形，你可能应该使用 <code>clip()</code>（<a href="#drawing-clip">第3.1.10节</a>）。
+</p>
+<p>
+此函数可用于绘图和打印。
+</p>
+<h3><a name="drawing-draw-thick-line"></a>3.1.7 <code>draw_thick_line()</code></h3>
+<pre><code>void draw_thick_line(drawing *dr, float thickness,
+                     float x1, float y1, float x2, float y2,
+                     int colour)
+</code></pre>
+<p>
+在拼图窗口中绘制一条线，可以控制线的厚度。
+</p>
+<p>
+<code>x1</code> 和 <code>y1</code> 给出线的一端的坐标。<code>x2</code> 和 <code>y2</code> 给出线的另一端的坐标。<code>thickness</code> 给出线的厚度，以像素为单位。
+</p>
+<p>
+请注意，坐标和厚度是浮点数：这里使用连续坐标系。在这种情况下，能够以优于像素的精度寻址点很重要，因为否则无法正确表达具有奇数和偶数厚度的线的端点。
+</p>
+<p>
+一些平台可能对此函数执行抗锯齿。粗线绘制操作影响的精确像素可能因平台而异，并且不提供特定的保证。实际上，即使水平或垂直线也可能被抗锯齿。
+</p>
+<p>
+此函数可用于绘图和打印。
+</p>
+<p>
+如果指定的厚度小于 1.0，则使用 1.0。这确保即使在小比例下细线也可见。
+</p>
+<h3><a name="drawing-draw-text"></a>3.1.8 <code>draw_text()</code></h3>
+<pre><code>void draw_text(drawing *dr, int x, int y, int fonttype,
+               int fontsize, int align, int colour,
+               const char *text);
+</code></pre>
+<p>
+在拼图窗口中绘制文本。
+</p>
+<p>
+<code>x</code> 和 <code>y</code> 给出一个点的坐标。此点与文本位置的关系由 <code>align</code> 指定，<code>align</code> 是水平和垂直对齐标志的按位或：
+</p>
+<dl><dt>
+<code>ALIGN_VNORMAL</code>
+</dt>
+<dd>
+表示 <code>y</code> 与文本的基线对齐。
+</dd>
+<dt>
+<code>ALIGN_VCENTRE</code>
+</dt>
+<dd>
+表示 <code>y</code> 与文本的垂直中心对齐。（实际上，它与正常<em>大写</em>文本的垂直中心对齐：在相同的 <code>y</code> 坐标处显示两个带有 <code>ALIGN_VCENTRE</code> 的文本片段将导致它们的基线彼此对齐，即使一个是上升符而另一个是下降符。）
+</dd>
+<dt>
+<code>ALIGN_HLEFT</code>
+</dt>
+<dd>
+表示 <code>x</code> 与文本的左端对齐。
+</dd>
+<dt>
+<code>ALIGN_HCENTRE</code>
+</dt>
+<dd>
+表示 <code>x</code> 与文本的水平中心对齐。
+</dd>
+<dt>
+<code>ALIGN_HRIGHT</code>
+</dt>
+<dd>
+表示 <code>x</code> 与文本的右端对齐。
+</dd>
+</dl>
+<p>
+<code>fonttype</code> 是 <code>FONT_FIXED</code> 或 <code>FONT_VARIABLE</code>，分别表示等宽或比例字体。（不能指定更多细节；这只会导致不同平台之间的可移植性问题。）
+</p>
+<p>
+<code>fontsize</code> 是文本的所需大小，以像素为单位。此大小对应于文本的整体点大小，而不是任何内部尺寸（如大写高度）。
+</p>
+<p>
+<code>colour</code> 是后端函数 <code>colours()</code>（<a href="backend.html#backend-colours">第2.8.6节</a>）返回的颜色数组的整数索引。
+</p>
+<p>
+此函数可用于绘图和打印。
+</p>
+<p>
+传递给此函数的文本的字符集由<em>绘图对象</em>指定，尽管它必须是 ASCII 的超集。如果拼图想要显示不包含在 ASCII 中的文本，它应该使用 <code>text_fallback()</code> 函数（<a href="#drawing-text-fallback">第3.1.9节</a>）来查询绘图对象以获取它想要的字符的适当表示。
+</p>
+<h3><a name="drawing-text-fallback"></a>3.1.9 <code>text_fallback()</code></h3>
+<pre><code>char *text_fallback(drawing *dr, const char *const *strings,
+                    int nstrings);
+</code></pre>
+<p>
+此函数用于请求将 UTF-8 文本转换为绘图对象的 <code>draw_text()</code> 实现期望的字符编码。
+</p>
+<p>
+输入是一个以 UTF-8 编码的字符串列表：<code>nstrings</code> 给出列表中字符串的数量，<code>strings[0]</code>、<code>strings[1]</code>、...、<code>strings[nstrings-1]</code> 是字符串本身。
+</p>
+<p>
+返回的字符串（动态分配，使用完毕后必须释放）派生自列表中绘图对象期望能够可靠显示的第一个字符串；它将由该字符串转换为 <code>draw_text()</code> 期望的字符集组成。
+</p>
+<p>
+绘图实现不需要处理 ASCII 以外的任何内容，但被允许假设<em>某个</em>字符串将被成功转换。因此，对此函数的每次调用都必须在列表中的某个位置（可能是最后一个元素）包含一个仅由 ASCII 组成的字符串，供任何无法处理其他内容的前端使用。
+</p>
+<p>
+例如，如果拼图希望显示包含乘号的字符串（Unicode 中的 U+00D7，在 UTF-8 中由字节 C3 97 表示），它可能会这样做：
+</p>
+<pre><code>static const char *const times_signs[] = { "\xC3\x97", "x" };
+char *times_sign = text_fallback(dr, times_signs, 2);
+sprintf(buffer, "%d%s%d", width, times_sign, height);
+sfree(times_sign);
+draw_text(dr, x, y, font, size, align, colour, buffer);
+sfree(buffer);
+</code></pre>
+<p>
+这将在支持它的平台上绘制中间带有乘号的字符串，并在没有替代方案的地方回退到简单的 ASCII '<code>x</code>'。
+</p>
+<h3><a name="drawing-clip"></a>3.1.10 <code>clip()</code></h3>
+<pre><code>void clip(drawing *dr, int x, int y, int w, int h);
+</code></pre>
+<p>
+在拼图窗口中建立一个裁剪矩形。
+</p>
+<p>
+<code>x</code> 和 <code>y</code> 给出裁剪矩形左上角像素的坐标。<code>w</code> 和 <code>h</code> 给出其宽度和高度。因此，矩形的水平范围从 <code>x</code> 到 <code>x+w-1</code>（含），垂直范围从 <code>y</code> 到 <code>y+h-1</code>（含）。（这些与 <code>draw_rect()</code> 的语义完全相同。）
+</p>
+<p>
+此调用后，任何绘图操作都不会影响指定矩形外的任何内容。通过调用 <code>unclip()</code>（<a href="#drawing-unclip">第3.1.11节</a>）可以撤销此效果。裁剪矩形是像素完美的：矩形内的像素受绘图函数的影响与平常一样；矩形外的像素完全不受影响。
+</p>
+<p>
+后端不应假设如果裁剪矩形被遗留下来，前端会自动清理它；这在当前前端上可能有效，但不应依赖。始终显式调用 <code>unclip()</code>。
+</p>
+<p>
+此函数可用于绘图和打印。
+</p>
+<h3><a name="drawing-unclip"></a>3.1.11 <code>unclip()</code></h3>
+<pre><code>void unclip(drawing *dr);
+</code></pre>
+<p>
+撤销之前对 <code>clip()</code> 的调用的效果。此调用后，所有绘图操作将能够再次影响整个拼图窗口。
+</p>
+<p>
+此函数可用于绘图和打印。
+</p>
+<h3><a name="drawing-draw-update"></a>3.1.12 <code>draw_update()</code></h3>
+<pre><code>void draw_update(drawing *dr, int x, int y, int w, int h);
+</code></pre>
+<p>
+通知前端拼图窗口的矩形部分已被绘制并且需要更新。
+</p>
+<p>
+<code>x</code> 和 <code>y</code> 给出更新矩形左上角像素的坐标。<code>w</code> 和 <code>h</code> 给出其宽度和高度。因此，矩形的水平范围从 <code>x</code> 到 <code>x+w-1</code>（含），垂直范围从 <code>y</code> 到 <code>y+h-1</code>（含）。（这些与 <code>draw_rect()</code> 的语义完全相同。）
+</p>
+<p>
+后端重绘函数<em>必须</em>调用此函数来报告它对窗口所做的任何更改。否则，这些更改可能不会立即可见，然后可能会在不可预测的后续时间出现，例如下次窗口被覆盖并重新暴露时。
+</p>
+<p>
+此函数仅在绘图时重要。它也可以在打印时调用，但这样做不是强制性的，并且没有效果。（因此，如果你在绘图和打印例程之间有共享的代码，该代码可以安全地调用 <code>draw_update()</code>。）
+</p>
+<h3><a name="drawing-status-bar"></a>3.1.13 <code>status_bar()</code></h3>
+<pre><code>void status_bar(drawing *dr, const char *text);
+</code></pre>
+<p>
+将游戏状态栏中的文本设置为 <code>text</code>。文本从提供的缓冲区复制，因此调用者在使用后可以自由释放或修改缓冲区。
+</p>
+<p>
+（此函数不是一个<em>绘图</em>函数，但它与绘图 API 共享一个属性，即它只能从后端重绘函数内部调用。并且它由前端通过 <code>drawing_api</code> 函数指针表实现。所以这是记录它的最佳位置。）
+</p>
+<p>
+提供的文本在传递给前端之前会通过中端进行可选重写；如果游戏是计时的，中端会在前面加上当前游戏时间（将来如果看起来是个好主意，可能会执行其他重写）。
+</p>
+<p>
+此函数仅用于绘图；绝不能在打印期间调用它。
+</p>
+<h3><a name="drawing-blitter"></a>3.1.14 Blitter 函数</h3>
+<p>
+本节描述一组相关函数，用于保存和恢复拼图窗口的一部分。这最常用于实现涉及在窗口周围拖动拼图元素的用户界面：在每次调用 <code>redraw()</code> 结束时，如果当前正在拖动对象，后端会保存该位置下的窗口内容，然后绘制被拖动的对象，在下一次 <code>redraw()</code> 开始时，它做的第一件事就是恢复背景。
+</p>
+<p>
+前端定义了一种称为 <code>blitter</code> 的不透明类型，能够存储指定大小的矩形区域。
+</p>
+<p>
+Blitter 函数仅用于绘图；绝不能在打印期间调用它们。
+</p>
+<h4><a name="drawing-blitter-new"></a>3.1.14.1 <code>blitter_new()</code></h4>
+<pre><code>blitter *blitter_new(drawing *dr, int w, int h);
+</code></pre>
+<p>
+创建一个新的 blitter 对象，存储大小为 <code>w</code> 乘 <code>h</code> 像素的矩形。返回指向 blitter 对象的指针。
+</p>
+<p>
+Blitter 对象最好存储在 <code>game_drawstate</code> 中。创建它们的好时机是在 <code>set_size()</code> 函数中（<a href="backend.html#backend-set-size">第2.8.5节</a>），因为此时你首先知道它们需要保存的矩形有多大。
+</p>
+<h4><a name="drawing-blitter-free"></a>3.1.14.2 <code>blitter_free()</code></h4>
+<pre><code>void blitter_free(drawing *dr, blitter *bl);
+</code></pre>
+<p>
+处理 blitter 对象。最好在 <code>free_drawstate()</code> 中调用。（但是，在尝试释放 blitter 对象之前，请检查它是否为 <code>NULL</code>；draw state 可能在创建和释放之间从未调用过 <code>set_size()</code>。）
+</p>
+<h4><a name="drawing-blitter-save"></a>3.1.14.3 <code>blitter_save()</code></h4>
+<pre><code>void blitter_save(drawing *dr, blitter *bl, int x, int y);
+</code></pre>
+<p>
+这是一个真正的绘图 API 函数，因为它只能在游戏重绘例程内部调用。它将拼图窗口的矩形部分保存到指定的 blitter 对象中。
+</p>
+<p>
+<code>x</code> 和 <code>y</code> 给出保存的矩形左上角的坐标。矩形的宽度和高度是创建 blitter 对象时指定的。
+</p>
+<p>
+此函数需要处理 <code>x</code> 和 <code>y</code> 超出范围的情况并做正确的事情。（正确的事情可能意味着保存 blitter 矩形与拼图窗口可见区域重叠的任何部分。）
+</p>
+<h4><a name="drawing-blitter-load"></a>3.1.14.4 <code>blitter_load()</code></h4>
+<pre><code>void blitter_load(drawing *dr, blitter *bl, int x, int y);
+</code></pre>
+<p>
+这是一个真正的绘图 API 函数，因为它只能在游戏重绘例程内部调用。它从指定的 blitter 对象中恢复拼图窗口的矩形部分。
+</p>
+<p>
+<code>x</code> 和 <code>y</code> 给出要恢复的矩形左上角的坐标。矩形的宽度和高度是创建 blitter 对象时指定的。
+</p>
+<p>
+此函数需要处理 <code>x</code> 和 <code>y</code> 超出范围的情况并做正确的事情。（正确的事情可能意味着恢复 blitter 矩形与拼图窗口可见区域重叠的任何部分。）
+</p>
+<p>
+如果此函数在之前从部分超出范围的矩形保存的 blitter 上调用，那么在保存时不可见的保存位图部分是未定义的。如果 blitter 被恢复到不同的位置，使这些部分可见，则对绘图区域的影响是未定义的。
+</p>
+<h3><a name="print-mono-colour"></a>3.1.15 <code>print_mono_colour()</code></h3>
+<pre><code>int print_mono_colour(drawing *dr, int grey);
+</code></pre>
+<p>
+此函数在打印期间为简单的单色分配颜色索引。
+</p>
+<p>
+<code>grey</code> 必须是 0 或 1。如果 <code>grey</code> 是 0，返回的颜色是黑色；如果 <code>grey</code> 是 1，颜色是白色。
+</p>
+<h3><a name="print-grey-colour"></a>3.1.16 <code>print_grey_colour()</code></h3>
+<pre><code>int print_grey_colour(drawing *dr, float grey);
+</code></pre>
+<p>
+此函数在打印期间为灰度颜色分配颜色索引。
+</p>
+<p>
+<code>grey</code> 可以是 0（黑色）到 1（白色）之间的任何数字；例如，0.5 表示中等灰色。
+</p>
+<p>
+所选颜色将根据打印机的半色调能力进行渲染。
+</p>
+<h3><a name="print-hatched-colour"></a>3.1.17 <code>print_hatched_colour()</code></h3>
+<pre><code>int print_hatched_colour(drawing *dr, int hatch);
+</code></pre>
+<p>
+此函数分配一个不表示字面<em>颜色</em>的颜色索引。相反，以此颜色着色的区域将用平行线进行阴影处理。<code>hatch</code> 参数定义了应该用于此颜色的阴影类型：
+</p>
+<dl><dt>
+<code>HATCH_SLASH</code>
+</dt>
+<dd>
+此颜色将由向右倾斜 45 度的线进行阴影处理。
+</dd>
+<dt>
+<code>HATCH_BACKSLASH</code>
+</dt>
+<dd>
+此颜色将由向左倾斜 45 度的线进行阴影处理。
+</dd>
+<dt>
+<code>HATCH_HORIZ</code>
+</dt>
+<dd>
+此颜色将由水平线进行阴影处理。
+</dd>
+<dt>
+<code>HATCH_VERT</code>
+</dt>
+<dd>
+此颜色将由垂直线进行阴影处理。
+</dd>
+<dt>
+<code>HATCH_PLUS</code>
+</dt>
+<dd>
+此颜色将由交叉的水平线和垂直线进行阴影处理。
+</dd>
+<dt>
+<code>HATCH_X</code>
+</dt>
+<dd>
+此颜色将由交叉的对角线进行阴影处理。
+</dd>
+</dl>
+<p>
+定义为使用阴影的颜色不得用于绘制线条或文本；它们只能用于填充区域。也就是说，它们可以用作 <code>draw_circle()</code> 和 <code>draw_polygon()</code> 的 <code>fillcolour</code> 参数，以及 <code>draw_rect()</code> 的颜色参数，但不得用作 <code>draw_circle()</code> 或 <code>draw_polygon()</code> 的 <code>outlinecolour</code> 参数，或与 <code>draw_line()</code> 或 <code>draw_text()</code> 一起使用。
+</p>
+<h3><a name="print-rgb-mono-colour"></a>3.1.18 <code>print_rgb_mono_colour()</code></h3>
+<pre><code>int print_rgb_mono_colour(drawing *dr, float r, float g,
+                          float b, float grey);
+</code></pre>
+<p>
+此函数在打印期间为完全指定的 RGB 颜色分配颜色索引。
+</p>
+<p>
+<code>r</code>、<code>g</code> 和 <code>b</code> 各自可以在 0 到 1 的范围内。
+</p>
+<p>
+如果仅以黑白打印，这些值将被忽略，而是根据 'grey' 参数使用纯黑色或纯白色。（回退颜色与 <code>print_mono_colour(grey)</code> 分配的颜色相同。）
+</p>
+<h3><a name="print-rgb-grey-colour"></a>3.1.19 <code>print_rgb_grey_colour()</code></h3>
+<pre><code>int print_rgb_grey_colour(drawing *dr, float r, float g,
+                          float b, float grey);
+</code></pre>
+<p>
+此函数在打印期间为完全指定的 RGB 颜色分配颜色索引。
+</p>
+<p>
+<code>r</code>、<code>g</code> 和 <code>b</code> 各自可以在 0 到 1 的范围内。
+</p>
+<p>
+如果仅以黑白打印，这些值将被忽略，而是使用由 <code>grey</code> 参数给出的灰度。（回退颜色与 <code>print_grey_colour(grey)</code> 分配的颜色相同。）
+</p>
+<h3><a name="print-rgb-hatched-colour"></a>3.1.20 <code>print_rgb_hatched_colour()</code></h3>
+<pre><code>int print_rgb_hatched_colour(drawing *dr, float r, float g,
+                             float b, float hatched);
+</code></pre>
+<p>
+此函数在打印期间为完全指定的 RGB 颜色分配颜色索引。
+</p>
+<p>
+<code>r</code>、<code>g</code> 和 <code>b</code> 各自可以在 0 到 1 的范围内。
+</p>
+<p>
+如果仅以黑白打印，这些值将被忽略，而是使用由 <code>hatch</code> 参数给出的交叉阴影形式；有关此参数的可能值，请参见 <a href="#print-hatched-colour">第3.1.17节</a>。（回退颜色与 <code>print_hatched_colour(hatch)</code> 分配的颜色相同。）
+</p>
+<h3><a name="print-line-width"></a>3.1.21 <code>print_line_width()</code></h3>
+<pre><code>void print_line_width(drawing *dr, int width);
+</code></pre>
+<p>
+此函数用于设置打印期间绘制的线条的粗细。它在绘图中没有意义：<code>draw_line()</code>、<code>draw_circle</code> 和 <code>draw_polygon()</code> 绘制的所有线条都是一个像素的粗细。然而，在打印中，没有明确的像素定义，因此必须显式指定线条宽度。
+</p>
+<p>
+线条宽度在通常的坐标系中指定。然而，请注意，这只是一个提示：中央打印系统可能会根据用户请求或打印机功能选择改变线条粗细。
+</p>
+<h3><a name="print-line-dotted"></a>3.1.22 <code>print_line_dotted()</code></h3>
+<pre><code>void print_line_dotted(drawing *dr, bool dotted);
+</code></pre>
+<p>
+此函数用于在打印期间切换虚线的绘制。它在绘图期间不受支持。
+</p>
+<p>
+将 'dotted' 设置为 <code>true</code> 意味着未来由 <code>draw_line()</code>、<code>draw_circle</code> 和 <code>draw_polygon()</code> 绘制的线条将是虚线。将其设置为 <code>false</code> 意味着它们将是实线。
+</p>
+<p>
+一些前端可能对虚线的宽度施加限制。如果前端需要，通过此前端请求虚线将覆盖任何线条宽度请求。
+</p>
+<h2><a name="drawing-frontend"></a>3.2 前端实现的绘图 API</h2>
+<p>
+本节描述前端实现的函数指针形式的绘图 API。
+</p>
+<p>
+（不仅是平台特定的前端实现此 API；平台无关的模块 <code>ps.c</code> 也提供了一个实现，用于输出 PostScript。因此，任何想要进行 PS 打印的平台都可以以最小的麻烦做到这一点。）
+</p>
+<p>
+以下条目（除了 <code>version</code> 字段外）都描述了名为 <code>drawing_api</code> 的结构中的函数指针字段。每个函数都接受一个“<code>drawing *</code>”指针，该指针又包含一个“<code>void *handle</code>”成员，前端可以访问该成员并在内部将其转换回更有用的类型。由于这是前端经常要做的事情，因此提供了 <code>GET_HANDLE_AS_TYPE()</code> 宏来为你执行此操作（参见 <a href="utils.html#utils-get-handle-as-type">第 5.9.20 节</a>）。
+</p>
+<p>
+适合传递给后端重绘或打印函数的绘图 <em>对象</em>（<code>drawing *)</code> 是通过将 <code>drawing_api</code> 和一个“<code>void *</code>”传递给函数 <code>drawing_new()</code> 来构造的（参见 <a href="#drawing-new">第 3.3.1 节</a>）。
+</p>
+<h3><a name="drawingapi-version"></a>3.2.1 <code>version</code></h3>
+<pre><code>int version;
+</code></pre>
+<p>
+这是一个整数，给出前端实现的绘图 API 的版本。对于本文档中描述的 API 版本，此字段应为 <code>1</code>。
+</p>
+<p>
+有时，绘图 API 可能会发生破坏性更改，例如引入新函数或更改现有函数的语义。此版本字段的目的是在发生此类破坏性更改时向前端作者发出信号。由于此类更改可能会对下游前端造成干扰，因此应谨慎进行。
+</p>
+<h3><a name="drawingapi-draw-text"></a>3.2.2 <code>draw_text()</code></h3>
+<pre><code>void (*draw_text)(drawing *dr, int x, int y, int fonttype,
+                  int fontsize, int align, int colour,
+                  const char *text);
+</code></pre>
+<p>
+此函数的行为与后端 <code>draw_text()</code> 函数完全相同；参见 <a href="#drawing-draw-text">第 3.1.8 节</a>。
+</p>
+<h3><a name="drawingapi-draw-rect"></a>3.2.3 <code>draw_rect()</code></h3>
+<pre><code>void (*draw_rect)(drawing *dr, int x, int y, int w, int h,
+                  int colour);
+</code></pre>
+<p>
+此函数的行为与后端 <code>draw_rect()</code> 函数完全相同；参见 <a href="#drawing-draw-rect">第 3.1.1 节</a>。
+</p>
+<h3><a name="drawingapi-draw-line"></a>3.2.4 <code>draw_line()</code></h3>
+<pre><code>void (*draw_line)(drawing *dr, int x1, int y1, int x2, int y2,
+                  int colour);
+</code></pre>
+<p>
+此函数的行为与后端 <code>draw_line()</code> 函数完全相同；参见 <a href="#drawing-draw-line">第 3.1.4 节</a>。
+</p>
+<h3><a name="drawingapi-draw-polygon"></a>3.2.5 <code>draw_polygon()</code></h3>
+<pre><code>void (*draw_polygon)(drawing *dr, const int *coords, int npoints,
+                     int fillcolour, int outlinecolour);
+</code></pre>
+<p>
+此函数的行为与后端 <code>draw_polygon()</code> 函数完全相同；参见 <a href="#drawing-draw-polygon">第 3.1.5 节</a>。
+</p>
+<p>
+没有原生多边形填充原语的此 API 实现可以将此函数指针定义为指向中间件的 <code>draw_polygon_fallback()</code>（参见 <a href="#drawing-draw-polygon-fallback">第 3.3.4 节</a>），这是一个回退多边形光栅化器，会产生一系列 <code>draw_line()</code> 调用来填充和勾勒多边形。但是，明确 <em>不</em> 允许此函数指针为 <code>NULL</code>。
+</p>
+<h3><a name="drawingapi-draw-circle"></a>3.2.6 <code>draw_circle()</code></h3>
+<pre><code>void (*draw_circle)(drawing *dr, int cx, int cy, int radius,
+                    int fillcolour, int outlinecolour);
+</code></pre>
+<p>
+此函数的行为与后端 <code>draw_circle()</code> 函数完全相同；参见 <a href="#drawing-draw-circle">第 3.1.6 节</a>。
+</p>
+<h3><a name="drawingapi-draw-thick-line"></a>3.2.7 <code>draw_thick_line()</code></h3>
+<pre><code>void draw_thick_line(drawing *dr, float thickness,
+                     float x1, float y1, float x2, float y2,
+                     int colour)
+</code></pre>
+<p>
+此函数的行为与后端 <code>draw_thick_line()</code> 函数完全相同；参见 <a href="#drawing-draw-thick-line">第 3.1.7 节</a>。
+</p>
+<p>
+不提供高质量粗线渲染的此 API 实现可以将此函数指针定义为 <code>NULL</code>。<code>drawing.c</code> 中的中间件会注意到这一点，并使用 <code>draw_polygon()</code> 提供低质量的替代方案。
+</p>
+<h3><a name="drawingapi-draw-update"></a>3.2.8 <code>draw_update()</code></h3>
+<pre><code>void (*draw_update)(drawing *dr, int x, int y, int w, int h);
+</code></pre>
+<p>
+此函数的行为与后端 <code>draw_update()</code> 函数完全相同；参见 <a href="#drawing-draw-update">第 3.1.12 节</a>。
+</p>
+<p>
+仅支持打印的此 API 实现可以将此函数指针定义为 <code>NULL</code>，而不是费心定义一个空函数。<code>drawing.c</code> 中的中间件会注意到这一点并避免调用它。
+</p>
+<h3><a name="drawingapi-clip"></a>3.2.9 <code>clip()</code></h3>
+<pre><code>void (*clip)(drawing *dr, int x, int y, int w, int h);
+</code></pre>
+<p>
+此函数的行为与后端 <code>clip()</code> 函数完全相同；参见 <a href="#drawing-clip">第 3.1.10 节</a>。
+</p>
+<h3><a name="drawingapi-unclip"></a>3.2.10 <code>unclip()</code></h3>
+<pre><code>void (*unclip)(drawing *dr);
+</code></pre>
+<p>
+此函数的行为与后端 <code>unclip()</code> 函数完全相同；参见 <a href="#drawing-unclip">第 3.1.11 节</a>。
+</p>
+<h3><a name="drawingapi-start-draw"></a>3.2.11 <code>start_draw()</code></h3>
+<pre><code>void (*start_draw)(drawing *dr);
+</code></pre>
+<p>
+此函数在绘图开始时调用。它允许前端初始化绘制所需的任何临时数据，例如设备上下文。
+</p>
+<p>
+不提供绘图服务的此 API 实现可以将此函数指针定义为 <code>NULL</code>；除非尝试绘图，否则永远不会调用它。
+</p>
+<h3><a name="drawingapi-end-draw"></a>3.2.12 <code>end_draw()</code></h3>
+<pre><code>void (*end_draw)(drawing *dr);
+</code></pre>
+<p>
+此函数在绘图结束时调用。它允许前端执行清理任务，例如释放设备上下文和安排适当的 GUI 重绘事件。
+</p>
+<p>
+不提供绘图服务的此 API 实现可以将此函数指针定义为 <code>NULL</code>；除非尝试绘图，否则永远不会调用它。
+</p>
+<h3><a name="drawingapi-status-bar"></a>3.2.13 <code>status_bar()</code></h3>
+<pre><code>void (*status_bar)(drawing *dr, const char *text);
+</code></pre>
+<p>
+此函数的行为与后端 <code>status_bar()</code> 函数完全相同；参见 <a href="#drawing-status-bar">第 3.1.13 节</a>。
+</p>
+<p>
+实现此函数的前端不必担心它会被重复调用相同的文本；<code>status_bar()</code> 中的中间件代码会处理这一点。
+</p>
+<p>
+不提供绘图服务的此 API 实现可以将此函数指针定义为 <code>NULL</code>；除非尝试绘图，否则永远不会调用它。
+</p>
+<h3><a name="drawingapi-blitter-new"></a>3.2.14 <code>blitter_new()</code></h3>
+<pre><code>blitter *(*blitter_new)(drawing *dr, int w, int h);
+</code></pre>
+<p>
+此函数的行为与后端 <code>blitter_new()</code> 函数完全相同；参见 <a href="#drawing-blitter-new">第 3.1.14.1 节</a>。
+</p>
+<p>
+不提供绘图服务的此 API 实现可以将此函数指针定义为 <code>NULL</code>；除非尝试绘图，否则永远不会调用它。
+</p>
+<h3><a name="drawingapi-blitter-free"></a>3.2.15 <code>blitter_free()</code></h3>
+<pre><code>void (*blitter_free)(drawing *dr, blitter *bl);
+</code></pre>
+<p>
+此函数的行为与后端 <code>blitter_free()</code> 函数完全相同；参见 <a href="#drawing-blitter-free">第 3.1.14.2 节</a>。
+</p>
+<p>
+不提供绘图服务的此 API 实现可以将此函数指针定义为 <code>NULL</code>；除非尝试绘图，否则永远不会调用它。
+</p>
+<h3><a name="drawingapi-blitter-save"></a>3.2.16 <code>blitter_save()</code></h3>
+<pre><code>void (*blitter_save)(drawing *dr, blitter *bl, int x, int y);
+</code></pre>
+<p>
+此函数的行为与后端 <code>blitter_save()</code> 函数完全相同；参见 <a href="#drawing-blitter-save">第 3.1.14.3 节</a>。
+</p>
+<p>
+不提供绘图服务的此 API 实现可以将此函数指针定义为 <code>NULL</code>；除非尝试绘图，否则永远不会调用它。
+</p>
+<h3><a name="drawingapi-blitter-load"></a>3.2.17 <code>blitter_load()</code></h3>
+<pre><code>void (*blitter_load)(drawing *dr, blitter *bl, int x, int y);
+</code></pre>
+<p>
+此函数的行为与后端 <code>blitter_load()</code> 函数完全相同；参见 <a href="#drawing-blitter-load">第 3.1.14.4 节</a>。
+</p>
+<p>
+不提供绘图服务的此 API 实现可以将此函数指针定义为 <code>NULL</code>；除非尝试绘图，否则永远不会调用它。
+</p>
+<h3><a name="drawingapi-begin-doc"></a>3.2.18 <code>begin_doc()</code></h3>
+<pre><code>void (*begin_doc)(drawing *dr, int pages);
+</code></pre>
+<p>
+此函数在打印运行开始时调用。它为前端提供了初始化任何所需打印子系统的机会。它还提前提供页数。
+</p>
+<p>
+不提供打印服务的此 API 实现可以将此函数指针定义为 <code>NULL</code>；除非尝试打印，否则永远不会调用它。
+</p>
+<h3><a name="drawingapi-begin-page"></a>3.2.19 <code>begin_page()</code></h3>
+<pre><code>void (*begin_page)(drawing *dr, int number);
+</code></pre>
+<p>
+此函数在打印期间，在每页开始时调用。它提供页码（从 1 而不是 0 开始编号，因此适合在用户可见的上下文中使用）。
+</p>
+<p>
+不提供打印服务的此 API 实现可以将此函数指针定义为 <code>NULL</code>；除非尝试打印，否则永远不会调用它。
+</p>
+<h3><a name="drawingapi-begin-puzzle"></a>3.2.20 <code>begin_puzzle()</code></h3>
+<pre><code>void (*begin_puzzle)(drawing *dr, float xm, float xc,
+                     float ym, float yc, int pw, int ph, float wmm);
+</code></pre>
+<p>
+此函数在打印期间，在页面上打印单个拼图之前调用。它指定拼图在页面上的大小和位置。
+</p>
+<p>
+<code>xm</code> 和 <code>xc</code> 指定拼图在页面上的水平位置，作为页面宽度的线性函数。前端应将页面宽度乘以 <code>xm</code>，加上 <code>xc</code>（以毫米为单位），并使用得到的 x 坐标作为拼图的左边缘。
+</p>
+<p>
+类似地，<code>ym</code> 和 <code>yc</code> 指定拼图的垂直位置作为页面高度的函数：页面高度乘以 <code>ym</code>，加上 <code>yc</code> 毫米，等于从页面顶部到拼图顶部的所需距离。
+</p>
+<p>
+（需要这种笨拙的机制是因为并非所有打印系统都能将页面大小传达回软件。例如，PostScript 后端写出的 PS 在打印时通过调用“<code>clippath</code>”来确定页面大小，并在其中居中拼图。因此，完全相同的 PS 文件可以在 A4 或 US Letter 纸上工作，而无需本地配置，这简化了事情。）
+</p>
+<p>
+<code>pw</code> 和 <code>ph</code> 给出绘图 API 坐标中拼图的大小。打印系统随后将调用拼图自己的打印函数，该函数又将调用绘图 API 函数，期望有一个 <code>pw</code> 乘 <code>ph</code> 单位的区域可用于绘制拼图。
+</p>
+<p>
+最后，<code>wmm</code> 给出拼图的所需宽度（以毫米为单位）。（预期会保持纵横比，因此如果还需要所需的拼图高度，则可以计算为 <code>wmm*ph/pw</code>。）
+</p>
+<p>
+不提供打印服务的此 API 实现可以将此函数指针定义为 <code>NULL</code>；除非尝试打印，否则永远不会调用它。
+</p>
+<h3><a name="drawingapi-end-puzzle"></a>3.2.21 <code>end_puzzle()</code></h3>
+<pre><code>void (*end_puzzle)(drawing *dr);
+</code></pre>
+<p>
+此函数在特定拼图的打印完成后调用。
+</p>
+<p>
+不提供打印服务的此 API 实现可以将此函数指针定义为 <code>NULL</code>；除非尝试打印，否则永远不会调用它。
+</p>
+<h3><a name="drawingapi-end-page"></a>3.2.22 <code>end_page()</code></h3>
+<pre><code>void (*end_page)(drawing *dr, int number);
+</code></pre>
+<p>
+此函数在页面打印完成后调用。
+</p>
+<p>
+不提供打印服务的此 API 实现可以将此函数指针定义为 <code>NULL</code>；除非尝试打印，否则永远不会调用它。
+</p>
+<h3><a name="drawingapi-end-doc"></a>3.2.23 <code>end_doc()</code></h3>
+<pre><code>void (*end_doc)(drawing *dr);
+</code></pre>
+<p>
+此函数在整个文档的打印完成后调用。这是关闭文件、将内容发送到打印假脱机程序或执行任何本地约定的时刻。
+</p>
+<p>
+不提供打印服务的此 API 实现可以将此函数指针定义为 <code>NULL</code>；除非尝试打印，否则永远不会调用它。
+</p>
+<h3><a name="drawingapi-line-width"></a>3.2.24 <code>line_width()</code></h3>
+<pre><code>void (*line_width)(drawing *dr, float width);
+</code></pre>
+<p>
+此函数仅在打印期间调用，用于设置线条粗细。请注意，这里的宽度是 <code>float</code>，而在后端看到的是 <code>int</code>。这是因为 <code>drawing.c</code> 可能在传递过程中对其进行了缩放。
+</p>
+<p>
+然而，宽度仍然在与其余绘图相同的坐标系中指定。
+</p>
+<p>
+不提供打印服务的此 API 实现可以将此函数指针定义为 <code>NULL</code>；除非尝试打印，否则永远不会调用它。
+</p>
+<h3><a name="drawingapi-line-dotted"></a>3.2.25 <code>line_dotted()</code></h3>
+<pre><code>void (*line_dotted)(drawing *dr, bool dotted);
+</code></pre>
+<p>
+此函数仅在打印期间调用，用于切换虚线绘制。
+</p>
+<p>
+不提供打印服务的此 API 实现可以将此函数指针定义为 <code>NULL</code>；除非尝试打印，否则永远不会调用它。
+</p>
+<h3><a name="drawingapi-text-fallback"></a>3.2.26 <code>text_fallback()</code></h3>
+<pre><code>char *(*text_fallback)(drawing *dr, const char *const *strings,
+                       int nstrings);
+</code></pre>
+<p>
+此函数的行为与后端 <code>text_fallback()</code> 函数完全相同；参见 <a href="#drawing-text-fallback">第 3.1.9 节</a>。
+</p>
+<p>
+不支持 ASCII 以外任何字符的此 API 实现可以将此函数指针定义为 <code>NULL</code>，在这种情况下，<code>drawing.c</code> 中的中央代码将提供默认实现。
+</p>
+<h2><a name="drawingapi-frontend"></a>3.3 前端调用的绘图 API</h2>
+<p>
+<code>drawing.c</code> 中提供了少量函数，前端需要 <em>调用</em> 这些函数，而不是帮助实现它们。本节描述这些函数。
+</p>
+<h3><a name="drawing-new"></a>3.3.1 <code>drawing_new()</code></h3>
+<pre><code>drawing *drawing_new(const drawing_api *api, midend *me,
+                     void *handle);
+</code></pre>
+<p>
+此函数创建一个绘图对象。它传递一个 <code>drawing_api</code>，这是一个包含函数指针和版本字段的结构；还传递一个“<code>void *</code>”句柄。句柄存储在绘图对象中，当调用每个函数指针时，可以从那里访问它。
+</p>
+<p>
+<code>midend</code> 参数用于重写状态栏内容：<code>status_bar()</code>（参见 <a href="#drawing-status-bar">第 3.1.13 节</a>）必须调用中端中的一个函数，该函数可能会重写状态栏文本。如果绘图对象仅用于打印，或者已知游戏不会调用 <code>status_bar()</code>，则此参数可以为 <code>NULL</code>。
+</p>
+<p>
+如果 <code>drawing_api</code> 的 <code>version</code> 字段与预期版本不匹配（参见 <a href="#drawingapi-version">第 3.2.1 节</a> 了解预期版本号），则会产生致命错误。
+</p>
+<h3><a name="drawing-free"></a>3.3.2 <code>drawing_free()</code></h3>
+<pre><code>void drawing_free(drawing *dr);
+</code></pre>
+<p>
+此函数释放绘图对象。请注意，“<code>void *</code>”句柄不会被释放；如果需要清理，必须由前端完成。
+</p>
+<h3><a name="drawing-print-get-colour"></a>3.3.3 <code>print_get_colour()</code></h3>
+<pre><code>void print_get_colour(drawing *dr, int colour,
+                      bool printing_in_colour,
+                      int *hatch, float *r, float *g, float *b);
+</code></pre>
+<p>
+此函数由绘图 API 函数的实现在打印上下文中被调用时调用。它接受颜色索引作为输入，并返回后端请求的颜色描述。
+</p>
+<p>
+<code>printing_in_colour</code> 为 <code>true</code> 当且仅当实现在彩色打印。如果所讨论的颜色是用黑白回退值指定的，这将改变返回的结果。
+</p>
+<p>
+如果颜色应通过阴影线渲染，<code>*hatch</code> 将填充所需的阴影线类型。有关此整数可以采用的值的详细信息，请参见 <a href="#print-grey-colour">第 3.1.16 节</a>。
+</p>
+<p>
+如果颜色应渲染为纯色，<code>*hatch</code> 将被赋予负值，并且 <code>*r</code>、<code>*g</code> 和 <code>*b</code> 将填充所需颜色的 RGB 值（如果以彩色打印），或全部填充灰度值（如果以黑白打印）。
+</p>
+<h3><a name="drawing-draw-polygon-fallback"></a>3.3.4 <code>draw_polygon_fallback()</code></h3>
+<pre><code>void draw_polygon_fallback(drawing *dr,
+                           const int *coords, int npoints,
+                           int fillcolour, int outlinecolour);
+</code></pre>
+<p>
+此函数旨在供没有原生多边形填充原语的前端使用。其签名和语义与 <code>draw_polygon()</code>（<a href="#drawing-draw-polygon">第 3.1.5 节</a>）完全相同；然而，它不是由前端实现的，而是作为使用扫描线算法的中间件实现，该算法产生一系列 <code>draw_line()</code> 调用，具有填充和勾勒所需多边形的效果。
+</p>
+<p>
+尽管前端可以选择直接调用此函数（例如，从 <code>draw_polygon()</code> 的存根实现中），但此函数旨在由前端 <code>drawing_api</code> 的 <code>draw_polygon</code> 字段 <em>指向</em>；也就是说，没有多边形填充原语的前端应将 <code>drawing_api</code> 的 <code>draw_polygon</code> 字段设置为 <code>draw_polygon_fallback</code>。
+</p>
+<p>
+采用这种相当笨拙的方法来使用此回退函数（而不是在 <code>drawing_api</code> 中将 <code>draw_polygon</code> 简单地设置为 <code>NULL</code>）的动机是，它允许链接时优化编译器在提供自己的 <code>draw_polygon()</code> 的平台上修剪此函数的实现，因为此函数在这些平台上永远不会被引用。（但此函数仍然在所有平台上无条件编译，从而保护它免受位腐烂。）
+</p>
+
+<hr><address>
+[Simon Tatham's Portable Puzzle Collection, version 20260309.06e37f1]</address></body>
+</html>

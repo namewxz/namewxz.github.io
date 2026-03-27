@@ -1,0 +1,730 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN"
+"http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+<meta name="generator" content="Halibut, unidentified version">
+<title>中端提供的 API</title>
+<link rel="previous" href="drawing.html">
+<link rel="ToC" href="index.html">
+<link rel="up" href="index.html">
+<link rel="next" href="utils.html">
+</head>
+<body>
+<p><a href="drawing.html">上一章</a> | <a href="index.html">目录</a> | <a href="utils.html">下一章</a></p>
+
+<ul>
+<li><a href="#midend">第 4 章：中端提供的 API</a>
+<ul>
+<li><a href="#midend-new">4.1 <code>midend_new()</code></a></li>
+<li><a href="#midend-free">4.2 <code>midend_free()</code></a></li>
+<li><a href="#midend-tilesize">4.3 <code>midend_tilesize()</code></a></li>
+<li><a href="#midend-set-params">4.4 <code>midend_set_params()</code></a></li>
+<li><a href="#midend-get-params">4.5 <code>midend_get_params()</code></a></li>
+<li><a href="#midend-size">4.6 <code>midend_size()</code></a></li>
+<li><a href="#midend-reset-tilesize">4.7 <code>midend_reset_tilesize()</code></a></li>
+<li><a href="#midend-new-game">4.8 <code>midend_new_game()</code></a></li>
+<li><a href="#midend-restart-game">4.9 <code>midend_restart_game()</code></a></li>
+<li><a href="#midend-force-redraw">4.10 <code>midend_force_redraw()</code></a></li>
+<li><a href="#midend-redraw">4.11 <code>midend_redraw()</code></a></li>
+<li><a href="#midend-process-key">4.12 <code>midend_process_key()</code></a></li>
+<li><a href="#midend-request-keys">4.13 <code>midend_request_keys()</code></a></li>
+<li><a href="#midend-current-key-label">4.14 <code>midend_current_key_label()</code></a></li>
+<li><a href="#midend-colours">4.15 <code>midend_colours()</code></a></li>
+<li><a href="#midend-timer">4.16 <code>midend_timer()</code></a></li>
+<li><a href="#midend-get-presets">4.17 <code>midend_get_presets()</code></a></li>
+<li><a href="#midend-which-preset">4.18 <code>midend_which_preset()</code></a></li>
+<li><a href="#midend-wants-statusbar">4.19 <code>midend_wants_statusbar()</code></a></li>
+<li><a href="#midend-get-config">4.20 <code>midend_get_config()</code></a></li>
+<li><a href="#midend-set-config">4.21 <code>midend_set_config()</code></a></li>
+<li><a href="#midend-game-id">4.22 <code>midend_game_id()</code></a></li>
+<li><a href="#midend-get-game-id">4.23 <code>midend_get_game_id()</code></a></li>
+<li><a href="#midend-get-random-seed">4.24 <code>midend_get_random_seed()</code></a></li>
+<li><a href="#midend-can-format-as-text-now">4.25 <code>midend_can_format_as_text_now()</code></a></li>
+<li><a href="#midend-text-format">4.26 <code>midend_text_format()</code></a></li>
+<li><a href="#midend-solve">4.27 <code>midend_solve()</code></a></li>
+<li><a href="#midend-get-cursor-location">4.28 <code>midend_get_cursor_location()</code></a></li>
+<li><a href="#midend-status">4.29 <code>midend_status()</code></a></li>
+<li><a href="#midend-can-undo">4.30 <code>midend_can_undo()</code></a></li>
+<li><a href="#midend-can-redo">4.31 <code>midend_can_redo()</code></a></li>
+<li><a href="#midend-serialise">4.32 <code>midend_serialise()</code></a></li>
+<li><a href="#midend-deserialise">4.33 <code>midend_deserialise()</code></a></li>
+<li><a href="#midend-save-prefs">4.34 <code>midend_save_prefs()</code></a></li>
+<li><a href="#midend-load-prefs">4.35 <code>midend_load_prefs()</code></a></li>
+<li><a href="#identify-game">4.36 <code>identify_game()</code></a></li>
+<li><a href="#midend-request-id-changes">4.37 <code>midend_request_id_changes()</code></a></li>
+<li><a href="#midend-which-game">4.38 <code>midend_which_game()</code></a></li>
+<li><a href="#frontend-backend">4.39 前端直接引用后端结构</a></li>
+<li><a href="#frontend-api">4.40 中端到前端的调用</a></li>
+<li><a href="#frontend-get-random-seed">4.41 <code>get_random_seed()</code></a></li>
+<li><a href="#frontend-activate-timer">4.42 <code>activate_timer()</code></a></li>
+<li><a href="#frontend-deactivate-timer">4.43 <code>deactivate_timer()</code></a></li>
+<li><a href="#frontend-fatal">4.44 <code>fatal()</code></a></li>
+<li><a href="#frontend-default-colour">4.45 <code>frontend_default_colour()</code></a></li>
+</ul></li>
+</ul>
+<h1><a name="midend"></a>第 4 章：中端提供的 API</h1>
+<p>
+本章文档介绍了中端提供给前端调用的 API。你可能只有在作为前端实现者时才需要阅读本章，例如当你将 Puzzles 移植到新平台时。如果你只是对编写新游戏感兴趣，可以安全地跳过本章。
+</p>
+<p>
+中端中的所有持久状态都封装在 <code>midend</code> 结构中，以便在任何支持同时打开多个拼图窗口的端口中拥有多个中端。每个 <code>midend</code> 旨在处理单个拼图窗口的内容。
+</p>
+<h2><a name="midend-new"></a>4.1 <code>midend_new()</code></h2>
+<pre><code>midend *midend_new(frontend *fe, const game *ourgame,
+                   const drawing_api *drapi, void *drhandle);
+</code></pre>
+<p>
+分配并返回一个新的中端结构。
+</p>
+<p>
+<code>fe</code> 参数存储在中端中。它将用于回调函数，例如 <code>activate_timer()</code>（<a href="#frontend-activate-timer">4.42 节</a>），并将传递给后端函数 <code>colours()</code>（<a href="backend.html#backend-colours">2.8.6 节</a>）。
+</p>
+<p>
+参数 <code>drapi</code> 和 <code>drhandle</code> 被传递给 <code>drawing_new()</code>（<a href="drawing.html#drawing-new">3.3.1 节</a>）以构建一个绘图对象，该对象将被传递给后端函数 <code>redraw()</code>（<a href="backend.html#backend-redraw">2.8.11 节</a>）。因此，<code>drapi</code> 中定义的所有与绘图相关的函数指针都可以预期以 <code>drhandle</code> 作为其第一个参数被调用。
+</p>
+<p>
+<code>ourgame</code> 参数指向描述游戏后端的容器结构。由此创建的中端将只能处理该游戏。（因此，即使在包含所有游戏的单片前端中，这也会限制任何单个拼图窗口只能绑定到单个游戏。除非，当然，你足够勇敢，在不关闭窗口的情况下更改窗口的中端...）
+</p>
+<h2><a name="midend-free"></a>4.2 <code>midend_free()</code></h2>
+<pre><code>void midend_free(midend *me);
+</code></pre>
+<p>
+释放中端结构及其所有相关数据。
+</p>
+<h2><a name="midend-tilesize"></a>4.3 <code>midend_tilesize()</code></h2>
+<pre><code>int midend_tilesize(midend *me);
+</code></pre>
+<p>
+返回用于显示当前拼图的 ' <code>tilesize</code> ' 参数（<a href="backend.html#backend-preferred-tilesize">2.8.3 节</a>）。
+</p>
+<h2><a name="midend-set-params"></a>4.4 <code>midend_set_params()</code></h2>
+<pre><code>void midend_set_params(midend *me, game_params *params);
+</code></pre>
+<p>
+设置中端的当前游戏参数。后续由 <code>midend_new_game()</code>（<a href="#midend-new-game">4.8 节</a>）生成的游戏将使用这些参数，直到另行通知。
+</p>
+<p>
+前端拥有实际 <code>game_params</code> 结构以传递给此函数的通常方式是，它之前从 <code>midend_get_presets()</code>（<a href="#midend-get-presets">4.17 节</a>）获取了它。因此，此函数通常在响应用户从预设菜单中进行选择时调用。
+</p>
+<h2><a name="midend-get-params"></a>4.5 <code>midend_get_params()</code></h2>
+<pre><code>game_params *midend_get_params(midend *me);
+</code></pre>
+<p>
+返回存储在此中端中的当前游戏参数。
+</p>
+<p>
+返回值是动态分配的，使用完毕后应通过将其传递给游戏自己的 <code>free_params()</code> 函数来释放（参见 <a href="backend.html#backend-free-params">2.3.6 节</a>）。
+</p>
+<h2><a name="midend-size"></a>4.6 <code>midend_size()</code></h2>
+<pre><code>void midend_size(midend *me, int *x, int *y,
+                 bool user_size, double device_pixel_ratio);
+</code></pre>
+<p>
+告诉中端计算其窗口大小。
+</p>
+<p>
+输入时，<code>*x</code> 和 <code>*y</code> 应包含窗口的最大或请求大小。（通常这将是窗口必须适应的屏幕大小，或类似的大小。）中端将重复调用后端函数 <code>compute_size()</code>（<a href="backend.html#backend-compute-size">2.8.4 节</a>），搜索最能满足要求的 tile 大小。输出时，<code>*x</code> 和 <code>*y</code> 将包含拼图窗口绘图区域所需的大小。（当然，前端可能需要根据菜单栏和窗口边框等任何额外的窗口家具来调整这一点，如果需要的话。状态栏也不包含在此大小中。）
+</p>
+<p>
+使用 <code>user_size</code> 来指示 <code>*x</code> 和 <code>*y</code> 是请求大小还是只是最大大小。
+</p>
+<p>
+如果 <code>user_size</code> 设置为 <code>true</code>，中端将把输入大小视为请求，并选择一个尽可能接近它的 tile 大小，必要时超过游戏的首选 tile 大小来实现这一点。中端还将使用生成的 tile 大小作为其首选大小，直到另行通知，假设这个大小是用户明确请求的。如果希望前端支持拼图窗口的动态调整大小，并自动缩放拼图以适应，可使用此选项。
+</p>
+<p>
+如果 <code>user_size</code> 设置为 <code>false</code>，那么游戏的 tile 大小将永远不会超过其首选大小，尽管为了适应 <code>*x</code> 和 <code>*y</code> 指定的最大边界，它可能会减小。这是在默认大小打开新窗口时的推荐方法：游戏将使用其首选大小，除非为了适应屏幕而必须使用较小的大小。如果 tile 大小因此而缩小，更改将不会持久；如果随后选择了较小的网格，tile 大小将恢复。
+</p>
+<p>
+中端将尽力返回一个在两个维度上都小于或等于输入大小的大小。在极端情况下，它可能会失败（如果即使最低可能的 tile 大小也会使窗口尺寸大于输入），在这种情况下，它将返回大于输入大小的大小。前端应该准备好这种情况发生（即不要崩溃或断言失败），但可以以任何方式处理它：拒绝导致问题的游戏参数，不管不便之处打开大于屏幕的窗口，在窗口上引入滚动条，在大位图上绘制并将其缩放到较小的窗口中，或通过任何其他你能想到的方法。当 tile 大小那么小时，游戏很可能已经无法玩了，所以不要太努力地创造性地处理它。
+</p>
+<p>
+如果你的平台对窗口大小没有限制（或者如果你计划对大型拼图使用滚动条），你可以将 <code>INT_MAX</code> 的维度作为输入传递给此函数。不过，你可能不应该这样做并设置 <code>user_size</code> 标志！
+</p>
+<p>
+<code>device_pixel_ratio</code> 允许前端指定其像素异常大或小（或应被视为如此）。中端使用此值来调整 tile 大小，无论是在启动时（如果比率不是 1）还是在比率更改时。
+</p>
+<p>
+<code>device_pixel_ratio</code> 为 1 表示正常大小的像素。'正常' 没有精确定义，但在设计为从一米远观看的屏幕上，大约是每毫米 4 个像素，或者是 15 像素高的文本可以舒适阅读的大小。一些平台有一个可以映射到的逻辑像素概念。例如，级联样式表（CSS）有一个称为 ' <code>px</code> ' 的单位，只有在 <code>device_pixel_ratio</code> 为 1 时才与物理像素匹配。
+</p>
+<p>
+<code>device_pixel_ratio</code> 表示正常大小像素中的物理像素数，因此小于 1 的值表示异常大的像素，大于 1 的值表示异常小的像素。
+</p>
+<p>
+如果 <code>device_pixel_ratio</code> 为 2 或更大，前端通常最好先对绘图应用自己的（整数）缩放因子，将其降低到 2 以下，然后只将剩余的因子传递给 <code>midend_size()</code>。这确保在具有非常小的物理像素的设备上，1 像素线不会变得不可见。
+</p>
+<p>
+中端依赖于前端在调用 <code>midend_size()</code> 之前调用 <code>midend_new_game()</code>（<a href="#midend-new-game">4.8 节</a>）。
+</p>
+<h2><a name="midend-reset-tilesize"></a>4.7 <code>midend_reset_tilesize()</code></h2>
+<pre><code>void midend_reset_tilesize(midend *me);
+</code></pre>
+<p>
+此函数将中端的首选 tile 大小重置为标准拼图的大小。
+</p>
+<p>
+如 <a href="#midend-size">4.6 节</a> 中所述，拼图大小调整通常是 '粘性的'，因为一旦用户将拼图拖动到不同的窗口大小，生成的 tile 大小将被记住并在拼图配置更改时使用。如果你 <em>不</em> 想要这样，例如，如果你想提供一个命令来明确地将拼图大小重置回其默认值，那么你可以在调用 <code>midend_size()</code> 之前调用此函数（反过来，你可能会调用 <code>user_size</code> 设置为 <code>false</code>）。
+</p>
+<h2><a name="midend-new-game"></a>4.8 <code>midend_new_game()</code></h2>
+<pre><code>void midend_new_game(midend *me);
+</code></pre>
+<p>
+导致中端开始一个新游戏。通常游戏将是一个新的随机生成的拼图。但是，如果你之前调用了 <code>midend_game_id()</code> 或 <code>midend_set_config()</code>，生成的游戏可能由这些函数的结果决定。（特别是，你 <em>必须</em> 在调用这些函数之后调用 <code>midend_new_game()</code>，否则不会立即看到效果。）
+</p>
+<p>
+你可能需要在调用此函数后调用 <code>midend_size()</code>，因为如果自上次新游戏以来游戏参数已更改，窗口大小可能需要更改。（如果你知道参数 <em>没有</em> 更改，则不需要这样做。）
+</p>
+<p>
+此函数将创建一个新的 <code>game_drawstate</code>，但实际上并不执行重绘（因为你通常需要在可以进行重绘之前调用 <code>midend_size()</code>）。因此，在调用此函数和调用 <code>midend_size()</code> 之后，你应该调用 <code>midend_redraw()</code>。（不需要调用 <code>midend_force_redraw()</code>；这会丢弃绘制状态并从头创建一个新状态，在这种情况下是不必要的，因为已经有一个新状态了。它会工作，但通常是过度的。）
+</p>
+<h2><a name="midend-restart-game"></a>4.9 <code>midend_restart_game()</code></h2>
+<pre><code>void midend_restart_game(midend *me);
+</code></pre>
+<p>
+此函数导致当前游戏重新开始。这是通过在撤销列表的末尾放置原始游戏状态的新副本来完成的（这样意外的重新开始可以被撤销）。
+</p>
+<p>
+此函数自动导致重绘，即前端可以期望在调用此函数的 <em>内部</em> 调用其绘图 API。一些后端要求在 <code>midend_restart_game()</code> 之前调用 <code>midend_size()</code>（<a href="#midend-size">4.6 节</a>）。
+</p>
+<h2><a name="midend-force-redraw"></a>4.10 <code>midend_force_redraw()</code></h2>
+<pre><code>void midend_force_redraw(midend *me);
+</code></pre>
+<p>
+通过在调用游戏的 <code>redraw()</code> 函数之前丢弃当前的 <code>game_drawstate</code> 并从头创建一个新状态，强制拼图窗口完全重绘。
+</p>
+<p>
+前端可以期望在调用此函数的内部调用其绘图 API。一些后端要求在 <code>midend_force_redraw()</code> 之前调用 <code>midend_size()</code>（<a href="#midend-size">4.6 节</a>）。
+</p>
+<h2><a name="midend-redraw"></a>4.11 <code>midend_redraw()</code></h2>
+<pre><code>void midend_redraw(midend *me);
+</code></pre>
+<p>
+通过简单地调用游戏的 <code>redraw()</code> 函数，导致拼图窗口的部分重绘。（也就是说，只会重绘自上次重绘以来发生变化的内容。）
+</p>
+<p>
+前端可以期望在调用此函数的内部调用其绘图 API。一些后端要求在 <code>midend_redraw()</code> 之前调用 <code>midend_size()</code>（<a href="#midend-size">4.6 节</a>）。
+</p>
+<h2><a name="midend-process-key"></a>4.12 <code>midend_process_key()</code></h2>
+<pre><code>int midend_process_key(midend *me, int x, int y, int button)
+</code></pre>
+<p>
+前端调用此函数来报告鼠标或键盘事件。参数 <code>x</code> 和 <code>y</code> 与传递给后端函数 <code>interpret_move()</code>（<a href="backend.html#backend-interpret-move">2.7.1 节</a>）的参数相同。
+</p>
+<p>
+<code>button</code> 类似于传递给 <code>interpret_move()</code> 的参数。但是，中端对传递给它的值更宽松，并且为前端传递给中端定义了一些额外的特殊按钮值（见下文）。
+</p>
+<p>
+此外，前端 <em>不需要</em> 提供关于鼠标事件顺序的保证。中端将整理多个同时的按钮按下和按钮更改；前端的责任只是尽可能准确地传递它接收到的鼠标事件。
+</p>
+<p>
+（某些平台可能需要通过使用修饰键（如 Shift）和另一个鼠标按钮来模拟缺少的鼠标按钮。这往往意味着，如果在鼠标拖动过程中按下或释放 Shift，中端将突然停止接收，例如，<code>LEFT_DRAG</code> 事件并开始接收 <code>RIGHT_DRAG</code> 事件，没有中间的按钮释放或按下事件。这也是中端将为你整理的事情；前端没有义务在这方面保持理智。）
+</p>
+<p>
+然而，前端 <em>应该</em> 始终最终发送某种按钮释放。在某些平台上，这需要特殊的努力：例如，Windows 需要调用系统 API 函数 <code>SetCapture()</code>，以确保即使在鼠标按钮释放时指针已经离开窗口，你的窗口也能收到鼠标释放事件。在任何需要这种操作的平台上，前端 <em>有</em> 责任这样做。
+</p>
+<p>
+调用此函数很可能会导致回调到前端的绘图 API 和/或 <code>activate_timer()</code>（<a href="#frontend-activate-timer">4.42 节</a>）。
+</p>
+<p>
+<code>midend_process_key()</code> 的返回值是以下常量之一：
+</p>
+<dl><dt>
+<code>PKR_QUIT</code>
+</dt>
+<dd>
+意味着按键的效果是请求终止程序。前端应响应 <code>PKR_QUIT</code> 返回关闭拼图。
+</dd>
+<dt>
+<code>PKR_SOME_EFFECT</code>
+</dt>
+<dd>
+按键在中端或拼图本身中产生了一些其他效果。
+</dd>
+<dt>
+<code>PKR_NO_EFFECT</code>
+</dt>
+<dd>
+按键没有效果，但在稍微不同的情况下可能会有效果。例如，它请求了一个不可能的移动。
+</dd>
+<dt>
+<code>PKR_UNUSED</code>
+</dt>
+<dd>
+该键是中端和后端都完全没有用的键。
+</dd>
+</dl>
+<p>
+前端可能会通过将键传递给可能对其感兴趣的其他内容来响应最后一个值。
+</p>
+<p>
+前端可以传递给此函数的 <code>button</code> 的以下附加值，但永远不会传递给后端。它们表示前端特定的 UI 操作，例如从下拉菜单中选择选项。（否则，前端将不得不将 'New Game' 菜单项转换为 ' <code>n</code> ' 按键，例如。）
+</p>
+<dl><dt>
+<code>UI_NEWGAME</code>
+</dt>
+<dd>
+表示用户请求新游戏，类似于按下 ' <code>n</code> '。
+</dd>
+<dt>
+<code>UI_SOLVE</code>
+</dt>
+<dd>
+表示用户请求解决当前游戏。
+</dd>
+<dt>
+<code>UI_UNDO</code>
+</dt>
+<dd>
+表示用户尝试撤销移动。
+</dd>
+<dt>
+<code>UI_REDO</code>
+</dt>
+<dd>
+表示用户尝试重做已撤销的移动。
+</dd>
+<dt>
+<code>UI_QUIT</code>
+</dt>
+<dd>
+表示用户要求退出游戏。（当然，前端完全可以自己处理这个问题。但将其包含在此枚举中允许前端通过将每个菜单项转换为传递给中端的按钮代码来同样处理所有这些菜单项，并通过注意 <code>midend_process_key()</code> 的 <code>false</code> 返回值来处理退出。）
+</dd>
+</dl>
+<p>
+中端容忍任何键上设置的任何修饰符，并在将键传递给后端之前根据需要移除它们。它还将处理将与 <code>MOD_CTRL</code> 组合的可打印字符转换为控制字符。
+</p>
+<h2><a name="midend-request-keys"></a>4.13 <code>midend_request_keys()</code></h2>
+<pre><code>key_label *midend_request_keys(midend *me, int *nkeys);
+</code></pre>
+<p>
+此函数的行为类似于后端的 <code>request_keys()</code> 函数（<a href="backend.html#backend-request-keys">2.10.7 节</a>）。如果后端不提供 <code>request_keys()</code>，此函数将返回 <code>NULL</code> 并将 <code>*nkeys</code> 设置为零。否则，此函数将通过使用 <code>button2label()</code>（<a href="utils.html#utils-button2label">5.9.12 节</a>）来填写通用标签（即其 <code>label</code> 字段设置为 <code>NULL</code> 的 <code>key_label</code> 项目）。
+</p>
+<h2><a name="midend-current-key-label"></a>4.14 <code>midend_current_key_label()</code></h2>
+<pre><code>const char *midend_current_key_label(midend *me, int button);
+</code></pre>
+<p>
+这是后端 <code>current_key_label()</code> 函数（<a href="backend.html#backend-current-key-label">2.10.8 节</a>）的薄包装。需要标记 <code>CURSOR_SELECT</code> 或 <code>CURSOR_SELECT2</code> 的前端应在每次移动后（至少在每次调用 <code>midend_process_key()</code> 后）调用此函数以获取当前标签。前端应安排在下次调用中端之前将返回的字符串复制到某个地方，以防它是动态分配的。如果提供的按钮没有任何作用，返回的标签将是空字符串。
+</p>
+<h2><a name="midend-colours"></a>4.15 <code>midend_colours()</code></h2>
+<pre><code>float *midend_colours(midend *me, int *ncolours);
+</code></pre>
+<p>
+返回游戏所需的颜色数组，格式与后端函数 <code>colours()</code>（<a href="backend.html#backend-colours">2.8.6 节</a>）返回的格式完全相同。前端应调用此函数，而不是直接调用后端的版本，因为中端添加了标准的自定义功能。（在撰写本文时，这些自定义功能是通过环境变量以黑客方式实现的，但它们在未来可能会变得更加完整和正式。）
+</p>
+<h2><a name="midend-timer"></a>4.16 <code>midend_timer()</code></h2>
+<pre><code>void midend_timer(midend *me, float tplus);
+</code></pre>
+<p>
+如果中端调用了 <code>activate_timer()</code>（<a href="#frontend-activate-timer">4.42 节</a>）请求定期回调以进行动画或计时，这是前端应定期调用的函数。参数 <code>tplus</code> 给出自上次调用此函数或调用 <code>activate_timer()</code> 以来的时间（以秒为单位）。
+</p>
+<p>
+中端中计时的主要目的之一是执行移动动画。因此，调用此函数很可能会导致回调到前端的绘图 API。
+</p>
+<h2><a name="midend-get-presets"></a>4.17 <code>midend_get_presets()</code></h2>
+<pre><code>struct preset_menu *midend_get_presets(midend *me, int *id_limit);
+</code></pre>
+<p>
+返回一个数据结构，描述此游戏的预设游戏参数集合，组织成菜单和子菜单的层次结构。
+</p>
+<p>
+返回值是指向包含以下字段（以及其他不供前端使用的字段）的数据结构的指针：
+</p>
+<pre><code>struct preset_menu {
+    int n_entries;
+    struct preset_menu_entry *entries;
+    /* and other things */
+};
+</code></pre>
+<p>
+这些字段描述层次结构中一个特定菜单的预期内容。' <code>entries</code> ' 指向一个包含 ' <code>n_entries</code> ' 项的数组，每个项都是一个包含以下字段的结构：
+</p>
+<pre><code>struct preset_menu_entry {
+    char *title;
+    game_params *params;
+    struct preset_menu *submenu;
+    int id;
+};
+</code></pre>
+<p>
+在这些字段中，' <code>title</code> ' 和 ' <code>id</code> ' 存在于每个条目中，分别给出菜单项的文本名称和其整数标识符。当该预设被选中时，整数 id 将对应于 <code>midend_which_preset</code>（<a href="#midend-which-preset">4.18 节</a>）返回的 id。
+</p>
+<p>
+其他两个字段是互斥的。每个 <code>struct preset_menu_entry</code> 将有一个字段为 <code>NULL</code>，另一个字段为非 null。如果菜单项是实际预设，则 ' <code>params</code> ' 将指向与名称对应的游戏参数集；如果是子菜单，则 ' <code>submenu</code> ' 将会非 null，并指向一个辅助 <code>struct preset_menu</code>。
+</p>
+<p>
+这些结构的完整层次结构由中端拥有，将在释放中端时释放。前端不应尝试释放其中任何一个。
+</p>
+<p>
+整数标识符将从 0 开始密集分配，因此前端可以合理地分配一个使用它们作为索引的数组，如果需要存储每个预设菜单项的信息。为此，前端可以将第二个参数 ' <code>id_limit</code> ' 作为 <code>int</code> 变量的地址传递给 <code>midend_get_presets</code>，<code>midend_get_presets</code> 将在其中写入一个比实际使用的最大 id 数大 1 的整数（即前端在数组中需要的元素数）。
+</p>
+<p>
+子菜单类型的条目也有整数标识符。
+</p>
+<h2><a name="midend-which-preset"></a>4.18 <code>midend_which_preset()</code></h2>
+<pre><code>int midend_which_preset(midend *me);
+</code></pre>
+<p>
+返回与当前游戏参数匹配的预设游戏参数结构的数字索引，如果没有预设匹配，则返回负数。前端可以使用此来在菜单中的项目旁边维护一个勾选标记（或者如果返回值小于零，则勾选 'Custom' 选项）。
+</p>
+<p>
+返回的索引值（如果非负）将与 <code>midend_get_presets()</code>（<a href="#midend-get-presets">4.17 节</a>）返回的相应 <code>struct preset_menu_entry</code> 的 <code>id</code> 字段匹配。
+</p>
+<h2><a name="midend-wants-statusbar"></a>4.19 <code>midend_wants_statusbar()</code></h2>
+<pre><code>bool midend_wants_statusbar(midend *me);
+</code></pre>
+<p>
+如果拼图需要文本状态栏（显示分数、完成状态、当前活动的 tile、时间或其他任何内容），此函数返回 <code>true</code>。
+</p>
+<p>
+前端应调用此函数，而不是直接与后端通信。
+</p>
+<h2><a name="midend-get-config"></a>4.20 <code>midend_get_config()</code></h2>
+<pre><code>config_item *midend_get_config(midend *me, int which,
+                               char **wintitle);
+</code></pre>
+<p>
+返回用户配置的对话框描述。
+</p>
+<p>
+输入时，<code>which</code> 应设置为三个值之一，这些值选择返回哪个对话框描述：
+</p>
+<dl><dt>
+<code>CFG_SETTINGS</code>
+</dt>
+<dd>
+请求由拼图本身生成的 GUI 参数配置框。当用户从游戏类型菜单（或等效菜单）中选择 'Custom' 时，应使用此选项。中端将此请求传递给后端函数 <code>configure()</code>（<a href="backend.html#backend-configure">2.3.9 节</a>）。
+</dd>
+<dt>
+<code>CFG_DESC</code>
+</dt>
+<dd>
+请求一个适合输入描述性游戏 ID（并查看现有 ID）的框。中端自己生成此对话框描述。当用户从游戏菜单（或等效菜单）中选择 'Specific' 时，应使用此选项。
+</dd>
+<dt>
+<code>CFG_SEED</code>
+</dt>
+<dd>
+请求一个适合输入随机种子游戏 ID（并查看现有 ID）的框。中端自己生成此对话框描述。当用户从游戏菜单（或等效菜单）中选择 'Random Seed' 时，应使用此选项。
+</dd>
+<dt>
+<code>CFG_PREFS</code>
+</dt>
+<dd>
+请求一个适合配置用户首选项的框。
+</dd>
+</dl>
+<p>
+（此枚举中提供了一个额外的值 <code>CFG_FRONTEND_SPECIFIC</code>，以便前端可以为自己的内部使用扩展它。例如，你可能会用一个 <code>frontend_get_config</code> 包装此函数，该函数根据 <code>which &lt; CFG_FRONTEND_SPECIFIC</code> 处理一些 <code>which</code> 值，并将其他值传递给中端。）
+</p>
+<p>
+返回值是 <code>config_item</code> 的数组，完全如 <a href="backend.html#backend-configure">2.3.9 节</a> 中所述。另一个返回值是一个 ASCII 字符串，在 <code>*wintitle</code> 中给出配置窗口的合适标题。
+</p>
+<p>
+两个返回值都是动态分配的，需要被释放。窗口标题可以以明显的方式释放；<code>config_item</code> 数组是一个稍微复杂的结构，因此提供了一个实用函数 <code>free_cfg()</code> 来为你释放它。参见 <a href="utils.html#utils-free-cfg">5.3.6 节</a>。
+</p>
+<p>
+（当然，你可能不想在对话框被关闭之前释放 <code>config_item</code> 数组，因为在此之前你可能需要将其传递给 <code>midend_set_config</code>。）
+</p>
+<h2><a name="midend-set-config"></a>4.21 <code>midend_set_config()</code></h2>
+<pre><code>const char *midend_set_config(midend *me, int which,
+                              config_item *cfg);
+</code></pre>
+<p>
+将配置对话框的结果传递给中端。<code>which</code> 应具有与调用 <code>midend_get_config()</code> 时相同的值；<code>cfg</code> 应是从 <code>midend_get_config()</code> 返回的 <code>config_item</code> 数组，修改为包含用户编辑操作的结果。
+</p>
+<p>
+此函数成功时返回 <code>NULL</code>，否则（如果配置数据以某种方式无效）返回包含适合向用户显示的错误消息的 ASCII 字符串。
+</p>
+<p>
+如果函数成功，游戏参数可能已更改，并且肯定会请求新游戏。因此，前端应调用 <code>midend_new_game()</code>，并可能使用 <code>midend_size()</code> 重新考虑窗口大小，并最终使用 <code>midend_redraw()</code> 执行刷新。
+</p>
+<h2><a name="midend-game-id"></a>4.22 <code>midend_game_id()</code></h2>
+<pre><code>const char *midend_game_id(midend *me, const char *id);
+</code></pre>
+<p>
+向中端传递一个字符串游戏 ID（任何有效的形式 ' <code>params</code> '、' <code>params:description</code> ' 或 ' <code>params#seed</code> '），中端将处理并用于下一个生成的游戏。
+</p>
+<p>
+此函数成功时返回 <code>NULL</code>，否则（如果配置数据以某种方式无效）返回包含适合向用户显示的错误消息（不是动态分配的）的 ASCII 字符串。在错误的情况下，中端的内部状态将保持与调用前完全相同。
+</p>
+<p>
+如果函数成功，游戏参数可能已更改，并且肯定会请求新游戏。因此，前端应调用 <code>midend_new_game()</code>，并可能使用 <code>midend_size()</code> 重新考虑窗口大小，并最终使用 <code>midend_redraw()</code> 执行刷新。
+</p>
+<h2><a name="midend-get-game-id"></a>4.23 <code>midend_get_game_id()</code></h2>
+<pre><code>char *midend_get_game_id(midend *me);
+</code></pre>
+<p>
+返回描述当前在中端中活动的游戏的描述性游戏 ID（即形式为 ' <code>params:description</code> ' 的 ID）。返回的字符串是动态分配的。
+</p>
+<h2><a name="midend-get-random-seed"></a>4.24 <code>midend_get_random_seed()</code></h2>
+<pre><code>char *midend_get_random_seed(midend *me);
+</code></pre>
+<p>
+返回描述当前在中端中活动的游戏的随机游戏 ID（即形式为 ' <code>params#seedstring</code> ' 的 ID），如果有的话。如果游戏是通过输入描述创建的，则当前不存在随机种子，此函数将返回 <code>NULL</code>。
+</p>
+<p>
+如果返回的字符串非 <code>NULL</code>，则它是动态分配的。
+</p>
+<p>
+与描述性游戏 ID 不同，随机种子可以包含可打印 ASCII 集之外的字符。
+</p>
+<h2><a name="midend-can-format-as-text-now"></a>4.25 <code>midend_can_format_as_text_now()</code></h2>
+<pre><code>bool midend_can_format_as_text_now(midend *me);
+</code></pre>
+<p>
+如果游戏代码能够将当前选择的游戏类型的拼图格式化为 ASCII，则返回 <code>true</code>。
+</p>
+<p>
+如果此函数返回 <code>false</code>，则 <code>midend_text_format()</code>（<a href="#midend-text-format">4.26 节</a>）将返回 <code>NULL</code>。
+</p>
+<h2><a name="midend-text-format"></a>4.26 <code>midend_text_format()</code></h2>
+<pre><code>char *midend_text_format(midend *me);
+</code></pre>
+<p>
+将当前游戏的当前状态格式化为适合复制到剪贴板的 ASCII 文本。返回的字符串是动态分配的。
+</p>
+<p>
+如果游戏的 <code>can_format_as_text_ever</code> 标志为 <code>false</code>，或者其 <code>can_format_as_text_now()</code> 函数返回 <code>false</code>，则此函数将返回 <code>NULL</code>。
+</p>
+<p>
+如果返回的字符串包含多行（这很可能），它将使用正常的 C 行结束约定（仅 <code>\n</code>）。在剪贴板中的数据使用不同行结束约定的平台上，前端有责任执行转换。
+</p>
+<h2><a name="midend-solve"></a>4.27 <code>midend_solve()</code></h2>
+<pre><code>const char *midend_solve(midend *me);
+</code></pre>
+<p>
+请求中端执行求解操作。
+</p>
+<p>
+成功时，返回 <code>NULL</code>。失败时，返回适合向用户显示的错误消息（不是动态分配的）。
+</p>
+<p>
+前端可以期望在调用此函数的内部调用其绘图 API 和/或 <code>activate_timer()</code>。一些后端要求在 <code>midend_solve()</code> 之前调用 <code>midend_size()</code>（<a href="#midend-size">4.6 节</a>）。
+</p>
+<h2><a name="midend-get-cursor-location"></a>4.28 <code>midend_get_cursor_location()</code></h2>
+<pre><code>bool midend_get_cursor_location(midend *me,
+                                int *x, int *y,
+                                int *w, int *h);
+</code></pre>
+<p>
+此函数请求后端的屏幕光标或其他感兴趣区域的位置。
+</p>
+<p>
+这个区域具体包含什么取决于后端，但一般来说，该区域将是玩家使用光标键控制的区域 - 例如 Cube 和 Inertia 中的玩家位置，或任何传统基于网格的游戏中的光标。了解此位置，前端可以，例如，确保感兴趣的区域保持可见，即使整个拼图太大而无法适合屏幕。
+</p>
+<p>
+成功时，此函数返回 <code>true</code>，并且由 <code>x</code>、<code>y</code>、<code>w</code> 和 <code>h</code> 指向的位置将被更新以描述光标区域，该区域的左上角位于 <code>(*x,*y)</code>，大小为 <code>*w</code> 像素宽乘以 <code>*h</code> 像素高。调用者可以为这些指针中的任何数量传递 <code>NULL</code>，这些指针将被忽略。
+</p>
+<p>
+失败时，此函数返回 <code>false</code>。失败可能发生在当前没有活动的光标区域，或者后端缺乏光标支持。
+</p>
+<h2><a name="midend-status"></a>4.29 <code>midend_status()</code></h2>
+<pre><code>int midend_status(midend *me);
+</code></pre>
+<p>
+如果中端当前显示的游戏处于已解决状态，此函数返回 +1；如果游戏处于永久丢失状态，返回 -1；否则返回 0。此函数只是调用后端的 <code>status()</code> 函数。前端可能希望将此用作主动提供开始新游戏选项的提示。
+</p>
+<p>
+（有关后端 <code>status()</code> 函数的更多详细信息以及关于什么应算作哪个状态代码的讨论，请参见 <a href="backend.html#backend-status">2.8.10 节</a>。）
+</p>
+<h2><a name="midend-can-undo"></a>4.30 <code>midend_can_undo()</code></h2>
+<pre><code>bool midend_can_undo(midend *me);
+</code></pre>
+<p>
+如果中端当前处于撤销操作有意义的状态（即撤销链上存在至少一个位置在当前位置之前），则返回 <code>true</code>。前端可能希望使用此来视觉激活和停用撤销按钮。
+</p>
+<h2><a name="midend-can-redo"></a>4.31 <code>midend_can_redo()</code></h2>
+<pre><code>bool midend_can_redo(midend *me);
+</code></pre>
+<p>
+如果中端当前处于重做操作有意义的状态（即重做链上存在至少一个位置在当前位置之后），则返回 <code>true</code>。前端可能希望使用此来视觉激活和停用重做按钮。
+</p>
+<h2><a name="midend-serialise"></a>4.32 <code>midend_serialise()</code></h2>
+<pre><code>void midend_serialise(midend *me,
+    void (*write)(void *ctx, const void *buf, int len), void *wctx);
+</code></pre>
+<p>
+调用此函数导致中端将其整个内部状态转换为一个长 ASCII 文本字符串，并将该字符串（逐段）传递给提供的 <code>write</code> 函数。该字符串将由可打印的 ASCII 字符和换行符组成。
+</p>
+<p>
+桌面实现可以使用此函数将任何状态（包括未完成的）的游戏保存到磁盘文件，方法是提供一个 <code>write</code> 函数，该函数是 <code>fwrite()</code>（或本地等效函数）的包装器。其他实现可能会发现它的其他用途，例如当掌上电脑应用程序暂停以便运行另一个应用程序时，将庞大而分散的中端状态压缩到可管理的内存量中；在这种情况下，<code>write</code> 可能希望写入内存缓冲区而不是文件。它可能还有其他用途。
+</p>
+<p>
+此函数将多次回调到提供的 <code>write</code> 函数，第一个参数（<code>ctx</code>）等于 <code>wctx</code>，其他两个参数指向输出字符串的一部分。
+</p>
+<h2><a name="midend-deserialise"></a>4.33 <code>midend_deserialise()</code></h2>
+<pre><code>const char *midend_deserialise(midend *me,
+    bool (*read)(void *ctx, void *buf, int len), void *rctx);
+</code></pre>
+<p>
+此函数是 <code>midend_serialise()</code> 的对应函数。它重复调用提供的 <code>read</code> 函数来读取一定量的数据，并尝试将该数据解释为由 <code>midend_serialise()</code> 输出的序列化中端。
+</p>
+<p>
+<code>read</code> 函数被调用时，第一个参数（<code>ctx</code>）等于 <code>rctx</code>，应尝试将 <code>len</code> 字节的数据读入由 <code>buf</code> 指向的缓冲区。它应在失败时返回 <code>false</code>，在成功时返回 <code>true</code>。除非它已填满整个缓冲区，否则不应报告成功；在可能从管道或其他阻塞数据源读取的平台上，<code>read</code> 负责循环直到整个缓冲区被填满。
+</p>
+<p>
+如果反序列化操作成功，中端的内部数据结构将被加载结果替换，并返回 <code>NULL</code>。否则，中端的状态将完全不变，并返回错误消息（通常是 'save file is corrupt' 的某种变体）。与往常一样，错误消息字符串不是动态分配的。
+</p>
+<p>
+如果此函数成功，游戏参数可能已更改。因此，前端可能应该使用 <code>midend_size()</code> 重新考虑窗口大小，并可能使用 <code>midend_redraw()</code> 引起刷新。
+</p>
+<p>
+因为每个中端都绑定到特定的游戏后端，如果你尝试读入由与此中端中配置的游戏不同的游戏生成的保存文件，即使你的应用程序是包含所有拼图的单片应用程序，此函数也会失败。有关允许你在首先实例化中端之前识别保存文件的辅助函数，请参见 <a href="#identify-game">4.36 节</a>。
+</p>
+<h2><a name="midend-save-prefs"></a>4.34 <code>midend_save_prefs()</code></h2>
+<pre><code>void midend_save_prefs(
+    midend *me, void (*write)(void *ctx, const void *buf, int len),
+    void *wctx);
+</code></pre>
+<p>
+调用此函数导致中端写出所有用户可设置的首选项选项的状态，包括其自己的跨平台首选项和通过 <code>get_prefs()</code> 和 <code>set_prefs()</code>（<a href="backend.html#backend-get-prefs">2.3.11 节</a>，<a href="backend.html#backend-set-prefs">2.3.12 节</a>）由特定游戏导出的首选项。输出是一种适合写入磁盘上配置文件的文本格式。
+</p>
+<p>
+<code>write</code> 和 <code>wctx</code> 参数与 <code>midend_serialise()</code>（<a href="#midend-serialise">4.32 节</a>）具有相同的语义。
+</p>
+<h2><a name="midend-load-prefs"></a>4.35 <code>midend_load_prefs()</code></h2>
+<pre><code>const char *midend_load_prefs(
+    midend *me, bool (*read)(void *ctx, void *buf, int len),
+    void *rctx);
+</code></pre>
+<p>
+此函数用于加载与 <code>midend_save_prefs()</code> 发出的格式相同的配置文件，并将文件中描述的所有首选项导入到当前中端。
+</p>
+<h2><a name="identify-game"></a>4.36 <code>identify_game()</code></h2>
+<pre><code>const char *identify_game(char **name,
+    bool (*read)(void *ctx, void *buf, int len), void *rctx);
+</code></pre>
+<p>
+此函数检查由 <code>midend_serialise()</code> 和 <code>midend_deserialise()</code> 使用的相同类型的序列化中端流，并返回保存它的游戏后端的 <code>name</code> 字段。
+</p>
+<p>
+如果你的前端是一个包含所有拼图的单片应用程序，并且你希望能够加载任意保存文件并自动切换到正确的游戏，你可能需要这个。你可能的下一步是遍历 <code>gamelist</code>（<a href="#frontend-backend">4.39 节</a>），寻找其 <code>name</code> 字段与返回的字符串匹配的游戏结构，如果找不到则给出错误。
+</p>
+<p>
+成功时，此函数的返回值是 <code>NULL</code>，游戏名称字符串被写入 <code>*name</code>。调用者应在使用后释放该字符串。
+</p>
+<p>
+失败时，<code>*name</code> 是 <code>NULL</code>，返回值是错误消息（完全不需要释放）。
+</p>
+<p>
+（严格来说，这不是一个中端函数，因为它不接受或返回指向中端的指针。你可能会在决定要实例化哪种中端之前调用它。）
+</p>
+<h2><a name="midend-request-id-changes"></a>4.37 <code>midend_request_id_changes()</code></h2>
+<pre><code>void midend_request_id_changes(midend *me,
+                               void (*notify)(void *), void *ctx);
+</code></pre>
+<p>
+前端调用此函数以请求中端在当前游戏 ID（描述性或随机种子）更改时通知它。这可能是按键（例如，'n' 表示 New Game）或当拼图取代其游戏描述时发生的（参见 <a href="backend.html#backend-supersede">2.11.2 节</a>）。调用此函数后，游戏 ID 的任何更改都会导致中端在更改后调用 <code>notify(ctx)</code>。
+</p>
+<p>
+这是为了那些想要不断向用户呈现游戏描述（例如作为 HTML 超链接）而不是仅在用户明确请求时显示它的拼图使用的。
+</p>
+<p>
+这是一个我预计很少前端需要实现的函数，所以我将其作为回调而不是静态函数，以减轻大多数前端提供空实现的需要。
+</p>
+<h2><a name="midend-which-game"></a>4.38 <code>midend_which_game()</code></h2>
+<pre><code>const game *midend_which_preset(midend *me);
+</code></pre>
+<p>
+此函数返回此中端致力于的拼图类型的 <code>game</code> 结构。
+</p>
+<h2><a name="frontend-backend"></a>4.39 前端直接引用后端结构</h2>
+<p>
+尽管前端需要完成的 <em>大多数</em> 事情应该通过调用中端来完成，但在一些情况下，前端需要直接引用游戏后端结构。
+</p>
+<p>
+最明显的是
+</p>
+<ul><li>
+将游戏后端作为参数传递给 <code>midend_new()</code>。
+</li>
+</ul>
+<p>
+还有一些其他后端功能没有被中端包装，因为这样做似乎没有多大意义：
+</p>
+<ul><li>
+获取 <code>name</code> 字段以用于窗口标题等
+</li>
+<li>
+读取 <code>can_configure</code>、<code>can_solve</code> 和 <code>can_format_as_text_ever</code> 字段以决定是否将这些项目添加到菜单栏或等效项
+</li>
+<li>
+读取 <code>winhelp_topic</code> 字段（仅 Windows）
+</li>
+<li>
+GTK 前端提供了一个 ' <code>--generate</code> ' 命令行选项，该选项直接调用后端来完成大部分工作。不过，这实际上不是主要前端代码的一部分，我不确定它是否算。
+</li>
+</ul>
+<p>
+为了找到游戏后端结构，前端做以下两件事之一：
+</p>
+<ul><li>
+如果特定前端为每个游戏编译单独的二进制文件，则后端结构是一个具有标准名称 ' <code>thegame</code> ' 的全局变量：
+<pre><code>extern const game thegame;
+</code></pre>
+
+</li>
+<li>
+如果前端编译为包含所有拼图的单片应用程序（在这种情况下，编译大部分代码库时必须定义预处理器符号 <code>COMBINED</code>），则将定义两个全局变量：
+<pre><code>extern const game *gamelist[];
+extern const int gamecount;
+</code></pre>
+<p>
+<code>gamelist</code> 将是 <code>gamecount</code> 游戏结构的数组，在自动构造的源模块 <code>list.c</code> 中声明。应用程序应搜索该数组以找到它想要的游戏，可能是通过进入每个游戏结构并查看其 <code>name</code> 字段。
+</p>
+
+</li>
+</ul>
+<h2><a name="frontend-api"></a>4.40 中端到前端的调用</h2>
+<p>
+本节描述前端必须提供的少量函数，以供中端或其他标准实用程序模块调用。
+</p>
+<h2><a name="frontend-get-random-seed"></a>4.41 <code>get_random_seed()</code></h2>
+<pre><code>void get_random_seed(void **randseed, int *randseedsize);
+</code></pre>
+<p>
+此函数由新中端调用，偶尔也由游戏后端调用。其任务是返回适合用作新 <code>random_state</code> 初始化种子的数据。
+</p>
+<p>
+退出时，<code>*randseed</code> 应设置为指向包含一些种子数据的新分配的内存块，<code>*randseedsize</code> 应设置为该数据的长度。
+</p>
+<p>
+一个简单且完全足够的实现是返回包含当前系统时间的最高方便可用分辨率的数据。
+</p>
+<h2><a name="frontend-activate-timer"></a>4.42 <code>activate_timer()</code></h2>
+<pre><code>void activate_timer(frontend *fe);
+</code></pre>
+<p>
+中端调用此函数以请求前端开始定期回调它。
+</p>
+<p>
+超时间隔由前端决定；间隔越精细，移动动画将越平滑，但会使用更多的 CPU 时间。当前前端使用的值约为 20ms（即 50Hz）。
+</p>
+<p>
+调用此函数后，中端将期望定期接收对 <code>midend_timer()</code> 的调用。
+</p>
+<h2><a name="frontend-deactivate-timer"></a>4.43 <code>deactivate_timer()</code></h2>
+<pre><code>void deactivate_timer(frontend *fe);
+</code></pre>
+<p>
+中端调用此函数以请求前端停止调用 <code>midend_timer()</code>。
+</p>
+<h2><a name="frontend-fatal"></a>4.44 <code>fatal()</code></h2>
+<pre><code>void fatal(const char *fmt, ...);
+</code></pre>
+<p>
+如果遇到真正致命的错误（例如内存不足），一些实用函数会调用此函数。它是一个类似于 <code>printf()</code> 的可变参数函数，期望以任何可能的方式向用户显示格式化的错误消息，然后终止应用程序。它不得返回。
+</p>
+<h2><a name="frontend-default-colour"></a>4.45 <code>frontend_default_colour()</code></h2>
+<pre><code>void frontend_default_colour(frontend *fe, float *output);
+</code></pre>
+<p>
+此函数期望传递一个指向三个 <code>float</code> 数组的指针。它以红色、绿色和蓝色值（按此顺序）在这三个浮点数中返回平台的本地首选背景颜色，范围从 <code>0.0</code> 到 <code>1.0</code>。
+</p>
+<p>
+此函数应该只由后端函数 <code>colours()</code>（<a href="backend.html#backend-colours">2.8.6 节</a>）调用。（因此，它本身不是中端到前端的函数，但似乎没有其他特别好的地方放它。抱歉。）
+</p>
+
+<hr><address>
+[Simon Tatham's Portable Puzzle Collection, version 20260309.06e37f1]</address></body>
+</html>

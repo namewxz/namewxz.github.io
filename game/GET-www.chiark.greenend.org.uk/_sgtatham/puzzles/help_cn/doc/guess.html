@@ -1,0 +1,112 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN"
+"http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+<meta name="generator" content="Halibut, unidentified version">
+<title>猜谜</title>
+<link rel="previous" href="flip.html">
+<link rel="ToC" href="index.html">
+<link rel="up" href="index.html">
+<link rel="index" href="indexpage.html">
+<link rel="next" href="pegs.html">
+</head>
+<body>
+<p><a href="flip.html">上一篇</a> | <a href="index.html">目录</a> | <a href="indexpage.html">索引</a> | <a href="pegs.html">下一篇</a></p>
+
+<ul>
+<li><a href="#guess">第 15 章：猜谜</a>
+<ul>
+<li><a href="#guess-controls">15.1 猜谜控制</a></li>
+<li><a href="#guess-parameters">15.2 猜谜参数</a></li>
+<li><a href="#guess-prefs">15.3 猜谜用户首选项</a></li>
+</ul></li>
+</ul>
+<h1><a name="guess"></a>第 15 章：<a name="i0"></a>猜谜</h1>
+<p>
+你有一组彩色钉子，必须在一定次数的猜测内重现一个预定的钉子序列（由计算机选择）。
+</p>
+<p>
+每个猜测都会标记正确位置的正确颜色钉子的数量（黑色），以及错误位置的正确颜色钉子的数量（白色）。
+</p>
+<p>
+这个游戏也被称为（并由 Hasbro 主要销售）棋盘游戏“<a name="i1"></a>Mastermind”，有 6 种颜色，每行 4 个钉子，10 次猜测。然而，这个版本允许自定义颜色数量（最多 10 个）、每行钉子数量和猜测次数。
+</p>
+<p>
+猜谜由 James Harvey 贡献到这个集合中。
+</p>
+<h2><a name="guess-controls"></a>15.1 <a name="i2"></a>猜谜控制</h2>
+<p>
+这个游戏可以用键盘或鼠标玩。
+</p>
+<p>
+使用鼠标，将彩色钉子从左侧的托盘中拖到当前猜测中的所需位置；钉子也可以从当前和过去的猜测中拖出，以将它们复制到其他地方。要移除钉子，将其从当前位置拖到无效的地方。
+</p>
+<p>
+右键点击当前猜测会添加一个“保持”标记；带有保持标记的钉子会在标记后自动添加到下一个猜测中。
+</p>
+<p>
+或者，使用键盘，上下光标键可用于选择钉子颜色，左右键可用于选择钉子位置，回车键可用于在所选位置放置所选颜色的钉子。'D' 或退格键移除钉子，空格键添加保持标记。
+</p>
+<p>
+数字键也可用于插入钉子：'1' 插入最顶部的颜色，'2' 插入第二个，依此类推。这些也会将钉子光标向右移动。按 'L' 将用数字标记钉子。
+</p>
+<p>
+按 'h' 或 '?' 将用建议的猜测填充当前猜测。对于 10 个或更多钉子，不建议使用此功能，因为它很慢。
+</p>
+<p>
+当猜测完成时，较小的反馈钉子会被高亮显示；点击这些（或使用箭头键将钉子光标移动到它们并按空格键或回车键）将标记当前猜测，将任何保持的钉子复制到下一个猜测，并移动“当前猜测”标记。
+</p>
+<p>
+如果你正确定位了所有钉子，解决方案将显示在下方；如果你用完了猜测次数（或选择“解决...”），解决方案也会被揭示。
+</p>
+<p>
+（<a href="common.html#common-actions">第 2.1 节</a> 中描述的所有操作也可用。）
+</p>
+<h2><a name="guess-parameters"></a>15.2 <a name="i3"></a>猜谜参数</h2>
+<p>
+这些参数可从“类型”菜单的“自定义...”选项获得。默认游戏与棋盘游戏“Mastermind”的参数匹配。
+</p>
+<dl><dt>
+<em>颜色</em>
+</dt>
+<dd>
+解决方案选择的颜色数量；从 2 到 10（更多更难）。
+</dd>
+<dt>
+<em>每次猜测的钉子数</em>
+</dt>
+<dd>
+每次猜测的钉子数量（更多更难）。
+</dd>
+<dt>
+<em>猜测次数</em>
+</dt>
+<dd>
+你必须在其中找到解决方案的猜测次数（越少越难）。
+</dd>
+<dt>
+<em>允许空白</em>
+</dt>
+<dd>
+允许空白钉子作为猜测的一部分（使其更容易，因为你知道这些永远不会被算作解决方案的一部分）。默认情况下，这是关闭的。
+<p>
+请注意，这不允许解决方案中的空白钉子；如果你真的想要那样，使用一种额外的颜色。
+</p>
+
+</dd>
+<dt>
+<em>允许重复</em>
+</dt>
+<dd>
+允许解决方案（和猜测）包含颜色不止一次；这增加了搜索空间（使事情更难），默认情况下是打开的。
+</dd>
+</dl>
+<h2><a name="guess-prefs"></a>15.3 <a name="i4"></a>猜谜用户首选项</h2>
+<p>
+在支持用户首选项的平台上，“游戏”菜单上的“首选项”选项将允许你配置钉子是否用其数字标记。与 'L' 键不同，这将在游戏之间保持。
+</p>
+
+<hr><address>
+[Simon Tatham's Portable Puzzle Collection, version 20260309.06e37f1]</address></body>
+</html>

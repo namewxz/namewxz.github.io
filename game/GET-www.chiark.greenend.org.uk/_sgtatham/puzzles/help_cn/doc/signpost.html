@@ -1,0 +1,87 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN"
+"http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+<meta name="generator" content="Halibut, unidentified version">
+<title>路标</title>
+<link rel="previous" href="magnets.html">
+<link rel="ToC" href="index.html">
+<link rel="up" href="index.html">
+<link rel="index" href="indexpage.html">
+<link rel="next" href="range.html">
+</head>
+<body>
+<p><a href="magnets.html">上一章</a> | <a href="index.html">目录</a> | <a href="indexpage.html">索引</a> | <a href="range.html">下一章</a></p>
+
+<ul>
+<li><a href="#signpost">第34章：路标</a>
+<ul>
+<li><a href="#signpost-controls">34.1 路标的操作</a></li>
+<li><a href="#signpost-parameters">34.2 路标的参数</a></li>
+<li><a href="#signpost-prefs">34.3 路标的用户偏好</a></li>
+</ul></li>
+</ul>
+<h1><a name="signpost"></a>第34章：<a name="i0"></a>路标</h1>
+<p>
+你有一个方格网格；每个方格（除了最后一个）都包含一个箭头，有些方格还包含数字。你的任务是连接这些方格，形成一个从1开始并按照箭头方向链接的连续数字列表——所以数字1所在方格内的箭头会指向包含数字2的方格，数字2的方格会指向包含数字3的方格，依此类推。每个方格可以与前一个方格相距任意距离，只要它位于箭头指向的方向上。
+</p>
+<p>
+按照惯例，第一个和最后一个数字会显示出来；开始时也可能会显示一个或多个中间数字。
+</p>
+<p>
+这个谜题的功劳归功于 <a name="i1"></a>Janko <a href="#p0">[17]</a>，他们称之为“Pfeilpfad”（“箭头路径”）。
+</p>
+<p>
+路标是由 James Harvey 贡献到这个集合中的。
+</p>
+<p><a name="p0"></a>
+[17] <a href="http://janko.at/Raetsel/Pfeilpfad/index.htm"><code>http://janko.at/Raetsel/Pfeilpfad/index.htm</code></a>
+</p>
+<h2><a name="signpost-controls"></a>34.1 <a name="i2"></a>路标的操作</h2>
+<p>
+要玩路标游戏，你通过从一个方格拖动到另一个方格来连接它们，表明它们在序列中是相邻的。用左键从一个方格拖动到它的后继方格，或用右键从一个方格拖动到它的前驱方格。
+</p>
+<p>
+如果你以这种方式连接两个方格，并且其中一个方格中有数字，另一个方格会出现相应的数字。如果你连接两个没有数字的方格，它们会被分配临时的代数标签：第一次连接时，它们会被标记为“<code>a</code>”和“<code>a+1</code>”，然后是“<code>b</code>”和“<code>b+1</code>”，依此类推。将更多方格连接到这样的链的末端会导致它们都用同一个字母标记。
+</p>
+<p>
+当你在一个方格上左键或右键单击时，会显示可以连接到它的合法方格。
+</p>
+<p>
+每个方格中的箭头一开始是黑色的，当你将该方格连接到其后继方格时，它会变成灰色。此外，每个需要前驱的方格在左下角都有一个小点，当你链接一个方格到它时，这个点会消失。所以你的目标始终是将一个带有黑色箭头的方格连接到一个带有小点的方格。
+</p>
+<p>
+要移除特定方格的所有链接（包括入站和出站），左键拖动它离开网格。要移除整个链，右键拖动链中的任意方格离开网格。
+</p>
+<p>
+你也可以使用光标键在网格方格和线上移动。当光标位于方格上时，按回车键开始链接操作，再次按回车键完成链接（如果允许）。在方格上按空格键会显示指向它的其他方格，并允许你形成向后链接，再次按空格键取消此操作。
+</p>
+<p>
+（<a href="common.html#common-actions">第2.1节</a>中描述的所有操作也可用。）
+</p>
+<h2><a name="signpost-parameters"></a>34.2 <a name="i3"></a>路标的参数</h2>
+<p>
+这些参数可从“类型”菜单上的“自定义...”选项获得。
+</p>
+<dl><dt>
+<em>宽度</em>、<em>高度</em>
+</dt>
+<dd>
+网格的大小（以方格为单位）。
+</dd>
+<dt>
+<em>强制起点/终点在角落</em>
+</dt>
+<dd>
+如果为真，起点和终点方格总是放置在对角（起点在左上角，终点在右下角）。如果为假，起点和终点方格会随机放置（尽管总是都会显示）。
+</dd>
+</dl>
+<h2><a name="signpost-prefs"></a>34.3 <a name="i4"></a>路标的用户偏好</h2>
+<p>
+在支持用户偏好的平台上，“游戏”菜单上的“偏好”选项允许你配置胜利效果的风格。
+</p>
+
+<hr><address>
+[Simon Tatham's Portable Puzzle Collection, version 20260309.06e37f1]</address></body>
+</html>

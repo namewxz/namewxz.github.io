@@ -1,0 +1,78 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta http-equiv="content-type" content="text/html; charset=US-ASCII">
+<title>Palisade</title>
+<link rel="previous" href="tracks">
+<link rel="ToC" href="./">
+<link rel="up" href="./">
+<link rel="index" href="docindex">
+<link rel="next" href="mosaic">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<script>(function(){let e=!1;try{e=localStorage.colorScheme===void 0?!1:{dark:!0,light:!1,system:null}[localStorage.colorScheme]??null}catch{}e===null&&(e=window.matchMedia("(prefers-color-scheme: dark)").matches),document.documentElement.classList.toggle("wa-dark",e)})();</script>
+  <link rel="stylesheet" crossorigin href="/assets/help-page-5GTs0WJF.css">
+  <link rel="sitemap" type="application/xml" title="Sitemap" href="/sitemap.xml">
+<link rel="manifest" href="/manifest.webmanifest">
+<meta name="theme-color" content="#d1e8ff">
+<link rel="icon" href="/favicon.ico" sizes="48x48">
+<link rel="icon" href="/favicon.svg" sizes="any" type="image/svg+xml">
+<link rel="apple-touch-icon" href="/apple-touch-icon-180x180.png"></head>
+<body>
+<p><a href="tracks">Previous</a> | <a href="./">Contents</a> | <a href="docindex">Index</a> | <a href="mosaic">Next</a></p>
+
+<ul>
+<li><a href="#palisade">Palisade</a>
+<ul>
+<li><a href="#palisade-controls">Palisade controls</a></li>
+<li><a href="#Palisade-parameters">Palisade parameters</a></li>
+<li><a href="#palisade-prefs">Palisade user preferences</a></li>
+</ul></li>
+</ul>
+<h1><a name="palisade"></a><a name="i0"></a>Palisade<img class="screenshot" src="data:image/png;base64,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" alt="Puzzle screenshot"></h1>
+<p>
+You're given a grid of squares, some of which contain numbers. Your goal is to subdivide the grid into contiguous regions, all of the same (given) size, such that each square containing a number is adjacent to exactly that many edges (including those between the inside and the outside of the grid).
+</p>
+<p>
+Credit for this puzzle goes to <a name="i1"></a>Nikoli, who call it &#8216;Five Cells&#8217;. <a href="#p0">[22]</a>.
+</p>
+<p>
+Palisade was contributed to this collection by Jonas K&#246;lker.
+</p>
+<p><a name="p0"></a>
+[22] <a href="https://www.nikoli.co.jp/en/puzzles/five_cells/"><code>https://www.nikoli.co.jp/en/puzzles/five_cells/</code></a>
+</p>
+<h2><a name="palisade-controls"></a><a name="i2"></a>Palisade controls</h2>
+<p>
+Left-click to place an edge. Right-click to indicate &#8216;no edge&#8217;.
+</p>
+<p>
+Alternatively, the arrow keys will move a keyboard cursor. Depending on the &#8216;Cursor mode&#8217; preference (see <a href="#palisade-prefs">section 41.3</a>), the cursor will either navigate among the grid squares, or along their borders. In &#8216;Full-grid&#8217; mode, hold Control while pressing an arrow key to place an edge, and press Shift-arrowkey to switch off an edge. In &#8216;Half-grid&#8217; mode, press Enter to place an edge, and Space to switch off an edge. In either mode, you can repeat an action to perform its inverse.
+</p>
+<p>
+(All the actions described in <a href="common#common-actions">section 2.1</a> are also available.)
+</p>
+<h2><a name="Palisade-parameters"></a><a name="i3"></a>Palisade parameters</h2>
+<p>
+These parameters are available from the &#8216;Custom...&#8217; option on the &#8216;Type&#8217; menu.
+</p>
+<dl><dt>
+<em>Width</em>, <em>Height</em>
+</dt>
+<dd>
+Size of grid in squares.
+</dd>
+<dt>
+<em>Region size</em>
+</dt>
+<dd>
+The size of the regions into which the grid must be subdivided.
+</dd>
+</dl>
+<h2><a name="palisade-prefs"></a><a name="i4"></a>Palisade user preferences</h2>
+<p>
+On platforms that support user preferences, the &#8216;Preferences&#8217; option on the &#8216;Game&#8217; menu will let you configure the behavior of the cursor keys to either navigate among full grid squares, or along the borders of the grid squares.
+</p>
+
+<hr><address></address><script defer src='https://static.cloudflareinsights.com/beacon.min.js' data-cf-beacon='{"token": "a5c8762bf7a148698e3926dda94ccd16"}'></script></body>
+</html>

@@ -1,0 +1,96 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN"
+"http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+<meta name="generator" content="Halibut, unidentified version">
+<title>环路</title>
+<link rel="previous" href="map.html">
+<link rel="ToC" href="index.html">
+<link rel="up" href="index.html">
+<link rel="index" href="indexpage.html">
+<link rel="next" href="inertia.html">
+</head>
+<body>
+<p><a href="map.html">上一篇</a> | <a href="index.html">目录</a> | <a href="indexpage.html">索引</a> | <a href="inertia.html">下一篇</a></p>
+
+<ul>
+<li><a href="#loopy">第 23 章：环路</a>
+<ul>
+<li><a href="#loopy-controls">23.1 环路控制</a></li>
+<li><a href="#loopy-parameters">23.2 环路参数</a></li>
+<li><a href="#loopy-prefs">23.3 环路用户首选项</a></li>
+</ul></li>
+</ul>
+<h1><a name="loopy"></a>第 23 章：<a name="i0"></a>环路</h1>
+<p>
+你会得到一个点阵网格，用黄色线条标记哪些点可以直接连接在一起。你的目标是使用这些黄色线条的子集在网格内从点到点绘制一个单一的不间断环。
+</p>
+<p>
+线条之间的一些空间包含数字。这些数字表示围绕该空间的线条中有多少是环的一部分。你绘制的环必须正确满足所有这些线索才能被视为正确的解决方案。
+</p>
+<p>
+在默认模式下，点排列成正方形网格；然而，你也可以在三角形或六边形网格上玩，甚至更奇特的网格。
+</p>
+<p>
+基本拼图理念的功劳归于 <a name="i1"></a>Nikoli <a href="#p0">[10]</a>。
+</p>
+<p>
+环路最初由 Mike Pinna 贡献到这个集合中，后来由 Lambros Lambrou 增强以处理各种类型的非正方形网格。
+</p>
+<p><a name="p0"></a>
+[10] <a href="https://www.nikoli.co.jp/en/puzzles/slitherlink/"><code>https://www.nikoli.co.jp/en/puzzles/slitherlink/</code></a>
+</p>
+<h2><a name="loopy-controls"></a>23.1 <a name="i2"></a>Loopy 控制</h2>
+<p>
+左键点击黄色线条将其变为黑色，表示你认为它是环的一部分。再次点击将线条再次变为黄色（意味着你还不确定）。
+</p>
+<p>
+如果你确定特定的线段<em>不是</em>环的一部分，你可以右键点击将其完全移除。同样，再次点击将线条变回黄色。
+</p>
+<p>
+（<a href="common.html#common-actions">第 2.1 节</a> 中描述的所有操作也可用。）
+</p>
+<h2><a name="loopy-parameters"></a>23.2 <a name="i3"></a>Loopy 参数</h2>
+<p>
+这些参数可从“类型”菜单的“自定义...”选项获得。
+</p>
+<dl><dt>
+<em>宽度</em>，<em>高度</em>
+</dt>
+<dd>
+网格的大小，以区域的数量来衡量。对于正方形网格，如何计数是明确的；对于其他类型的网格，你可能需要思考一下尺寸是如何测量的。
+</dd>
+<dt>
+<em>网格类型</em>
+</dt>
+<dd>
+允许你在各种类型的平铺之间选择。有些所有面都相同，但可能有多种不同类型的顶点（例如，<em>开罗</em>或<em>风筝</em>模式）；其他所有顶点都相同，但可能有不同类型的面（例如，<em>大六边形</em>）。正方形、三角形和蜂窝网格是完全规则的，并且它们的所有顶点<em>和</em>面都相同；这使它们玩起来最不混乱。
+</dd>
+<dt>
+<em>难度</em>
+</dt>
+<dd>
+控制生成的拼图的难度。
+</dd>
+</dl>
+<h2><a name="loopy-prefs"></a>23.3 <a name="i4"></a>Loopy 用户首选项</h2>
+<p>
+在支持用户首选项的平台上，“游戏”菜单上的“首选项”选项将允许你配置以下内容：
+</p>
+<p>
+“淡淡地绘制排除的网格线”。这是默认开启的：当网格的一条线通过右键点击被明确排除在解决方案之外时，该线仍然被绘制，只是以淡灰色绘制。如果你关闭此选项，排除的线根本不会被绘制。
+</p>
+<p>
+“自动跟随边缘的唯一路径”。这默认是关闭的。当它开启时，点击更改单个网格线的状态可能会沿着多条线传播更改，如果你点击的线的一端或两端只连接到另一条线。（这个想法是，如果两条线在一个顶点相遇，而没有其他线在那里，那么这些线要么都是环的一部分，要么都不是，所以你没有理由必须分别点击来切换每一条。）
+</p>
+<p>
+在“仅基于网格”模式下，点击的效果只会在基础网格中度数为 2 的顶点上传播。例如，在正方形网格中，效果将<em>仅</em>发生在四个网格角落。
+</p>
+<p>
+在“基于网格和游戏状态”模式下，传播还会考虑你已经从解决方案中排除的边缘，因此它会为你做更多工作。
+</p>
+
+<hr><address>
+[Simon Tatham's Portable Puzzle Collection, version 20260309.06e37f1]</address></body>
+</html>

@@ -1,0 +1,63 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN"
+"http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+<meta name="generator" content="Halibut, unidentified version">
+<title>旋转拼图</title>
+<link rel="previous" href="sixteen.html">
+<link rel="ToC" href="index.html">
+<link rel="up" href="index.html">
+<link rel="index" href="indexpage.html">
+<link rel="next" href="rect.html">
+</head>
+<body>
+<p><a href="sixteen.html">上一篇</a> | <a href="index.html">目录</a> | <a href="indexpage.html">索引</a> | <a href="rect.html">下一篇</a></p>
+<h1><a name="twiddle"></a>第 7 章：<a name="i0"></a>旋转拼图</h1>
+<p>
+旋转拼图是一个瓦片重排拼图，视觉上类似于 Sixteen（见 <a href="sixteen.html#sixteen">第 6 章</a>）：你会得到一个正方形瓦片网格，每个瓦片包含一个数字，你的目标是将数字排列成升序。
+<p>
+在基本的旋转拼图中，你的移动是围绕四个瓦片的共同中心旋转一个正方形组。（在基本拼图中，方向不重要，尽管你可以选择它。）在更高级的设置中，你可以旋转更大的正方形瓦片组。
+</p>
+<p>
+我第一次看到这种类型的拼图是在 GameCube 游戏“Metroid Prime 2”中。在该游戏的主陀螺仪室中，有一个你需要解决的拼图来解锁门，这是旋转拼图的一个特殊情况。我开发了这个游戏作为那个拼图的一般化。
+</p>
+<h2><a name="twiddle-controls"></a>7.1 <a name="i1"></a>旋转拼图控制</h2>
+<p>
+要玩旋转拼图，在你想要旋转的正方形组的中心点击鼠标。在基本模式下，你旋转一个 2×2 正方形，这意味着你必须点击四个瓦片相遇的角点。
+
+在更高级的模式中，你可能一次旋转 3×3 甚至更多；如果正方形的大小是奇数，你只需点击你想要旋转的正方形的中心瓦片。
+</p>
+<p>
+左键点击将组逆时针旋转。右键点击将其顺时针旋转。
+</p>
+<p>
+你也可以用光标键在网格周围移动一个轮廓正方形；正方形的大小如上（默认 2×2，或更大）。按回车键或空格键将分别逆时针或顺时针旋转当前正方形。
+</p>
+<p>
+（<a href="common.html#common-actions">第 2.1 节</a> 中描述的所有操作也可用。）
+</p>
+<h2><a name="twiddle-parameters"></a>7.2 <a name="i2"></a>旋转拼图参数</h2>
+<p>
+旋转拼图通过“类型”菜单上的“自定义”选项提供几个配置选项：
+</p>
+<ul><li>
+你可以配置拼图网格的宽度和高度。
+</li>
+<li>
+你可以配置一次旋转的正方形块的大小。
+</li>
+<li>
+你可以要求网格中的每个正方形都是可区分的（默认），或者你可以要求一个简化的拼图，其中有相同数字的组。在简化的拼图中，你的目标只是将所有的 1 排列到第一行，所有的 2 排列到第二行，依此类推。
+</li>
+<li>
+你可以配置瓦片的方向是否重要。如果你要求一个可定向的拼图，每个瓦片上会画一个三角形。所有三角形必须指向上方才能完成拼图。
+</li>
+<li>
+你可以要求对网格执行有限的打乱操作。默认情况下，旋转拼图会将网格打乱到任何排列都大致相同的概率。你可以通过请求执行精确数量的打乱移动来覆盖这一点。通常，你的目标是确定精确的打乱移动集合并准确地反转它们，以便你用四步解决方案回答（例如）四步打乱。请注意，你要求的移动越多，比目标长度更短的解决方案越有可能出现。
+</li>
+</ul>
+
+<hr><address>
+[Simon Tatham's Portable Puzzle Collection, version 20260309.06e37f1]</address></body>
+</html>

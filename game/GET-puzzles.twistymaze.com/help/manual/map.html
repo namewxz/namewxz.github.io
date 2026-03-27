@@ -1,0 +1,97 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta http-equiv="content-type" content="text/html; charset=US-ASCII">
+<title>Map</title>
+<link rel="previous" href="lightup">
+<link rel="ToC" href="./">
+<link rel="up" href="./">
+<link rel="index" href="docindex">
+<link rel="next" href="loopy">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<script>(function(){let e=!1;try{e=localStorage.colorScheme===void 0?!1:{dark:!0,light:!1,system:null}[localStorage.colorScheme]??null}catch{}e===null&&(e=window.matchMedia("(prefers-color-scheme: dark)").matches),document.documentElement.classList.toggle("wa-dark",e)})();</script>
+  <link rel="stylesheet" crossorigin href="/assets/help-page-5GTs0WJF.css">
+  <link rel="sitemap" type="application/xml" title="Sitemap" href="/sitemap.xml">
+<link rel="manifest" href="/manifest.webmanifest">
+<meta name="theme-color" content="#d1e8ff">
+<link rel="icon" href="/favicon.ico" sizes="48x48">
+<link rel="icon" href="/favicon.svg" sizes="any" type="image/svg+xml">
+<link rel="apple-touch-icon" href="/apple-touch-icon-180x180.png"></head>
+<body>
+<p><a href="lightup">Previous</a> | <a href="./">Contents</a> | <a href="docindex">Index</a> | <a href="loopy">Next</a></p>
+
+<ul>
+<li><a href="#map">Map</a>
+<ul>
+<li><a href="#map-controls">Map controls</a></li>
+<li><a href="#map-parameters">Map parameters</a></li>
+<li><a href="#map-prefs">Map user preferences</a></li>
+</ul></li>
+</ul>
+<h1><a name="map"></a><a name="i0"></a>Map<img class="screenshot" src="data:image/png;base64,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" alt="Puzzle screenshot"></h1>
+<p>
+You are given a map consisting of a number of regions. Your task is to colour each region with one of four colours, in such a way that no two regions sharing a boundary have the same colour. You are provided with some regions already coloured, sufficient to make the remainder of the solution unique, and these cannot be changed.
+</p>
+<p>
+Only regions which share a length of border are required to be different colours. Two regions which meet at only one <em>point</em> (i.e. are diagonally separated) may be the same colour.
+</p>
+<p>
+I believe this puzzle is original; I've never seen an implementation of it anywhere else. The concept of a <a name="i1"></a>four-colouring puzzle was suggested by Alexandra Lanes; credit must also go to Nikoli and to Verity Allan for inspiring the train of thought that led to me realising Alex's suggestion was a viable puzzle. Thanks also to Gareth Taylor for many detailed suggestions.
+</p>
+<h2><a name="map-controls"></a><a name="i2"></a>Map controls</h2>
+<p>
+To colour a region, click the left mouse button on an existing region of the desired colour and drag that colour into the new region.
+</p>
+<p>
+(The program will always ensure the starting puzzle has at least one region of each colour, so that this is always possible!)
+</p>
+<p>
+If you need to clear a region, you can drag from an empty region, or from the puzzle boundary if there are no empty regions left.
+</p>
+<p>
+Dragging a colour using the <em>right</em> mouse button will stipple the region in that colour, which you can use as a note to yourself that you think the region <em>might</em> be that colour. A region can contain stipples in multiple colours at once. (This is often useful at the harder difficulty levels.)
+</p>
+<p>
+You can also use the cursor keys to move around the map: the colour of the cursor indicates the position of the colour you would drag (which is not obvious if you're on a region's boundary, since it depends on the direction from which you approached the boundary). Pressing the return key starts a drag of that colour, as above, which you control with the cursor keys; pressing the return key again finishes the drag. The space bar can be used similarly to create a stippled region. Double-pressing the return key (without moving the cursor) will clear the region, as a drag from an empty region does: this is useful with the cursor mode if you have filled the entire map in but need to correct the layout.
+</p>
+<p>
+If you press L during play, the game will toggle display of a number in each region of the map. This is useful if you want to discuss a particular puzzle instance with a friend &#8211; having an unambiguous name for each region is much easier than trying to refer to them all by names such as &#8216;the one down and right of the brown one on the top border&#8217;.
+</p>
+<p>
+(All the actions described in <a href="common#common-actions">section 2.1</a> are also available.)
+</p>
+<h2><a name="map-parameters"></a><a name="i3"></a>Map parameters</h2>
+<p>
+These parameters are available from the &#8216;Custom...&#8217; option on the &#8216;Type&#8217; menu.
+</p>
+<dl><dt>
+<em>Width</em>, <em>Height</em>
+</dt>
+<dd>
+Size of grid in squares.
+</dd>
+<dt>
+<em>Regions</em>
+</dt>
+<dd>
+Number of regions in the generated map.
+</dd>
+<dt>
+<em>Difficulty</em>
+</dt>
+<dd>
+In &#8216;Easy&#8217; mode, there should always be at least one region whose colour can be determined trivially. In &#8216;Normal&#8217; and &#8216;Hard&#8217; modes, you will have to use increasingly complex logic to deduce the colour of some regions. However, it will always be possible without having to guess or backtrack.
+<p>
+In &#8216;Unreasonable&#8217; mode, the program will feel free to generate puzzles which are as hard as it can possibly make them: the only constraint is that they should still have a unique solution. Solving Unreasonable puzzles may require guessing and backtracking.
+</p>
+
+</dd>
+</dl>
+<h2><a name="map-prefs"></a><a name="i4"></a>Map user preferences</h2>
+<p>
+On platforms that support user preferences, the &#8216;Preferences&#8217; option on the &#8216;Game&#8217; menu will let you configure the style of the victory flash and also whether the regions start out labelled with numbers.
+</p>
+
+<hr><address></address><script defer src='https://static.cloudflareinsights.com/beacon.min.js' data-cf-beacon='{"token": "a5c8762bf7a148698e3926dda94ccd16"}'></script></body>
+</html>

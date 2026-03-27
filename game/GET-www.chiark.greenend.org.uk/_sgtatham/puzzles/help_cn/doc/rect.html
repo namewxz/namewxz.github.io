@@ -1,0 +1,78 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN"
+"http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+<meta name="generator" content="Halibut, unidentified version">
+<title>矩形</title>
+<link rel="previous" href="twiddle.html">
+<link rel="ToC" href="index.html">
+<link rel="up" href="index.html">
+<link rel="index" href="indexpage.html">
+<link rel="next" href="netslide.html">
+</head>
+<body>
+<p><a href="twiddle.html">上一篇</a> | <a href="index.html">目录</a> | <a href="indexpage.html">索引</a> | <a href="netslide.html">下一篇</a></p>
+<h1><a name="rect"></a>第 8 章：<a name="i0"></a>矩形</h1>
+<p>
+你有一个方格网格，其中一些（但不是全部）方格中写有数字。你的任务是将网格细分为不同大小的矩形，使得（a）每个矩形恰好包含一个编号的方格，并且（b）每个矩形的面积等于其编号方格中写的数字。
+</p>
+<p>
+这个游戏的功劳归于日本拼图杂志 <a name="i1"></a>Nikoli <a href="#p0">[3]</a>；我还在 <a name="i2"></a>Puzzle Palace <a href="#p1">[4]</a> 看到了一个 Palm 实现。与 Puzzle Palace 的实现不同，我的版本会自动生成你喜欢的任何大小的随机网格。因此，拼图设计的质量不如手工制作的拼图好，但优点是你可以获得无穷无尽的拼图，根据你自己的规格定制。
+</p>
+<p><a name="p0"></a>
+[3] <a href="https://www.nikoli.co.jp/en/puzzles/shikaku/"><code>https://www.nikoli.co.jp/en/puzzles/shikaku/</code></a>
+</p>
+<p><a name="p1"></a>
+[4] <a href="https://web.archive.org/web/20041024001459/http://www.puzzle.gr.jp/puzzle/sikaku/palm/index.html.en"><code>https://web.archive.org/web/20041024001459/http://www.puzzle.gr.jp/puzzle/sikaku/palm/index.html.en</code></a>
+</p>
+<h2><a name="rectangles-controls"></a>8.1 <a name="i3"></a>矩形控制</h2>
+<p>
+这个游戏用鼠标或光标键玩。
+</p>
+<p>
+左键点击任何边缘将其切换打开或关闭，或左键点击并拖动以在网格上一次性绘制整个矩形（或线条）（移除该矩形内的任何现有边缘）。右键点击并拖动将允许你擦除矩形的内容而不影响其边缘。
+</p>
+<p>
+或者，使用光标键在板上移动位置指示器。按回车键然后允许你使用光标键从该位置拖动出一个矩形，再次按回车键完成矩形。使用空格键而不是回车键允许你擦除矩形的内容而不影响其边缘，如上所述。按 Escape 取消拖动。
+</p>
+<p>
+当正确大小的矩形完成时，它会被着色。
+</p>
+<p>
+（<a href="common.html#common-actions">第 2.1 节</a> 中描述的所有操作也可用。）
+</p>
+<h2><a name="rectangles-params"></a>8.2 <a name="i4"></a>矩形参数</h2>
+<p>
+这些参数可从“类型”菜单的“自定义...”选项获得。
+</p>
+<dl><dt>
+<em>宽度</em>，<em>高度</em>
+</dt>
+<dd>
+网格的大小（以方块为单位）。
+</dd>
+<dt>
+<em>扩展因子</em>
+</dt>
+<dd>
+这是一种用于更改程序生成的网格类型的机制。有些人更喜欢包含几个大矩形的网格，而不是包含许多小矩形的网格。所以你可以要求矩形本质上生成一个比你指定的大小<em>更小</em>的网格，然后通过添加行和列来扩展它。
+<p>
+默认的扩展因子为零，意味着矩形将简单地生成你要求大小的网格，不再做任何进一步的操作。如果你设置扩展因子为（例如）0.5，这意味着网格的每个维度在生成后将被扩展到一半大。换句话说，初始网格将是每个维度大小的 2/3，并将扩展到其完整大小而不添加任何更多的矩形。
+</p>
+<p>
+设置大约 0.5 的扩展因子往往会使游戏更困难，并且（根据我的经验）奖励一种较少演绎性和更直观的游戏风格。但是，如果你设置得<em>太高</em>，游戏根本无法生成超过几个矩形来覆盖整个网格，游戏变得微不足道。
+</p>
+
+</dd>
+<dt>
+<em>确保唯一解决方案</em>
+</dt>
+<dd>
+通常，矩形将确保它呈现的拼图只有一个解决方案。具有歧义部分的拼图可能更困难和更微妙，所以如果你愿意，你可以关闭这个功能，冒险获得有歧义的拼图。此外，找到<em>所有</em>可能的解决方案对高级玩家来说可能是一个额外的挑战。关闭此选项也可以加快拼图生成速度。
+</dd>
+</dl>
+
+<hr><address>
+[Simon Tatham's Portable Puzzle Collection, version 20260309.06e37f1]</address></body>
+</html>

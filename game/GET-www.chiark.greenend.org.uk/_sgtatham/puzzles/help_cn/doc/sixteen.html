@@ -1,0 +1,50 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN"
+"http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+<meta name="generator" content="Halibut, unidentified version">
+<title>十六</title>
+<link rel="previous" href="fifteen.html">
+<link rel="ToC" href="index.html">
+<link rel="up" href="index.html">
+<link rel="index" href="indexpage.html">
+<link rel="next" href="twiddle.html">
+</head>
+<body>
+<p><a href="fifteen.html">上一篇</a> | <a href="index.html">目录</a> | <a href="indexpage.html">索引</a> | <a href="twiddle.html">下一篇</a></p>
+<h1><a name="sixteen"></a>第 6 章：<a name="i0"></a>十六</h1>
+<p>
+另一个滑动瓦片拼图，视觉上类似于 Fifteen（见 <a href="fifteen.html#fifteen">第 5 章</a>），但有不同类型的移动。这次，没有洞：网格上的所有 16 个方格都包含编号的方块。你的移动是将整行向左或向右移动，或将整列向上或向下移动；每次你这样做，你移出网格的瓦片会重新出现在同一行的另一端，在你刚刚腾出的空间中。要获胜，将瓦片排列成数字顺序（顶行 1,2,3,4，底行 13,14,15,16）。完成后，尝试在不同大小的网格上玩。
+</p>
+<p>
+我<em>可能</em>自己发明了这个游戏，尽管如果是这样的话只是偶然（而且我确信其他人也独立发明了它）。我以为我在模仿我见过的一个屏幕保护程序，但我感觉那个屏幕保护程序实际上可能是一个 Fifteen 类型的拼图，而不是这种略有不同的类型。所以这可能是我的拼图集合中唯一代表我创造力的东西，而不仅仅是工程。
+</p>
+<h2><a name="sixteen-controls"></a>6.1 <a name="i1"></a>十六控制</h2>
+<p>
+左键点击箭头将按指示的方向移动相应的行或列。右键点击将向相反方向移动它。
+</p>
+<p>
+或者，使用光标键在网格边缘移动位置指示器，并使用回车键按指示的方向移动行/列。
+</p>
+<p>
+你也可以直接移动瓦片。将光标移到瓦片上，按住 Control 并按箭头键移动光标下的瓦片，并使光标随瓦片一起移动。或者，按住 Shift 只移动瓦片。按 Enter 模拟按住 Control（再次按 Enter 释放），而按 Space 模拟按住 Shift。
+</p>
+<p>
+（<a href="common.html#common-actions">第 2.1 节</a> 中描述的所有操作也可用。）
+</p>
+<h2><a name="sixteen-params"></a>6.2 <a name="i2"></a>十六参数</h2>
+<p>
+“类型”菜单上的“自定义...”选项提供的参数是：
+</p>
+<ul><li>
+<em>宽度</em> 和 <em>高度</em>，它们的含义不言自明。
+</li>
+<li>
+你可以要求对网格执行有限的打乱操作。默认情况下，十六会以任何排列都大致相同的概率打乱网格。你可以通过请求执行精确数量的打乱移动来覆盖这一点。通常，你的目标是确定精确的打乱移动集合并准确地反转它们，以便你用四步解决方案回答（例如）四步打乱。请注意，你要求的移动越多，比目标长度更短的解决方案越有可能出现。
+</li>
+</ul>
+
+<hr><address>
+[Simon Tatham's Portable Puzzle Collection, version 20260309.06e37f1]</address></body>
+</html>

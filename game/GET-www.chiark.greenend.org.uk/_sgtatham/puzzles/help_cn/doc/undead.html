@@ -1,0 +1,101 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN"
+"http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+<meta name="generator" content="Halibut, unidentified version">
+<title>不死生物</title>
+<link rel="previous" href="pearl.html">
+<link rel="ToC" href="index.html">
+<link rel="up" href="index.html">
+<link rel="index" href="indexpage.html">
+<link rel="next" href="unruly.html">
+</head>
+<body>
+<p><a href="pearl.html">上一篇</a> | <a href="index.html">目录</a> | <a href="indexpage.html">索引</a> | <a href="unruly.html">下一篇</a></p>
+
+<ul>
+<li><a href="#undead">第 37 章：不死生物</a>
+<ul>
+<li><a href="#undead-controls">37.1 不死生物控制</a></li>
+<li><a href="#undead-parameters">37.2 不死生物参数</a></li>
+<li><a href="#undead-prefs">37.3 不死生物用户首选项</a></li>
+</ul></li>
+</ul>
+<h1><a name="undead"></a>第 37 章：<a name="i0"></a>不死生物</h1>
+<p>
+你会得到一个方格网格，其中一些包含对角线镜子。每个不是镜子的方格必须填充三种不死怪物之一：幽灵、吸血鬼或僵尸。
+</p>
+<p>
+吸血鬼可以直接看到，但在镜子中反射时是不可见的。幽灵则相反：它们可以在镜子中看到，但直接看时是不可见的。僵尸可以通过任何方式看到。
+</p>
+<p>
+你还被告知网格中每种类型怪物的总数。网格边缘也写有数字，这些数字表示如果你从该位置沿行或列看向网格，可以看到的怪物数量。（对角线镜子在两侧都有反射性。如果你的反射视线多次穿过同一个怪物，数字会计算它每次可见的次数，而不仅仅是一次。）
+</p>
+<p>
+这种拼图类型是由 David Millar 发明的，名称为“Haunted Mirror Maze”。有关更多详细信息，请参见 <a href="#p0">[20]</a>。
+</p>
+<p>
+不死生物由 Steffen Bauer 贡献到这个集合中。
+</p>
+<p><a name="p0"></a>
+[20] <a href="http://www.janko.at/Raetsel/Spukschloss/index.htm"><code>http://www.janko.at/Raetsel/Spukschloss/index.htm</code></a>
+</p>
+<h2><a name="undead-controls"></a>37.1 <a name="i1"></a>不死生物控制</h2>
+<p>
+不死生物具有与 Solo、Unequal 和 Keen 类似的控制系统。
+
+要玩不死生物，在任何空方块中点击鼠标，然后在键盘上输入字母或数字表示怪物类型：'G' 或 '1' 表示幽灵，'V' 或 '2' 表示吸血鬼，或 'Z' 或 '3' 表示僵尸。你也可以点击顶部计数中的怪物将其放置在高亮的方块中。如果你犯了错误，在错误的方块中点击鼠标，然后按空格键再次清除它（或使用撤销功能）。
+</p>
+<p>
+如果你在方块中<em>右键</em>点击然后输入字母或数字，相应的怪物将以缩小的大小显示在该方块中，作为“铅笔标记”。你可以在同一个方块中有多个怪物的铅笔标记。包含全尺寸怪物的方块不能同时包含铅笔标记。
+</p>
+<p>
+游戏不关注铅笔标记，所以你用它们做什么完全取决于你：你可以用它们作为提醒，一旦你对特定怪物了解更多，特定方块需要重新检查，或者你可以用它们作为给定方块中可能怪物的列表，或者任何你喜欢的其他东西。
+</p>
+<p>
+要擦除单个铅笔标记，右键点击方块并再次输入相同的字母或数字。
+</p>
+<p>
+当你左键点击并输入怪物字母，或者左键点击并按空格键时，方块中的所有铅笔标记都会被擦除。右键点击并按空格键也会擦除铅笔标记。
+</p>
+<p>
+对于 Solo，可以将光标键与字母键结合使用来放置怪物或铅笔标记。使用光标键在网格周围移动高亮，然后输入怪物字母或数字将其输入到高亮的方块中。按回车键将高亮切换到可以输入或移除铅笔标记的模式。
+</p>
+<p>
+如果你更喜欢字母表中的普通字母而不是可爱的怪物图片，你可以按 'A' 键在将怪物显示为怪物或显示为字母之间切换。
+</p>
+<p>
+按 'C' 或右键点击顶部的任何怪物计数将循环三种怪物计数样式：每种类型要放置的总怪物数，尚未放置的剩余数量（显示为负数以与第一种样式区分），或到目前为止放置的数量后跟斜杠和总计数。
+</p>
+<p>
+左键点击线索将其标记为完成（灰色显示），如果它已经被标记，则取消标记。当放置了正确数量的怪物时，顶部的计数会自动变灰。
+</p>
+<p>
+（<a href="common.html#common-actions">第 2.1 节</a> 中描述的所有操作也可用。）
+</p>
+<h2><a name="undead-parameters"></a>37.2 <a name="i2"></a>不死生物参数</h2>
+<p>
+这些参数可从“类型”菜单的“自定义...”选项获得。
+</p>
+<dl><dt>
+<em>宽度</em>，<em>高度</em>
+</dt>
+<dd>
+网格的大小（以方块为单位）。
+</dd>
+<dt>
+<em>难度</em>
+</dt>
+<dd>
+控制生成的拼图的难度。
+</dd>
+</dl>
+<h2><a name="undead-prefs"></a>37.3 <a name="i3"></a>不死生物用户首选项</h2>
+<p>
+在支持用户首选项的平台上，“游戏”菜单上的“首选项”选项将允许你配置不死生物是否使用字母或图片来表示怪物，以及如何在顶部显示怪物计数。与 'A' 和 'C' 键不同，这些设置将在游戏之间保持。
+</p>
+
+<hr><address>
+[Simon Tatham's Portable Puzzle Collection, version 20260309.06e37f1]</address></body>
+</html>

@@ -1,0 +1,1099 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN"
+"http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+<meta name="generator" content="Halibut, unidentified version">
+<title>实用工具 API</title>
+<link rel="previous" href="midend.html">
+<link rel="ToC" href="index.html">
+<link rel="up" href="index.html">
+<link rel="next" href="writing.html">
+</head>
+<body>
+<p><a href="midend.html">上一篇</a> | <a href="index.html">目录</a> | <a href="writing.html">下一篇</a></p>
+
+<ul>
+<li><a href="#utils">第 5 章：实用工具 API</a>
+<ul>
+<li><a href="#utils-random">5.1 随机数生成</a>
+<ul>
+<li><a href="#utils-random-init">5.1.1 <code>random_new()</code></a></li>
+<li><a href="#utils-random-copy">5.1.2 <code>random_copy()</code></a></li>
+<li><a href="#utils-random-free">5.1.3 <code>random_free()</code></a></li>
+<li><a href="#utils-random-bits">5.1.4 <code>random_bits()</code></a></li>
+<li><a href="#utils-random-upto">5.1.5 <code>random_upto()</code></a></li>
+<li><a href="#utils-random-state-encode">5.1.6 <code>random_state_encode()</code></a></li>
+<li><a href="#utils-random-state-decode">5.1.7 <code>random_state_decode()</code></a></li>
+<li><a href="#utils-shuffle">5.1.8 <code>shuffle()</code></a></li>
+</ul></li>
+<li><a href="#utils-presets">5.2 预设菜单管理</a>
+<ul>
+<li><a href="#utils-preset-menu-new">5.2.1 <code>preset_menu_new()</code></a></li>
+<li><a href="#utils-preset-menu-add_submenu">5.2.2 <code>preset_menu_add_submenu()</code></a></li>
+<li><a href="#utils-preset-menu-add-preset">5.2.3 <code>preset_menu_add_preset()</code></a></li>
+<li><a href="#utils-preset-menu-lookup-by-id">5.2.4 <code>preset_menu_lookup_by_id()</code></a></li>
+</ul></li>
+<li><a href="#utils-alloc">5.3 内存分配</a>
+<ul>
+<li><a href="#utils-snew">5.3.1 <code>snew()</code></a></li>
+<li><a href="#utils-snewn">5.3.2 <code>snewn()</code></a></li>
+<li><a href="#utils-sresize">5.3.3 <code>sresize()</code></a></li>
+<li><a href="#utils-sfree">5.3.4 <code>sfree()</code></a></li>
+<li><a href="#utils-dupstr">5.3.5 <code>dupstr()</code></a></li>
+<li><a href="#utils-free-cfg">5.3.6 <code>free_cfg()</code></a></li>
+<li><a href="#utils-free-keys">5.3.7 <code>free_keys()</code></a></li>
+</ul></li>
+<li><a href="#utils-tree234">5.4 排序和计数树函数</a>
+<ul>
+<li><a href="#utils-newtree234">5.4.1 <code>newtree234()</code></a></li>
+<li><a href="#utils-freetree234">5.4.2 <code>freetree234()</code></a></li>
+<li><a href="#utils-add234">5.4.3 <code>add234()</code></a></li>
+<li><a href="#utils-addpos234">5.4.4 <code>addpos234()</code></a></li>
+<li><a href="#utils-index234">5.4.5 <code>index234()</code></a></li>
+<li><a href="#utils-find234">5.4.6 <code>find234()</code></a></li>
+<li><a href="#utils-findrel234">5.4.7 <code>findrel234()</code></a></li>
+<li><a href="#utils-findpos234">5.4.8 <code>findpos234()</code></a></li>
+<li><a href="#utils-findrelpos234">5.4.9 <code>findrelpos234()</code></a></li>
+<li><a href="#utils-del234">5.4.10 <code>del234()</code></a></li>
+<li><a href="#utils-delpos234">5.4.11 <code>delpos234()</code></a></li>
+<li><a href="#utils-count234">5.4.12 <code>count234()</code></a></li>
+<li><a href="#utils-splitpos234">5.4.13 <code>splitpos234()</code></a></li>
+<li><a href="#utils-split234">5.4.14 <code>split234()</code></a></li>
+<li><a href="#utils-join234">5.4.15 <code>join234()</code></a></li>
+<li><a href="#utils-join234r">5.4.16 <code>join234r()</code></a></li>
+<li><a href="#utils-copytree234">5.4.17 <code>copytree234()</code></a></li>
+</ul></li>
+<li><a href="#utils-dsf">5.5 不相交集森林</a>
+<ul>
+<li><a href="#utils-dsf-new">5.5.1 <code>dsf_new()</code>, <code>dsf_new_flip()</code>, <code>dsf_new_min()</code></a></li>
+<li><a href="#utils-dsf-free">5.5.2 <code>dsf_free()</code></a></li>
+<li><a href="#utils-dsf-reinit">5.5.3 <code>dsf_reinit()</code></a></li>
+<li><a href="#utils-dsf-copy">5.5.4 <code>dsf_copy()</code></a></li>
+<li><a href="#utils-dsf-merge">5.5.5 <code>dsf_merge()</code></a></li>
+<li><a href="#utils-dsf-canonify">5.5.6 <code>dsf_canonify()</code></a></li>
+<li><a href="#utils-dsf-size">5.5.7 <code>dsf_size()</code></a></li>
+<li><a href="#utils-dsf-merge-flip">5.5.8 <code>dsf_merge_flip()</code></a></li>
+<li><a href="#utils-dsf-canonify-flip">5.5.9 <code>dsf_canonify_flip()</code></a></li>
+<li><a href="#utils-dsf-minimal">5.5.10 <code>dsf_minimal()</code></a></li>
+</ul></li>
+<li><a href="#utils-tdq">5.6 待办队列</a>
+<ul>
+<li><a href="#utils-tdq-new">5.6.1 <code>tdq_new()</code></a></li>
+<li><a href="#utils-tdq-free">5.6.2 <code>tdq_free()</code></a></li>
+<li><a href="#utils-tdq-add">5.6.3 <code>tdq_add()</code></a></li>
+<li><a href="#utils-tdq-remove">5.6.4 <code>tdq_remove()</code></a></li>
+<li><a href="#utils-tdq-fill">5.6.5 <code>tdq_fill()</code></a></li>
+</ul></li>
+<li><a href="#utils-findloop">5.7 在图和网格中查找环路</a>
+<ul>
+<li><a href="#utils-findloop-new-state">5.7.1 <code>findloop_new_state()</code></a></li>
+<li><a href="#utils-findloop-free-state">5.7.2 <code>findloop_free_state()</code></a></li>
+<li><a href="#utils-findloop-run">5.7.3 <code>findloop_run()</code></a></li>
+<li><a href="#utils-findloop-is-loop-edge">5.7.4 <code>findloop_is_loop_edge()</code></a></li>
+<li><a href="#utils-findloop-is-bridge">5.7.5 <code>findloop_is_bridge()</code></a></li>
+</ul></li>
+<li><a href="#utils-combi">5.8 从 n 个元素中选择 r 个</a>
+<ul>
+<li><a href="#utils-combi-new">5.8.1 <code>new_combi()</code></a></li>
+<li><a href="#utils-combi-free">5.8.2 <code>free_combi()</code></a></li>
+<li><a href="#utils-combi-reset">5.8.3 <code>reset_combi()</code></a></li>
+<li><a href="#utils-combi-next">5.8.4 <code>next_combi()</code></a></li>
+</ul></li>
+<li><a href="#utils-misc">5.9 其他实用工具函数和宏</a>
+<ul>
+<li><a href="#utils-maxmin">5.9.1 <code>max()</code> 和 <code>min()</code></a></li>
+<li><a href="#utils-max-digits">5.9.2 <code>MAX_DIGITS()</code></a></li>
+<li><a href="#utils-pi">5.9.3 <code>PI</code></a></li>
+<li><a href="#utils-obfuscate-bitmap">5.9.4 <code>obfuscate_bitmap()</code></a></li>
+<li><a href="#utils-bin2hex">5.9.5 <code>bin2hex()</code></a></li>
+<li><a href="#utils-hex2bin">5.9.6 <code>hex2bin()</code></a></li>
+<li><a href="#utils-fgetline">5.9.7 <code>fgetline()</code></a></li>
+<li><a href="#utils-arraysort">5.9.8 <code>arraysort()</code></a></li>
+<li><a href="#utils-colour-mix">5.9.9 <code>colour_mix()</code></a></li>
+<li><a href="#utils-game-mkhighlight">5.9.10 <code>game_mkhighlight()</code></a></li>
+<li><a href="#utils-game-mkhighlight-specific">5.9.11 <code>game_mkhighlight_specific()</code></a></li>
+<li><a href="#utils-button2label">5.9.12 <code>button2label()</code></a></li>
+<li><a href="#utils-move-cursor">5.9.13 <code>move_cursor()</code></a></li>
+<li><a href="#utils-divvy-rectangle">5.9.14 <code>divvy_rectangle()</code></a></li>
+<li><a href="#utils-domino-layout">5.9.15 <code>domino_layout()</code></a></li>
+<li><a href="#utils-domino-layout-prealloc">5.9.16 <code>domino_layout_prealloc()</code></a></li>
+<li><a href="#utils-strip-button-modifiers">5.9.17 <code>STRIP_BUTTON_MODIFIERS()</code></a></li>
+<li><a href="#utils-swap-regions">5.9.18 <code>swap_regions()</code></a></li>
+<li><a href="#utils-compare-integers">5.9.19 <code>compare_integers()</code></a></li>
+<li><a href="#utils-get-handle-as-type">5.9.20 <code>GET_HANDLE_AS_TYPE()</code></a></li>
+<li><a href="#utils-getenv-bool">5.9.21 <code>getenv_bool()</code></a></li>
+</ul></li>
+</ul></li>
+</ul>
+<h1><a name="utils"></a>第 5 章：实用工具 API</h1>
+<p>
+本章记录了 Puzzles 代码中供其他部分使用的各种实用工具 API。
+</p>
+<h2><a name="utils-random"></a>5.1 随机数生成</h2>
+<p>
+不同平台的本地随机数生成器在质量和种子大小方面差异很大。因此，Puzzles 提供了自己的高质量随机数生成器，其额外优势是在不同平台上使用相同的种子数据时能产生相同的结果。这使得游戏随机种子可以在 Puzzles 的不同端口之间交换，并且仍然生成相同的游戏。
+</p>
+<p>
+与 ANSI C 的 <code>rand()</code> 函数不同，Puzzles 随机数生成器有一个称为 <code>random_state</code> 的<em>显式</em>状态对象。例如，每个中端管理一个这样的对象，并将其传递给后端以生成游戏。
+</p>
+<h3><a name="utils-random-init"></a>5.1.1 <code>random_new()</code></h3>
+<pre><code>random_state *random_new(char *seed, int len);
+</code></pre>
+<p>
+分配、初始化并返回一个新的 <code>random_state</code>。输入数据用作随机数流的种子（即，以后使用相同的种子将生成相同的流）。
+</p>
+<p>
+种子数据可以是任何数据；不需要使用可打印的 ASCII、以 NUL 结尾的字符串或类似的东西。
+</p>
+<h3><a name="utils-random-copy"></a>5.1.2 <code>random_copy()</code></h3>
+<pre><code>random_state *random_copy(random_state *tocopy);
+</code></pre>
+<p>
+分配一个新的 <code>random_state</code>，将另一个 <code>random_state</code> 的内容复制到其中，并返回新状态。如果随后对副本和原始状态调用完全相同的函数序列，结果将是相同的。这对于使用给定的随机状态推测性地执行某些操作，以及稍后精确地重放该操作可能很有用。
+</p>
+<h3><a name="utils-random-free"></a>5.1.3 <code>random_free()</code></h3>
+<pre><code>void random_free(random_state *state);
+</code></pre>
+<p>
+释放 <code>random_state</code>。
+</p>
+<h3><a name="utils-random-bits"></a>5.1.4 <code>random_bits()</code></h3>
+<pre><code>unsigned long random_bits(random_state *state, int bits);
+</code></pre>
+<p>
+返回一个从 0 到 <code>2^bits-1</code> 之间的随机数。<code>bits</code> 应该在 1 到 32 之间。
+</p>
+<h3><a name="utils-random-upto"></a>5.1.5 <code>random_upto()</code></h3>
+<pre><code>unsigned long random_upto(random_state *state, unsigned long limit);
+</code></pre>
+<p>
+返回一个从 0 到 <code>limit-1</code> 之间的随机数。<code>limit</code> 不能为零。
+</p>
+<h3><a name="utils-random-state-encode"></a>5.1.6 <code>random_state_encode()</code></h3>
+<pre><code>char *random_state_encode(random_state *state);
+</code></pre>
+<p>
+将 <code>random_state</code> 的整个内容编码为可打印的 ASCII。返回包含该编码的动态分配的字符串。随后可以将其传递给 <code>random_state_decode()</code> 以重建相同的 <code>random_state</code>。
+</p>
+<h3><a name="utils-random-state-decode"></a>5.1.7 <code>random_state_decode()</code></h3>
+<pre><code>random_state *random_state_decode(char *input);
+</code></pre>
+<p>
+解码由 <code>random_state_encode()</code> 生成的字符串，并重建与编码的 <code>random_state</code> 等效的 <code>random_state</code>，即它应该产生相同的随机数流。
+</p>
+<p>
+此函数没有错误报告；如果传递无效字符串，它将简单地生成任意随机状态，这可能会变得明显非随机。
+</p>
+<h3><a name="utils-shuffle"></a>5.1.8 <code>shuffle()</code></h3>
+<pre><code>void shuffle(void *array, int nelts, int eltsize, random_state *rs);
+</code></pre>
+<p>
+将数组随机打乱顺序。接口与 ANSI C 的 <code>qsort()</code> 非常相似，只是不需要比较函数。
+</p>
+<p>
+<code>array</code> 是指向数组第一个元素的指针。<code>nelts</code> 是数组中的元素数；<code>eltsize</code> 是单个元素的大小（通常使用 <code>sizeof</code> 测量）。<code>rs</code> 是用于为打乱过程生成所有随机数的 <code>random_state</code>。
+</p>
+<h2><a name="utils-presets"></a>5.2 预设菜单管理</h2>
+<p>
+函数 <code>midend_get_presets()</code>（<a href="midend.html#midend-get-presets">第 4.17 节</a>）返回一个描述菜单层次结构的数据结构。后端也可以选择向中端提供这样的结构，如果它们希望将预设按层次结构分组的话。为了使这变得容易，有一些实用函数可以构建预设菜单结构，还有一个供前端使用的函数。
+</p>
+<h3><a name="utils-preset-menu-new"></a>5.2.1 <code>preset_menu_new()</code></h3>
+<pre><code>struct preset_menu *preset_menu_new(void);
+</code></pre>
+<p>
+分配一个新的 <code>struct preset_menu</code>，并将其初始化为不包含菜单项。
+</p>
+<h3><a name="utils-preset-menu-add_submenu"></a>5.2.2 <code>preset_menu_add_submenu()</code></h3>
+<pre><code>struct preset_menu *preset_menu_add_submenu
+    (struct preset_menu *parent, char *title);
+</code></pre>
+<p>
+将新子菜单添加到现有预设菜单的末尾，并返回指向描述该子菜单的新分配的 <code>struct preset_menu</code> 的指针。
+</p>
+<p>
+字符串参数 &#8216;<code>title</code>&#8217; 必须由调用者动态分配。预设菜单结构将取得其所有权，因此调用者不得释放它。
+</p>
+<h3><a name="utils-preset-menu-add-preset"></a>5.2.3 <code>preset_menu_add_preset()</code></h3>
+<pre><code>void preset_menu_add_preset
+    (struct preset_menu *menu, char *title, game_params *params);
+</code></pre>
+<p>
+将预设游戏配置添加到预设菜单的末尾。
+</p>
+<p>
+字符串参数 &#8216;<code>title</code>&#8217; 和游戏参数结构 &#8216;<code>params</code>&#8217; 本身都必须由调用者动态分配。预设菜单结构将取得其所有权，因此调用者不得释放它。
+</p>
+<h3><a name="utils-preset-menu-lookup-by-id"></a>5.2.4 <code>preset_menu_lookup_by_id()</code></h3>
+<pre><code>game_params *preset_menu_lookup_by_id
+    (struct preset_menu *menu, int id);
+</code></pre>
+<p>
+给定一个数字索引，递归搜索预设菜单层次结构以找到对应的菜单项，并返回指向其现有 <code>game_params</code> 结构的指针。
+</p>
+<p>
+此函数供前端使用（但前端如果愿意以其他方式做事，则不需要使用它）。如果前端发现除了每个菜单项旁边存储数字索引之外存储任何东西都不方便，那么此函数为前端提供了一种简单的方法，以获取用户选择的菜单项对应的实际游戏参数。
+</p>
+<h2><a name="utils-alloc"></a>5.3 内存分配</h2>
+<p>
+Puzzles 对标准内存分配函数有一些中央包装器，它们提供编译时类型检查，以及通过在内存不足时退出应用程序来进行运行时错误检查。这不能提供最好的内存不足恢复，但另一方面，它大大简化了代码的其余部分，因为其他任何地方都不需要担心分配的 <code>NULL</code> 返回。
+</p>
+<h3><a name="utils-snew"></a>5.3.1 <code>snew()</code></h3>
+<pre><code><em>var</em> = snew(<em>type</em>);
+</code></pre>
+<p>
+此宏接受一个参数，即<em>类型名称</em>。它为该类型的一个对象分配空间。如果分配失败，它将调用 <code>fatal()</code> 并且不返回；因此，如果它返回，您可以确信其返回值是非 <code>NULL</code> 的。
+</p>
+<p>
+返回值被转换为指定的类型，因此编译器将对其与您分配给它的变量进行类型检查。因此，这确保您不会意外分配错误类型大小的内存并将其分配给正确类型的变量（或反之亦然！）。
+</p>
+<h3><a name="utils-snewn"></a>5.3.2 <code>snewn()</code></h3>
+<pre><code><em>var</em> = snewn(<em>n</em>, <em>type</em>);
+</code></pre>
+<p>
+此宏是 <code>snew()</code> 的数组形式。它接受两个参数：第一个是数字，第二个是类型名称。它为该类型的许多对象分配空间，并像 <code>snew()</code> 一样返回类型检查的非 <code>NULL</code> 指针。
+</p>
+<h3><a name="utils-sresize"></a>5.3.3 <code>sresize()</code></h3>
+<pre><code><em>var</em> = sresize(<em>var</em>, <em>n</em>, <em>type</em>);
+</code></pre>
+<p>
+此宏是 <code>realloc()</code> 的类型检查形式。它接受三个参数：输入内存块、元素的新大小和类型。它将输入内存块调整为足以包含该类型的多个元素的大小。它像 <code>snew()</code> 和 <code>snewn()</code> 一样返回类型检查的非 <code>NULL</code> 指针。
+</p>
+<p>
+输入内存块可以是 <code>NULL</code>，在这种情况下，此函数的行为将完全像 <code>snewn()</code>。（原则上，任何符合 ANSI 标准的 <code>realloc()</code> 实现都应该能够处理这种情况，但我从未完全信任它在所有地方都能工作。）
+</p>
+<h3><a name="utils-sfree"></a>5.3.4 <code>sfree()</code></h3>
+<pre><code>void sfree(void *p);
+</code></pre>
+<p>
+此函数几乎等同于 <code>free()</code>。它被提供一个动态分配的块，并释放它。
+</p>
+<p>
+输入内存块可以是 <code>NULL</code>，在这种情况下，此函数将不执行任何操作。（原则上，任何符合 ANSI 标准的 <code>free()</code> 实现都应该能够处理这种情况，但我从未完全信任它在所有地方都能工作。）
+</p>
+<h3><a name="utils-dupstr"></a>5.3.5 <code>dupstr()</code></h3>
+<pre><code>char *dupstr(const char *s);
+</code></pre>
+<p>
+此函数动态分配 C 字符串的副本。像 <code>snew()</code> 函数一样，它保证返回非 <code>NULL</code> 或根本不返回。
+</p>
+<p>
+（许多平台提供函数 <code>strdup()</code>。除了保证从不返回 <code>NULL</code> 之外，我的版本的优点是在<em>所有地方</em>都定义，而不是不方便地几乎在所有地方都定义。）
+</p>
+<h3><a name="utils-free-cfg"></a>5.3.6 <code>free_cfg()</code></h3>
+<pre><code>void free_cfg(config_item *cfg);
+</code></pre>
+<p>
+此函数正确释放 <code>config_item</code> 数组，包括遍历数组直到末尾并释放每个 <code>u</code> 子联合中预期为动态分配的任何辅助数据项。
+</p>
+<p>
+（有关 <code>config_item</code> 结构的详细信息，请参见 <a href="backend.html#backend-configure">第 2.3.9 节</a>。）
+</p>
+<h3><a name="utils-free-keys"></a>5.3.7 <code>free_keys()</code></h3>
+<pre><code>void free_keys(key_label *keys, int nkeys);
+</code></pre>
+<p>
+此函数正确释放 <code>key_label</code> 数组，包括每个键的动态分配的标签字符串。
+</p>
+<p>
+（有关 <code>key_label</code> 结构的详细信息，请参见 <a href="backend.html#backend-request-keys">第 2.10.7 节</a>。）
+</p>
+<h2><a name="utils-tree234"></a>5.4 排序和计数树函数</h2>
+<p>
+许多游戏需要复杂的算法来生成随机拼图，有些甚至在游戏过程中需要适度复杂的算法。这些算法的一个常见要求是需要维护项目的排序或未排序列表，以便可以方便地删除和添加项目。
+</p>
+<p>
+对于一般用途，Puzzles 提供了以下一组在内存中维护 2-3-4 树的函数。（2-3-4 树是一种平衡树结构，具有所有查找、插入、删除、拆分和连接都可以在 <code>O(log N)</code> 时间内完成的特性。）
+</p>
+<p>
+所有这些函数都期望您存储 <code>void *</code> 指针的树。您可以在这些指针中放入任何您喜欢的东西。
+</p>
+<p>
+通过使用每节点元素计数，这些树结构具有通过它们在树表示的列表中的数字索引查找元素的略微不同寻常的能力。这意味着它们可以用于存储未排序列表（在这种情况下，每次插入新元素时，您必须明确指定要插入的位置）。它们还可以在排序树中进行数字查找，这对于（例如）跟踪变化数据集的中位数可能很有用。
+</p>
+<p>
+除了存储排序列表外，这些函数还可以用于存储“映射”（关联数组），方法是将树的每个元素定义为（键，值）对。
+</p>
+<h3><a name="utils-newtree234"></a>5.4.1 <code>newtree234()</code></h3>
+<pre><code>tree234 *newtree234(cmpfn234 cmp);
+</code></pre>
+<p>
+创建一个新的空树，并返回指向它的指针。
+</p>
+<p>
+参数 <code>cmp</code> 确定树上的排序标准。其原型是
+</p>
+<pre><code>typedef int (*cmpfn234)(void *, void *);
+</code></pre>
+<p>
+如果您想要排序树，您应该提供一个匹配此原型的函数，该函数返回类似于 <code>strcmp()</code> 的值（如果第一个参数小于第二个参数则为负数，如果大于则为正数，如果相等则为零）。在这种情况下，函数 <code>addpos234()</code> 将不能在您的树上使用（因为所有插入都必须遵守排序顺序）。
+</p>
+<p>
+如果您想要未排序树，请传递 <code>NULL</code>。在这种情况下，您将无法使用 <code>add234()</code> 或 <code>del234()</code>，或任何其他依赖于排序顺序的函数，如 <code>find234()</code>。您的树将变得更像一个数组，除了它将有效地支持插入和删除以及按数字索引的查找。
+</p>
+<h3><a name="utils-freetree234"></a>5.4.2 <code>freetree234()</code></h3>
+<pre><code>void freetree234(tree234 *t);
+</code></pre>
+<p>
+释放树。此函数不会释放树的<em>元素</em>（因为它们可能不是动态分配的，或者您可能在多个树中存储相同的元素集）；它只会释放树结构本身。如果您想要释放树的所有元素，您应该在将其传递给 <code>freetree234()</code> 之前清空它，方法是使用类似于以下的代码
+</p>
+<pre><code>while ((element = delpos234(tree, 0)) != NULL)
+    sfree(element); <em>/* 或一些更复杂的释放函数 */</em>
+</code></pre>
+<h3><a name="utils-add234"></a>5.4.3 <code>add234()</code></h3>
+<pre><code>void *add234(tree234 *t, void *e);
+</code></pre>
+<p>
+将新元素 <code>e</code> 插入树 <code>t</code> 中。此函数期望树是排序的；新元素根据排序顺序插入。
+</p>
+<p>
+如果树中已经存在与 <code>e</code> 相等的元素，则插入将失败，返回值将是现有元素。否则，插入成功，返回 <code>e</code>。
+</p>
+<h3><a name="utils-addpos234"></a>5.4.4 <code>addpos234()</code></h3>
+<pre><code>void *addpos234(tree234 *t, void *e, int index);
+</code></pre>
+<p>
+将新元素插入未排序树中。由于没有排序顺序来决定新元素的位置，您必须指定要插入的位置。将 <code>index</code> 设置为零将新元素放在列表的开头；将 <code>index</code> 设置为树中当前元素的数量将新元素放在末尾。
+</p>
+<p>
+返回值是 <code>e</code>，与 <code>add234()</code> 一致（尽管此函数除了内存不足外不会失败，在这种情况下它会崩溃并死亡，而不是返回错误指示）。
+</p>
+<h3><a name="utils-index234"></a>5.4.5 <code>index234()</code></h3>
+<pre><code>void *index234(tree234 *t, int index);
+</code></pre>
+<p>
+返回指向树的第 <code>index</code> 个元素的指针，如果 <code>index</code> 超出范围则返回 <code>NULL</code>。树的元素从零开始编号。
+</p>
+<h3><a name="utils-find234"></a>5.4.6 <code>find234()</code></h3>
+<pre><code>void *find234(tree234 *t, void *e, cmpfn234 cmp);
+</code></pre>
+<p>
+在排序树中搜索与 <code>e</code> 相等的元素。
+</p>
+<p>
+如果 <code>cmp</code> 是 <code>NULL</code>，则将使用树的普通比较函数来执行搜索。但是，有时您不希望这样；例如，假设您的每个元素都是一个包含 <code>char *</code> 名称字段的大结构，并且您想要找到具有给定名称的元素。您<em>可以</em>通过构造一个假元素结构，适当设置其名称字段，并将其传递给 <code>find234()</code> 来实现这一点，但您可能会发现将<em>仅</em>名称字符串传递给 <code>find234()</code>，提供一个替代比较函数，该函数期望其参数之一是裸名称，另一个是包含名称字段的大结构，会更方便。
+</p>
+<p>
+因此，如果 <code>cmp</code> 不是 <code>NULL</code>，则它将用于将 <code>e</code> 与树的元素进行比较。传递给 <code>cmp</code> 的第一个参数将始终是 <code>e</code>；第二个将是树的一个元素。
+</p>
+<p>
+（有关 <code>cmpfn234</code> 函数指针类型的定义，请参见 <a href="#utils-newtree234">第 5.4.1 节</a>。）
+</p>
+<p>
+返回值是找到的元素，如果搜索不成功则返回 <code>NULL</code>。
+</p>
+<h3><a name="utils-findrel234"></a>5.4.7 <code>findrel234()</code></h3>
+<pre><code>void *findrel234(tree234 *t, void *e, cmpfn234 cmp, int relation);
+</code></pre>
+<p>
+此函数类似于 <code>find234()</code>，但具有执行<em>相对</em>搜索的附加能力。附加参数 <code>relation</code> 可以是以下值之一：
+</p>
+<dl><dt>
+<code>REL234_EQ</code>
+</dt>
+<dd>
+仅查找与 <code>e</code> 相等的元素。这与 <code>find234()</code> 的行为完全相同。
+</dd>
+<dt>
+<code>REL234_LT</code>
+</dt>
+<dd>
+查找严格小于 <code>e</code> 的最大元素。<code>e</code> 可以是 <code>NULL</code>，在这种情况下，它找到整个树中的最大元素（这也可以通过 <code>index234(t, count234(t)-1)</code> 完成）。
+</dd>
+<dt>
+<code>REL234_LE</code>
+</dt>
+<dd>
+查找小于或等于 <code>e</code> 的最大元素。（也就是说，尽可能找到与 <code>e</code> 相等的元素，但如果失败，则接受比它小的元素。）
+</dd>
+<dt>
+<code>REL234_GT</code>
+</dt>
+<dd>
+查找严格大于 <code>e</code> 的最小元素。<code>e</code> 可以是 <code>NULL</code>，在这种情况下，它找到整个树中的最小元素（这也可以通过 <code>index234(t, 0)</code> 完成）。
+</dd>
+<dt>
+<code>REL234_GE</code>
+</dt>
+<dd>
+查找大于或等于 <code>e</code> 的最小元素。（也就是说，尽可能找到与 <code>e</code> 相等的元素，但如果失败，则接受比它大的元素。）
+</dd>
+</dl>
+<p>
+返回值，如前所述，是找到的元素或 <code>NULL</code>（如果没有元素满足搜索条件）。
+</p>
+<h3><a name="utils-findpos234"></a>5.4.8 <code>findpos234()</code></h3>
+<pre><code>void *findpos234(tree234 *t, void *e, cmpfn234 cmp, int *index);
+</code></pre>
+<p>
+此函数类似于 <code>find234()</code>，但具有返回树中找到的元素的索引的附加功能；在成功搜索（非 <code>NULL</code> 返回值）的情况下，该索引被写入 <code>*index</code>。
+</p>
+<p>
+<code>index</code> 可以是 <code>NULL</code>，在这种情况下，此函数的行为与 <code>find234()</code> 完全相同。
+</p>
+<h3><a name="utils-findrelpos234"></a>5.4.9 <code>findrelpos234()</code></h3>
+<pre><code>void *findrelpos234(tree234 *t, void *e, cmpfn234 cmp, int relation,
+                    int *index);
+</code></pre>
+<p>
+此函数结合了 <code>findrel234()</code> 和 <code>findpos234()</code> 的所有功能。
+</p>
+<h3><a name="utils-del234"></a>5.4.10 <code>del234()</code></h3>
+<pre><code>void *del234(tree234 *t, void *e);
+</code></pre>
+<p>
+在树中找到与 <code>e</code> 相等的元素，删除它，并返回它。
+</p>
+<p>
+输入树必须是排序的。
+</p>
+<p>
+找到的元素可能是 <code>e</code> 本身，也可能只是与它相等。
+</p>
+<p>
+如果未找到这样的元素，返回值是 <code>NULL</code>。
+</p>
+<h3><a name="utils-delpos234"></a>5.4.11 <code>delpos234()</code></h3>
+<pre><code>void *delpos234(tree234 *t, int index);
+</code></pre>
+<p>
+删除树中位置 <code>index</code> 的元素，并返回它。
+</p>
+<p>
+如果索引超出范围，返回值是 <code>NULL</code>。
+</p>
+<h3><a name="utils-count234"></a>5.4.12 <code>count234()</code></h3>
+<pre><code>int count234(tree234 *t);
+</code></pre>
+<p>
+返回树中当前元素的数量。
+</p>
+<h3><a name="utils-splitpos234"></a>5.4.13 <code>splitpos234()</code></h3>
+<pre><code>tree234 *splitpos234(tree234 *t, int index, bool before);
+</code></pre>
+<p>
+在给定位置将输入树拆分为两部分，并创建一个新树，包含该位置一侧的所有元素。
+</p>
+<p>
+如果 <code>before</code> 为 <code>true</code>，则位置 <code>index</code> 或之后的所有项目都留在输入树中，该点之前的项目在新树中返回。否则，情况相反：位置 <code>index</code> 或之后的所有项目都移动到新树中，之前的项目留在旧树中。
+</p>
+<p>
+如果 <code>index</code> 等于 0 或输入树中的元素数量，则两棵树中的一棵将最终为空（这不是错误条件）。如果 <code>index</code> 在任一方向上进一步超出范围，操作将完全失败并返回 <code>NULL</code>。
+</p>
+<p>
+此操作在 <code>O(log N)</code> 时间内完成，无论树有多大或拆分如何平衡或不平衡。
+</p>
+<h3><a name="utils-split234"></a>5.4.14 <code>split234()</code></h3>
+<pre><code>tree234 *split234(tree234 *t, void *e, cmpfn234 cmp, int rel);
+</code></pre>
+<p>
+根据排序顺序拆分排序树。
+</p>
+<p>
+<code>rel</code> 可以是 <a href="#utils-findrel234">第 5.4.7 节</a> 中描述的任何关系常量，<em>除了</em> <code>REL234_EQ</code>。具有与 <code>e</code> 该关系的所有元素将被转移到新树中；其余元素将留在旧树中。
+</p>
+<p>
+参数 <code>cmp</code> 与 <code>find234()</code> 中的语义相同：如果它不是 <code>NULL</code>，则在将元素与 <code>e</code> 进行比较时，它将替代树自己的比较函数，使得 <code>e</code> 本身始终是其两个操作数中的第一个。
+</p>
+<p>
+同样，此操作在 <code>O(log N)</code> 时间内完成，无论树有多大或拆分如何平衡或不平衡。
+</p>
+<h3><a name="utils-join234"></a>5.4.15 <code>join234()</code></h3>
+<pre><code>tree234 *join234(tree234 *t1, tree234 *t2);
+</code></pre>
+<p>
+通过连接它们表示的列表将两棵树连接在一起。<code>t2</code> 的所有元素都被移动到 <code>t1</code> 中，使得它们出现在 <code>t1</code> 的元素<em>之后</em>。树 <code>t2</code> 被释放；返回值是 <code>t1</code>。
+</p>
+<p>
+如果您将此函数应用于排序树并且它违反了排序顺序（即 <code>t2</code> 中的最小元素小于或等于 <code>t1</code> 中的最大元素），操作将失败并返回 <code>NULL</code>。
+</p>
+<p>
+此操作在 <code>O(log N)</code> 时间内完成，无论要连接的树有多大。
+</p>
+<h3><a name="utils-join234r"></a>5.4.16 <code>join234r()</code></h3>
+<pre><code>tree234 *join234r(tree234 *t1, tree234 *t2);
+</code></pre>
+<p>
+以与 <code>join234()</code> 完全相同的方式连接两棵树，但这次组合树在 <code>t2</code> 中返回，而 <code>t1</code> 被销毁。<code>t1</code> 中的元素仍然出现在 <code>t2</code> 中的元素之前。
+</p>
+<p>
+同样，此操作在 <code>O(log N)</code> 时间内完成，无论要连接的树有多大。
+</p>
+<h3><a name="utils-copytree234"></a>5.4.17 <code>copytree234()</code></h3>
+<pre><code>tree234 *copytree234(tree234 *t, copyfn234 copyfn,
+                     void *copyfnstate);
+</code></pre>
+<p>
+复制整个树。
+</p>
+<p>
+如果 <code>copyfn</code> 是 <code>NULL</code>，树将被复制，但元素不会被复制；即，新树将包含指向与旧树完全相同的物理元素的指针。
+</p>
+<p>
+如果您想在操作期间复制每个实际元素，您可以改为在 <code>copyfn</code> 中传递一个复制每个元素的函数。该函数具有原型
+</p>
+<pre><code>typedef void *(*copyfn234)(void *state, void *element);
+</code></pre>
+<p>
+每次调用它时，<code>state</code> 参数将设置为您作为 <code>copyfnstate</code> 传递的值。
+</p>
+<h2><a name="utils-dsf"></a>5.5 不相交集森林</h2>
+<p>
+本节描述了一组实现数据结构的函数，该数据结构被称为“并查集”或“Tarjan 的不相交集森林”。在这个代码库中，它被普遍缩写为“dsf”。
+</p>
+<p>
+dsf 表示一组元素，这些元素被划分为“等价类”，在等价关系被增量添加的情况下。也就是说，所有元素开始时被认为是不同的，您通过 <code>dsf_merge()</code> 操作逐渐声明越来越多的元素相等，该操作表示从现在开始，两个特定元素应该被视为相等。
+</p>
+<p>
+例如，如果我开始时 A,B,U,V 都不同，并且我将 A 与 B 合并，将 U 与 V 合并，那么该结构将告诉我 A 和 U 不是等价的。但如果我然后将 B 与 V 合并，那么之后，该结构将告诉我 A 和 U <em>是</em> 等价的，通过跟随它知道的等价关系的传递链。
+</p>
+<p>
+因此，dsf 数据结构非常适合跟踪无向图中的增量连接性（同样，“增量”意味着您只添加边，从不删除它们），以及其他您逐渐获得关于什么与什么相同的知识的应用程序。它广泛用于拼图求解器和生成器算法，有时也用于游戏过程中。
+</p>
+<p>
+dsf 操作的时间复杂度在理论上不是<em>完全</em>恒定时间，但它非常接近，以至于在实践中没有区别。特别是，每当 dsf 必须做非平凡的工作时，它会更新结构，这样就不需要第二次做这项工作。使用 dsf 操作，无需担心它们需要多长时间！
+</p>
+<p>
+对于一些拼图游戏应用，通过额外信息增强此数据结构以了解等价类的元素如何相互关联是有用的。您可能有多种方法来做到这一点；这里支持的一种方法在您要跟踪的对象最终会处于两种状态之一（例如，黑/白或开/关）的情况下很有用，对于任何两个对象，您要么知道它们处于相同的状态，要么知道它们处于相反的状态，要么还不知道。Puzzles 称这为“翻转 dsf”：它跟踪同一等价类中的对象是否相对于彼此翻转。
+</p>
+<p>
+除了查询两个元素是否等价外，此 dsf 实现还允许您询问给定等价类中的元素数量，以及类中的最小元素。（后者用于例如决定在 Keen 拼图的每个区域中打印线索的方块。）
+</p>
+<h3><a name="utils-dsf-new"></a>5.5.1 <code>dsf_new()</code>, <code>dsf_new_flip()</code>, <code>dsf_new_min()</code></h3>
+<pre><code>DSF *dsf_new(int size);
+DSF *dsf_new_flip(int size);
+DSF *dsf_new_min(int size);
+</code></pre>
+<p>
+这些函数中的每一个都为描述 <code>size</code> 个元素的 dsf 分配空间，并将其初始化，使得每个元素都在自己的等价类中。
+</p>
+<p>
+dsf 描述的元素由从 <code>0</code> 到 <code>size-1</code> 的整数表示。
+</p>
+<p>
+<code>dsf_new_flip()</code> 将创建一个 dsf，该 dsf 具有跟踪同一等价类中的对象是否相对于彼此翻转的额外能力。
+</p>
+<p>
+<code>dsf_new_min()</code> 将创建一个 dsf，该 dsf 具有跟踪每个等价类的最小元素的额外能力。
+</p>
+<p>
+任何这些函数的返回对象都必须使用 <code>dsf_free()</code> 释放。
+</p>
+<h3><a name="utils-dsf-free"></a>5.5.2 <code>dsf_free()</code></h3>
+<pre><code>void dsf_free(DSF *dsf);
+</code></pre>
+<p>
+释放由任何 <code>dsf_new()</code> 函数分配的 dsf。
+</p>
+<h3><a name="utils-dsf-reinit"></a>5.5.3 <code>dsf_reinit()</code></h3>
+<pre><code>void dsf_reinit(DSF *dsf);
+</code></pre>
+<p>
+将现有 dsf 重新初始化为所有元素都不同的状态，而无需释放和重新分配它。
+</p>
+<h3><a name="utils-dsf-copy"></a>5.5.4 <code>dsf_copy()</code></h3>
+<pre><code>void dsf_copy(DSF *to, DSF *from);
+</code></pre>
+<p>
+将一个 dsf 的内容复制到另一个 dsf 上。之前存储在 <code>to</code> 中的所有内容都被覆盖。
+</p>
+<p>
+两个 dsf 必须以相同的大小创建，并且目标 dsf 不得具有源 dsf 没有的任何额外信息。
+</p>
+<h3><a name="utils-dsf-merge"></a>5.5.5 <code>dsf_merge()</code></h3>
+<pre><code>void dsf_merge(DSF *dsf, int v1, int v2);
+</code></pre>
+<p>
+更新 dsf，使得元素 <code>v1</code> 和 <code>v2</code> 现在将被视为在同一等价类中。如果它们已经在同一类中，此函数将安全地不执行任何操作。
+</p>
+<p>
+此函数不得在翻转 dsf 上调用。请改用 <code>dsf_merge_flip</code>。
+</p>
+<h3><a name="utils-dsf-canonify"></a>5.5.6 <code>dsf_canonify()</code></h3>
+<pre><code>int dsf_canonify(DSF *dsf, int val);
+</code></pre>
+<p>
+返回 dsf 中包含 <code>val</code> 的等价类的“规范”元素。这将是同一等价类的某个元素。因此，为了确定两个元素是否在同一等价类中，您可以对它们都调用 <code>dsf_canonify</code>，并比较结果。
+</p>
+<p>
+如果 dsf 通过 <code>dsf_merge</code> 发生变异，规范元素不一定保持相同。但在两次 <code>dsf_merge</code> 调用之间，它们保持相同。
+</p>
+<h3><a name="utils-dsf-size"></a>5.5.7 <code>dsf_size()</code></h3>
+<pre><code>int dsf_size(DSF *dsf, int val);
+</code></pre>
+<p>
+返回当前包含 <code>val</code> 的等价类中的元素数量。
+</p>
+<p>
+<code>val</code> 本身计数，因此在新创建的 dsf 中，返回值将是 1。
+</p>
+<h3><a name="utils-dsf-merge-flip"></a>5.5.8 <code>dsf_merge_flip()</code></h3>
+<pre><code>void edsf_merge(DSF *dsf, int v1, int v2, bool flip);
+</code></pre>
+<p>
+更新翻转 dsf，使得元素 <code>v1</code> 和 <code>v2</code> 在同一等价类中。如果 <code>flip</code> 为 <code>false</code>，它们将被视为彼此处于相同状态；如果 <code>flip</code> 为 <code>true</code>，则它们将被视为处于相反状态。
+</p>
+<p>
+如果 <code>v1</code> 和 <code>v2</code> 已经在同一等价类中，则新的 <code>flip</code> 值将与 edsf 之前的信念进行检查，如果您与之矛盾，将发生断言失败。
+</p>
+<p>
+例如，如果您从空白翻转 dsf 开始并执行以下操作：
+</p>
+<pre><code>dsf_merge_flip(dsf, 0, 1, false);
+dsf_merge_flip(dsf, 1, 2, true);
+</code></pre>
+<p>
+然后它将创建一个 dsf，其中元素 0,1,2 都在同一类中，0,1 彼此处于相同状态，2 与两者处于相反状态。然后此调用将不执行任何操作，因为它与 dsf 已经知道的一致：
+</p>
+<pre><code>dsf_merge_flip(dsf, 0, 2, true);
+</code></pre>
+<p>
+但此调用将失败断言：
+</p>
+<pre><code>dsf_merge_flip(dsf, 0, 2, false);
+</code></pre>
+<h3><a name="utils-dsf-canonify-flip"></a>5.5.9 <code>dsf_canonify_flip()</code></h3>
+<pre><code>int dsf_canonify_flip(DSF *dsf, int val, bool *inverse);
+</code></pre>
+<p>
+像 <code>dsf_canonify()</code> 一样，这返回包含 <code>val</code> 的 dsf 等价类的规范元素。
+</p>
+<p>
+然而，它只能在翻转 dsf 上调用，并且它还使用一个标志填充 <code>*flip</code>，该标志指示 <code>val</code> 和规范元素是否处于相反状态：如果它们处于相反状态，则为 <code>true</code>，如果它们处于相同状态，则为 <code>false</code>。
+</p>
+<p>
+因此，如果您想知道 <code>v1</code> 和 <code>v2</code> 之间的关系，您可以这样做：
+</p>
+<pre><code>bool inv1, inv2;
+int canon1 = dsf_canonify_flip(dsf, v1, &amp;inv1);
+int canon2 = dsf_canonify_flip(dsf, v2, &amp;inv2);
+if (canon1 != canon2) {
+    // v1 和 v2 没有已知关系
+} else if (inv1 == inv2) {
+    // v1 和 v2 已知彼此处于相同状态
+} else {
+    // v1 和 v2 已知处于相反状态
+}
+</code></pre>
+<h3><a name="utils-dsf-minimal"></a>5.5.10 <code>dsf_minimal()</code></h3>
+<pre><code>int dsf_minimal(DSF *dsf, int val);
+</code></pre>
+<p>
+返回 dsf 中包含 <code>val</code> 的等价类的最小元素。
+</p>
+<p>
+为了使此函数工作，dsf 必须使用 <code>dsf_new_min()</code> 创建。
+</p>
+<h2><a name="utils-tdq"></a>5.6 待办队列</h2>
+<p>
+本节描述了一组实现“待办队列”的函数，这是一种简单的去重待办列表机制。代码称这为“tdq”。
+</p>
+<p>
+tdq 可以存储高达给定大小的整数（在创建时指定）。但它不能存储相同的整数多次。因此，您可以快速<em>确保</em>整数在队列中（如果它已经在那里，将不执行任何操作），并且您可以快速从队列中弹出整数并返回它，两者都在恒定时间内。
+</p>
+<p>
+这个想法是，您可能在游戏求解器中使用它，在那种游戏中，更新您对网格中一个方块的知识意味着有一组特定的其他方块（如其邻居），现在值得尝试进一步的推理。因此，您保留一个待办队列，其中包含您计划下一步查看的所有网格方块，每次在一个方块中进行推理时，您将相邻的方块添加到待办队列中，以确保它们在那之后再次被查看。
+</p>
+<p>
+在推理大多是局部的求解器中，这避免了每次通过遍历整个网格来找到下一个要做的事情的减慢：相反，您可以不断检查 tdq 以获取<em>特定</em>要查看的方块，直到用完。
+</p>
+<p>
+然而，常见的情况是，游戏中<em>大多数</em>推理是局部的，但并非全部。在这种情况下，当您的 tdq 为空时，您可以使用 <code>tdq_fill()</code> 用网格中的每个方块重新填充它，这将强制再次迭代所有内容。然后，如果 tdq 在您没有取得任何进展的情况下<em>再次</em>为空，就放弃。
+</p>
+<h3><a name="utils-tdq-new"></a>5.6.1 <code>tdq_new()</code></h3>
+<pre><code>tdq *tdq_new(int n);
+</code></pre>
+<p>
+为跟踪从 <code>0</code> 到 <code>size-1</code> 范围内的项目的 tdq 分配空间。
+</p>
+<h3><a name="utils-tdq-free"></a>5.6.2 <code>tdq_free()</code></h3>
+<pre><code>void tdq_free(tdq *tdq);
+</code></pre>
+<p>
+释放 tdq。
+</p>
+<h3><a name="utils-tdq-add"></a>5.6.3 <code>tdq_add()</code></h3>
+<pre><code>void tdq_add(tdq *tdq, int k);
+</code></pre>
+<p>
+将值 <code>k</code> 添加到 tdq。如果 <code>k</code> 已经在待办列表中，则不执行任何操作。
+</p>
+<h3><a name="utils-tdq-remove"></a>5.6.4 <code>tdq_remove()</code></h3>
+<pre><code>int tdq_remove(tdq *tdq);
+</code></pre>
+<p>
+从 tdq 中删除一个项目并返回它。如果 tdq 为空，则返回 <code>-1</code>。
+</p>
+<h3><a name="utils-tdq-fill"></a>5.6.5 <code>tdq_fill()</code></h3>
+<pre><code>void tdq_fill(tdq *tdq);
+</code></pre>
+<p>
+用它可以跟踪的每个元素填充 tdq。
+</p>
+<h2><a name="utils-findloop"></a>5.7 在图和网格中查找环路</h2>
+<p>
+许多在网格或图上玩的拼图都有一个共同的游戏元素，即将事物连接成路径，以避免形成环路（或者，也许，避免形成<em>错误</em>类型的环路）。
+</p>
+<p>
+仅确定图中<em>是否</em>存在环路很容易，使用跟踪顶点之间连接性的 dsf。只需遍历图的每条边，合并每条边两端的两个顶点——但在这样做之前，检查这些顶点是否<em>已经</em>已知彼此连接，如果是，则新边即将完成一个环路。
+</p>
+<p>
+但是，如果您还想<em>精确</em>识别任何环路的边集，例如在游戏过程中将整个环路标记为红色，那么这是一个更难的问题。此 API 在此处提供，供所有拼图用于此目的。
+</p>
+<h3><a name="utils-findloop-new-state"></a>5.7.1 <code>findloop_new_state()</code></h3>
+<pre><code>struct findloopstate *findloop_new_state(int nvertices);
+</code></pre>
+<p>
+为 findloop 算法分配新的状态结构，能够处理最多 <code>nvertices</code> 个顶点的图。顶点将由从 <code>0</code> 到 <code>nvertices-1</code> 的整数表示。
+</p>
+<h3><a name="utils-findloop-free-state"></a>5.7.2 <code>findloop_free_state()</code></h3>
+<pre><code>void findloop_free_state(struct findloopstate *state);
+</code></pre>
+<p>
+释放由 <code>findloop_new_state()</code> 分配的状态结构。
+</p>
+<h3><a name="utils-findloop-run"></a>5.7.3 <code>findloop_run()</code></h3>
+<pre><code>bool findloop_run(struct findloopstate *state, int nvertices,
+                  neighbour_fn_t neighbour, void *ctx);
+</code></pre>
+<p>
+运行环路查找算法，该算法将探索图并识别每条边是否是任何环路的一部分。
+</p>
+<p>
+该算法将调用提供的函数 <code>neighbour</code> 来列出每个顶点的相邻顶点。它应该具有此原型：
+</p>
+<pre><code>int neighbour(int vertex, void *ctx);
+</code></pre>
+<p>
+在此回调中，当算法<em>首次</em>为给定顶点调用它时，<code>vertex</code> 将是顶点的索引。该函数应返回该顶点的一个邻居的索引，如果没有则返回负数。
+</p>
+<p>
+如果函数返回顶点，算法将再次调用 <code>neighbour</code>，这次 <code>vertex</code> 参数为<em>负数</em>，这意味着“请给我上次的同一顶点的另一个邻居”。同样，该函数应返回顶点索引，或返回负数表示没有更多顶点。
+</p>
+<p>
+传递给 <code>findloop_run()</code> 的 <code>ctx</code> 参数被原样传递给 <code>neighbour</code>，因此您可以将其指向您的游戏状态或求解器状态或其他任何东西。
+</p>
+<p>
+返回值为 <code>true</code> 如果图中至少存在一个环路，<code>false</code> 如果不存在环路。此外，算法状态将填充以下查询函数可以用来询问单个图边的信息。
+</p>
+<h3><a name="utils-findloop-is-loop-edge"></a>5.7.4 <code>findloop_is_loop_edge()</code></h3>
+<pre><code>bool findloop_is_loop_edge(struct findloopstate *state,
+                           int u, int v);
+</code></pre>
+<p>
+查询顶点 <code>u</code> 和 <code>v</code> 之间的图边是否是环路的一部分。如果是，返回值为 <code>true</code>，否则为 <code>false</code>。
+</p>
+<h3><a name="utils-findloop-is-bridge"></a>5.7.5 <code>findloop_is_bridge()</code></h3>
+<pre><code>bool findloop_is_bridge(struct findloopstate *pv,
+    int u, int v, int *u_vertices, int *v_vertices);
+</code></pre>
+<p>
+查询顶点 <code>u</code> 和 <code>v</code> 之间的图边是否是“桥”，即如果移除它会将图分解为（更多）断开的组件的边。
+</p>
+<p>
+这是“环路边”标准的精确 inverse：顶点从 <code>findloop_is_loop_edge()</code> 返回 <code>true</code> 当且仅当它从 <code>findloop_is_bridge()</code> 返回 <code>false</code>，反之亦然。
+</p>
+<p>
+然而，<code>findloop_is_bridge()</code> 返回更多信息。如果它返回 <code>true</code>，那么它还会用桥的 <code>u</code> 和 <code>v</code> 侧连接的顶点数量填充 <code>*u_vertices</code> 和 <code>*v_vertices</code>。
+</p>
+<p>
+例如，如果你有三个顶点 A,B,C 彼此连接，四个顶点 U,V,W,X 彼此连接，以及 A 和 V 之间的一条边，那么对 A,V 对调用 <code>findloop_is_bridge()</code> 将返回 true（移除该边会将两组分开），并报告 A 侧有三个顶点，V 侧有四个顶点。
+</p>
+<h2><a name="utils-combi"></a>5.8 从 n 个元素中选择 r 个</h2>
+<p>
+本节描述了一个小 API，用于迭代所有从 n 个元素中选择 r 个的组合。
+</p>
+<p>
+例如，如果你要求所有从 5 个元素中选择 3 个的组合，你会得到集合 {0,1,2}、{0,1,3}、{0,1,4}、{0,2,3}、{0,2,4}、{0,3,4}、{1,2,3}、{1,2,4}、{1,3,4} 和 {2,3,4}。
+</p>
+<p>
+这些函数使用一个称为 <code>combi_ctx</code> 的结构，其中包含一个元素 <code>int *a</code> 保存每个返回的组合，以及其他仅用于实现的字段。
+</p>
+<h3><a name="utils-combi-new"></a>5.8.1 <code>new_combi()</code></h3>
+<pre><code>combi_ctx *new_combi(int r, int n);
+</code></pre>
+<p>
+为枚举从 n 个元素中选择 r 个的组合分配新的 <code>combi_ctx</code> 结构。
+</p>
+<h3><a name="utils-combi-free"></a>5.8.2 <code>free_combi()</code></h3>
+<pre><code>void free_combi(combi_ctx *combi);
+</code></pre>
+<p>
+释放 <code>combi_ctx</code> 结构。
+</p>
+<h3><a name="utils-combi-reset"></a>5.8.3 <code>reset_combi()</code></h3>
+<pre><code>void reset_combi(combi_ctx *combi);
+</code></pre>
+<p>
+将现有的 <code>combi_ctx</code> 结构重置到其迭代的开始
+</p>
+<h3><a name="utils-combi-next"></a>5.8.4 <code>next_combi()</code></h3>
+<pre><code>combi_ctx *next_combi(combi_ctx *combi);
+</code></pre>
+<p>
+从 <code>combi_ctx</code> 请求组合。
+</p>
+<p>
+如果没有更多要返回的组合，返回值为 <code>NULL</code>。否则，它返回输入结构 <code>combi</code>，表示它已经填充了 <code>combi-&gt;a[0]</code>、<code>combi-&gt;a[1]</code>、...、<code>combi-&gt;a[r-1]</code>，其中包含从 <code>0</code> 到 <code>n-1</code> 的递增序列的不同整数。
+</p>
+<h2><a name="utils-misc"></a>5.9 其他实用工具函数和宏</h2>
+<p>
+本节包含所有未合理归入其他地方的实用工具函数。
+</p>
+<h3><a name="utils-maxmin"></a>5.9.1 <code>max()</code> 和 <code>min()</code></h3>
+<p>
+Puzzles 主头文件定义了相当标准的宏 <code>max()</code> 和 <code>min()</code>，每个宏都接受两个参数并返回分别比较大或小的那个。
+</p>
+<p>
+这些宏可能会多次评估它们的参数。避免副作用。
+</p>
+<h3><a name="utils-max-digits"></a>5.9.2 <code>MAX_DIGITS()</code></h3>
+<p>
+在 Puzzles 主头文件中定义的 <code>MAX_DIGITS()</code> 宏接受一个类型（或该类型的变量），并展开为一个整数常量，表示该类型的数字在使用 <code>printf()</code> 的 <code>%u</code> 或 <code>%d</code> 格式格式化为十进制数时可能展开的字符数的合理上限。这对于分配一个保证足够大的固定大小缓冲区以 <code>sprintf()</code> 值非常有用。不要忘记为尾随的 <code>'\0'</code> 添加一个！
+</p>
+<h3><a name="utils-pi"></a>5.9.3 <code>PI</code></h3>
+<p>
+Puzzles 主头文件定义了一个宏 <code>PI</code>，它展开为表示 pi 的浮点常量。
+</p>
+<p>
+（我一直不明白为什么 ANSI 的 <code>&lt;math.h&gt;</code> 不定义这个。它会非常有用！）
+</p>
+<h3><a name="utils-obfuscate-bitmap"></a>5.9.4 <code>obfuscate_bitmap()</code></h3>
+<pre><code>void obfuscate_bitmap(unsigned char *bmp, int bits, bool decode);
+</code></pre>
+<p>
+此函数通过加密方法模糊数据的内容。它对隐藏信息的游戏（如 Mines、Guess 或 Black Box）很有用，其中游戏 ID 理论上揭示了玩家应该尝试猜测的所有信息。因此，为了让玩家能够相互发送游戏 ID 而不会通过查看它们意外破坏结果游戏，这些游戏使用此函数混淆它们的游戏 ID。
+</p>
+<p>
+虽然混淆函数是加密的，但由于它没有密钥，因此不能正确称为加密。因此，任何有足够动力的人都可以重新实现它，或从 Puzzles 源代码中破解它，并去除这些游戏 ID 的混淆以查看其下的内容。（实际上，他们通常可以通过将游戏 ID 输入到自己的拼图副本中并点击 Solve 来更轻松地做到这一点。）目标不是防止坚定的攻击者；目标只是保护想要诚实地玩游戏的人<em>意外</em>破坏自己的乐趣。
+</p>
+<p>
+输入参数 <code>bmp</code> 指向要混淆的内存块。<code>bits</code> 给出数据的长度。请注意，该长度以<em>位</em>而不是字节为单位：如果您要求混淆部分字节，您将得到它。字节被认为是从上到下使用的：因此，例如，将 <code>bits</code> 设置为 10 将覆盖整个 <code>bmp[0]</code> 和 <code>bmp[1]</code> 的<em>前两位</em>。部分使用的字节的剩余部分是未定义的（即，它可能被函数损坏）。
+</p>
+<p>
+参数 <code>decode</code> 对于编码操作是 <code>false</code>，对于解码操作是 <code>true</code>。每个都是另一个的逆。（如果您真的想要，您可以通过解码来混淆并通过编码来恢复明文；它仍然应该工作。）
+</p>
+<p>
+输入位图是就地处理的。
+</p>
+<h3><a name="utils-bin2hex"></a>5.9.5 <code>bin2hex()</code></h3>
+<pre><code>char *bin2hex(const unsigned char *in, int inlen);
+</code></pre>
+<p>
+此函数接受输入字节数组并将其转换为 ASCII 字符串，以（小写）十六进制编码这些字节。它返回包含该编码的动态分配的字符串。
+</p>
+<p>
+此函数对于将 <code>obfuscate_bitmap()</code> 的结果编码为可打印的 ASCII 以用于游戏 ID 很有用。
+</p>
+<h3><a name="utils-hex2bin"></a>5.9.6 <code>hex2bin()</code></h3>
+<pre><code>unsigned char *hex2bin(const char *in, int outlen);
+</code></pre>
+<p>
+此函数接受包含十六进制数字的 ASCII 字符串，并将其转换回长度为 <code>outlen</code> 的字节数组。如果字符串中没有足够的十六进制数字，结果数组的内容将是未定义的。
+</p>
+<p>
+此函数是 <code>bin2hex()</code> 的逆函数。
+</p>
+<h3><a name="utils-fgetline"></a>5.9.7 <code>fgetline()</code></h3>
+<pre><code>char *fgetline(FILE *fp);
+</code></pre>
+<p>
+此函数从标准 C 输入流读取单行文本，并将其作为动态分配的字符串返回。返回的字符串末尾仍然有一个换行符。
+</p>
+<h3><a name="utils-arraysort"></a>5.9.8 <code>arraysort()</code></h3>
+<p>
+排序数组，比标准 C <code>qsort()</code> 稍微灵活一些。
+</p>
+<p>
+此函数实际上是作为宏实现的，因此它没有这样的原型。但您可以想象它有这样的原型：
+</p>
+<pre><code>void arraysort(element_t *array, size_t nmemb,
+               arraysort_cmpfn_t cmp, void *ctx);
+</code></pre>
+<p>
+其中 <code>element_t</code> 是未指定的类型。
+</p>
+<p>
+（实际上，有一个底层函数，它接受一个额外的参数，给出每个数组元素的大小。但调用者被鼓励使用此宏版本，它使用 <code>sizeof</code> 自动填充。）
+</p>
+<p>
+此函数的行为基本上类似于 <code>qsort()</code>：它期望 <code>array</code> 指向 <code>nmemb</code> 元素的数组，并且它将按照比较函数 <code>cmp</code> 指定的顺序对它们进行就地排序。
+</p>
+<p>
+比较函数应该具有此原型：
+</p>
+<pre><code>int cmp(const void *a, const void *b, void *ctx);
+</code></pre>
+<p>
+其中 <code>a</code> 和 <code>b</code> 指向要比较的两个元素，返回值为负如果 <code>a&lt;b</code>（即，<code>a</code> 应该在输出数组中出现在 <code>b</code> 之前），正如果 <code>a&gt;b</code>，或零如果 <code>a=b</code>。
+</p>
+<p>
+传递给 <code>arraysort()</code> 的 <code>ctx</code> 参数直接传递给比较函数。这是使 <code>arraysort()</code> 比标准 <code>qsort()</code> 更灵活的特性：它允许您以动态方式改变排序标准，而无需在调用者中为比较函数读取的全局变量编写代码。
+</p>
+<h3><a name="utils-colour-mix"></a>5.9.9 <code>colour_mix()</code></h3>
+<pre><code>void colour_mix(const float src1[3], const float src2[3], float p,
+                float dst[3]);
+</code></pre>
+<p>
+此函数以指定的比例混合颜色 <code>src1</code> 和 <code>src2</code>，产生 <code>dst</code>。<code>p</code> 是结果中 <code>src2</code> 的比例。因此，如果 <code>p</code> 为 <code>1.0</code>，<code>dst</code> 将与 <code>src2</code> 相同。如果 <code>p</code> 为 <code>0.0</code>，<code>dst</code> 将与 <code>src1</code> 相同。如果 <code>p</code> 在两者之间，<code>dst</code> 也会在两者之间。<code>p</code> 不限于 <code>0.0</code> 到 <code>1.0</code> 的范围。该范围之外的值将产生外推颜色，这对于某些目的可能有用，但也可能产生不可能的颜色。
+</p>
+<h3><a name="utils-game-mkhighlight"></a>5.9.10 <code>game_mkhighlight()</code></h3>
+<pre><code>void game_mkhighlight(frontend *fe, float *ret,
+                      int background, int highlight, int lowlight);
+</code></pre>
+<p>
+拼图游戏的图形使用高光和低光来指示“凸起”或“凹陷”部分是相当常见的。Fifteen、Sixteen 和 Twiddle 是很好的例子。
+</p>
+<p>
+使用这种图形风格的拼图存在风险，如果它们只是使用前端提供的任何背景颜色，因为该背景颜色可能太亮或太暗，无法看到任何高光。（特别是，前端指定默认背景颜色为白色并不少见。）
+</p>
+<p>
+因此，这样的拼图可以从它们的 <code>colours()</code> 例程（<a href="backend.html#backend-colours">第 2.8.6 节</a>）调用此实用函数。您传递给它前端句柄、指向返回数组开头的指针以及三个颜色索引。它将：
+</p>
+<ul><li>
+调用 <code>frontend_default_colour()</code>（<a href="midend.html#frontend-default-colour">第 4.45 节</a>）获取前端的默认背景颜色
+</li>
+<li>
+如果不合适，改变该颜色的亮度
+</li>
+<li>
+定义该颜色的更亮和更暗的变体，用作高光和低光
+</li>
+<li>
+将这些结果写入 <code>ret</code> 数组的相关位置。
+</li>
+</ul>
+<p>
+因此，<code>ret[background*3]</code> 到 <code>ret[background*3+2]</code> 将设置为定义合理背景颜色的 RGB 值，类似地，<code>highlight</code> 和 <code>lowlight</code> 将设置为合理的颜色。
+</p>
+<p>
+<code>highlight</code> 或 <code>lowlight</code> 可以作为 <code>-1</code> 传递，表示后端不需要高光或低光颜色。
+</p>
+<h3><a name="utils-game-mkhighlight-specific"></a>5.9.11 <code>game_mkhighlight_specific()</code></h3>
+<pre><code>void game_mkhighlight_specific(frontend *fe, float *ret,
+    int background, int highlight, int lowlight);
+</code></pre>
+<p>
+此函数的行为与 <code>game_mkhighlight()</code> 完全相同，除了它期望背景颜色已经在元素 <code>ret[background*3]</code> 到 <code>ret[background*3+2]</code> 中填充。它将填充其他两种颜色作为该颜色的更亮和更暗的版本。
+</p>
+<p>
+如果您想在多个基本颜色中显示拼图的浮雕部分，这很有用。
+</p>
+<h3><a name="utils-button2label"></a>5.9.12 <code>button2label()</code></h3>
+<pre><code>char *button2label(int button);
+</code></pre>
+<p>
+此函数为 <code>button</code> 的某些通用值生成描述性文本标签，这些值是可以传递给中端的按钮代码。
+</p>
+<p>
+<code>button</code> 的允许值是 <code>A-Z, a-z, 0-9, CURSOR_{UP,DOWN,LEFT,RIGHT,SELECT}</code> 和 <code>'\b'</code>。不允许其他值。传递不支持的值将产生致命错误。
+</p>
+<p>
+此函数的预期用途是生成无键盘前端可以向用户呈现为可以发送到后端的键的字符串。例如，<code>CURSOR_UP</code> 产生 <code>"Up"</code>。大写和小写字母数字字符产生包含该字符的单例字符串。退格字符 <code>'\b'</code> 产生 <code>"Clear"</code>。
+</p>
+<p>
+此函数应仅在后端的 <code>request_keys()</code>（<a href="backend.html#backend-request-keys">第 2.10.7 节</a>）函数返回的 <code>key_label</code> 项的 <code>label</code> 字段设置为 <code>NULL</code> 时调用；在这种情况下，可以将相应的 <code>button</code> 字段传递给此函数以获得适当的通用标签。但是，如果 <code>label</code> 字段不是 <code>NULL</code>，则不应使用此函数。
+</p>
+<p>
+返回的字符串是动态分配的，应由调用者 <code>sfree</code>。
+</p>
+<h3><a name="utils-move-cursor"></a>5.9.13 <code>move_cursor()</code></h3>
+<pre><code>char *move_cursor(int button, int *x, int *y, int w, int h,
+                  bool wrap, bool *visible);
+</code></pre>
+<p>
+此函数可以由 <code>interpret_move()</code> 调用来实现用于在网格周围移动光标的默认键盘 API。
+</p>
+<p>
+<code>button</code> 是传递给 <code>interpret_move()</code> 的相同值。如果它不是 <code>CURSOR_UP</code>、<code>CURSOR_DOWN</code>、<code>CURSOR_LEFT</code> 或 <code>CURSOR_RIGHT</code> 中的任何一个，函数将不执行任何操作。
+</p>
+<p>
+<code>x</code> 和 <code>y</code> 指向两个整数，输入时给出光标在正方形网格中的当前位置。<code>w</code> 和 <code>h</code> 给出网格的尺寸。返回时，<code>x</code> 和 <code>y</code> 根据按下的箭头键更新为光标的新位置。
+</p>
+<p>
+此函数假设网格坐标从 <code>0</code> 到 <code>w-1</code>（从左到右），以及从 <code>0</code> 到 <code>h-1</code>（从上到下）。
+</p>
+<p>
+如果 <code>wrap</code> 为 <code>true</code>，则尝试将光标移出网格的任何边缘将导致它环绕到相对边缘的相应正方形。如果 <code>wrap</code> 为 <code>false</code>，则此类移动将无效。
+</p>
+<p>
+如果 <code>visible</code> 不是 <code>NULL</code>，它指向一个指示光标是否可见的标志。如果 <code>button</code> 表示光标移动键，这将设置为 <code>true</code>。
+</p>
+<p>
+函数返回可以由 <code>interpret_move()</code> 返回的特殊常量之一。如果 <code>button</code> 未被识别，返回值为 <code>MOVE_UNUSED</code>；如果 <code>x</code>、<code>y</code> 或 <code>visible</code> 已更新，返回值为 <code>MOVE_UI_UPDATE</code>；否则返回 <code>MOVE_NO EFFECT</code>。
+</p>
+<h3><a name="utils-divvy-rectangle"></a>5.9.14 <code>divvy_rectangle()</code></h3>
+<pre><code>int *divvy_rectangle(int w, int h, int k, random_state *rs);
+</code></pre>
+<p>
+发明一个矩形的随机分割成相同大小的多格骨牌，例如在拼图模式下的 Solo 拼图的块布局中，或 Palisade 拼图的解决方案中找到的。
+</p>
+<p>
+<code>w</code> 和 <code>h</code> 是矩形的尺寸。<code>k</code> 是所需的多格骨牌的大小。它必须是 <code>w*h</code> 的因数。
+</p>
+<p>
+<code>rs</code> 是用于选择矩形的随机分割的随机数的 <code>random_state</code>。
+</p>
+<p>
+返回值是一个 dsf（参见 <a href="#utils-dsf">第 5.5 节</a>），其等价类对应于矩形被分割成的多格骨牌。dsf 的索引形式为 <code>y*w+x</code>，对于坐标为 <code>x,y</code> 的单元格。
+</p>
+<h3><a name="utils-domino-layout"></a>5.9.15 <code>domino_layout()</code></h3>
+<pre><code>int *domino_layout(int w, int h, random_state *rs);
+</code></pre>
+<p>
+发明一个用多米诺骨牌随机平铺的矩形。
+</p>
+<p>
+<code>w</code> 和 <code>h</code> 是矩形的尺寸。如果它们都是奇数，则会留下一个方块未平铺。
+</p>
+<p>
+<code>rs</code> 是用于选择矩形的随机分割的随机数的 <code>random_state</code>。
+</p>
+<p>
+返回值是一个数组，其中元素 <code>y*w+x</code> 表示坐标为 <code>x,y</code> 的单元格。数组的每个元素给出其多米诺骨牌另一端的索引（以相同的表示形式）。如果有剩余的方块，则该元素包含其自己的索引。
+</p>
+<h3><a name="utils-domino-layout-prealloc"></a>5.9.16 <code>domino_layout_prealloc()</code></h3>
+<pre><code>void domino_layout_prealloc(int w, int h, random_state *rs,
+                            int *grid, int *grid2, int *list);
+</code></pre>
+<p>
+就像 <code>domino_layout()</code>，但不进行内存分配。如果您期望需要生成相同网格的许多多米诺骨牌平铺，您可以使用此函数来节省分配器开销。
+</p>
+<p>
+<code>grid</code> 和 <code>grid2</code> 各自应该有空间用于 <code>w*h</code> 个整数。<code>list</code> 应该有空间用于 <code>2*w*h</code> 个整数。
+</p>
+<p>
+返回的数组在 <code>grid</code> 中交付。
+</p>
+<h3><a name="utils-strip-button-modifiers"></a>5.9.17 <code>STRIP_BUTTON_MODIFIERS()</code></h3>
+<p>
+此宏在 Puzzles 主头文件中定义，从作为参数传递的键代码中剥离修饰符标志。它等效于与 <code>~MOD_MASK</code> 进行按位与操作。
+</p>
+<h3><a name="utils-swap-regions"></a>5.9.18 <code>swap_regions()</code></h3>
+<pre><code>void swap_regions(void *av, void *bv, size_t size);
+</code></pre>
+<p>
+交换两个大小为 <code>size</code> 字节的内存区域。两个区域不得重叠。
+</p>
+<h3><a name="utils-compare-integers"></a>5.9.19 <code>compare_integers()</code></h3>
+<pre><code>int compare_integers(const void *av, const void *bv);
+</code></pre>
+<p>
+比较 <code>av</code> 和 <code>bv</code> 指向的整数。如果第一个参数分别小于、等于或大于第二个参数，它返回小于、等于或大于零的整数。此函数旨在传递给 <code>qsort()</code> 以按升序排序整数。
+</p>
+<h3><a name="utils-get-handle-as-type"></a>5.9.20 <code>GET_HANDLE_AS_TYPE()</code></h3>
+<pre><code>#define GET_HANDLE_AS_TYPE(dr, type) ((type*)((dr)-&gt;handle))
+</code></pre>
+<p>
+此宏在 Puzzles 主头文件中定义，从 <code>drawing *</code> 指针中检索 <code>handle</code> 字段并将其转换为 <code>type *</code>。它旨在用于绘图 API 函数的实现，其中此操作是惯用的。
+</p>
+<h3><a name="utils-getenv-bool"></a>5.9.21 <code>getenv_bool()</code></h3>
+<pre><code>bool getenv_bool(const char *name, bool dflt)
+</code></pre>
+<p>
+这是标准库函数 <code>getenv()</code> 的简单包装器。它查询名为 <code>name</code> 的环境变量，如果变量存在并且看起来有点真实（任何以 <code>y</code>、<code>Y</code>、<code>t</code> 或 <code>T</code> 开头的值），则返回 <code>true</code>。如果变量定义为其他值，则返回 <code>false</code>，如果未定义，则函数返回 <code>dflt</code>。这可用于实现对于标准首选项机制来说太晦涩的首选项（参见 <a href="backend.html#backend-get-prefs">第 2.3.11 节</a>）。
+</p>
+
+<hr><address>
+[Simon Tatham's Portable Puzzle Collection, version 20260309.06e37f1]</address></body>
+</html>

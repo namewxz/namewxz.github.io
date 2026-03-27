@@ -1,0 +1,109 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta http-equiv="content-type" content="text/html; charset=US-ASCII">
+<title>Towers</title>
+<link rel="previous" href="keen">
+<link rel="ToC" href="./">
+<link rel="up" href="./">
+<link rel="index" href="docindex">
+<link rel="next" href="singles">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<script>(function(){let e=!1;try{e=localStorage.colorScheme===void 0?!1:{dark:!0,light:!1,system:null}[localStorage.colorScheme]??null}catch{}e===null&&(e=window.matchMedia("(prefers-color-scheme: dark)").matches),document.documentElement.classList.toggle("wa-dark",e)})();</script>
+  <link rel="stylesheet" crossorigin href="/assets/help-page-5GTs0WJF.css">
+  <link rel="sitemap" type="application/xml" title="Sitemap" href="/sitemap.xml">
+<link rel="manifest" href="/manifest.webmanifest">
+<meta name="theme-color" content="#d1e8ff">
+<link rel="icon" href="/favicon.ico" sizes="48x48">
+<link rel="icon" href="/favicon.svg" sizes="any" type="image/svg+xml">
+<link rel="apple-touch-icon" href="/apple-touch-icon-180x180.png"></head>
+<body>
+<p><a href="keen">Previous</a> | <a href="./">Contents</a> | <a href="docindex">Index</a> | <a href="singles">Next</a></p>
+
+<ul>
+<li><a href="#towers">Towers</a>
+<ul>
+<li><a href="#towers-controls">Towers controls</a></li>
+<li><a href="#towers-parameters">Towers parameters</a></li>
+<li><a href="#towers-prefs">Towers user preferences</a></li>
+</ul></li>
+</ul>
+<h1><a name="towers"></a><a name="i0"></a>Towers<img class="screenshot" src="data:image/png;base64,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" alt="Puzzle screenshot"></h1>
+<p>
+You have a square grid. On each square of the grid you can build a tower, with its height ranging from 1 to the size of the grid. Around the edge of the grid are some numeric clues.
+</p>
+<p>
+Your task is to build a tower on every square, in such a way that:
+</p>
+<ul><li>
+Each row contains every possible height of tower once
+</li>
+<li>
+Each column contains every possible height of tower once
+</li>
+<li>
+Each numeric clue describes the number of towers that can be seen if you look into the square from that direction, assuming that shorter towers are hidden behind taller ones. For example, in a 5&#215;5 grid, a clue marked &#8216;5&#8217; indicates that the five tower heights must appear in increasing order (otherwise you would not be able to see all five towers), whereas a clue marked &#8216;1&#8217; indicates that the tallest tower (the one marked 5) must come first.
+</li>
+</ul>
+<p>
+In harder or larger puzzles, some towers will be specified for you as well as the clues round the edge, and some edge clues may be missing.
+</p>
+<p>
+This puzzle appears on the web under various names, particularly &#8216;<a name="i1"></a>Skyscrapers&#8217;, but I don't know who first invented it.
+</p>
+<h2><a name="towers-controls"></a><a name="i2"></a>Towers controls</h2>
+<p>
+Towers shares much of its control system with Solo, Unequal and Keen.
+</p>
+<p>
+To play Towers, simply click the mouse in any empty square and then type a digit on the keyboard to fill that square with a tower of the given height. If you make a mistake, click the mouse in the incorrect square and press Space to clear it again (or use the Undo feature).
+</p>
+<p>
+If you <em>right</em>-click in a square and then type a number, that number will be entered in the square as a &#8216;pencil mark&#8217;. You can have pencil marks for multiple numbers in the same square. A square containing a tower cannot also contain pencil marks.
+</p>
+<p>
+The game pays no attention to pencil marks, so exactly what you use them for is up to you: you can use them as reminders that a particular square needs to be re-examined once you know more about a particular number, or you can use them as lists of the possible numbers in a given square, or anything else you feel like.
+</p>
+<p>
+To erase a single pencil mark, right-click in the square and type the same number again.
+</p>
+<p>
+All pencil marks in a square are erased when you left-click and type a number, or when you left-click and press space. Right-clicking and pressing space will also erase pencil marks.
+</p>
+<p>
+As for Solo, the cursor keys can be used in conjunction with the digit keys to set numbers or pencil marks. Use the cursor keys to move a highlight around the grid, and type a digit to enter it in the highlighted square. Pressing return toggles the highlight into a mode in which you can enter or remove pencil marks.
+</p>
+<p>
+Pressing M will fill in a full set of pencil marks in every square that does not have a main digit in it.
+</p>
+<p>
+Left-clicking a clue will mark it as done (grey it out), or unmark it if it is already marked. Holding Control or Shift and pressing an arrow key likewise marks any clue in the given direction.
+</p>
+<p>
+(All the actions described in <a href="common#common-actions">section 2.1</a> are also available.)
+</p>
+<h2><a name="towers-parameters"></a><a name="i3"></a>Towers parameters</h2>
+<p>
+These parameters are available from the &#8216;Custom...&#8217; option on the &#8216;Type&#8217; menu.
+</p>
+<dl><dt>
+<em>Grid size</em>
+</dt>
+<dd>
+Specifies the size of the grid. Lower limit is 3; upper limit is 9 (because the user interface would become more difficult with &#8216;digits&#8217; bigger than 9!).
+</dd>
+<dt>
+<em>Difficulty</em>
+</dt>
+<dd>
+Controls the difficulty of the generated puzzle. At Unreasonable level, some backtracking will be required, but the solution should still be unique. The remaining levels require increasingly complex reasoning to avoid having to backtrack.
+</dd>
+</dl>
+<h2><a name="towers-prefs"></a><a name="i4"></a>Towers user preferences</h2>
+<p>
+On platforms that support user preferences, the &#8216;Preferences&#8217; option on the &#8216;Game&#8217; menu will let you configure the style of the game display. If you don't like the three-dimensional mode, selecting &#8216;2D&#8217; will switch to a simpler display style in which towers are shown by just writing their height in the square.
+</p>
+
+<hr><address></address><script defer src='https://static.cloudflareinsights.com/beacon.min.js' data-cf-beacon='{"token": "a5c8762bf7a148698e3926dda94ccd16"}'></script></body>
+</html>

@@ -1,0 +1,79 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN"
+"http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+<meta name="generator" content="Halibut, unidentified version">
+<title>斜线</title>
+<link rel="previous" href="blackbox.html">
+<link rel="ToC" href="index.html">
+<link rel="up" href="index.html">
+<link rel="index" href="indexpage.html">
+<link rel="next" href="lightup.html">
+</head>
+<body>
+<p><a href="blackbox.html">上一篇</a> | <a href="index.html">目录</a> | <a href="indexpage.html">索引</a> | <a href="lightup.html">下一篇</a></p>
+
+<ul>
+<li><a href="#slant">第 20 章：斜线</a>
+<ul>
+<li><a href="#slant-controls">20.1 斜线控制</a></li>
+<li><a href="#slant-parameters">20.2 斜线参数</a></li>
+<li><a href="#slant-prefs">20.3 斜线用户首选项</a></li>
+</ul></li>
+</ul>
+<h1><a name="slant"></a>第 20 章：<a name="i0"></a>斜线</h1>
+<p>
+你有一个方格网格。你的目标是在每个方格中画一条对角线，并选择每条线的倾斜方向，以便满足以下条件：
+</p>
+<ul><li>
+对角线永远不会形成一个环。
+</li>
+<li>
+任何带有圈出数字的点恰好有那么多线在那里交汇。（因此，4 是十字形的中心，而 0 是菱形的中心 —— 或者更确切地说，是部分菱形的中心，因为 0 永远不能出现在网格的中间，因为那会立即导致一个环。）
+</li>
+</ul>
+<p>
+这个拼图的功劳归于 <a name="i1"></a>Nikoli <a href="#p0">[8]</a>。
+</p>
+<p><a name="p0"></a>
+[8] <a href="https://www.nikoli.co.jp/ja/puzzles/gokigen_naname/"><code>https://www.nikoli.co.jp/ja/puzzles/gokigen_naname/</code></a>（日语）
+</p>
+<h2><a name="slant-controls"></a>20.1 <a name="i2"></a>斜线控制</h2>
+<p>
+左键点击空白方格将在其中放置一个 <code>\</code>（向左倾斜的线，即从方格的左上角延伸到右下角）。右键点击空白方格将在其中放置一个 <code>/</code>（向右倾斜，从右上角延伸到左下角）。
+</p>
+<p>
+继续点击任一按钮将在三种可能的方格内容之间循环。因此，如果你在空白方格中反复左键点击，它将从空白变为 <code>\</code> 变为 <code>/</code> 变回空白，如果你反复右键点击，方格将从空白变为 <code>/</code> 变为 <code>\</code> 变回空白。（因此，如果你需要，你可以完全用一个按钮玩游戏。）
+</p>
+<p>
+你也可以使用光标键在网格周围移动。按回车键或空格键将分别放置 <code>\</code> 或 <code>/</code>，然后如上所述循环它们。你也可以按 <code>/</code> 或 <code>\</code> 分别放置 <code>/</code> 或 <code>\</code>，与光标方格中已有的内容无关。退格键从光标方格中移除任何线。
+</p>
+<p>
+（<a href="common.html#common-actions">第 2.1 节</a> 中描述的所有操作也可用。）
+</p>
+<h2><a name="slant-parameters"></a>20.2 <a name="i3"></a>斜线参数</h2>
+<p>
+这些参数可从“类型”菜单的“自定义...”选项获得。
+</p>
+<dl><dt>
+<em>宽度</em>，<em>高度</em>
+</dt>
+<dd>
+网格的大小（以方块为单位）。
+</dd>
+<dt>
+<em>难度</em>
+</dt>
+<dd>
+控制生成的拼图的难度。在困难级别，你需要基于方格之间的<em>关系</em>知识进行推理，而不是总是能够一次推断出一个方格的确切内容。（例如，你可能知道两个方格向同一方向倾斜，即使你还不知道那个方向是什么，这可能使你能够推断出关于其他方格的信息。）即使在困难级别，也永远不需要猜测和回溯。
+</dd>
+</dl>
+<h2><a name="slant-prefs"></a>20.3 <a name="i4"></a>斜线用户首选项</h2>
+<p>
+在支持用户首选项的平台上，“游戏”菜单上的“首选项”选项将允许你配置鼠标按钮的工作方式。
+</p>
+
+<hr><address>
+[Simon Tatham's Portable Puzzle Collection, version 20260309.06e37f1]</address></body>
+</html>

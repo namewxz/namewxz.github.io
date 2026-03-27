@@ -1,0 +1,1244 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN"
+"http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+<meta name="generator" content="Halibut, unidentified version">
+<title>后端接口</title>
+<link rel="previous" href="intro.html">
+<link rel="ToC" href="index.html">
+<link rel="up" href="index.html">
+<link rel="next" href="drawing.html">
+</head>
+<body>
+<p><a href="intro.html">上一章</a> | <a href="index.html">目录</a> | <a href="drawing.html">下一章</a></p>
+
+<ul>
+<li><a href="#backend">第2章：后端接口</a>
+<ul>
+<li><a href="#backend-structs">2.1 数据结构</a>
+<ul>
+<li><a href="#backend-game-params">2.1.1 <code>game_params</code></a></li>
+<li><a href="#backend-game-state">2.1.2 <code>game_state</code></a></li>
+<li><a href="#backend-game-drawstate">2.1.3 <code>game_drawstate</code></a></li>
+<li><a href="#backend-game-ui">2.1.4 <code>game_ui</code></a></li>
+</ul></li>
+<li><a href="#backend-simple">2.2 后端中的简单数据</a>
+<ul>
+<li><a href="#backend-name">2.2.1 <code>name</code></a></li>
+<li><a href="#backend-winhelp">2.2.2 <code>winhelp_topic</code> 和 <code>htmlhelp_topic</code></a></li>
+</ul></li>
+<li><a href="#backend-params">2.3 处理游戏参数集</a>
+<ul>
+<li><a href="#backend-default-params">2.3.1 <code>default_params()</code></a></li>
+<li><a href="#backend-fetch-preset">2.3.2 <code>fetch_preset()</code></a></li>
+<li><a href="#backend-preset-menu">2.3.3 <code>preset_menu()</code></a></li>
+<li><a href="#backend-encode-params">2.3.4 <code>encode_params()</code></a></li>
+<li><a href="#backend-decode-params">2.3.5 <code>decode_params()</code></a></li>
+<li><a href="#backend-free-params">2.3.6 <code>free_params()</code></a></li>
+<li><a href="#backend-dup-params">2.3.7 <code>dup_params()</code></a></li>
+<li><a href="#backend-can-configure">2.3.8 <code>can_configure</code></a></li>
+<li><a href="#backend-configure">2.3.9 <code>configure()</code></a></li>
+<li><a href="#backend-custom-params">2.3.10 <code>custom_params()</code></a></li>
+<li><a href="#backend-get-prefs">2.3.11 <code>get_prefs()</code></a></li>
+<li><a href="#backend-set-prefs">2.3.12 <code>set_prefs()</code></a></li>
+<li><a href="#backend-validate-params">2.3.13 <code>validate_params()</code></a></li>
+</ul></li>
+<li><a href="#backend-descs">2.4 处理游戏描述</a>
+<ul>
+<li><a href="#backend-new-desc">2.4.1 <code>new_desc()</code></a></li>
+<li><a href="#backend-validate-desc">2.4.2 <code>validate_desc()</code></a></li>
+<li><a href="#backend-new-game">2.4.3 <code>new_game()</code></a></li>
+</ul></li>
+<li><a href="#backend-states">2.5 处理游戏状态</a>
+<ul>
+<li><a href="#backend-dup-game">2.5.1 <code>dup_game()</code></a></li>
+<li><a href="#backend-free-game">2.5.2 <code>free_game()</code></a></li>
+</ul></li>
+<li><a href="#backend-ui">2.6 处理 <code>game_ui</code></a>
+<ul>
+<li><a href="#backend-new-ui">2.6.1 <code>new_ui()</code></a></li>
+<li><a href="#backend-free-ui">2.6.2 <code>free_ui()</code></a></li>
+<li><a href="#backend-encode-ui">2.6.3 <code>encode_ui()</code></a></li>
+<li><a href="#backend-decode-ui">2.6.4 <code>decode_ui()</code></a></li>
+<li><a href="#backend-changed-state">2.6.5 <code>changed_state()</code></a></li>
+</ul></li>
+<li><a href="#backend-moves">2.7 进行移动</a>
+<ul>
+<li><a href="#backend-interpret-move">2.7.1 <code>interpret_move()</code></a></li>
+<li><a href="#backend-execute-move">2.7.2 <code>execute_move()</code></a></li>
+<li><a href="#backend-can-solve">2.7.3 <code>can_solve</code></a></li>
+<li><a href="#backend-solve">2.7.4 <code>solve()</code></a></li>
+</ul></li>
+<li><a href="#backend-drawing">2.8 绘制游戏图形</a>
+<ul>
+<li><a href="#backend-new-drawstate">2.8.1 <code>new_drawstate()</code></a></li>
+<li><a href="#backend-free-drawstate">2.8.2 <code>free_drawstate()</code></a></li>
+<li><a href="#backend-preferred-tilesize">2.8.3 <code>preferred_tilesize</code></a></li>
+<li><a href="#backend-compute-size">2.8.4 <code>compute_size()</code></a></li>
+<li><a href="#backend-set-size">2.8.5 <code>set_size()</code></a></li>
+<li><a href="#backend-colours">2.8.6 <code>colours()</code></a></li>
+<li><a href="#backend-anim-length">2.8.7 <code>anim_length()</code></a></li>
+<li><a href="#backend-flash-length">2.8.8 <code>flash_length()</code></a></li>
+<li><a href="#backend-get-cursor-location">2.8.9 <code>get_cursor_location()</code></a></li>
+<li><a href="#backend-status">2.8.10 <code>status()</code></a></li>
+<li><a href="#backend-redraw">2.8.11 <code>redraw()</code></a></li>
+</ul></li>
+<li><a href="#backend-printing">2.9 打印函数</a>
+<ul>
+<li><a href="#backend-can-print">2.9.1 <code>can_print</code></a></li>
+<li><a href="#backend-can-print-in-colour">2.9.2 <code>can_print_in_colour</code></a></li>
+<li><a href="#backend-print-size">2.9.3 <code>print_size()</code></a></li>
+<li><a href="#backend-print">2.9.4 <code>print()</code></a></li>
+</ul></li>
+<li><a href="#backend-misc">2.10 杂项</a>
+<ul>
+<li><a href="#backend-can-format-as-text-ever">2.10.1 <code>can_format_as_text_ever</code></a></li>
+<li><a href="#backend-can-format-as-text-now">2.10.2 <code>can_format_as_text_now()</code></a></li>
+<li><a href="#backend-text-format">2.10.3 <code>text_format()</code></a></li>
+<li><a href="#backend-wants-statusbar">2.10.4 <code>wants_statusbar</code></a></li>
+<li><a href="#backend-is-timed">2.10.5 <code>is_timed</code></a></li>
+<li><a href="#backend-timing-state">2.10.6 <code>timing_state()</code></a></li>
+<li><a href="#backend-request-keys">2.10.7 <code>request_keys()</code></a></li>
+<li><a href="#backend-current-key-label">2.10.8 <code>current_key_label()</code></a></li>
+<li><a href="#backend-flags">2.10.9 <code>flags</code></a></li>
+</ul></li>
+<li><a href="#backend-initiative">2.11 后端可以主动执行的操作</a>
+<ul>
+<li><a href="#backend-newrs">2.11.1 创建随机状态</a></li>
+<li><a href="#backend-supersede">2.11.2 取代自己的游戏描述</a></li>
+<li><a href="#backend-set-public-desc">2.11.3 <code>set_public_desc()</code></a></li>
+</ul></li>
+</ul></li>
+</ul>
+<h1><a name="backend"></a>第2章：后端接口</h1>
+<p>
+本章详细讨论每个后端必须实现的接口。
+</p>
+<p>
+在顶层，每个后端源文件导出一个全局符号，即一个 <code>const struct game</code>，包含大量函数指针和少量常量数据。这个结构根据拼图集编译的平台类型有不同的名称：
+</p>
+<ul><li>
+在 Windows 和 GTK 等平台上，每个拼图构建一个单独的二进制文件，每个后端中的游戏结构都有相同的名称，即“<code>thegame</code>”；前端直接引用这个名称，因此将相同的前端模块与不同的后端模块编译会构建不同的拼图。
+</li>
+<li>
+在 MacOS X 和 PalmOS 等平台上，所有拼图都构建到一个单一的整体二进制文件中，每个后端中的游戏结构必须有不同的名称，并且有一个辅助模块 <code>list.c</code>，它从 CMake 生成的头文件构建这些游戏结构的完整列表。
+</li>
+</ul>
+<p>
+在后一种类型的平台上，源文件可以假设预处理器符号 <code>COMBINED</code> 已被定义。因此，声明游戏结构的通常代码如下所示：
+</p>
+<pre><code>#ifdef COMBINED
+#define thegame <em>net</em>    <em>/* 或这个游戏的其他名称 */</em>
+#endif
+
+const struct game thegame = {
+    <em>/* 这里有很多结构初始化 */</em>
+};
+</code></pre>
+<p>
+游戏后端还必须在内部定义许多数据结构，用于存储其各种持久状态。本章将首先讨论这些结构的性质和用途，然后详细介绍游戏结构的每个元素。
+</p>
+<h2><a name="backend-structs"></a>2.1 数据结构</h2>
+<p>
+每个游戏都需要定义四个独立的数据结构。本节讨论每个结构并建议需要放入哪些内容。
+</p>
+<h3><a name="backend-game-params"></a>2.1.1 <code>game_params</code></h3>
+<p>
+<code>game_params</code> 结构包含影响新拼图自动生成的任何内容。因此，如果拼图生成以任何方式参数化，这些参数需要存储在 <code>game_params</code> 中。
+</p>
+<p>
+当前此集合中的大多数拼图都在方格网格上玩，这意味着最明显的参数是网格大小。许多拼图有额外的参数；例如，Mines 允许你独立于网格大小控制网格中的地雷数量，Net 可以是环绕或非环绕的，Solo 有难度级别和对称性设置，等等。
+</p>
+<p>
+决定数据项是否需要放入 <code>game_params</code> 的简单规则是：用户是否期望能够从预设游戏类型菜单或“自定义”游戏类型配置中控制此数据项？如果是，它就是 <code>game_params</code> 的一部分。
+</p>
+<p>
+如果需要，<code>game_params</code> 结构可以包含指向辅助数据的指针。后端需要提供创建和销毁 <code>game_params</code> 的函数，这些函数可以在必要时分配和释放额外的内存。（到目前为止，在任何拼图中都还没有必要这样做，但这种能力是存在的，以防万一。）
+</p>
+<p>
+<code>game_params</code> 也是游戏的 <code>compute_size()</code> 函数可以引用的唯一结构；这意味着游戏中影响其需要绘制的窗口大小的任何方面（除了放大级别）都必须存储在 <code>game_params</code> 中。特别是，这施加了一个基本限制：随机游戏生成可能不会对窗口大小产生随机影响：游戏生成算法被约束为从网格大小开始工作，而不是将其生成为一种涌现现象。（虽然这在理论上是一个限制，但到目前为止似乎不是问题。）
+</p>
+<h3><a name="backend-game-state"></a>2.1.2 <code>game_state</code></h3>
+<p>
+当用户实际玩拼图时，<code>game_state</code> 结构存储与当前游戏状态对应的所有数据。
+</p>
+<p>
+中端在列表中保留 <code>game_state</code>，并在玩家每次移动时添加到列表中；撤销和重做函数在该列表上来回移动。
+</p>
+<p>
+因此，决定数据项是否需要放入 <code>game_state</code> 的好方法是：玩家是否期望在撤销时恢复该数据项？如果是，将其放入 <code>game_state</code>，这将自动发生，无需你做任何事情。如果不是，那么你可能找到了一个需要放入 <code>game_ui</code> 的数据项。
+</p>
+<p>
+这方面的两个完全不同的例子：
+</p>
+<ul><li>
+如果游戏提供了一个界面，通过使用键盘在网格周围移动光标并在到达要更改的方块时按其他键来进行移动，那么该光标的位置属于 <code>game_ui</code>，因为玩家希望一次撤销一个<em>方块更改</em>，而不是一次撤销一个<em>光标移动</em>。
+</li>
+<li>
+Mines 跟踪你打开地雷方块并死亡的次数。每次你这样做，你只能通过按撤销来继续游戏。因此，死亡计数器属于 <code>game_ui</code>，因为否则，每次你撤销错误的移动时，它都会恢复为 0。
+</li>
+</ul>
+<p>
+在游戏过程中，<code>game_state</code> 通常在没有伴随的 <code>game_params</code> 结构的情况下传递。因此，<code>game_params</code> 中在游戏过程中重要的任何信息（例如网格大小）都必须在 <code>game_state</code> 中重复。这样做的一种简单方法是让 <code>game_state</code> 结构<em>包含</em>一个 <code>game_params</code> 结构作为其成员之一，尽管如果你更喜欢以其他方式做，这不是必须的。
+</p>
+<h3><a name="backend-game-drawstate"></a>2.1.3 <code>game_drawstate</code></h3>
+<p>
+<code>game_drawstate</code> 携带与拼图窗口当前图形内容相关的持久状态。相同的 <code>game_drawstate</code> 传递给游戏重绘函数的每次调用，以便它可以记住已经绘制的内容和需要重绘的内容。
+</p>
+<p>
+<code>game_drawstate</code> 的典型用途是有一个数组镜像 <code>game_state</code> 中的网格方块数组，但描述最近一次重绘时在窗口中绘制的内容。这用于通过决定该数组中的新值应该是什么，并将其与上次绘制的内容进行比较，来识别下次需要重绘的方块。有关此主题的更多信息，请参见 <a href="writing.html#writing-howto-redraw">第6.3.1节</a>。
+</p>
+<p>
+如果用户以某种方式强制完全重绘，中端偶尔会完全拆除并重建 <code>game_drawstate</code>。因此，不应在 <code>game_drawstate</code> 中存储<em>与拼图窗口状态无关</em>的数据，因为它可能会被意外销毁。
+</p>
+<p>
+后端提供创建和销毁 <code>game_drawstate</code> 的函数，这意味着如果需要，它可以包含指向辅助分配数据的指针。在 <code>game_drawstate</code> 中分配的常见内容是 <code>blitter</code>；有关此主题的更多信息，请参见 <a href="drawing.html#drawing-blitter">第3.1.14节</a>。
+</p>
+<h3><a name="backend-game-ui"></a>2.1.4 <code>game_ui</code></h3>
+<p>
+<code>game_ui</code> 包含不适合上述三个结构的任何内容！
+</p>
+<p>
+当用户开始玩拼图的新实例时（即在“新游戏”期间或输入游戏 ID 等之后），会创建一个新的 <code>game_ui</code>。它会一直存在，直到用户完成该游戏并开始另一个游戏（或关闭窗口）；特别是，“重新开始游戏”<em>不会</em>销毁 <code>game_ui</code>。
+</p>
+<p>
+你可能会在 <code>game_ui</code> 中存储各种不同概念的东西，但我还没有发现需要将它们分解为不同目的的较小子结构：
+</p>
+<dl><dt>
+瞬态 UI 状态：
+</dt>
+<dd>
+在 <code>game_state</code> 中存储 UI 状态意味着你只能通过向撤销链追加移动来更新它。某些 UI 状态不应该这样处理。例如，如果你的拼图有一个键盘控制的光标，你可能不希望每次光标移动都是一个可撤销的操作，因为光标移动的历史并不有趣。更可能的是，光标应该自由移动，唯一可撤销的操作是你修改光标下元素的操作。所以你会将光标位置存储在 <code>game_ui</code> 而不是 <code>game_state</code> 中。有关更多详细信息，请参见 <a href="writing.html#writing-keyboard-cursor">第6.3.3节</a>。
+<p>
+另一个例子是正在进行的鼠标拖动的状态。如果涉及可撤销的操作，它可能会在拖动释放时发生。在此期间，你仍然需要存储重绘函数将用于更新显示的状态 — 这可以存在于 <code>game_ui</code> 中。有关此主题的更多详细信息，请参见 <a href="writing.html#writing-howto-dragging">第6.3.4节</a>。
+</p>
+
+</dd>
+<dt>
+持久 UI 状态：
+</dt>
+<dd>
+这方面的一个例子是 Mines 或 Inertia 中的死亡计数器。这不应通过按撤销来恢复，原因与光标位置相反：光标位置太无聊，无法存储历史记录，但死亡计数器太<em>重要</em>了！
+</dd>
+<dt>
+有关游戏状态最近更改的信息：
+</dt>
+<dd>
+例如，这在 Mines 中用于指示请求的“闪烁”应该是胜利的白色闪烁还是失败的红色闪烁；请参见 <a href="writing.html#writing-flash-types">第6.3.6节</a>。
+</dd>
+<dt>
+用户偏好：
+</dt>
+<dd>
+任何由 <code>get_prefs()</code> 和 <code>set_prefs()</code> 处理的关于显示或 UI 的用户偏好都需要存在于 <code>game_ui</code> 中，因为这是那些函数访问的结构。
+</dd>
+</dl>
+<h2><a name="backend-simple"></a>2.2 后端中的简单数据</h2>
+<p>
+在本节中，我开始讨论后端结构中的每个单独元素。首先，这里有一些简单的自包含数据元素。
+</p>
+<h3><a name="backend-name"></a>2.2.1 <code>name</code></h3>
+<pre><code>const char *name;
+</code></pre>
+<p>
+这是一个简单的 ASCII 字符串，给出拼图的名称。此名称将用于窗口标题、单片平台上的游戏选择菜单以及前端需要知道游戏名称的任何其他地方。
+</p>
+<h3><a name="backend-winhelp"></a>2.2.2 <code>winhelp_topic</code> 和 <code>htmlhelp_topic</code></h3>
+<pre><code>const char *winhelp_topic, *htmlhelp_topic;
+</code></pre>
+<p>
+这些成员仅在 Windows 上使用，以提供在线帮助。虽然 Windows 前端为每个拼图提供单独的二进制文件，但它有一个单一的整体帮助文件；因此，当用户从菜单中选择“帮助”时，程序需要打开帮助文件并跳转到描述该特定拼图的章节。
+</p>
+<p>
+此代码库仍然支持传统的 <code>.HLP</code> Windows 帮助格式以及较旧的 <code>.CHM</code> HTML 帮助格式。两者使用不同的方法来标识主题，因此你必须同时指定两者。
+</p>
+<p>
+<code>puzzles.but</code> 中关于拼图的每一章都标有 Windows 帮助的<em>帮助主题</em>名称，通常出现在 <code>\C</code> 章节标题段落之后，类似于这样：
+</p>
+<pre><code>\C{net} \i{Net}
+
+\cfg{winhelp-topic}{games.net}
+</code></pre>
+<p>
+但 HTML 帮助能够使用章节本身的 Halibut 标识符，即紧跟在 <code>\C</code> 后面的大括号中的关键字。
+</p>
+<p>
+因此，相应的游戏后端在游戏结构的 <code>winhelp_topic</code> 元素中编码 <code>winhelp-topic</code> 字符串（这里是“<code>games.net</code>”），并将章节标识符（这里是“<code>net</code>”）放在 <code>htmlhelp_topic</code> 元素中。例如：
+</p>
+<pre><code>const struct game thegame = {
+   "Net", "games.net", "net",
+   // ...
+};
+</code></pre>
+<h2><a name="backend-params"></a>2.3 处理游戏参数集</h2>
+<p>
+在本节中，我介绍处理 <code>game_params</code> 结构的各种函数。
+</p>
+<h3><a name="backend-default-params"></a>2.3.1 <code>default_params()</code></h3>
+<pre><code>game_params *(*default_params)(void);
+</code></pre>
+<p>
+此函数分配一个新的 <code>game_params</code> 结构，用默认值填充它，并返回指向它的指针。
+</p>
+<h3><a name="backend-fetch-preset"></a>2.3.2 <code>fetch_preset()</code></h3>
+<pre><code>bool (*fetch_preset)(int i, char **name, game_params **params);
+</code></pre>
+<p>
+此函数是后端可以提供的两个 API 之一，用于填充“类型”菜单，该菜单为大多数游戏提供了一组方便访问的预设参数。
+</p>
+<p>
+调用此函数时，<code>i</code> 等于所需预设的索引（从零开始编号）。如果该预设不存在（如果 <code>i</code> 小于零或大于最大预设索引），则返回 <code>false</code>。否则，它将 <code>*params</code> 设置为指向包含预设信息的新分配的 <code>game_params</code> 结构，将 <code>*name</code> 设置为指向包含预设标题的新分配的 C 字符串（用于“类型”菜单），并返回 <code>true</code>。
+</p>
+<p>
+如果游戏不希望支持任何预设，此函数允许始终返回 <code>false</code>。
+</p>
+<p>
+如果游戏希望以层次菜单的形式返回预设而不是扁平列表（实际上，即使它不这样做），它可以将此函数指针设置为 <code>NULL</code>，而是填写替代函数指针 <code>preset_menu</code>（<a href="#backend-preset-menu">第2.3.3节</a>）。
+</p>
+<h3><a name="backend-preset-menu"></a>2.3.3 <code>preset_menu()</code></h3>
+<pre><code>struct preset_menu *(*preset_menu)(void);
+</code></pre>
+<p>
+此函数是后端可以定义一组预设游戏参数的两种 API 中更灵活的一种。
+</p>
+<p>
+此函数简单地返回一个完整的菜单层次结构，形式为 <code>struct preset_menu</code>（参见 <a href="midend.html#midend-get-presets">第4.17节</a>）和悬挂在其上的更多子菜单（如果需要）。在 <a href="utils.html#utils-presets">第5.2节</a> 中描述了实用函数，使后端可以轻松构建此菜单。
+</p>
+<p>
+如果游戏不需要返回菜单层次结构，它可以选择实现 <code>fetch_preset()</code> 函数（参见 <a href="#backend-fetch-preset">第2.3.2节</a>）。
+</p>
+<p>
+游戏不需要在预设菜单结构中填写 <code>id</code> 字段。中端会在从游戏接收结构后，在将其传递给前端之前完成此操作。
+</p>
+<h3><a name="backend-encode-params"></a>2.3.4 <code>encode_params()</code></h3>
+<pre><code>char *(*encode_params)(const game_params *params, bool full);
+</code></pre>
+<p>
+此函数的任务是获取 <code>game_params</code>，并将其编码为可打印的 ASCII 字符串形式，用于游戏 ID。返回值必须是新分配的 C 字符串，并且<em>不得</em>包含冒号或哈希符号（因为这些字符用于标记游戏 ID 中参数部分的结尾）。
+</p>
+<p>
+理想情况下，它也不应包含任何其他可能有争议的标点符号；在设计字符串参数格式时，请记住它可能会在 Windows 和 Unix 命令行中使用，遵循各种令人兴奋的 shell 引用和元字符规则。完全使用字母数字是最安全的；如果你确实需要标点符号，你可能可以使用逗号、句点或下划线而不会给任何人带来重大不便。如果你超越这一点，你可能会激怒<em>某人</em>。
+</p>
+<p>
+（在撰写本文时，大多数现有游戏都有纯字母数字的字符串参数格式。通常这些涉及一个表示参数的字母，后跟一个可选的数字给出该参数的值，开头有一些强制性部分，例如用“<code>x</code>”分隔的数字宽度和高度。）
+</p>
+<p>
+如果 <code>full</code> 参数为 <code>true</code>，此函数应编码 <code>game_params</code> 中的绝对所有内容，使得后续调用 <code>decode_params()</code>（<a href="#backend-decode-params">第2.3.5节</a>）将产生相同的结构。然而，如果 <code>full</code> 为 <code>false</code>，你应该省略任何不需要描述<em>特定拼图实例</em>的内容，即任何只在生成新拼图时生效的内容。
+</p>
+<p>
+例如，Solo <code>game_params</code> 包括构建新拼图时使用的难度等级；但 Solo 游戏 ID 不需要明确包含难度，因为要描述生成后的拼图，只需给出网格尺寸以及线索方块的位置和内容即可。（实际上，人们可能很容易从报纸上输入一个拼图，而<em>不知道</em>它在 Solo 术语中的难度等级是多少。）因此，Solo 的 <code>encode_params()</code> 只有在设置了 <code>full</code> 时才编码难度等级。
+</p>
+<h3><a name="backend-decode-params"></a>2.3.5 <code>decode_params()</code></h3>
+<pre><code>void (*decode_params)(game_params *params, char const *string);
+</code></pre>
+<p>
+此函数是 <code>encode_params()</code>（<a href="#backend-encode-params">第2.3.4节</a>）的逆函数。它解析提供的字符串并填充提供的 <code>game_params</code> 结构。请注意，该结构将<em>已经</em>被分配：此函数不期望创建<em>新</em>的 <code>game_params</code>，而是修改现有的。
+</p>
+<p>
+此函数可以接收仅编码参数子集的字符串。最明显的方式是，如果字符串是由 <code>encode_params()</code> 以其 <code>full</code> 参数设置为 <code>false</code> 构建的；然而，如果用户手动输入参数集并遗漏了某些内容，也可能发生这种情况。准备好处理各种可能性。
+</p>
+<p>
+当处理输入字符串中未指定的参数时，该做什么需要程序员做出判断。有时，调整其他参数以使其与新参数保持一致是有意义的。例如，在 Mines 中，如果你可能不希望在用户减小网格大小且未指定地雷数量时保持相同的地雷数量，因为你可能很容易最终得到比网格中实际容纳的地雷更多的地雷！另一方面，有时保持参数不变是有意义的：Solo 玩家可能合理地期望能够独立配置大小和难度。
+</p>
+<p>
+此函数目前没有直接的方法在字符串完全无法解析时返回错误。然而，返回的 <code>game_params</code> 几乎总是随后传递给 <code>validate_params()</code>（<a href="#backend-validate-params">第2.3.13节</a>），因此如果你真的想发出解析错误信号，你可以在参数结构中有一个 <code>char *</code> 来存储错误消息，并让 <code>validate_params()</code> 在它非 <code>NULL</code> 时返回它。
+</p>
+<h3><a name="backend-free-params"></a>2.3.6 <code>free_params()</code></h3>
+<pre><code>void (*free_params)(game_params *params);
+</code></pre>
+<p>
+此函数释放 <code>game_params</code> 结构及其包含的任何辅助分配。
+</p>
+<h3><a name="backend-dup-params"></a>2.3.7 <code>dup_params()</code></h3>
+<pre><code>game_params *(*dup_params)(const game_params *params);
+</code></pre>
+<p>
+此函数分配一个新的 <code>game_params</code> 结构，并用提供的输入中的信息的精确副本初始化它。它返回指向新副本的指针。
+</p>
+<h3><a name="backend-can-configure"></a>2.3.8 <code>can_configure</code></h3>
+<pre><code>bool can_configure;
+</code></pre>
+<p>
+如果后端支持通过对话框进行自定义参数配置，则此数据元素设置为 <code>true</code>。如果为 <code>true</code>，则函数 <code>configure()</code> 和 <code>custom_params()</code> 应能工作。有关更多详细信息，请参见 <a href="#backend-configure">第2.3.9节</a> 和 <a href="#backend-custom-params">第2.3.10节</a>。
+</p>
+<h3><a name="backend-configure"></a>2.3.9 <code>configure()</code></h3>
+<pre><code>config_item *(*configure)(const game_params *params);
+</code></pre>
+<p>
+当用户请求用于自定义参数配置的对话框时，调用此函数。它返回一个新分配的 <code>config_item</code> 结构数组，描述对话框中所需的 GUI 元素。数组应该比控件数量多一个元素，因为它以 <code>C_END</code> 标记结束（见下文）。每个数组元素描述控件及其初始值；前端将修改值字段并将更新的数组返回给 <code>custom_params()</code>（见 <a href="#backend-custom-params">第2.3.10节</a>）。
+</p>
+<p>
+<code>config_item</code> 结构包含此函数使用的以下元素：
+</p>
+<pre><code>const char *name;
+int type;
+union { <em>/* 类型特定字段 */</em> } u;
+</code></pre>
+<p>
+<code>name</code> 是一个 ASCII 字符串，给出 GUI 控件的文本标签。它<em>不需要</em>是动态分配的。
+</p>
+<p>
+<code>type</code> 包含少量 <code>enum</code> 值之一，定义正在描述的控件类型。联合字段 <code>u</code> 的可用成员取决于 <code>type</code>。有效的类型值为：
+</p>
+<dl><dt>
+<code>C_STRING</code>
+</dt>
+<dd>
+描述文本输入框。（这也用于数字输入。后端不费心通知前端该框是数字的而不是文本的；一些前端确实有能力考虑到这一点，但我认为在接口中增加这种复杂性是不值得的。）
+<p>
+对于这种类型的控件，<code>u.string</code> 包含一个字段
+</p>
+<pre><code>char *sval;
+</code></pre>
+<p>
+它存储一个动态分配的字符串，表示输入框的内容。
+</p>
+
+</dd>
+<dt>
+<code>C_BOOLEAN</code>
+</dt>
+<dd>
+描述一个简单的复选框。
+<p>
+对于这种类型的控件，<code>u.boolean</code> 包含一个字段
+</p>
+<pre><code>bool bval;
+</code></pre>
+
+</dd>
+<dt>
+<code>C_CHOICES</code>
+</dt>
+<dd>
+描述一个下拉列表，呈现少量固定选项之一。
+<p>
+对于这种类型的控件，<code>u.choices</code> 包含两个字段：
+</p>
+<pre><code>const char *choicenames;
+int selected;
+</code></pre>
+<p>
+<code>choicenames</code> 包含描述选项的字符串列表。<code>sval</code> 的第一个字符用作处理其余部分的分隔符（因此字符串 '<code>:zero:one:two</code>'、'<code>!zero!one!two</code>' 和 '<code>xzeroxonextwo</code>' 都定义了一个包含 '<code>zero</code>'、'<code>one</code>' 和 '<code>two</code>' 的三元素列表）。
+</p>
+<p>
+<code>selected</code> 包含当前选择的元素的索引，从零开始编号（因此在上面的示例中，0 表示 '<code>zero</code>'，2 表示 '<code>two</code>'）。
+</p>
+<p>
+请注意，<code>u.choices.choicenames</code><em>不是</em>动态分配的，与 <code>u.string.sval</code> 不同。
+</p>
+
+</dd>
+<dt>
+<code>C_END</code>
+</dt>
+<dd>
+标记 <code>config_item</code> 数组的结尾。此类型没有联合字段 <code>u</code> 的关联成员。
+</dd>
+</dl>
+<p>
+此函数返回的数组应根据输入 <code>game_params</code> 结构填写所有控件的初始值。
+</p>
+<p>
+如果游戏的 <code>can_configure</code> 标志设置为 <code>false</code>，则永远不会调用此函数，并且可以为 <code>NULL</code>。
+</p>
+<h3><a name="backend-custom-params"></a>2.3.10 <code>custom_params()</code></h3>
+<pre><code>game_params *(*custom_params)(const config_item *cfg);
+</code></pre>
+<p>
+此函数是 <code>configure()</code>（<a href="#backend-configure">第2.3.9节</a>）的对应函数。它接收作为输入的 <code>config_item</code> 数组，该数组最初由 <code>configure()</code> 创建，但其中的控件值已根据用户输入进行了更改。其函数是从控件中读取新值并返回一个新分配的 <code>game_params</code> 结构，表示用户选择的参数集。
+</p>
+<p>
+（前端会修改控件的<em>值</em>，但仍然会始终有与 <code>configure()</code> 提供的相同的控件集，按相同的顺序。没有必要检查 <code>name</code> 和 <code>type</code> 字段，尽管如果你精力充沛，你可以使用 <code>assert()</code>。）
+</p>
+<p>
+此函数不应（实际上<em>必须</em>不）释放输入 <code>config_item</code> 数组。（如果参数验证失败，对话框将保持打开。）
+</p>
+<p>
+如果游戏的 <code>can_configure</code> 标志设置为 <code>false</code>，则永远不会调用此函数，并且可以为 <code>NULL</code>。
+</p>
+<h3><a name="backend-get-prefs"></a>2.3.11 <code>get_prefs()</code></h3>
+<pre><code>config_item *(*get_prefs)(game_ui *ui);
+</code></pre>
+<p>
+此函数的工作方式与 <code>configure()</code> 非常相似，但它不是接收 <code>game_params</code> 并返回描述其中数据的 GUI 元素，而是接收 <code>game_ui</code> 并返回描述存储在其中的任何用户偏好的 GUI 元素。
+</p>
+<p>
+此函数应仅处理 <code>game_ui</code> 中用户可设置的偏好字段。游戏中的状态（如光标位置和鼠标拖动）或每游戏状态（如死亡计数器）与此函数无关。
+</p>
+<p>
+如果没有用户偏好，你可以将此函数指针和 <code>set_prefs</code> 设置为 <code>NULL</code>。
+</p>
+<p>
+如果你实现这些函数，你还必须确保游戏的 <code>new_ui()</code> 函数可以使用空 <code>game_state</code> 指针调用。（参见 <a href="#backend-new-ui">第2.6.1节</a>。）
+</p>
+<p>
+在此函数返回的每个 <code>config_item</code> 中，你必须设置 <a href="#backend-configure">第2.3.9节</a> 中描述的字段之外的额外字段：
+</p>
+<pre><code>const char *kw;
+</code></pre>
+<p>
+这应该是有关用户偏好的识别关键字，适合在配置文件中使用。这意味着它应该保持稳定，即使 <code>name</code> 字段中的用户面向措辞为了清晰而被改写。如果它不稳定，旧的配置文件将无法正确读取。
+</p>
+<p>
+对于类型为 <code>C_CHOICES</code> 的 <code>config_item</code>，你还必须在 <code>u.choices</code> 中设置一个额外字段：
+</p>
+<pre><code>const char *choicekws;
+</code></pre>
+<p>
+这与 <code>choicenames</code> 字段具有相同的结构（由整个字符串中的第一个字符分隔的值列表），并为列表中的每个单独选项提供识别关键字，顺序与 <code>choicenames</code> 的条目相同。
+</p>
+<h3><a name="backend-set-prefs"></a>2.3.12 <code>set_prefs()</code></h3>
+<pre><code>void (*set_prefs)(game_ui *ui, const config_item *cfg);
+</code></pre>
+<p>
+此函数是 <code>set_prefs()</code> 的对应函数，就像 <code>custom_params()</code> 是 <code>configure()</code> 的对应函数一样。它接收一个 <code>config_item</code> 数组作为输入，该数组最初由 <code>get_prefs()</code> 创建，控件值从用户输入更新，并且它应该将新设置转录到提供的 <code>game_ui</code> 中。
+</p>
+<p>
+如果没有用户偏好，你可以将此函数指针和 <code>get_prefs</code> 设置为 <code>NULL</code>。
+</p>
+<h3><a name="backend-validate-params"></a>2.3.13 <code>validate_params()</code></h3>
+<pre><code>const char *(*validate_params)(const game_params *params,
+                               bool full);
+</code></pre>
+<p>
+此函数接收 <code>game_params</code> 结构作为输入，并检查其中描述的参数是否在合理范围内。（至少，网格尺寸几乎肯定应该严格为正，例如。）
+</p>
+<p>
+返回值为 <code>NULL</code>（如果未发现问题），或者是描述人类可读形式错误的（非动态分配的）ASCII 字符串。
+</p>
+<p>
+如果设置了 <code>full</code> 参数，则应执行完全验证：任何不允许生成合理拼图的参数集都应被错误。如果 <code>full</code> 未设置，则意味着这些参数不会用于<em>生成</em>拼图；因此，无法合理<em>描述</em>有效拼图的参数仍应被错误，但仅影响拼图生成的参数不应被错误。
+</p>
+<p>
+（当参数组合非正交时，<code>full</code> 选项会产生差异。例如，Net 有一个布尔选项，控制它是否强制唯一解；事实证明，无法生成具有环绕墙和宽度 2 的唯一可解拼图，因此如果你要求一个，<code>validate_params()</code> 会抱怨。然而，如果用户刚刚玩了一个更合理宽度的唯一环绕拼图，然后粘贴了一个来自其他人的游戏 ID，该 ID 恰好描述了一个<em>非</em>唯一的环绕宽度 2 拼图，那么 <code>validate_params()</code> 将被传递一个 <code>game_params</code>，其中包含来自新游戏 ID 的宽度和环绕设置以及来自旧游戏的唯一性设置。如果不是在调用期间未设置 <code>full</code>，Net 会忽略这种不一致，否则这将被错误。生成的 <code>game_params</code> 随后永远不会用于生成拼图；这是中端在请求非完全验证时做出的承诺。）
+</p>
+<h2><a name="backend-descs"></a>2.4 处理游戏描述</h2>
+<p>
+在本节中，我介绍处理拼图文本描述的函数，即描述性格式游戏 ID 中冒号后面的部分。
+</p>
+<h3><a name="backend-new-desc"></a>2.4.1 <code>new_desc()</code></h3>
+<pre><code>char *(*new_desc)(const game_params *params, random_state *rs,
+                  char **aux, bool interactive);
+</code></pre>
+<p>
+此函数是所有真正困难工作完成的地方。这是负责随机生成新拼图的函数，确保适当的可解性和唯一性。
+</p>
+<p>
+作为输入，它被赋予一个 <code>game_params</code> 结构和一个随机状态（有关随机数 API，请参见 <a href="utils.html#utils-random">第5.1节</a>）。它必须发明一个拼图实例，将其编码为可打印的 ASCII 字符串形式，并返回包含该编码的动态分配的 C 字符串。
+</p>
+<p>
+此外，它可以在 <code>*aux</code> 中返回第二个动态分配的字符串。（如果它不想这样做，那么它可以完全不管那个参数；它不需要将其设置为 <code>NULL</code>，尽管这样做是无害的。）如果存在该字符串，稍后会将其传递给 <code>solve()</code>（<a href="#backend-solve">第2.7.4节</a>）；因此，如果拼图是以已知解决方案的方式生成的，那么关于该解决方案的信息可以保存在 <code>*aux</code> 中供 <code>solve()</code> 使用。
+</p>
+<p>
+几乎所有拼图都应该忽略 <code>interactive</code> 参数。其目的是区分在 GUI 上下文中生成拼图以供立即玩，以及在命令行上下文中生成拼图以供保存后玩。目前使用这种区别的唯一拼图（我热切希望永远需要使用它的唯一拼图）是 Mines，它在非交互式生成拼图时选择随机的首次点击位置，但在交互式时等待用户放置首次点击。如果你认为你想出了另一个需要使用此参数的拼图，请至少思考十分钟，是否有<em>任何</em>替代方案！
+</p>
+<p>
+请注意，游戏描述字符串不需要包含网格大小等参数的编码；游戏描述永远不会与其生成时的 <code>game_params</code> 分开，因此该结构中包含的任何信息都不需要在游戏描述中再次编码。
+</p>
+<h3><a name="backend-validate-desc"></a>2.4.2 <code>validate_desc()</code></h3>
+<pre><code>const char *(*validate_desc)(const game_params *params,
+                             const char *desc);
+</code></pre>
+<p>
+此函数被赋予一个游戏描述，其工作是验证它描述了一个有意义的拼图。
+</p>
+<p>
+在某种程度上，用户完全取决于他们对“有意义”一词的理解程度；对于用户手动输入虚假游戏描述时允许自己多么严重地自找麻烦，没有特别严格的规则。（例如，Rectangles 不会验证网格中所有数字的总和是否等于网格的面积。因此，用户可以输入一个可证明不可解的拼图，程序不会抱怨；只是不会碰巧有任何解决它的移动序列。）
+</p>
+<p>
+唯一不可协商的标准是，任何通过 <code>validate_desc()</code> 的游戏描述 <em>绝对不能</em> 在被提供给 <code>new_game()</code> 以及后续的后端其他部分时导致崩溃或断言失败。
+</p>
+<p>
+返回值在成功时为 <code>NULL</code>，或包含错误消息的非动态分配的 C 字符串。
+</p>
+<h3><a name="backend-new-game"></a>2.4.3 <code>new_game()</code></h3>
+<pre><code>game_state *(*new_game)(midend *me, const game_params *params,
+                        const char *desc);
+</code></pre>
+<p>
+此函数将游戏描述作为输入，连同其伴随的 <code>game_params</code>，并构建一个 <code>game_state</code> 描述拼图的初始状态。它返回一个新分配的 <code>game_state</code> 结构。
+</p>
+<p>
+几乎所有拼图都应该忽略 <code>me</code> 参数。它是 Mines 所必需的，Mines 需要它在用户放置第一次点击后传递给 <code>midend_supersede_game_desc()</code>（见 <a href="#backend-supersede">第 2.11.2 节</a>）。我强烈希望没有其他拼图会足够笨拙到需要它，所以其他人都应该忽略它。与 <code>new_desc()</code> 中的 <code>interactive</code> 参数（<a href="#backend-new-desc">第 2.4.1 节</a>）一样，如果你认为你有理由需要这个参数，请非常努力地思考替代方法！
+</p>
+<h2><a name="backend-states"></a>2.5 处理游戏状态</h2>
+<p>
+本节描述创建和销毁 <code>game_state</code> 结构的函数。
+</p>
+<p>
+（嗯，除了 <code>new_game()</code>，它在 <a href="#backend-new-game">第 2.4.3 节</a> 而不是这里；但它处理游戏描述 <em>和</em> 游戏状态，并且必须放在一个部分或另一个部分。）
+</p>
+<h3><a name="backend-dup-game"></a>2.5.1 <code>dup_game()</code></h3>
+<pre><code>game_state *(*dup_game)(const game_state *state);
+</code></pre>
+<p>
+此函数分配一个新的 <code>game_state</code> 结构，并用提供的输入中的信息的精确副本初始化它。它返回指向新副本的指针。
+</p>
+<h3><a name="backend-free-game"></a>2.5.2 <code>free_game()</code></h3>
+<pre><code>void (*free_game)(game_state *state);
+</code></pre>
+<p>
+此函数释放 <code>game_state</code> 结构，以及其中包含的任何辅助分配。
+</p>
+<h2><a name="backend-ui"></a>2.6 处理 <code>game_ui</code></h2>
+<h3><a name="backend-new-ui"></a>2.6.1 <code>new_ui()</code></h3>
+<pre><code>game_ui *(*new_ui)(const game_state *state);
+</code></pre>
+<p>
+此函数分配并返回一个用于玩特定拼图的新 <code>game_ui</code> 结构。
+</p>
+<p>
+通常，此函数会传递一个指向初始 <code>game_state</code> 的指针，以防在设置新游戏的初始值时需要引用它。
+</p>
+<p>
+然而，如果拼图定义了 <code>get_prefs()</code> 和 <code>set_prefs()</code> 函数，那么此函数也可能在 <code>state==NULL</code> 的情况下被调用。在这种情况下，它仍然必须分配一个可被 <code>get_prefs()</code> 和 <code>set_prefs()</code> 使用的 <code>game_ui</code>，尽管它不需要可用于实际玩游戏。
+</p>
+<h3><a name="backend-free-ui"></a>2.6.2 <code>free_ui()</code></h3>
+<pre><code>void (*free_ui)(game_ui *ui);
+</code></pre>
+<p>
+此函数释放 <code>game_ui</code> 结构，以及其中包含的任何辅助分配。
+</p>
+<h3><a name="backend-encode-ui"></a>2.6.3 <code>encode_ui()</code></h3>
+<pre><code>char *(*encode_ui)(const game_ui *ui);
+</code></pre>
+<p>
+此函数以可打印的 ASCII 字符串形式编码 <code>game_ui</code> 结构中的任何 <em>重要</em> 数据。它只在将未完成的游戏保存到文件时被调用。
+</p>
+<p>
+应谨慎使用它。<code>game_ui</code> 中的几乎所有数据都不够重要，不需要保存。例如，键盘控制的光标的位置可以在重新加载游戏时重置为默认位置，而不会影响用户体验。如果用户以某种方式在鼠标拖动进行时保存游戏，那么丢弃该鼠标拖动将是一个彻底的 <em>功能</em>。
+</p>
+<p>
+在此函数中值得编码的典型内容是 Mines 的死亡计数器：它在 <code>game_ui</code> 而不是 <code>game_state</code> 中，因为它太重要了，不允许用户通过使用 Undo 来恢复它，因此也太重要了，不允许用户通过保存和重新加载来恢复它。（当然，用户可以手动编辑保存文件... 但如果用户 <em>那么</em> 决心作弊，他们也可以修改游戏的源代码。）
+</p>
+<p>
+<code>encode_ui()</code> 函数是可选的。如果后端不需要此函数，它可以将指针设置为 <code>NULL</code>。
+</p>
+<h3><a name="backend-decode-ui"></a>2.6.4 <code>decode_ui()</code></h3>
+<pre><code>void (*decode_ui)(game_ui *ui, const char *encoding,
+                  const game_state *state);
+</code></pre>
+<p>
+此函数解析先前由 <code>encode_ui()</code> 输出的字符串，并将解码的数据写回提供的新创建的 <code>game_ui</code> 结构中。如果字符串无效，函数应尽力而为，这可能只是意味着根本不改变 <code>game_ui</code> 结构。这可能发生在保存文件损坏时，或者只是来自编码更多 <code>game_ui</code> 数据的较新版本。提供当前的 <code>game_state</code> 以防函数需要引用它进行验证。
+</p>
+<p>
+与 <code>encode_ui()</code> 一样，<code>decode_ui()</code> 是可选的。如果后端不需要此函数，它可以将指针设置为 <code>NULL</code>。
+</p>
+<h3><a name="backend-changed-state"></a>2.6.5 <code>changed_state()</code></h3>
+<pre><code>void (*changed_state)(game_ui *ui, const game_state *oldstate,
+                      const game_state *newstate);
+</code></pre>
+<p>
+每当当前游戏状态因任何原因发生变化时，中端都会调用此函数。这些原因包括：
+</p>
+<ul><li>
+通过 <code>interpret_move()</code> 和 <code>execute_move()</code> 进行的新移动
+</li>
+<li>
+通过 <code>solve()</code> 和 <code>execute_move()</code> 执行的求解操作
+</li>
+<li>
+用户通过 Undo 和 Redo 操作在撤销列表上来回移动
+</li>
+<li>
+用户选择 Restart 回到初始游戏状态。
+</li>
+</ul>
+<p>
+<code>changed_state()</code> 的工作是更新 <code>game_ui</code> 以与新的游戏状态保持一致（如果需要任何更新）。例如，Same Game 在其 <code>game_ui</code> 中存储有关当前选择的瓦片组的数据，这些数据与从中派生的游戏状态内在相关。因此，当游戏状态改变时，它很可能会变得无效；因此，Same Game 的 <code>changed_state()</code> 函数在被调用时会清除当前选择。
+</p>
+<p>
+当调用 <code>anim_length()</code> 或 <code>flash_length()</code> 时，你可以确定之前已经调用过 <code>changed_state()</code>。因此，<code>changed_state()</code> 可以在 <code>game_ui</code> 中设置将被 <code>anim_length()</code> 和 <code>flash_length()</code> 读取的数据，而这些函数不必担心在数据未初始化的情况下被调用。
+</p>
+<h2><a name="backend-moves"></a>2.7 进行移动</h2>
+<p>
+本节描述实际在游戏中进行移动的函数：即处理用户输入并最终产生新的 <code>game_state</code> 的函数。
+</p>
+<h3><a name="backend-interpret-move"></a>2.7.1 <code>interpret_move()</code></h3>
+<pre><code>char *(*interpret_move)(const game_state *state, game_ui *ui,
+                        const game_drawstate *ds,
+                        int x, int y, int button);
+</code></pre>
+<p>
+此函数接收用户输入并处理它。其输入参数是当前的 <code>game_state</code>、当前的 <code>game_ui</code> 和当前的 <code>game_drawstate</code>，以及输入事件的详细信息。<code>button</code> 是 ASCII 值或指示箭头或功能键或鼠标事件的特殊代码（如下所列）；当 <code>button</code> 是鼠标事件时，<code>x</code> 和 <code>y</code> 包含鼠标指针相对于拼图绘制区域左上角的像素坐标。
+</p>
+<p>
+（指向 <code>game_drawstate</code> 的指针被标记为 <code>const</code>，因为 <code>interpret_move</code> 不应写入它。该指针的正常用途是读取游戏的瓦片大小参数，以便用它除以鼠标坐标。）
+</p>
+<p>
+<code>interpret_move()</code> 可能以四种不同的方式返回：
+</p>
+<ul><li>
+返回 <code>MOVE_UNUSED</code> 或 <code>MOVE_NO_EFFECT</code> 表示响应输入事件没有发生任何操作；拼图对它根本不感兴趣。它们之间的区别是，<code>MOVE_NO_EFFECT</code> 意味着游戏状态使事件变得无趣，而 <code>MOVE_UNUSED</code> 意味着事件本身就无趣。例如，在 Mines 中点击已揭示的方块可能返回 <code>MOVE_NO_EFFECT</code>，而点击棋盘外的区域将返回 <code>MOVE_UNUSED</code>。
+</li>
+<li>
+返回特殊值 <code>MOVE_UI_UPDATE</code> 表示输入事件导致对 <code>game_ui</code> 进行了更改，这将需要重新绘制游戏窗口，但没有进行实际的 <em>移动</em>（即不需要创建新的 <code>game_state</code>）。
+</li>
+<li>
+返回其他任何内容表示进行了移动，并且必须创建新的 <code>game_state</code>。然而，此函数不需要自己实际构建新的 <code>game_state</code>，而是需要返回移动细节的可打印 ASCII 字符串描述。此字符串将被传递给 <code>execute_move()</code>（<a href="#backend-execute-move">第 2.7.2 节</a>）以实际创建新的 <code>game_state</code>。（以这种方式将移动编码为字符串意味着中端可以保留字符串以及游戏状态，并且在保存游戏时可以将字符串写入磁盘，在重新加载时再次将其提供给 <code>execute_move()</code>。）
+</li>
+</ul>
+<p>
+<code>interpret_move()</code> 的返回值只有在不是 <code>NULL</code> <em>或</em> 特殊字符串常量 <code>MOVE_UNUSED</code>、<code>MOVE_NO_EFFECT</code> 或 <code>MOVE_UI_UPDATE</code> 之一时，才应该是动态分配的。
+</p>
+<p>
+调用此函数后，后端被允许依赖于一些后续操作按顺序发生：
+</p>
+<ul><li>
+<code>execute_move()</code> 将被调用来将此移动描述转换为新的 <code>game_state</code>
+</li>
+<li>
+<code>changed_state()</code> 将使用新的 <code>game_state</code> 被调用。
+</li>
+</ul>
+<p>
+这意味着如果 <code>interpret_move()</code> 需要对 <code>game_ui</code> 进行更新，而这些更新通过引用新的 <code>game_state</code> 更容易执行，它可以安全地将它们留给 <code>changed_state()</code> 来完成，而不必担心它们不会发生。
+</p>
+<p>
+（然而，请注意，<code>execute_move()</code> 也可能在其他情况下被调用。只有 <code>interpret_move()</code> 可以依赖于后续对 <code>changed_state()</code> 的调用。）
+</p>
+<p>
+此函数支持的特殊键码有：
+</p>
+<dl><dt>
+<code>LEFT_BUTTON</code>、<code>MIDDLE_BUTTON</code>、<code>RIGHT_BUTTON</code>
+</dt>
+<dd>
+表示按下了鼠标按钮之一。
+</dd>
+<dt>
+<code>LEFT_DRAG</code>、<code>MIDDLE_DRAG</code>、<code>RIGHT_DRAG</code>
+</dt>
+<dd>
+表示在按住鼠标按钮之一的同时移动了鼠标。中端保证，当收到这些事件之一时，它总是之前有相同鼠标按钮的按下事件（可能还有其他拖动事件），并且中间不会出现涉及其他鼠标按钮的事件。
+</dd>
+<dt>
+<code>LEFT_RELEASE</code>、<code>MIDDLE_RELEASE</code>、<code>RIGHT_RELEASE</code>
+</dt>
+<dd>
+表示释放了鼠标按钮。中端保证，当收到这些事件之一时，它总是之前有相同鼠标按钮的按下事件（可能还有一些拖动事件），并且中间不会出现涉及其他鼠标按钮的事件。
+</dd>
+<dt>
+<code>CURSOR_UP</code>、<code>CURSOR_DOWN</code>、<code>CURSOR_LEFT</code>、<code>CURSOR_RIGHT</code>
+</dt>
+<dd>
+表示按下了箭头键。
+</dd>
+<dt>
+<code>CURSOR_SELECT</code>、<code>CURSOR_SELECT2</code>
+</dt>
+<dd>
+在其光标键旁边有一个或两个突出的“选择”按钮的平台上，表示按下了其中一个按钮。在其他平台上，这些分别代表 Enter（或 Return）和 Space 键。
+</dd>
+</dl>
+<p>
+此外，还有一些修饰符可以按位 OR 到 <code>button</code> 参数中：
+</p>
+<dl><dt>
+<code>MOD_CTRL</code>、<code>MOD_SHFT</code>
+</dt>
+<dd>
+这些表示在按键的同时按下了 Control 或 Shift 键。它们仅适用于光标键和 ASCII 水平制表符 <code>\t</code>，不适用于鼠标按钮或其他任何东西。
+</dd>
+<dt>
+<code>MOD_STYLUS</code>
+</dt>
+<dd>
+这表示按钮事件来自手写笔或触摸设备，而不是鼠标。这适用于所有鼠标事件，但仅当设置了 <code>STYLUS_SUPPORT</code> 标志时。
+</dd>
+<dt>
+<code>MOD_NUM_KEYPAD</code>
+</dt>
+<dd>
+这适用于一些 ASCII 值，表示键码是通过数字键盘而不是主键盘输入的。一些拼图可能希望以不同方式处理这一点（例如，拼图可能希望使用数字键盘作为八向方向键），而其他拼图可能不（涉及数字输入的游戏可能只想将数字键盘视为数字）。
+</dd>
+<dt>
+<code>MOD_MASK</code>
+</dt>
+<dd>
+此掩码是所有可用修饰符的按位 OR；你可以用 <code>~MOD_MASK</code> 进行按位 AND 操作，以从任何输入值中剥离所有修饰符；由于这是一个常见操作，<code>STRIP_BUTTON_MODIFIERS()</code> 宏可以为你执行此操作（参见 <a href="utils.html#utils-strip-button-modifiers">第 5.9.17 节</a>）。
+</dd>
+</dl>
+<h3><a name="backend-execute-move"></a>2.7.2 <code>execute_move()</code></h3>
+<pre><code>game_state *(*execute_move)(const game_state *state, char *move);
+</code></pre>
+<p>
+此函数接收输入的 <code>game_state</code> 和 <code>interpret_move()</code> 输出的移动字符串。它返回一个新分配的 <code>game_state</code>，其中包含将指定移动应用于输入游戏状态的结果。
+</p>
+<p>
+如果此函数无法解析移动字符串，它可能返回 <code>NULL</code>（这绝对比崩溃或断言失败更好，因为发生这种情况的一种方式是加载损坏的保存文件）。然而，对于确实来自 <code>interpret_move()</code> 的任何移动字符串，它绝不能返回 <code>NULL</code>：这会在中端导致断言失败。
+</p>
+<h3><a name="backend-can-solve"></a>2.7.3 <code>can_solve</code></h3>
+<pre><code>bool can_solve;
+</code></pre>
+<p>
+如果游戏的 <code>solve()</code> 函数执行某些操作，则此字段设置为 <code>true</code>。如果设置为 <code>false</code>，游戏甚至不会提供“求解”菜单选项。
+</p>
+<h3><a name="backend-solve"></a>2.7.4 <code>solve()</code></h3>
+<pre><code>char *(*solve)(const game_state *orig, const game_state *curr,
+               const char *aux, const char **error);
+</code></pre>
+<p>
+当用户从菜单中选择“求解”选项时，会调用此函数。如果 <code>can_solve</code> 为 <code>false</code>，则永远不会调用它，并且可以为 <code>NULL</code>。
+</p>
+<p>
+它接收两个输入游戏状态：<code>orig</code> 是拼图开始时的游戏状态，<code>curr</code> 是当前的游戏状态。（不同的游戏发现其中一个或另一个或两者都很方便。）它还接收由 <code>new_desc()</code> 保存的 <code>aux</code> 字符串（<a href="#backend-new-desc">第 2.4.1 节</a>），以防它编码提供解决方案所需的重要信息。
+</p>
+<p>
+如果此函数无法产生解决方案（例如，游戏没有内置求解器，因此只能解决它在内部发明的拼图并具有 <code>aux</code> 字符串），则可能返回 <code>NULL</code>。如果这样做，它还必须将 <code>*error</code> 设置为要呈现给用户的错误消息（例如“此拼图的解决方案未知”）；该错误消息不需要动态分配。
+</p>
+<p>
+如果此函数 <em>确实</em> 产生了解决方案，它返回一个适合提供给 <code>execute_move()</code> 的可打印 ASCII 移动字符串（<a href="#backend-execute-move">第 2.7.2 节</a>）。与从 <code>interpret_move()</code> 返回的（非空）字符串一样，返回的字符串应该是动态分配的。
+</p>
+<h2><a name="backend-drawing"></a>2.8 绘制游戏图形</h2>
+<p>
+本节讨论处理绘制的后端函数。
+</p>
+<h3><a name="backend-new-drawstate"></a>2.8.1 <code>new_drawstate()</code></h3>
+<pre><code>game_drawstate *(*new_drawstate)(drawing *dr,
+                                 const game_state *state);
+</code></pre>
+<p>
+此函数分配并返回一个用于绘制特定拼图的新 <code>game_drawstate</code> 结构。它接收一个指向 <code>game_state</code> 的指针，以防在设置任何初始数据时需要引用它。
+</p>
+<p>
+此函数可能不依赖于拼图是否新开始；如果前端请求强制重绘，任何时候都可以构建新的绘制状态。对于像 Pattern 这样的游戏，其中初始游戏状态比一般状态简单得多，这可能很重要。
+</p>
+<p>
+参数 <code>dr</code> 是一个绘制对象（参见 <a href="drawing.html#drawing">第 3 章</a>），函数可能需要使用它来分配 blitter。（然而，这不推荐；通常更明智的是等到调用 <code>set_size()</code> 时再分配 blitter，因为这样你可以根据绘制拼图的比例来定制它。）
+</p>
+<h3><a name="backend-free-drawstate"></a>2.8.2 <code>free_drawstate()</code></h3>
+<pre><code>void (*free_drawstate)(drawing *dr, game_drawstate *ds);
+</code></pre>
+<p>
+此函数释放 <code>game_drawstate</code> 结构，以及其中包含的任何辅助分配。
+</p>
+<p>
+参数 <code>dr</code> 是一个绘制对象（参见 <a href="drawing.html#drawing">第 3 章</a>），如果你正在释放 blitter，可能需要它。
+</p>
+<h3><a name="backend-preferred-tilesize"></a>2.8.3 <code>preferred_tilesize</code></h3>
+<pre><code>int preferred_tilesize;
+</code></pre>
+<p>
+每个游戏都需要定义一个整数参数，在某种意义上表达它的绘制比例。在 API 中，这被描述为“<code>tilesize</code>”，因为大多数拼图都在正方形（或可能是三角形或六边形）网格上，因此对该参数的合理解释是将其定义为一个网格瓦片的像素大小；然而，实际上没有要求“瓦片大小”与游戏窗口大小成比例。然而，窗口大小需要随着“瓦片大小”单调增加。
+</p>
+<p>
+数据元素 <code>preferred_tilesize</code> 表示在没有充分理由（例如屏幕太小无法容纳整个拼图，或用户明确请求调整大小）的情况下应使用的瓦片大小。
+</p>
+<h3><a name="backend-compute-size"></a>2.8.4 <code>compute_size()</code></h3>
+<pre><code>void (*compute_size)(const game_params *params, int tilesize,
+                     const game_ui *ui, int *x, int *y);
+</code></pre>
+<p>
+此函数接收 <code>game_params</code> 结构和瓦片大小。它在 <code>*x</code> 和 <code>*y</code> 中返回以该瓦片大小渲染具有这些参数的拼图所需的绘制区域的像素大小。
+</p>
+<h3><a name="backend-set-size"></a>2.8.5 <code>set_size()</code></h3>
+<pre><code>void (*set_size)(drawing *dr, game_drawstate *ds,
+                 const game_params *params, int tilesize);
+</code></pre>
+<p>
+此函数负责设置 <code>game_drawstate</code> 以给定的瓦片大小绘制。通常，这只会涉及将提供的 <code>tilesize</code> 参数复制到绘制状态内部的 <code>tilesize</code> 字段中；对于一些更复杂的游戏，它还可能涉及设置其他维度字段，或者可能分配 blitter（参见 <a href="drawing.html#drawing-blitter">第 3.1.14 节</a>）。
+</p>
+<p>
+参数 <code>dr</code> 是一个绘制对象（参见 <a href="drawing.html#drawing">第 3 章</a>），如果需要分配 blitter，则需要它。
+</p>
+<p>
+后端可以假设（并且可以通过断言强制执行）此函数对任何 <code>game_drawstate</code> 最多调用一次。如果拼图需要以不同大小重绘，中端将创建一个新的绘制状态。
+</p>
+<h3><a name="backend-colours"></a>2.8.6 <code>colours()</code></h3>
+<pre><code>float *(*colours)(frontend *fe, int *ncolours);
+</code></pre>
+<p>
+此函数负责告诉前端拼图需要什么颜色来绘制自己。
+</p>
+<p>
+它在 <code>*ncolours</code> 中返回所需的颜色数量，函数本身的返回值是一个动态分配的数组，包含三倍于该数量的 <code>float</code>，分别包含每种颜色的红色、绿色和蓝色分量，范围为 [0,1]。
+</p>
+<p>
+传递给此函数的第二个参数是前端句柄。它允许使用此句柄的唯一事情是调用名为 <code>frontend_default_colour()</code> 的前端函数（参见 <a href="midend.html#frontend-default-colour">第 4.45 节</a>）或名为 <code>game_mkhighlight()</code> 的实用函数（参见 <a href="utils.html#utils-game-mkhighlight">第 5.9.10 节</a>）。（后者是前者的包装器，因此前端实现者只需提供 <code>frontend_default_colour()</code>。）这允许 <code>colours()</code> 在决定自己的颜色分配时考虑本地配置。大多数游戏使用前端的默认颜色作为背景，除了少数依赖于绘制浮雕高光的游戏，因此如果背景颜色太浅，高光无法显示，它们会调整背景颜色。
+</p>
+<p>
+列表中的第一种颜色稍微特殊。中端在第一次调用 <code>redraw()</code>（参见 <a href="#backend-redraw">第 2.8.11 节</a>）之前用它填充绘制区域。一些前端还使用它填充拼图窗口中拼图外部的部分。这意味着通常将颜色 0 设为拼图的背景色是合理的。
+</p>
+<p>
+请注意，此函数返回的颜色用于 <em>绘制</em>，而不是打印。打印有完全不同的颜色分配策略。
+</p>
+<h3><a name="backend-anim-length"></a>2.8.7 <code>anim_length()</code></h3>
+<pre><code>float (*anim_length)(const game_state *oldstate,
+                     const game_state *newstate,
+                     int dir, game_ui *ui);
+</code></pre>
+<p>
+当进行、撤销或重做移动时，会调用此函数。它被赋予旧的和新的 <code>game_state</code>，其工作是决定两个状态之间的过渡是否需要动画或可以立即完成。
+</p>
+<p>
+<code>oldstate</code> 是在此调用之前当前的状态；<code>newstate</code> 是调用之后将成为当前的状态。<code>dir</code> 指定这些状态的时间顺序：如果为正，则过渡是移动或重做的结果（因此 <code>newstate</code> 是两个移动中较晚的一个），而如果为负，则过渡是撤销的结果（因此 <code>newstate</code> 是 <em>较早</em> 的移动）。
+</p>
+<p>
+如果此函数决定过渡应该动画，则返回所需的动画长度（以秒为单位）。如果不需要，则返回零。
+</p>
+<p>
+由于 Restart 操作导致的状态变化永远不会动画；中端将在内部处理它们，并且永远不会咨询此函数。由于 Solve 操作导致的状态变化默认也不会动画，尽管你可以通过在 <code>flags</code> 中设置标志来为特定游戏更改此设置（<a href="#backend-flags">第 2.10.9 节</a>）。
+</p>
+<p>
+该函数还接收指向本地 <code>game_ui</code> 的指针。它可以参考这里的信息来帮助做出决定（有关此示例，请参见 <a href="writing.html#writing-conditional-anim">第 6.3.8 节</a>），和/或它可以 <em>写入</em> 关于动画性质的信息，这些信息稍后将被 <code>redraw()</code> 读取。
+</p>
+<p>
+当调用此函数时，它可以依赖于之前已调用 <code>changed_state()</code>，因此如果 <code>anim_length()</code> 需要参考 <code>game_ui</code> 中的信息，那么 <code>changed_state()</code> 是设置该信息的可靠位置。
+</p>
+<p>
+移动动画不会抑制进一步的输入事件。如果用户在移动动画完成之前继续游戏，动画将被放弃，显示将直接跳转到最终状态。
+</p>
+<h3><a name="backend-flash-length"></a>2.8.8 <code>flash_length()</code></h3>
+<pre><code>float (*flash_length)(const game_state *oldstate,
+                      const game_state *newstate,
+                      int dir, game_ui *ui);
+</code></pre>
+<p>
+当移动完成时，会调用此函数。（“完成”意味着不仅移动已完成，而且伴随它的任何动画也已完成。）它决定从 <code>oldstate</code> 到 <code>newstate</code> 的过渡是否值得“闪烁”。
+</p>
+<p>
+闪烁很像移动动画，但它 <em>不会</em> 被进一步的用户界面活动打断；它与显示上可能发生的任何其他事情并行运行完成。唯一会加速闪烁完成的是另一个闪烁。
+</p>
+<p>
+闪烁的目的是指示游戏已完成。它们作为与移动动画分开的概念引入是因为 Net：大多数 Net 玩家（当然包括我）的习惯是将瓦片旋转到位并立即锁定，然后移动到另一个瓦片。当你做出最后一步时，在最后一个瓦片旋转到位的瞬间，屏幕开始闪烁以指示胜利 &#8211; 但如果你出于习惯按下锁定按钮，那么移动动画会被取消，胜利闪烁不会完成。（如果你 <em>不</em> 按下锁定按钮，完成的网格会看起来不整洁，因为会有一个未锁定的方块。）因此，我引入了一个特定的“闪烁”概念，它与移动动画分开，并且可以与移动动画和任何其他显示活动并行进行，这样 Net 中的胜利闪烁就不会被最终的锁定移动取消。
+</p>
+<p>
+<code>flash_length()</code> 的输入参数与 <code>anim_length()</code> 的输入参数完全相同：参见 <a href="#backend-anim-length">第 2.8.7 节</a>。
+</p>
+<p>
+就像 <code>anim_length()</code> 一样，当调用此函数时，它可以依赖于之前已调用 <code>changed_state()</code>，因此如果它需要参考 <code>game_ui</code> 中的信息，那么 <code>changed_state()</code> 是设置该信息的可靠位置。
+</p>
+<p>
+（一些游戏使用闪烁来指示失败和胜利；例如，Mines 在你踩到地雷时会用与完成游戏时不同的颜色闪烁。为了实现这一点，其 <code>flash_length()</code> 函数必须在 <code>game_ui</code> 中存储一个标志，以指示所需的闪烁类型。）
+</p>
+<h3><a name="backend-get-cursor-location"></a>2.8.9 <code>get_cursor_location()</code></h3>
+<pre><code>void (*get_cursor_location)(const game_ui *ui,
+                            const game_drawstate *ds,
+                            const game_state *state,
+                            const game_params *params,
+                            int *x, int *y,
+                            int *w, int *h);
+</code></pre>
+<p>
+此函数向后端查询包含光标的矩形区域（在有光标的游戏中），或其他感兴趣的区域。
+</p>
+<p>
+此函数仅由 <code>midend_get_cursor_location()</code> 调用（<a href="midend.html#midend-get-cursor-location">第 4.28 节</a>）。其目的是允许前端查询后端光标的位置。有了此位置的知识，前端可以例如确保如果拼图太大而无法一次适合屏幕，则感兴趣的区域保持可见。
+</p>
+<p>
+返回时，<code>*x</code>、<code>*y</code> 应设置为感兴趣矩形区域左上角的 X 和 Y 坐标，<code>*w</code> 和 <code>*h</code> 应分别是该区域的宽度和高度。如果光标在屏幕上不可见，此函数应返回并保持返回参数不变 &#8211; 中端会注意到这一点。后端无需检查 <code>x</code>、<code>y</code>、<code>w</code> 和 <code>h</code> 是否为非 <code>NULL</code> &#8211; 中端保证它们不会为 <code>NULL</code>。
+</p>
+<p>
+定义什么构成“感兴趣的区域”由后端决定。如果游戏提供传统光标 &#8211; 例如 Mines、Solo 或任何其他基于网格的游戏 &#8211; 最合理的选择当然是光标本身的位置。然而，在其他情况下，如 Cube 或 Inertia，没有传统意义上的“光标” &#8211; 玩家而是控制一个在屏幕上移动的对象。在这些情况下，将感兴趣的区域定义为玩家对象的边界框或另一个合理的区域是有意义的 &#8211; 例如 Cube 中玩家所在的网格方块。
+</p>
+<p>
+如果后端根本不提供光标机制，后端可以自由提供此函数的空实现，或在 <code>game</code> 结构中提供 <code>NULL</code> 指针 &#8211; 中端会注意到这些情况并适当行为。
+</p>
+<h3><a name="backend-status"></a>2.8.10 <code>status()</code></h3>
+<pre><code>int (*status)(const game_state *state);
+</code></pre>
+<p>
+此函数返回一个状态值，指示当前游戏是否仍在进行中，或已获胜，或已确定失败。中端使用此函数实现 <code>midend_status()</code>（<a href="midend.html#midend-status">第 4.29 节</a>）。
+</p>
+<p>
+如果游戏已成功解决，返回值应为 +1。如果游戏在不太可能继续玩的情况下失败，返回值应为 -1。如果两者都不是（即游戏仍在进行中），返回零。
+</p>
+<p>
+前端可能希望使用非零状态作为主动提供开始新游戏选项的线索。因此，如果游戏在技术上已经失败但撤销并继续仍然是现实的可能性，后端不应返回 -1。
+</p>
+<p>
+（例如，具有隐藏信息的游戏，如 Guess 或 Mines，可能会在揭示解决方案时返回非零状态，无论玩家是否正确猜测，理由是玩家在答案被泄露后不太可能隐藏解决方案并继续玩。另一方面，像 Same Game 或 Inertia 这样的游戏，你可能只是进入死胡同，在这种情况下可能选择返回 0，理由是玩家很可能会按 Undo 并继续玩。）
+</p>
+<h3><a name="backend-redraw"></a>2.8.11 <code>redraw()</code></h3>
+<pre><code>void (*redraw)(drawing *dr, game_drawstate *ds,
+               const game_state *oldstate,
+               const game_state *newstate,
+               int dir, const game_ui *ui,
+               float anim_time, float flash_time);
+</code></pre>
+<p>
+此函数负责实际绘制游戏窗口的内容，并在游戏状态或 <code>game_ui</code> 每次更改时重绘。
+</p>
+<p>
+参数 <code>dr</code> 是一个绘制对象，可以传递给绘制 API 函数（有关绘制 API 的文档，请参见 <a href="drawing.html#drawing">第 3 章</a>）。此函数不得保存 <code>dr</code> 并在其他地方使用它；它只能在自己的生命周期内使用它来回调绘制 API 函数。
+</p>
+<p>
+<code>ds</code> 是本地 <code>game_drawstate</code>，当然，<code>ui</code> 是本地 <code>game_ui</code>。
+</p>
+<p>
+<code>newstate</code> 是语义上当前的游戏状态，始终为非 <code>NULL</code>。如果 <code>oldstate</code> 也为非 <code>NULL</code>，则表示最近进行了移动，游戏仍在显示链接旧状态和新状态的动画的过程中；在这种情况下，<code>anim_time</code> 将给出动画已经运行的时间长度（以秒为单位）。如果 <code>oldstate</code> 为 <code>NULL</code>，则 <code>anim_time</code> 未使用（并希望设置为零以避免混淆）。
+</p>
+<p>
+<code>dir</code> 指定这些状态的时间顺序：如果为正，则过渡是移动或重做的结果（因此 <code>newstate</code> 是两个移动中较晚的一个），而如果为负，则过渡是撤销的结果（因此 <code>newstate</code> 是 <em>较早</em> 的移动）。这允许绘制非时间对称的移动动画（例如 Inertia，其中宝石在动画期间被消耗）以正确的方式绘制。
+</p>
+<p>
+<code>flash_time</code> 如果非零，表示游戏正在闪烁过程中，并给出闪烁开始以来的时间。有关闪烁的一般讨论，请参见 <a href="#backend-flash-length">第 2.8.8 节</a>。
+</p>
+<p>
+对于新的 <code>game_drawstate</code>，第一次调用此函数时，预计会重绘 <em>整个</em> 绘制区域。由于这通常涉及绘制随后从未更改的视觉家具，通常最简单的方法是在绘制状态中设置一个特殊的“第一次”标志，并在第一次重绘后重置它。此函数可以假设中端在第一次调用之前已用颜色 0 填充了绘制区域。
+</p>
+<p>
+当此函数（或任何子函数）调用绘制 API 时，预计会传递先前由 <code>colours()</code> 函数定义的颜色索引。
+</p>
+<h2><a name="backend-printing"></a>2.9 打印函数</h2>
+<p>
+本节讨论处理在纸上打印拼图的后端函数。
+</p>
+<h3><a name="backend-can-print"></a>2.9.1 <code>can_print</code></h3>
+<pre><code>bool can_print;
+</code></pre>
+<p>
+如果拼图能够在纸上打印自己，则此标志设置为 <code>true</code>。（这对某些拼图有意义，例如 Solo，可以用铅笔填写。其他拼图，如 Twiddle，本质上涉及移动东西，因此打印它们没有意义。）
+</p>
+<p>
+如果此标志为 <code>false</code>，则 <code>print_size()</code> 和 <code>print()</code> 函数永远不会被调用，可以为 <code>NULL</code>。
+</p>
+<h3><a name="backend-can-print-in-colour"></a>2.9.2 <code>can_print_in_colour</code></h3>
+<pre><code>bool can_print_in_colour;
+</code></pre>
+<p>
+如果拼图在有颜色可用时能够以不同方式打印自己，则此标志设置为 <code>true</code>。例如，Map 实际上可以用不同的 <em>颜色</em> 打印彩色区域，而不是使用交叉阴影线。
+</p>
+<p>
+如果 <code>can_print</code> 标志为 <code>false</code>，则此标志将被忽略。
+</p>
+<h3><a name="backend-print-size"></a>2.9.3 <code>print_size()</code></h3>
+<pre><code>void (*print_size)(const game_params *params, const game_ui *ui,
+                   float *x, float *y);
+</code></pre>
+<p>
+此函数接收 <code>game_params</code> 结构和瓦片大小。它在 <code>*x</code> 和 <code>*y</code> 中返回该拼图在纸上打印时的首选大小（以 <em>毫米</em> 为单位）。
+</p>
+<p>
+如果 <code>can_print</code> 标志为 <code>false</code>，此函数永远不会被调用。
+</p>
+<h3><a name="backend-print"></a>2.9.4 <code>print()</code></h3>
+<pre><code>void (*print)(drawing *dr, const game_state *state,
+              const game_ui *ui, int tilesize);
+</code></pre>
+<p>
+当拼图要在纸上打印时，会调用此函数。它应该使用绘制 API 函数（参见 <a href="drawing.html#drawing">第 3 章</a>）来打印自己。
+</p>
+<p>
+此函数与 <code>redraw()</code> 分开，因为它通常非常不同：
+</p>
+<ul><li>
+打印函数可能不依赖于像素精度，因为打印机分辨率是可变的。绘制时就像你的画布具有无限分辨率一样。
+</li>
+<li>
+打印函数有时需要以完全不同的风格显示内容。例如，Net 作为屏幕拼图和打印拼图非常不同。
+</li>
+<li>
+打印函数通常更简单，因为它不需要处理重复的部分重绘。
+</li>
+</ul>
+<p>
+然而，如果它们愿意，打印和重绘函数没有理由不能共享一些代码。
+</p>
+<p>
+当此函数（或任何子函数）调用绘制 API 时，它传递的颜色索引应该是在此执行 <code>print()</code> 期间由 <code>print_*_colour()</code> 函数分配的颜色。这与 <code>redraw()</code> 中使用的固定少量颜色非常不同，因为打印机对可能使用的颜色总数没有限制。一些拼图的打印函数可能希望只分配一种“墨水”颜色并将其用于所有绘制；其他可能希望分配 <em>多于</em> 屏幕上使用的颜色。
+</p>
+<p>
+值得特别提及的一种可能的颜色策略是，拼图的打印函数可能希望分配与重绘函数使用的 <em>相同</em> 颜色索引，以便在绘制和打印之间共享的代码不必不断切换其颜色索引。为了做到这一点，最简单的方法是利用这样一个事实：从 <code>print_*_colour()</code> 返回的颜色索引保证从零开始递增。因此，如果你声明了一个 <code>enum</code> 定义三种颜色 <code>COL_BACKGROUND</code>、<code>COL_THIS</code> 和 <code>COL_THAT</code>，你可以这样写：
+</p>
+<pre><code>int c;
+c = print_mono_colour(dr, 1); assert(c == COL_BACKGROUND);
+c = print_mono_colour(dr, 0); assert(c == COL_THIS);
+c = print_mono_colour(dr, 0); assert(c == COL_THAT);
+</code></pre>
+<p>
+如果 <code>can_print</code> 标志为 <code>false</code>，此函数永远不会被调用。
+</p>
+<h2><a name="backend-misc"></a>2.10 其他</h2>
+<h3><a name="backend-can-format-as-text-ever"></a>2.10.1 <code>can_format_as_text_ever</code></h3>
+<pre><code>bool can_format_as_text_ever;
+</code></pre>
+<p>
+如果游戏支持将游戏状态格式化为 ASCII 文本（通常是 ASCII 艺术）以复制到剪贴板并粘贴到其他应用程序，则此字段为 <code>true</code>。如果为 <code>false</code>，前端根本不会提供“复制”命令。
+</p>
+<p>
+如果此字段为 <code>true</code>，游戏不一定需要支持所有游戏的文本格式化：例如，可以在方形网格或三角形网格上玩的游戏可能只支持前者的复制和粘贴，因为 ASCII 艺术中的三角形网格太困难了。
+</p>
+<p>
+如果此字段为 <code>false</code>，则 <code>can_format_as_text_now()</code>（<a href="#backend-can-format-as-text-now">第 2.10.2 节</a>）和 <code>text_format()</code>（<a href="#backend-text-format">第 2.10.3 节</a>）函数永远不会被调用，可以为 <code>NULL</code>。
+</p>
+<h3><a name="backend-can-format-as-text-now"></a>2.10.2 <code>can_format_as_text_now()</code></h3>
+<pre><code>bool (*can_format_as_text_now)(const game_params *params);
+</code></pre>
+<p>
+此函数接收 <code>game_params</code>，如果游戏可以为此特定游戏类型支持 ASCII 文本输出，则返回 <code>true</code>。如果返回 <code>false</code>，前端将灰色显示或以其他方式禁用“复制”命令。
+</p>
+<p>
+游戏可以为不同的游戏 <em>参数</em> 启用和禁用复制粘贴功能，但当前被约束为对共享相同参数的所有游戏 <em>状态</em> 从此函数返回相同的答案。换句话说，当玩家更改游戏预设时，“复制”函数可能会启用或禁用自身，但在单个游戏的游戏过程中或生成完全相同类型的另一个游戏时，它永远不会改变。
+</p>
+<p>
+此函数不应考虑当 <code>full</code> 参数设置为 <code>false</code> 时未由 <code>encode_params()</code>（<a href="#backend-encode-params">第 2.3.4 节</a>）编码的游戏参数的方面。这些参数在调用此函数和随后调用 <code>text_format()</code> 本身之间不一定匹配。（例如，游戏 <em>难度</em> 不应影响游戏是否可以复制到剪贴板。只有游戏的实际可见 <em>形状</em> 才能影响这一点。）
+</p>
+<h3><a name="backend-text-format"></a>2.10.3 <code>text_format()</code></h3>
+<pre><code>char *(*text_format)(const game_state *state);
+</code></pre>
+<p>
+此函数接收 <code>game_state</code>，并返回一个新分配的 C 字符串，其中包含该游戏状态的 ASCII 表示。它用于在许多前端实现“复制”操作。
+</p>
+<p>
+只有当后端字段 <code>can_format_as_text_ever</code>（<a href="#backend-can-format-as-text-ever">第 2.10.1 节</a>）为 <code>true</code> <em>且</em> 函数 <code>can_format_as_text_now()</code>（<a href="#backend-can-format-as-text-now">第 2.10.2 节</a>）为当前选择的游戏参数返回 <code>true</code> 时，才会调用此函数。
+</p>
+<p>
+返回的字符串可能包含行尾（可能需要），使用正常的 C 内部“<code>\n</code>”约定。为了在拼图之间保持一致性，所有多行文本拼图表示都应该在内部包含行尾的同时，<em>最后</em> 也以一个换行符结束。（目前没有拼图具有单行 ASCII 表示，因此对于是否应该带有换行符还没有先例。）
+</p>
+<h3><a name="backend-wants-statusbar"></a>2.10.4 <code>wants_statusbar</code></h3>
+<pre><code>bool wants_statusbar;
+</code></pre>
+<p>
+如果拼图需要文本状态栏（显示分数、完成状态、当前活动瓦片等），则此字段设置为 <code>true</code>。如果 <code>redraw()</code> 函数打算调用绘制 API 中的 <code>status_bar()</code>（<a href="drawing.html#drawing-status-bar">第 3.1.13 节</a>），则应将此标志设置为 <code>true</code>。
+</p>
+<h3><a name="backend-is-timed"></a>2.10.5 <code>is_timed</code></h3>
+<pre><code>bool is_timed;
+</code></pre>
+<p>
+如果拼图是时间关键的，则此字段为 <code>true</code>。如果是这样，中端将在用户玩游戏时维护游戏计时器。
+</p>
+<p>
+如果此字段为 <code>false</code>，则 <code>timing_state()</code> 永远不会被调用，可以为 <code>NULL</code>。
+</p>
+<h3><a name="backend-timing-state"></a>2.10.6 <code>timing_state()</code></h3>
+<pre><code>bool (*timing_state)(const game_state *state, game_ui *ui);
+</code></pre>
+<p>
+此函数接收当前的 <code>game_state</code> 和本地 <code>game_ui</code>；如果游戏计时器当前应该运行，则返回 <code>true</code>。
+</p>
+<p>
+此函数中 <code>game_ui</code> 的典型用途是记录游戏何时首次完成（通过在 <code>changed_state()</code> 中设置标志 &#8211; 参见 <a href="#backend-changed-state">第 2.6.5 节</a>），并在此后冻结计时器，以便用户可以通过其解决方案过程撤销而不改变其时间。
+</p>
+<h3><a name="backend-request-keys"></a>2.10.7 <code>request_keys()</code></h3>
+<pre><code>key_label *(*request_keys)(const game_params *params, int *nkeys);
+</code></pre>
+<p>
+此函数返回一个动态分配的 <code>key_label</code> 结构数组，列出后端认为游戏所需的除光标键之外的按钮。其预期用途是使无键盘前端能够为依赖于光标键之外的按钮输入的游戏实现替代控制方案。
+</p>
+<p>
+每个 <code>key_label</code> 项包含以下字段：
+</p>
+<pre><code>struct key_label {
+    char *label; /* label for frontend use, dynamically allocated */
+    int button; /* button to pass to midend */
+} key_label;
+</code></pre>
+<p>
+<code>label</code> 字段指向一个动态分配的字符串，该字符串应包含描述按钮功能的简洁、人类可读的标签。然而，对于通用按钮（即字母数字字符和 <code>'\b'</code>），后端可以将此结构的 <code>label</code> 字段设置为 <code>NULL</code>，在这种情况下，中端将改为调用 <code>button2label()</code>（<a href="utils.html#utils-button2label">第 5.9.12 节</a>）并填写通用标签。<code>button</code> 字段是相关的按钮代码，当前端认为适当时可以传递给中端。
+</p>
+<p>
+如果 <code>label</code> 不是 <code>NULL</code>，则它是一个动态分配的字符串。因此，释放这些结构的数组需要的不仅仅是单个释放操作。函数 <code>free_keys()</code>（<a href="utils.html#utils-free-keys">第 5.3.7 节</a>）可用于方便地释放整个这些结构的数组。
+</p>
+<p>
+后端作者在决定在返回列表中包含哪些按钮时有一定的酌处权。此函数不需要生成后端可以接受的每个按钮的详尽列表。例如，Keen 只返回高达游戏大小的数字和退格字符 <code>'\b'</code>，即使它 <em>可以</em> 接受 <code>M</code>，因为只有这些按钮实际上是玩游戏所必需的。
+</p>
+<p>
+后端应将 <code>*nkeys</code> 设置为返回数组中的元素数量。
+</p>
+<p>
+<code>game</code> 结构中此函数指针的字段可以设置为 <code>NULL</code>（实际上对于大多数游戏来说是这样），以指示玩游戏不需要光标键之外的其他按钮。
+</p>
+<p>
+前端不应直接调用此函数。相反，前端应使用 <code>midend_request_keys()</code>（<a href="midend.html#midend-request-keys">第 4.13 节</a>），它将负责适当地调用 <code>button2label()</code>。
+</p>
+<h3><a name="backend-current-key-label"></a>2.10.8 <code>current_key_label()</code></h3>
+<pre><code>const char *(*current_key_label)(const game_ui *ui,
+                                 const game_state *state,
+                                 int button);
+</code></pre>
+<p>
+此函数被调用来询问后端在平台（如功能手机）上某些键应该如何标记，这是常规做法。这些标签预计会反映键现在将做什么，因此它们可以根据游戏和 UI 状态而变化。
+</p>
+<p>
+<code>ui</code> 和 <code>state</code> 参数描述需要键标签的游戏状态。<code>button</code> 参数与传递给 <code>interpret_move()</code> 的参数相同。目前，可以传递给 <code>current_key_label()</code> 的 <code>button</code> 的唯一值是 <code>CURSOR_SELECT</code> 和 <code>CURSOR_SELECT2</code>。返回值是一个短字符串，描述如果按下请求的键将会做什么。通常，该字符串应该是静态字符串常量。如果确实需要使用动态分配的字符串，它应该在下次调用 <code>current_key_label()</code> 或使用相同 <code>game_ui</code> 的 <code>free_ui()</code> 之前保持有效（因此它可以从 <code>game_ui</code> 引用并在下次调用时释放）。
+</p>
+<p>
+此函数可以返回的字符串长度没有固定的上限，但超过约 12 个字符可能会给前端带来问题。如果两个按钮具有相同的效果，它们的标签应该相同，以便前端可以检测到这一点。同样，做不同事情的键应该有不同的标签。如果键什么都不做，标签应该是空字符串（<code>""</code>）。
+</p>
+<p>
+与 <code>request_keys()</code> 一样，<code>game</code> 结构中的 <code>current_key_label</code> 指针允许为 <code>NULL</code>，在这种情况下，中端将把它视为总是返回 <code>""</code>。
+</p>
+<h3><a name="backend-flags"></a>2.10.9 <code>flags</code></h3>
+<pre><code>int flags;
+</code></pre>
+<p>
+此字段包含各种后端标志。它由以下各项的某种组合的按位 OR 组成：
+</p>
+<dl><dt>
+<code>BUTTON_BEATS(x,y)</code>
+</dt>
+<dd>
+给定来自集合 {<code>LEFT_BUTTON</code>, <code>MIDDLE_BUTTON</code>, <code>RIGHT_BUTTON</code>} 的任何 <code>x</code> 和 <code>y</code>，此宏计算为一个位标志，指示当按钮 <code>x</code> 和 <code>y</code> 同时按下时，中端应认为 <code>x</code> 具有优先级。（在没有任何此类标志的情况下，中端将始终认为最近按下的按钮具有优先级。）
+</dd>
+<dt>
+<code>SOLVE_ANIMATES</code>
+</dt>
+<dd>
+此标志指示由 <code>solve()</code>（<a href="#backend-solve">第 2.7.4 节</a>）生成的移动与任何其他移动一样是动画的候选者。对于大多数游戏，求解移动不应被动画，因此中端甚至不会费心调用 <code>anim_length()</code>（<a href="#backend-anim-length">第 2.8.7 节</a>），从而在每个游戏中节省一些特殊情况代码。在极少数情况下，实际需要动画求解移动时，你可以设置此标志。
+</dd>
+<dt>
+<code>REQUIRE_RBUTTON</code>
+</dt>
+<dd>
+此标志指示如果不使用左键以外的鼠标按钮，拼图就无法有效地玩。在某些 PDA 平台上，前端使用此标志通过适当的手势启用右键模拟。请注意，拼图不需要仅仅因为它 <em>使用</em> 右键就设置此标志，只有当其对右键的使用对玩游戏至关重要时才需要。（例如，Slant 使用右键以与左键相反的顺序循环通过三个方块状态，因此没有它也能很好地管理。）
+</dd>
+<dt>
+<code>REQUIRE_NUMPAD</code>
+</dt>
+<dd>
+此标志指示如果不使用数字键输入，拼图就无法有效地玩。在某些 PDA 平台上，它会导致屏幕上出现模拟数字键盘。与 <code>REQUIRE_RBUTTON</code> 类似，拼图不需要仅仅因为它使用数字键就指定此标志，只有当数字键的使用对玩游戏至关重要时才需要。
+</dd>
+<dt>
+<code>STYLUS_SUPPORT</code>
+</dt>
+<dd>
+此标志指示拼图可能会以与鼠标事件不同的方式处理手写笔或触摸事件。每个按钮事件上会适当设置 <code>MOD_STYLUS</code> 修饰符。
+</dd>
+</dl>
+<h2><a name="backend-initiative"></a>2.11 后端可以主动执行的操作</h2>
+<p>
+本节描述后端可以通过调用程序其他部分的函数来选择执行的几件事情，否则这些事情可能不明显。
+</p>
+<h3><a name="backend-newrs"></a>2.11.1 创建随机状态</h3>
+<p>
+如果后端在正常游戏期间需要随机数，它可以通过首先调用 <code>get_random_seed</code>（<a href="midend.html#frontend-get-random-seed">第 4.41 节</a>），然后将返回的种子数据传递给 <code>random_new()</code> 来创建新的 <code>random_state</code>。
+</p>
+<p>
+这可能不是你想要的。如果拼图在游戏过程中需要随机性，将某种随机状态存储在 <code>game_state</code> 中可能更合理，这样随机数就与特定的游戏状态相关联，因此玩家不能简单地不断撤销移动直到获得他们更喜欢的数字。
+</p>
+<p>
+此功能目前仅在 Net 中使用，用于实现“混乱”命令，该命令将每个未锁定的瓦片设置为新的随机方向。这种随机性 <em>是</em> 此功能的合理使用，因为它是非对抗性的 &#8211; 用户获得不同的随机数没有优势。
+</p>
+<h3><a name="backend-supersede"></a>2.11.2 取代自己的游戏描述</h3>
+<p>
+作为对移动的响应，后端（不情愿地）被允许调用 <code>midend_supersede_game_desc()</code>：
+</p>
+<pre><code>void midend_supersede_game_desc(midend *me,
+                                char *desc, char *privdesc);
+</code></pre>
+<p>
+当用户选择“新游戏”时，中端调用 <code>new_desc()</code>（<a href="#backend-new-desc">第 2.4.1 节</a>）以获取新的游戏描述，并（除了使用它生成初始游戏状态外）将其存储用于保存文件和告诉用户。上面的函数覆盖该游戏描述，并将其分为两部分。<code>desc</code> 成为应请求提供给用户的新游戏描述，也是如果用户选择“重新开始”时用于构建新初始游戏状态的描述。<code>privdesc</code> 是一个“私有”游戏描述，用于在重新加载时重建游戏的初始状态。
+</p>
+<p>
+两者之间的区别，以及对此函数的完全需求，来自 Mines。Mines 从一个空白网格开始，不知道地雷实际上在哪里；<code>new_desc()</code> 在交互模式下几乎不做任何工作，只是返回一个编码 <code>random_state</code> 的字符串。当用户第一次点击打开瓦片时，Mines <em>然后</em> 生成地雷位置，以确保游戏从该起点可解。然后它使用此函数用适当的描述取代随机状态游戏描述。但它需要两个：一个包含初始点击位置（因为这是你希望在重新开始游戏时发生的事情，也是你想发送给朋友以便他们玩与你 <em>相同的游戏</em> 的内容），另一个不包含初始点击位置（因为当你保存并重新加载游戏时，你期望看到与保存前相同的空白初始状态）。
+</p>
+<p>
+我应该再次强调，此函数是一个可怕的黑客。如果不是 Mines，没有人应该使用它；如果你认为你需要使用它，请反复思考，希望找到更好的方法来做你需要做的任何事情。
+</p>
+<h3><a name="backend-set-public-desc"></a>2.11.3 <code>set_public_desc()</code></h3>
+<pre><code>void (*set_public_desc)(game_state *state, const char *pubdesc);
+</code></pre>
+<p>
+如果拼图使用了 <code>midend_supersede_game_desc()</code>（<a href="#backend-supersede">第 2.11.2 节</a>）来设置单独的公共和私有游戏描述，那么当游戏被保存和重新加载时，私有描述是用于在重新加载的游戏中重建初始 <code>game_state</code> 的描述。如果后端也想知道公共描述，它可以填写此函数指针，然后在重新加载期间，此函数将在同一个 <code>game_state</code> 上的 <code>new_game()</code>（<a href="#backend-new-game">第 2.4.3 节</a>）之后立即被调用。
+</p>
+<p>
+不调用 <code>midend_supersede_game_desc()</code> 的人根本不应该填写此函数。即使是 <code>midend_supersede_game_desc()</code> 的用户，如果他们没有设置单独的私有和公共描述，也不需要它，甚至可能不需要。
+</p>
+
+<hr><address>
+[Simon Tatham's Portable Puzzle Collection, version 20260309.06e37f1]</address></body>
+</html>

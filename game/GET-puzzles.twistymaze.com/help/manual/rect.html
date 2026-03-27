@@ -1,0 +1,84 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta http-equiv="content-type" content="text/html; charset=US-ASCII">
+<title>Rectangles</title>
+<link rel="previous" href="twiddle">
+<link rel="ToC" href="./">
+<link rel="up" href="./">
+<link rel="index" href="docindex">
+<link rel="next" href="netslide">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<script>(function(){let e=!1;try{e=localStorage.colorScheme===void 0?!1:{dark:!0,light:!1,system:null}[localStorage.colorScheme]??null}catch{}e===null&&(e=window.matchMedia("(prefers-color-scheme: dark)").matches),document.documentElement.classList.toggle("wa-dark",e)})();</script>
+  <link rel="stylesheet" crossorigin href="/assets/help-page-5GTs0WJF.css">
+  <link rel="sitemap" type="application/xml" title="Sitemap" href="/sitemap.xml">
+<link rel="manifest" href="/manifest.webmanifest">
+<meta name="theme-color" content="#d1e8ff">
+<link rel="icon" href="/favicon.ico" sizes="48x48">
+<link rel="icon" href="/favicon.svg" sizes="any" type="image/svg+xml">
+<link rel="apple-touch-icon" href="/apple-touch-icon-180x180.png"></head>
+<body>
+<p><a href="twiddle">Previous</a> | <a href="./">Contents</a> | <a href="docindex">Index</a> | <a href="netslide">Next</a></p>
+<h1><a name="rect"></a><a name="i0"></a>Rectangles<img class="screenshot" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAM0AAADNCAAAAAA+16u1AAAEE0lEQVR42uzaA48kURQF4DPoaa1t27Zt27Zt27a9jTWCtY1gEK3rd2yc3OWrpKbe68658Y3qSz3l5MKKp4pfDTXUUEMNNdRQQw011FBDDWKnYl1DjfXHmm1lah9A5I81+89tZzTUUEMNNc97FPbXiLqvCQ0p5Cm6zGnNw6xdBnuyfXVdsxjFmqf4Tjq90jIsqy3S3F9py8OR5tjotObz87O522rZN6EiKaed1lwHKj/ToumJERGnNWlH1hYMvtCgGYXW4cw4oYdjn/uaiQktwxGnNTPbTRjg9TxzXTM/wdO0adOFDmuOVPT7a593f9/0BgAM5lvAZQ011FBDTaZlNrN1VNwlUIj/PA2Ahn1DDTXUUPNtSWlv+Yuyr57LARC5mW7NGVTo4wumy75yLgdA5ma6V1roh9UXt2VfOZcDIHMz/fvmWzlfhuir53IAZG6mXzMFK2VfPZcDIHMz7Zo1GPRD9tVzOQAyN9Ot2ZLQ/7vo28nlAMjcTLPmRKK3Z69eJ0VfPZcDIHMzzZrpAIBFoq+eywGQuVl8vgWooYYaaqjRn6fZ7XOlUUMNNdTEi2Y3+tn4ul3lAtVC5mrS8tjR3EXlRUW86cZqBuW3owljkTUQ70zVXE1Yb0fztY63c9JYU1fal/LdntnaNyeB/HdN1SzwXg2h00f1lZbU8Uq57C8N1VQHAHRT/rpJeGYdxUZDNaFDh9ai0Q3lr9uJtmtr4Ya5942tffNjVmFP6Z18C1BDDTXUxKoGNsvsPM0uRUOeZvK/MWp+kxrDNdRQQ42YQ1PX7G2Sx1tmlXkaMYemrNnhb9gmOXDRUI2cQ1NYaacjkTo4aZxGzKGpa87vXZytjnkrTcyhqWvWASX2mKcRc2jqmpNzx+T27TNRI+bQ1E/o9phhnEbMoSlr+tTt1sqTvMc4jZhDU9bMLeb1llv6s507wKwYjKIgvP9dFzAIYBy9/zNZQPm8hhjH7VsgTZo0aebNxj93e9qjF8duaHpv0qRJk4adm+hpZzTs3HRPO6Bh56Z72gENOzfd0w5o2Ln5nnZAw85N97QDGnZuoqed0bBzEz3tkoadm+tpfQukSZOGJ82FNqM10252ep92/7f5h/dj+d6kSZMmDffQZhr2Zvt9GvfQZhr2Zvt9GvfQVhr2Zvt9GvfQZhr2Zvt9GvfQVhr2Zvt9GvfQVhr2Zvt9GvfQVhr2Zvt9GvfQRhr2Zvt9GvfQJhr2Zlf2afe/BdKkSZPm3vO+xve093+b2f/7mfcmTZo0ab79aqDh7+819Cuv8T3Na+hXXqN7mtfQr7zG9jSvoV95je1pXkO/8hrb07yGfuU1sqd5Df3Ka2xP85pv7/Ia09P6FkiTJk2aZ540T2teftKkSZPmV540adKkSZMmTZo/jZVVnQx9xGoAAAAASUVORK5CYII=" alt="Puzzle screenshot"></h1>
+<p>
+You have a grid of squares, with numbers written in some (but not all) of the squares. Your task is to subdivide the grid into rectangles of various sizes, such that (a) every rectangle contains exactly one numbered square, and (b) the area of each rectangle is equal to the number written in its numbered square.
+</p>
+<p>
+Credit for this game goes to the Japanese puzzle magazine <a name="i1"></a>Nikoli <a href="#p0">[3]</a>; I've also seen a Palm implementation at <a name="i2"></a>Puzzle Palace <a href="#p1">[4]</a>. Unlike Puzzle Palace's implementation, my version automatically generates random grids of any size you like. The quality of puzzle design is therefore not quite as good as hand-crafted puzzles would be, but on the plus side you get an inexhaustible supply of puzzles tailored to your own specification.
+</p>
+<p><a name="p0"></a>
+[3] <a href="https://www.nikoli.co.jp/en/puzzles/shikaku/"><code>https://www.nikoli.co.jp/en/puzzles/shikaku/</code></a>
+</p>
+<p><a name="p1"></a>
+[4] <a href="https://web.archive.org/web/20041024001459/http://www.puzzle.gr.jp/puzzle/sikaku/palm/index.html.en"><code>https://web.archive.org/web/20041024001459/http://www.puzzle.gr.jp/puzzle/sikaku/palm/index.html.en</code></a>
+</p>
+<h2><a name="rectangles-controls"></a><a name="i3"></a>Rectangles controls</h2>
+<p>
+This game is played with the mouse or cursor keys.
+</p>
+<p>
+Left-click any edge to toggle it on or off, or left-click and drag to draw an entire rectangle (or line) on the grid in one go (removing any existing edges within that rectangle). Right-clicking and dragging will allow you to erase the contents of a rectangle without affecting its edges.
+</p>
+<p>
+Alternatively, use the cursor keys to move the position indicator around the board. Pressing the return key then allows you to use the cursor keys to drag a rectangle out from that position, and pressing the return key again completes the rectangle. Using the space bar instead of the return key allows you to erase the contents of a rectangle without affecting its edges, as above. Pressing escape cancels a drag.
+</p>
+<p>
+When a rectangle of the correct size is completed, it will be shaded.
+</p>
+<p>
+(All the actions described in <a href="common#common-actions">section 2.1</a> are also available.)
+</p>
+<h2><a name="rectangles-params"></a><a name="i4"></a>Rectangles parameters</h2>
+<p>
+These parameters are available from the &#8216;Custom...&#8217; option on the &#8216;Type&#8217; menu.
+</p>
+<dl><dt>
+<em>Width</em>, <em>Height</em>
+</dt>
+<dd>
+Size of grid, in squares.
+</dd>
+<dt>
+<em>Expansion factor</em>
+</dt>
+<dd>
+This is a mechanism for changing the type of grids generated by the program. Some people prefer a grid containing a few large rectangles to one containing many small ones. So you can ask Rectangles to essentially generate a <em>smaller</em> grid than the size you specified, and then to expand it by adding rows and columns.
+<p>
+The default expansion factor of zero means that Rectangles will simply generate a grid of the size you ask for, and do nothing further. If you set an expansion factor of (say) 0.5, it means that each dimension of the grid will be expanded to half again as big after generation. In other words, the initial grid will be 2/3 the size in each dimension, and will be expanded to its full size without adding any more rectangles.
+</p>
+<p>
+Setting an expansion factor of around 0.5 tends to make the game more difficult, and also (in my experience) rewards a less deductive and more intuitive playing style. If you set it <em>too</em> high, though, the game simply cannot generate more than a few rectangles to cover the entire grid, and the game becomes trivial.
+</p>
+
+</dd>
+<dt>
+<em>Ensure unique solution</em>
+</dt>
+<dd>
+Normally, Rectangles will make sure that the puzzles it presents have only one solution. Puzzles with ambiguous sections can be more difficult and more subtle, so if you like you can turn off this feature and risk having ambiguous puzzles. Also, finding <em>all</em> the possible solutions can be an additional challenge for an advanced player. Turning off this option can also speed up puzzle generation.
+</dd>
+</dl>
+
+<hr><address></address><script defer src='https://static.cloudflareinsights.com/beacon.min.js' data-cf-beacon='{"token": "a5c8762bf7a148698e3926dda94ccd16"}'></script></body>
+</html>

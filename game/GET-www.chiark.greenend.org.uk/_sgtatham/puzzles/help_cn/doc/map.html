@@ -1,0 +1,91 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN"
+"http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+<meta name="generator" content="Halibut, unidentified version">
+<title>地图</title>
+<link rel="previous" href="lightup.html">
+<link rel="ToC" href="index.html">
+<link rel="up" href="index.html">
+<link rel="index" href="indexpage.html">
+<link rel="next" href="loopy.html">
+</head>
+<body>
+<p><a href="lightup.html">上一篇</a> | <a href="index.html">目录</a> | <a href="indexpage.html">索引</a> | <a href="loopy.html">下一篇</a></p>
+
+<ul>
+<li><a href="#map">第 22 章：地图</a>
+<ul>
+<li><a href="#map-controls">22.1 地图控制</a></li>
+<li><a href="#map-parameters">22.2 地图参数</a></li>
+<li><a href="#map-prefs">22.3 地图用户首选项</a></li>
+</ul></li>
+</ul>
+<h1><a name="map"></a>第 22 章：<a name="i0"></a>地图</h1>
+<p>
+你会得到一张由多个区域组成的地图。你的任务是用四种颜色中的一种为每个区域着色，使得没有两个共享边界的区域具有相同的颜色。有些区域已经被着色，足以使剩余的解决方案唯一，这些区域不能更改。
+</p>
+<p>
+只有共享边界长度的区域才需要使用不同的颜色。仅在一个<em>点</em>相遇的两个区域（即对角分离的）可以使用相同的颜色。
+</p>
+<p>
+我相信这个拼图是原创的；我从未在其他地方见过它的实现。四色拼图的概念是由 Alexandra Lanes 提出的；也必须归功于 Nikoli 和 Verity Allan，他们启发了我的思路，使我意识到 Alex 的建议是一个可行的拼图。还要感谢 Gareth Taylor 提供的许多详细建议。
+</p>
+<h2><a name="map-controls"></a>22.1 <a name="i2"></a>Map 控制</h2>
+<p>
+要为区域着色，用左键点击现有区域中所需颜色，然后将该颜色拖到新区域。
+</p>
+<p>
+（程序将始终确保起始拼图至少有一个每种颜色的区域，所以这总是可能的！）
+</p>
+<p>
+如果你需要清除一个区域，你可以从一个空区域拖动，或者如果没有空区域了，从拼图边界拖动。
+</p>
+<p>
+使用<em>右键</em>拖动颜色会使该区域用该颜色点画，你可以用它作为给自己的笔记，表明你认为该区域<em>可能</em>是那种颜色。一个区域可以同时包含多种颜色的点画。（这在较难的难度级别上通常很有用。）
+</p>
+<p>
+你也可以使用光标键在地图上移动：光标的颜色表示你将要拖动的颜色的位置（如果你在区域的边界上，这并不明显，因为它取决于你接近边界的方向）。按回车键开始拖动该颜色，如上所述，你可以用光标键控制；再次按回车键完成拖动。空格键可以类似地用于创建点画区域。双击回车键（不移动光标）将清除区域，就像从空区域拖动一样：这在光标模式下很有用，如果你已经填满了整个地图但需要修正布局。
+</p>
+<p>
+如果你在游戏过程中按 L，游戏将切换在地图的每个区域中显示一个数字。如果你想与朋友讨论特定的拼图实例，这很有用 —— 为每个区域提供一个明确的名称比尝试通过诸如“顶部边界上棕色区域的右下方那个”之类的名称来引用它们要容易得多。
+</p>
+<p>
+（<a href="common.html#common-actions">第 2.1 节</a> 中描述的所有操作也可用。）
+</p>
+<h2><a name="map-parameters"></a>22.2 <a name="i3"></a>Map 参数</h2>
+<p>
+这些参数可从“类型”菜单的“自定义...”选项获得。
+</p>
+<dl><dt>
+<em>宽度</em>，<em>高度</em>
+</dt>
+<dd>
+网格的大小（以方块为单位）。
+</dd>
+<dt>
+<em>区域</em>
+</dt>
+<dd>
+生成的地图中的区域数量。
+</dd>
+<dt>
+<em>难度</em>
+</dt>
+<dd>
+在“简单”模式下，应该总是至少有一个区域的颜色可以平凡地确定。在“普通”和“困难”模式下，你将需要使用越来越复杂的逻辑来推断某些区域的颜色。然而，这总是可以在不需要猜测或回溯的情况下完成。
+<p>
+在“不合理”模式下，程序将自由生成尽可能困难的拼图：唯一的约束是它们仍然应该有唯一的解决方案。解决不合理的拼图可能需要猜测和回溯。
+</p>
+
+</dd>
+</dl>
+<h2><a name="map-prefs"></a>22.3 <a name="i4"></a>Map 用户首选项</h2>
+<p>
+在支持用户首选项的平台上，“游戏”菜单上的“首选项”选项将允许你配置胜利闪光的样式，以及区域是否开始时标有数字。
+</p>
+
+<hr><address>
+[Simon Tatham's Portable Puzzle Collection, version 20260309.06e37f1]</address></body>
+</html>

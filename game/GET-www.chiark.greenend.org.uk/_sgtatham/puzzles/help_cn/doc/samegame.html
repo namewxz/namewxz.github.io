@@ -1,0 +1,84 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN"
+"http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+<meta name="generator" content="Halibut, unidentified version">
+<title>同色游戏</title>
+<link rel="previous" href="mines.html">
+<link rel="ToC" href="index.html">
+<link rel="up" href="index.html">
+<link rel="index" href="indexpage.html">
+<link rel="next" href="flip.html">
+</head>
+<body>
+<p><a href="mines.html">上一篇</a> | <a href="index.html">目录</a> | <a href="indexpage.html">索引</a> | <a href="flip.html">下一篇</a></p>
+<h1><a name="samegame"></a>第 13 章：<a name="i0"></a>同色游戏</h1>
+<p>
+你有一个彩色方格网格，你必须通过高亮显示多个彩色方格的连续区域来清除它；你高亮显示的区域越大，你获得的分数就越多（并且你清除竞技场的速度就越快）。
+</p>
+<p>
+如果你清除了网格，你就赢了。如果你最终只剩下单个方格（即没有更多可点击的区域），你就输了。
+</p>
+<p>
+移除一个区域会导致网格的其余部分向上移动：悬垂的块会向下掉落（首先），然后空列从右侧填充。
+</p>
+<p>
+同色游戏由 James Harvey 贡献到这个集合中。
+</p>
+<h2><a name="samegame-controls"></a>13.1 <a name="i1"></a>同色游戏控制</h2>
+<p>
+这个游戏可以用键盘或鼠标玩。
+</p>
+<p>
+如果你左键点击未选中的区域，它会被选中（可能会清除当前选择）。
+</p>
+<p>
+如果你左键点击选中的区域，它会被移除（网格的其余部分立即被打乱）。
+</p>
+<p>
+如果你右键点击选中的区域，它会被取消选择。
+</p>
+<p>
+光标键在网格周围移动光标。当光标在未选中的区域时，按空格键或回车键选择它；再次按空格键或回车键如上所述移除它。
+</p>
+<p>
+（<a href="common.html#common-actions">第 2.1 节</a> 中描述的所有操作也可用。）
+</p>
+<h2><a name="samegame-parameters"></a>13.2 <a name="i2"></a>同色游戏参数</h2>
+<p>
+这些参数可从“类型”菜单的“自定义...”选项获得。
+</p>
+<dl><dt>
+<em>宽度</em>，<em>高度</em>
+</dt>
+<dd>
+网格的大小（以方块为单位）。
+</dd>
+<dt>
+<em>颜色数量</em>
+</dt>
+<dd>
+用于填充网格的不同颜色的数量；颜色越多，大面积的相同颜色就越少，因此成功清除网格就越困难。
+</dd>
+<dt>
+<em>评分系统</em>
+</dt>
+<dd>
+控制用于评分的精确机制。使用默认系统 '(n-2)^2'，只有三个或更多方格的区域才会得分。使用替代的 '(n-1)^2' 系统，两个方格的区域每个得一分，更大的区域得分相对更多。
+</dd>
+<dt>
+<em>确保可解性</em>
+</dt>
+<dd>
+如果此选项被勾选（默认状态），生成的网格将保证至少有一个解决方案。
+<p>
+如果你关闭它，游戏生成器将不会尝试保证可解的网格；然而，它仍然会确保开始时网格上每种颜色至少有 2 个方格（因为具有给定颜色恰好一个方格的网格<em>绝对</em>不可解）。禁用此选项生成的网格可能包含更多连续颜色的大面积，导致获得更高分数的机会；它们生成的时间也可能更少。
+</p>
+
+</dd>
+</dl>
+
+<hr><address>
+[Simon Tatham's Portable Puzzle Collection, version 20260309.06e37f1]</address></body>
+</html>

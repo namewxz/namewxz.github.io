@@ -1,0 +1,123 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN"
+"http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+<meta name="generator" content="Halibut, unidentified version">
+<title>网络</title>
+<link rel="previous" href="common.html">
+<link rel="ToC" href="index.html">
+<link rel="up" href="index.html">
+<link rel="index" href="indexpage.html">
+<link rel="next" href="cube.html">
+</head>
+<body>
+<p><a href="common.html">上一篇</a> | <a href="index.html">目录</a> | <a href="indexpage.html">索引</a> | <a href="cube.html">下一篇</a></p>
+
+<ul>
+<li><a href="#net">第 3 章：网络</a>
+<ul>
+<li><a href="#net-controls">3.1 网络控制</a></li>
+<li><a href="#net-params">3.2 网络参数</a></li>
+<li><a href="#net-prefs">3.3 网络用户首选项</a></li>
+</ul></li>
+</ul>
+<h1><a name="net"></a>第 3 章：<a name="i0"></a>网络</h1>
+<p>
+（<em>注意：</em>这个游戏的 <a name="i1"></a>Windows 版本被称为 <a name="i2"></a><code>NETGAME.EXE</code>，以避免与 Windows 自己的 <code>NET.EXE</code> 冲突。）
+</p>
+<p>
+我最初是在一个名为 <a name="i3"></a>FreeNet <a href="#p0">[1]</a> 的 Flash 游戏中看到这个的，由 Pavils Jurjans 编写；还有几个其他的实现，名称为 <a name="i4"></a>NetWalk。计算机通过连接网格中方格的中心来准备一个网络，然后通过随机旋转每个瓦片来打乱网络。你的工作是将其全部旋转回原位。成功的解决方案将是一个完全连接的网络，没有闭合回路。作为视觉辅助，所有连接到中间那个的瓦片都会被高亮显示。
+</p>
+<p><a name="p0"></a>
+[1] <a href="http://www.jurjans.lv/stuff/net/FreeNet.htm"><code>http://www.jurjans.lv/stuff/net/FreeNet.htm</code></a>
+</p>
+<h2><a name="net-controls"></a>3.1 <a name="i5"></a>Net 控制</h2>
+<p>
+这个游戏可以用键盘或鼠标玩。控制如下：
+</p>
+<dl><dt>
+<em>选择瓦片</em>：鼠标指针，箭头键
+</dt>
+<dt>
+<em>逆时针旋转瓦片</em>：鼠标左键，'A' 键
+</dt>
+<dt>
+<em>顺时针旋转瓦片</em>：鼠标右键，'D' 键
+</dt>
+<dt>
+<em>旋转瓦片 180 度</em>：'F' 键
+</dt>
+<dt>
+<em>锁定（或解锁）瓦片</em>：鼠标中键，Shift+点击，'S' 键
+</dt>
+<dd>
+一旦你确定了瓦片的方向，你可以锁定它。你也可以再次解锁它，但在锁定时你不能意外地转动它。
+</dd>
+</dl>
+<p>
+以下控制对于完成游戏不是必需的，但可能有用：
+</p>
+<dl><dt>
+<em>移动网格</em>：Shift + 箭头键
+</dt>
+<dd>
+在环绕的网格上，你可以移动网格的原点，这样在网格相反两侧的瓦片可以一起看到。
+</dd>
+<dt>
+<em>移动中心</em>：Ctrl + 箭头键
+</dt>
+<dd>
+你可以更改用作高亮显示源的瓦片。（这最终无关紧要，因为在正确的解决方案中，每个瓦片都会连接到其他每个瓦片，但在解决拼图的中间阶段可能会有所帮助。）
+</dd>
+<dt>
+<em>打乱瓦片</em>：'J' 键
+</dt>
+<dd>
+这个键将所有未锁定的瓦片转到随机方向。
+</dd>
+</dl>
+<p>
+（<a href="common.html#common-actions">第 2.1 节</a> 中描述的所有操作也可用。）
+</p>
+<h2><a name="net-params"></a>3.2 <a name="i6"></a>Net 参数</h2>
+<p>
+这些参数可从“类型”菜单的“自定义...”选项获得。
+</p>
+<dl><dt>
+<em>宽度</em>，<em>高度</em>
+</dt>
+<dd>
+网格的大小（以瓦片为单位）。
+</dd>
+<dt>
+<em>墙壁环绕</em>
+</dt>
+<dd>
+如果选中，流可以从左边缘流到右边缘，从顶部流到底部，反之亦然。
+</dd>
+<dt>
+<em>障碍概率</em>
+</dt>
+<dd>
+一个介于 0.0 和 1.0 之间的数字，控制是否在两个瓦片之间放置不可移动的障碍以防止它们之间的流动（数字越高，障碍越多）。由于障碍是不可移动的，它们作为解决方案的约束（即提示）。
+<p>
+网络中的网格生成已经精心安排，使得障碍与网格的其余部分无关。这意味着如果你记下用于生成当前拼图的随机种子（见 <a href="common.html#common-id">第 2.2 节</a>），更改 <em>障碍概率</em> 参数，然后重新输入相同的随机种子，你应该看到完全相同的起始网格，唯一的变化是障碍的数量。所以如果你在特定的网格上卡住了，需要提示，你可以启动另一个网络实例，设置相同的参数但更高的障碍概率，然后输入原始网络窗口中的游戏种子。
+</p>
+
+</dd>
+<dt>
+<em>确保唯一解决方案</em>
+</dt>
+<dd>
+通常，网络会确保它呈现的拼图只有一个解决方案。具有歧义部分的拼图可能更困难和更微妙，所以如果你愿意，你可以关闭这个功能，冒险获得有歧义的拼图。（此外，找到<em>所有</em>可能的解决方案对高级玩家来说可能是一个额外的挑战。）
+</dd>
+</dl>
+<h2><a name="net-prefs"></a>3.3 <a name="i7"></a>网络用户首选项</h2>
+<p>
+在支持用户首选项的平台上，“游戏”菜单上的“首选项”选项将允许你配置何时将回路高亮显示为错误。默认情况下，它们总是被高亮显示；通过更改此选项，你可以要求仅当形成回路的每个瓦片都被锁定时才高亮显示回路。这避免了回路高亮显示作为剧透，用于你甚至还没有查看的方块的可用推断。
+</p>
+
+<hr><address>
+[Simon Tatham's Portable Puzzle Collection, version 20260309.06e37f1]</address></body>
+</html>

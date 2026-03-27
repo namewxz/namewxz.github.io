@@ -1,0 +1,204 @@
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Simon Tatham的便携益智游戏集合</title>
+<link rel="stylesheet" type="text/css" href="sitestyle.css" name="Simon Tatham's Home Page Style">
+<style type="text/css">
+span.puzzle {display: -moz-inline-box;
+	     display: inline-block;
+	     margin-right: 10px;
+	     margin-bottom: 10px;
+	     vertical-align: top;
+	     width: 200px;}
+span.puzzle table {width: 200px; align: top; }
+span.puzzle table p {width: 200px; }
+span.puzzle th {text-align: center; }
+span.puzzle table,tr,th,td {border: none; }
+p.announcement { margin: 1em; padding: 1em; border: 0.3em solid red; }
+</style>
+</head>
+<body>
+<h1 align=center>Simon Tatham的便携益智游戏集合</h1>
+
+<h2>介绍</h2>
+
+<p>
+本页面包含一系列小型计算机程序，实现了单人益智游戏。所有游戏都可以在Unix（GTK）和Windows上原生运行。它们也可以在网络上作为Java或Javascript小程序游玩。
+
+<p class="announcement">2023-09-20：很抱歉，我将不再能够构建这些游戏的MacOS版本。我的Mac已经很旧了，一直在挣扎运行；现在它已经停止工作，我也不打算购买新的。如果有人愿意自愿维护Mac前端代码并提供可下载的应用程序，我会帮助他们开始，并在网站启动后链接到他们的站点。对不起，Mac用户们。与此同时，总有网络版本可用...</p>
+
+<p>
+我编写这个集合是因为我认为应该有更多的小型桌面玩具：你可以在窗口中弹出并玩上两三分钟的小游戏，当你从其他事情中休息时。我也很恼火，每次我在（比如说）Unix上找到一个好游戏，下次我坐在Windows机器前时它就不可用了，反之亦然；所以我安排了我的个人益智游戏集合中的所有游戏都能在这两个平台上愉快地运行，甚至更多平台。当我发现（或者可能发明）更多我喜欢的益智游戏时，它们会被添加到这个集合中，并立即在两个平台上可用。如果有人想为我不支持的平台编写其他前端（已经有人这样做了），那么这个框架中的所有游戏将立即在另一个平台上可用。
+
+<h2>游戏</h2>
+
+<p>
+这个集合中的实际游戏大多不是我的发明；它们是在我的便携益智游戏框架内对现有游戏概念的重新实现。一般来说，我不声称拥有这些谜题规则的发明权。（我甚至不声称拥有所有代码的作者权；下面的一些谜题是由其他作者提交的。）
+
+<p>
+每张图片下方都有两个链接，指向你可以在网络上玩的谜题版本。'js'链接（以及谜题图片本身）链接到基于JavaScript和WebAssembly的版本。'java'链接现在可能已经过时：它链接到Java小程序，大多数浏览器不再支持。
+
+<p>
+每张图片下方还有一个指向游戏Windows二进制文件的链接，以及一个指向手册的链接。对于所有其他平台，游戏以单个包的形式提供，因此请向下滚动到<a href="winexe/#download">下载</a>部分获取所有游戏。
+
+<p>
+<div class="outer" align="center">
+
+<span class="puzzle"><table><tr><th align="center">黑盒</th></tr><tr><td align="center"><a href="js/blackbox_cn.html"><img style="margin: 0.5em" alt="" title="Ball-finding puzzle" width=150 height=150 border=0 src="img/blackbox-web.png" /></a></td></tr><tr><td align="center" style="font-size: 70%"><code>[</code> <a href="java/blackbox.html">java</a> | <a href="js/blackbox_cn.html">js</a> | <a href="help_cn/doc/blackbox.html#blackbox">手册</a> <code>]</code><br><code>[</code> <a href="winexe/blackbox.exe"><code>blackbox.exe</code></a> <code>]</code></td></tr><tr><td align="center">通过激光束反弹找到盒子里隐藏的球。</td></tr></table></span>
+<span class="puzzle"><table><tr><th align="center">桥梁</th></tr><tr><td align="center"><a href="js/bridges_cn.html"><img style="margin: 0.5em" alt="" title="Bridge-placing puzzle" width=150 height=150 border=0 src="img/bridges-web.png" /></a></td></tr><tr><td align="center" style="font-size: 70%"><code>[</code> <a href="java/bridges.html">java</a> | <a href="js/bridges_cn.html">js</a> | <a href="help_cn/doc/bridges.html#bridges">手册</a> <code>]</code><br><code>[</code> <a href="winexe/bridges.exe"><code>bridges.exe</code></a> <code>]</code></td></tr><tr><td align="center">用桥梁网络连接所有岛屿。</td></tr></table></span>
+<span class="puzzle"><table><tr><th align="center">立方体</th></tr><tr><td align="center"><a href="js/cube.html"><img style="margin: 0.5em" alt="" title="Rolling cube puzzle" width=150 height=150 border=0 src="img/cube-web.png" /></a></td></tr><tr><td align="center" style="font-size: 70%"><code>[</code> <a href="java/cube.html">java</a> | <a href="js/cube_cn.html">js</a> | <a href="help_cn/doc/cube.html#cube">手册</a> <code>]</code><br><code>[</code> <a href="winexe/cube.exe"><code>cube.exe</code></a> <code>]</code></td></tr><tr><td align="center">通过滚动立方体来拾取所有蓝色方块。</td></tr></table></span>
+<span class="puzzle"><table><tr><th align="center">多米诺骨牌</th></tr><tr><td align="center"><a href="js/dominosa.html"><img style="margin: 0.5em" alt="" title="Domino tiling puzzle" width=150 height=150 border=0 src="img/dominosa-web.png" /></a></td></tr><tr><td align="center" style="font-size: 70%"><code>[</code> <a href="java/dominosa.html">java</a> | <a href="js/dominosa_cn.html">js</a> | <a href="help_cn/doc/dominosa.html#dominosa">手册</a> <code>]</code><br><code>[</code> <a href="winexe/dominosa.exe"><code>dominosa.exe</code></a> <code>]</code></td></tr><tr><td align="center">用一整套多米诺骨牌铺满矩形。</td></tr></table></span>
+<span class="puzzle"><table><tr><th align="center">十五拼图</th></tr><tr><td align="center"><a href="js/fifteen.html"><img style="margin: 0.5em" alt="" title="Sliding block puzzle" width=150 height=150 border=0 src="img/fifteen-web.png" /></a></td></tr><tr><td align="center" style="font-size: 70%"><code>[</code> <a href="java/fifteen.html">java</a> | <a href="js/fifteen_cn.html">js</a> | <a href="help_cn/doc/fifteen.html#fifteen">手册</a> <code>]</code><br><code>[</code> <a href="winexe/fifteen.exe"><code>fifteen.exe</code></a> <code>]</code></td></tr><tr><td align="center">滑动方块以将它们排列整齐。</td></tr></table></span>
+<span class="puzzle"><table><tr><th align="center">填充</th></tr><tr><td align="center"><a href="js/filling.html"><img style="margin: 0.5em" alt="" title="Polyomino puzzle" width=150 height=150 border=0 src="img/filling-web.png" /></a></td></tr><tr><td align="center" style="font-size: 70%"><code>[</code> <a href="java/filling.html">java</a> | <a href="js/filling_cn.html">js</a> | <a href="help_cn/doc/filling.html#filling">手册</a> <code>]</code><br><code>[</code> <a href="winexe/filling.exe"><code>filling.exe</code></a> <code>]</code></td></tr><tr><td align="center">标记每个方块及其包含区域的面积。</td></tr></table></span>
+<span class="puzzle"><table><tr><th align="center">翻转</th></tr><tr><td align="center"><a href="js/flip.html"><img style="margin: 0.5em" alt="" title="Tile inversion puzzle" width=150 height=150 border=0 src="img/flip-web.png" /></a></td></tr><tr><td align="center" style="font-size: 70%"><code>[</code> <a href="java/flip.html">java</a> | <a href="js/flip_cn.html">js</a> | <a href="help_cn/doc/flip.html#flip">手册</a> <code>]</code><br><code>[</code> <a href="winexe/flip.exe"><code>flip.exe</code></a> <code>]</code></td></tr><tr><td align="center">翻转方块组以使它们同时点亮。</td></tr></table></span>
+<span class="puzzle"><table><tr><th align="center">洪水</th></tr><tr><td align="center"><a href="js/flood.html"><img style="margin: 0.5em" alt="" title="Flood-filling puzzle" width=150 height=150 border=0 src="img/flood-web.png" /></a></td></tr><tr><td align="center" style="font-size: 70%"><code>[</code> <a href="java/flood.html">java</a> | <a href="js/flood_cn.html">js</a> | <a href="help_cn/doc/flood.html#flood">手册</a> <code>]</code><br><code>[</code> <a href="winexe/flood.exe"><code>flood.exe</code></a> <code>]</code></td></tr><tr><td align="center">以尽可能少的洪水填充次数将网格变成相同的颜色。</td></tr></table></span>
+<span class="puzzle"><table><tr><th align="center">星系</th></tr><tr><td align="center"><a href="js/galaxies.html"><img style="margin: 0.5em" alt="" title="Symmetric polyomino puzzle" width=150 height=150 border=0 src="img/galaxies-web.png" /></a></td></tr><tr><td align="center" style="font-size: 70%"><code>[</code> <a href="java/galaxies.html">java</a> | <a href="js/galaxies_cn.html">js</a> | <a href="help_cn/doc/galaxies.html#galaxies">手册</a> <code>]</code><br><code>[</code> <a href="winexe/galaxies.exe"><code>galaxies.exe</code></a> <code>]</code></td></tr><tr><td align="center">将网格划分为以点为中心的旋转对称区域。</td></tr></table></span>
+<span class="puzzle"><table><tr><th align="center">猜谜</th></tr><tr><td align="center"><a href="js/guess.html"><img style="margin: 0.5em" alt="" title="Combination-guessing puzzle" width=150 height=150 border=0 src="img/guess-web.png" /></a></td></tr><tr><td align="center" style="font-size: 70%"><code>[</code> <a href="java/guess.html">java</a> | <a href="js/guess_cn.html">js</a> | <a href="help_cn/doc/guess.html#guess">手册</a> <code>]</code><br><code>[</code> <a href="winexe/guess.exe"><code>guess.exe</code></a> <code>]</code></td></tr><tr><td align="center">猜测隐藏的颜色组合。</td></tr></table></span>
+<span class="puzzle"><table><tr><th align="center">惯性</th></tr><tr><td align="center"><a href="js/inertia.html"><img style="margin: 0.5em" alt="" title="Gem-collecting puzzle" width=150 height=150 border=0 src="img/inertia-web.png" /></a></td></tr><tr><td align="center" style="font-size: 70%"><code>[</code> <a href="java/inertia.html">java</a> | <a href="js/inertia_cn.html">js</a> | <a href="help_cn/doc/inertia.html#inertia">手册</a> <code>]</code><br><code>[</code> <a href="winexe/inertia.exe"><code>inertia.exe</code></a> <code>]</code></td></tr><tr><td align="center">收集所有宝石而不碰到任何地雷。</td></tr></table></span>
+<span class="puzzle"><table><tr><th align="center">敏锐</th></tr><tr><td align="center"><a href="js/keen.html"><img style="margin: 0.5em" alt="" title="Arithmetic Latin square puzzle" width=150 height=150 border=0 src="img/keen-web.png" /></a></td></tr><tr><td align="center" style="font-size: 70%"><code>[</code> <a href="java/keen.html">java</a> | <a href="js/keen_cn.html">js</a> | <a href="help_cn/doc/keen.html#keen">手册</a> <code>]</code><br><code>[</code> <a href="winexe/keen.exe"><code>keen.exe</code></a> <code>]</code></td></tr><tr><td align="center">根据算术线索完成拉丁方阵。</td></tr></table></span>
+<span class="puzzle"><table><tr><th align="center">点灯</th></tr><tr><td align="center"><a href="js/lightup.html"><img style="margin: 0.5em" alt="" title="Light-bulb placing puzzle" width=150 height=150 border=0 src="img/lightup-web.png" /></a></td></tr><tr><td align="center" style="font-size: 70%"><code>[</code> <a href="java/lightup.html">java</a> | <a href="js/lightup_cn.html">js</a> | <a href="help_cn/doc/lightup.html#lightup">手册</a> <code>]</code><br><code>[</code> <a href="winexe/lightup.exe"><code>lightup.exe</code></a> <code>]</code></td></tr><tr><td align="center">放置灯泡以照亮所有方块。</td></tr></table></span>
+<span class="puzzle"><table><tr><th align="center">环路</th></tr><tr><td align="center"><a href="js/loopy.html"><img style="margin: 0.5em" alt="" title="Loop-drawing puzzle" width=150 height=150 border=0 src="img/loopy-web.png" /></a></td></tr><tr><td align="center" style="font-size: 70%"><code>[</code> <a href="java/loopy.html">java</a> | <a href="js/loopy_cn.html">js</a> | <a href="help_cn/doc/loopy.html#loopy">手册</a> <code>]</code><br><code>[</code> <a href="winexe/loopy.exe"><code>loopy.exe</code></a> <code>]</code></td></tr><tr><td align="center">根据相邻边数的线索绘制单个闭合环路。</td></tr></table></span>
+<span class="puzzle"><table><tr><th align="center">磁铁</th></tr><tr><td align="center"><a href="js/magnets.html"><img style="margin: 0.5em" alt="" title="Magnet-placing puzzle" width=150 height=150 border=0 src="img/magnets-web.png" /></a></td></tr><tr><td align="center" style="font-size: 70%"><code>[</code> <a href="java/magnets.html">java</a> | <a href="js/magnets_cn.html">js</a> | <a href="help_cn/doc/magnets.html#magnets">手册</a> <code>]</code><br><code>[</code> <a href="winexe/magnets.exe"><code>magnets.exe</code></a> <code>]</code></td></tr><tr><td align="center">放置磁铁以满足线索并避免同极接触。</td></tr></table></span>
+<span class="puzzle"><table><tr><th align="center">地图</th></tr><tr><td align="center"><a href="js/map.html"><img style="margin: 0.5em" alt="" title="Map-colouring puzzle" width=150 height=150 border=0 src="img/map-web.png" /></a></td></tr><tr><td align="center" style="font-size: 70%"><code>[</code> <a href="java/map.html">java</a> | <a href="js/map_cn.html">js</a> | <a href="help_cn/doc/map.html#map">手册</a> <code>]</code><br><code>[</code> <a href="winexe/map.exe"><code>map.exe</code></a> <code>]</code></td></tr><tr><td align="center">为地图着色，使相邻区域永远不会是相同的颜色。</td></tr></table></span>
+<span class="puzzle"><table><tr><th align="center">扫雷</th></tr><tr><td align="center"><a href="js/mines.html"><img style="margin: 0.5em" alt="" title="Mine-finding puzzle" width=150 height=150 border=0 src="img/mines-web.png" /></a></td></tr><tr><td align="center" style="font-size: 70%"><code>[</code> <a href="java/mines.html">java</a> | <a href="js/mines_cn.html">js</a> | <a href="help_cn/doc/mines.html#mines">手册</a> <code>]</code><br><code>[</code> <a href="winexe/mines.exe"><code>mines.exe</code></a> <code>]</code></td></tr><tr><td align="center">找到所有地雷而不踩到任何一个。</td></tr></table></span>
+<span class="puzzle"><table><tr><th align="center">马赛克</th></tr><tr><td align="center"><a href="js/mosaic.html"><img style="margin: 0.5em" alt="" title="Grid-filling puzzle" width=150 height=150 border=0 src="img/mosaic-web.png" /></a></td></tr><tr><td align="center" style="font-size: 70%"><code>[</code> <a href="java/mosaic.html">java</a> | <a href="js/mosaic_cn.html">js</a> | <a href="help_cn/doc/mosaic.html#mosaic">手册</a> <code>]</code><br><code>[</code> <a href="winexe/mosaic.exe"><code>mosaic.exe</code></a> <code>]</code></td></tr><tr><td align="center">根据附近黑方块数量的线索填充网格。</td></tr></table></span>
+<span class="puzzle"><table><tr><th align="center">网络</th></tr><tr><td align="center"><a href="js/net.html"><img style="margin: 0.5em" alt="" title="Network jigsaw puzzle" width=150 height=150 border=0 src="img/net-web.png" /></a></td></tr><tr><td align="center" style="font-size: 70%"><code>[</code> <a href="java/net.html">java</a> | <a href="js/net_cn.html">js</a> | <a href="help_cn/doc/net.html#net">手册</a> <code>]</code><br><code>[</code> <a href="winexe/netgame.exe"><code>netgame.exe</code></a> <code>]</code></td></tr><tr><td align="center">旋转每个方块以重新组装网络。</td></tr></table></span>
+<span class="puzzle"><table><tr><th align="center">网络滑块</th></tr><tr><td align="center"><a href="js/netslide.html"><img style="margin: 0.5em" alt="" title="Toroidal sliding network puzzle" width=150 height=150 border=0 src="img/netslide-web.png" /></a></td></tr><tr><td align="center" style="font-size: 70%"><code>[</code> <a href="java/netslide.html">java</a> | <a href="js/netslide_cn.html">js</a> | <a href="help_cn/doc/netslide.html#netslide">手册</a> <code>]</code><br><code>[</code> <a href="winexe/netslide.exe"><code>netslide.exe</code></a> <code>]</code></td></tr><tr><td align="center">一次滑动一行以重新组装网络。</td></tr></table></span>
+<span class="puzzle"><table><tr><th align="center">栅栏</th></tr><tr><td align="center"><a href="js/palisade.html"><img style="margin: 0.5em" alt="" title="Grid-division puzzle" width=150 height=150 border=0 src="img/palisade-web.png" /></a></td></tr><tr><td align="center" style="font-size: 70%"><code>[</code> <a href="java/palisade.html">java</a> | <a href="js/palisade_cn.html">js</a> | <a href="help_cn/doc/palisade.html#palisade">手册</a> <code>]</code><br><code>[</code> <a href="winexe/palisade.exe"><code>palisade.exe</code></a> <code>]</code></td></tr><tr><td align="center">根据线索将网格划分为等大小的区域。</td></tr></table></span>
+<span class="puzzle"><table><tr><th align="center">图案</th></tr><tr><td align="center"><a href="js/pattern.html"><img style="margin: 0.5em" alt="" title="Pattern puzzle" width=150 height=150 border=0 src="img/pattern-web.png" /></a></td></tr><tr><td align="center" style="font-size: 70%"><code>[</code> <a href="java/pattern.html">java</a> | <a href="js/pattern_cn.html">js</a> | <a href="help_cn/doc/pattern.html#pattern">手册</a> <code>]</code><br><code>[</code> <a href="winexe/pattern.exe"><code>pattern.exe</code></a> <code>]</code></td></tr><tr><td align="center">仅根据黑方块连续长度填充网格中的图案。</td></tr></table></span>
+<span class="puzzle"><table><tr><th align="center">珍珠</th></tr><tr><td align="center"><a href="js/pearl.html"><img style="margin: 0.5em" alt="" title="Loop-drawing puzzle" width=150 height=150 border=0 src="img/pearl-web.png" /></a></td></tr><tr><td align="center" style="font-size: 70%"><code>[</code> <a href="java/pearl.html">java</a> | <a href="js/pearl_cn.html">js</a> | <a href="help_cn/doc/pearl.html#pearl">手册</a> <code>]</code><br><code>[</code> <a href="winexe/pearl.exe"><code>pearl.exe</code></a> <code>]</code></td></tr><tr><td align="center">根据角落和直线方块的线索绘制单个闭合环路。</td></tr></table></span>
+<span class="puzzle"><table><tr><th align="center"> 独立钻石 </th></tr><tr><td align="center"><a href="js/pegs.html"><img style="margin: 0.5em" alt="" title="Peg solitaire puzzle" width=150 height=150 border=0 src="img/pegs-web.png" /></a></td></tr><tr><td align="center" style="font-size: 70%"><code>[</code> <a href="java/pegs.html">java</a> | <a href="js/pegs_cn.html">js</a> | <a href="help_cn/doc/pegs.html#pegs">手册</a> <code>]</code><br><code>[</code> <a href="winexe/pegs.exe"><code>pegs.exe</code></a> <code>]</code></td></tr><tr><td align="center">跳过钉子以移除除一个之外的所有钉子。</td></tr></table></span>
+<span class="puzzle"><table><tr><th align="center">范围</th></tr><tr><td align="center"><a href="js/range.html"><img style="margin: 0.5em" alt="" title="Visible-distance puzzle" width=150 height=150 border=0 src="img/range-web.png" /></a></td></tr><tr><td align="center" style="font-size: 70%"><code>[</code> <a href="java/range.html">java</a> | <a href="js/range_cn.html">js</a> | <a href="help_cn/doc/range.html#range">手册</a> <code>]</code><br><code>[</code> <a href="winexe/range.exe"><code>range.exe</code></a> <code>]</code></td></tr><tr><td align="center">放置黑方块以限制从每个编号单元格的可见距离。</td></tr></table></span>
+<span class="puzzle"><table><tr><th align="center">矩形</th></tr><tr><td align="center"><a href="js/rect.html"><img style="margin: 0.5em" alt="" title="Rectangles puzzle" width=150 height=150 border=0 src="img/rect-web.png" /></a></td></tr><tr><td align="center" style="font-size: 70%"><code>[</code> <a href="java/rect.html">java</a> | <a href="js/rect_cn.html">js</a> | <a href="help_cn/doc/rect.html#rect">手册</a> <code>]</code><br><code>[</code> <a href="winexe/rect.exe"><code>rect.exe</code></a> <code>]</code></td></tr><tr><td align="center">将网格划分为面积等于数字的矩形。</td></tr></table></span>
+<span class="puzzle"><table><tr><th align="center">同样的游戏</th></tr><tr><td align="center"><a href="js/samegame.html"><img style="margin: 0.5em" alt="" title="Block-clearing puzzle" width=150 height=150 border=0 src="img/samegame-web.png" /></a></td></tr><tr><td align="center" style="font-size: 70%"><code>[</code> <a href="java/samegame.html">java</a> | <a href="js/samegame_cn.html">js</a> | <a href="help_cn/doc/samegame.html#samegame">手册</a> <code>]</code><br><code>[</code> <a href="winexe/samegame.exe"><code>samegame.exe</code></a> <code>]</code></td></tr><tr><td align="center">通过移除相同颜色方块的接触组来清除网格。</td></tr></table></span>
+<span class="puzzle"><table><tr><th align="center">路标</th></tr><tr><td align="center"><a href="js/signpost.html"><img style="margin: 0.5em" alt="" title="Square-connecting puzzle" width=150 height=150 border=0 src="img/signpost-web.png" /></a></td></tr><tr><td align="center" style="font-size: 70%"><code>[</code> <a href="java/signpost.html">java</a> | <a href="js/signpost_cn.html">js</a> | <a href="help_cn/doc/signpost.html#signpost">手册</a> <code>]</code><br><code>[</code> <a href="winexe/signpost.exe"><code>signpost.exe</code></a> <code>]</code></td></tr><tr><td align="center">按照箭头将方块连接成一条路径。</td></tr></table></span>
+<span class="puzzle"><table><tr><th align="center">单打</th></tr><tr><td align="center"><a href="js/singles.html"><img style="margin: 0.5em" alt="" title="Number-removing puzzle" width=150 height=150 border=0 src="img/singles-web.png" /></a></td></tr><tr><td align="center" style="font-size: 70%"><code>[</code> <a href="java/singles.html">java</a> | <a href="js/singles_cn.html">js</a> | <a href="help_cn/doc/singles.html#singles">手册</a> <code>]</code><br><code>[</code> <a href="winexe/singles.exe"><code>singles.exe</code></a> <code>]</code></td></tr><tr><td align="center">涂黑正确的重复数字集。</td></tr></table></span>
+<span class="puzzle"><table><tr><th align="center">十六</th></tr><tr><td align="center"><a href="js/sixteen.html"><img style="margin: 0.5em" alt="" title="Toroidal sliding block puzzle" width=150 height=150 border=0 src="img/sixteen-web.png" /></a></td></tr><tr><td align="center" style="font-size: 70%"><code>[</code> <a href="java/sixteen.html">java</a> | <a href="js/sixteen_cn.html">js</a> | <a href="help_cn/doc/sixteen.html#sixteen">手册</a> <code>]</code><br><code>[</code> <a href="winexe/sixteen.exe"><code>sixteen.exe</code></a> <code>]</code></td></tr><tr><td align="center">一次滑动一行以将方块排列整齐。</td></tr></table></span>
+<span class="puzzle"><table><tr><th align="center">倾斜</th></tr><tr><td align="center"><a href="js/slant.html"><img style="margin: 0.5em" alt="" title="Maze-drawing puzzle" width=150 height=150 border=0 src="img/slant-web.png" /></a></td></tr><tr><td align="center" style="font-size: 70%"><code>[</code> <a href="java/slant.html">java</a> | <a href="js/slant_cn.html">js</a> | <a href="help_cn/doc/slant.html#slant">手册</a> <code>]</code><br><code>[</code> <a href="winexe/slant.exe"><code>slant.exe</code></a> <code>]</code></td></tr><tr><td align="center">绘制与线索匹配的倾斜线条迷宫。</td></tr></table></span>
+<span class="puzzle"><table><tr><th align="center">数独</th></tr><tr><td align="center"><a href="js/solo.html"><img style="margin: 0.5em" alt="" title="Number placement puzzle" width=150 height=150 border=0 src="img/solo-web.png" /></a></td></tr><tr><td align="center" style="font-size: 70%"><code>[</code> <a href="java/solo.html">java</a> | <a href="js/solo_cn.html">js</a> | <a href="help_cn/doc/solo.html#solo">手册</a> <code>]</code><br><code>[</code> <a href="winexe/solo.exe"><code>solo.exe</code></a> <code>]</code></td></tr><tr><td align="center">填充网格，使每行、每列和每个方块都包含每个数字一次。</td></tr></table></span>
+<span class="puzzle"><table><tr><th align="center">帐篷</th></tr><tr><td align="center"><a href="js/tents.html"><img style="margin: 0.5em" alt="" title="Tent-placing puzzle" width=150 height=150 border=0 src="img/tents-web.png" /></a></td></tr><tr><td align="center" style="font-size: 70%"><code>[</code> <a href="java/tents.html">java</a> | <a href="js/tents_cn.html">js</a> | <a href="help_cn/doc/tents.html#tents">手册</a> <code>]</code><br><code>[</code> <a href="winexe/tents.exe"><code>tents.exe</code></a> <code>]</code></td></tr><tr><td align="center">在每棵树旁边放置一个帐篷。</td></tr></table></span>
+<span class="puzzle"><table><tr><th align="center">塔</th></tr><tr><td align="center"><a href="js/towers.html"><img style="margin: 0.5em" alt="" title="Tower-placing Latin square puzzle" width=150 height=150 border=0 src="img/towers-web.png" /></a></td></tr><tr><td align="center" style="font-size: 70%"><code>[</code> <a href="java/towers.html">java</a> | <a href="js/towers_cn.html">js</a> | <a href="help_cn/doc/towers.html#towers">手册</a> <code>]</code><br><code>[</code> <a href="winexe/towers.exe"><code>towers.exe</code></a> <code>]</code></td></tr><tr><td align="center">根据线索完成塔的拉丁方阵。</td></tr></table></span>
+<span class="puzzle"><table><tr><th align="center">轨道</th></tr><tr><td align="center"><a href="js/tracks.html"><img style="margin: 0.5em" alt="" title="Path-finding railway track puzzle" width=150 height=150 border=0 src="img/tracks-web.png" /></a></td></tr><tr><td align="center" style="font-size: 70%"><code>[</code> <a href="java/tracks.html">java</a> | <a href="js/tracks_cn.html">js</a> | <a href="help_cn/doc/tracks.html#tracks">手册</a> <code>]</code><br><code>[</code> <a href="winexe/tracks.exe"><code>tracks.exe</code></a> <code>]</code></td></tr><tr><td align="center">根据线索填充铁路轨道。</td></tr></table></span>
+<span class="puzzle"><table><tr><th align="center">旋转</th></tr><tr><td align="center"><a href="js/twiddle.html"><img style="margin: 0.5em" alt="" title="Rotational sliding block puzzle" width=150 height=150 border=0 src="img/twiddle-web.png" /></a></td></tr><tr><td align="center" style="font-size: 70%"><code>[</code> <a href="java/twiddle.html">java</a> | <a href="js/twiddle_cn.html">js</a> | <a href="help_cn/doc/twiddle.html#twiddle">手册</a> <code>]</code><br><code>[</code> <a href="winexe/twiddle.exe"><code>twiddle.exe</code></a> <code>]</code></td></tr><tr><td align="center">围绕自身旋转方块以将它们排列整齐。</td></tr></table></span>
+<span class="puzzle"><table><tr><th align="center">不死族</th></tr><tr><td align="center"><a href="js/undead.html"><img style="margin: 0.5em" alt="" title="Monster-placing puzzle" width=150 height=150 border=0 src="img/undead-web.png" /></a></td></tr><tr><td align="center" style="font-size: 70%"><code>[</code> <a href="java/undead.html">java</a> | <a href="js/undead_cn.html">js</a> | <a href="help_cn/doc/undead.html#undead">手册</a> <code>]</code><br><code>[</code> <a href="winexe/undead.exe"><code>undead.exe</code></a> <code>]</code></td></tr><tr><td align="center">放置幽灵、吸血鬼和僵尸，使镜子中能看到正确数量的它们。</td></tr></table></span>
+<span class="puzzle"><table><tr><th align="center">不平等</th></tr><tr><td align="center"><a href="js/unequal.html"><img style="margin: 0.5em" alt="" title="Latin square puzzle" width=150 height=150 border=0 src="img/unequal-web.png" /></a></td></tr><tr><td align="center" style="font-size: 70%"><code>[</code> <a href="java/unequal.html">java</a> | <a href="js/unequal_cn.html">js</a> | <a href="help_cn/doc/unequal.html#unequal">手册</a> <code>]</code><br><code>[</code> <a href="winexe/unequal.exe"><code>unequal.exe</code></a> <code>]</code></td></tr><tr><td align="center">根据&gt;符号完成拉丁方阵。</td></tr></table></span>
+<span class="puzzle"><table><tr><th align="center">不守规矩</th></tr><tr><td align="center"><a href="js/unruly.html"><img style="margin: 0.5em" alt="" title="Black and white grid puzzle" width=150 height=150 border=0 src="img/unruly-web.png" /></a></td></tr><tr><td align="center" style="font-size: 70%"><code>[</code> <a href="java/unruly.html">java</a> | <a href="js/unruly_cn.html">js</a> | <a href="help_cn/doc/unruly.html#unruly">手册</a> <code>]</code><br><code>[</code> <a href="winexe/unruly.exe"><code>unruly.exe</code></a> <code>]</code></td></tr><tr><td align="center">填充黑白网格以避免三个连续的相同颜色。</td></tr></table></span>
+<span class="puzzle"><table><tr><th align="center">解开</th></tr><tr><td align="center"><a href="js/untangle.html"><img style="margin: 0.5em" alt="" title="Planar graph layout puzzle" width=150 height=150 border=0 src="img/untangle-web.png" /></a></td></tr><tr><td align="center" style="font-size: 70%"><code>[</code> <a href="java/untangle.html">java</a> | <a href="js/untangle_cn.html">js</a> | <a href="help_cn/doc/untangle.html#untangle">手册</a> <code>]</code><br><code>[</code> <a href="winexe/untangle.exe"><code>untangle.exe</code></a> <code>]</code></td></tr><tr><td align="center">重新定位点，使线条不交叉。</td></tr></table></span>
+</div>
+
+<h2 style="clear: both">许可证</h2>
+
+本游戏集合的版权归2004-2021 Simon Tatham所有（部分版权归Richard Boulton、James Harvey、Mike Pinna、Jonas K&ouml;lker、Dariusz Olszewski、Michael Schierl、Lambros Lambrou、Bernd Schmidt、Steffen Bauer、Lennard Sprong、Rogier Goossens、Michael Quevillon、Asher Gordon和Didi Kohen所有）。所有内容均根据<a href="help_cn/doc/licence.html#licence">MIT许可证</a>分发。这意味着你可以对游戏二进制文件或代码做几乎任何你想做的事情，除了假装你自己写了它们，或者在出现问题时起诉我。
+
+<h2><a name="download">下载</a></h2>
+
+<p>这里是集合中益智游戏的Windows可执行文件。（仅在Windows上，Net可执行文件被称为<code>netgame.exe</code>，以避免与Windows自己的<code>net.exe</code>冲突。游戏的名称仍然是"Net" :-)）
+
+<blockquote>
+<p>
+<code>
+<a href="winexe/blackbox.exe">blackbox.exe</a> | <a href="winexe/bridges.exe">bridges.exe</a> | <a href="winexe/cube.exe">cube.exe</a> | <a href="winexe/dominosa.exe">dominosa.exe</a> | <a href="winexe/fifteen.exe">fifteen.exe</a><br /><a href="winexe/filling.exe">filling.exe</a> | <a href="winexe/flip.exe">flip.exe</a> | <a href="winexe/flood.exe">flood.exe</a> | <a href="winexe/galaxies.exe">galaxies.exe</a> | <a href="winexe/guess.exe">guess.exe</a><br /><a href="winexe/inertia.exe">inertia.exe</a> | <a href="winexe/keen.exe">keen.exe</a> | <a href="winexe/lightup.exe">lightup.exe</a> | <a href="winexe/loopy.exe">loopy.exe</a> | <a href="winexe/magnets.exe">magnets.exe</a><br /><a href="winexe/map.exe">map.exe</a> | <a href="winexe/mines.exe">mines.exe</a> | <a href="winexe/mosaic.exe">mosaic.exe</a> | <a href="winexe/netgame.exe">netgame.exe</a> | <a href="winexe/netslide.exe">netslide.exe</a><br /><a href="winexe/palisade.exe">palisade.exe</a> | <a href="winexe/pattern.exe">pattern.exe</a> | <a href="winexe/pearl.exe">pearl.exe</a> | <a href="winexe/pegs.exe">pegs.exe</a> | <a href="winexe/range.exe">range.exe</a><br /><a href="winexe/rect.exe">rect.exe</a> | <a href="winexe/samegame.exe">samegame.exe</a> | <a href="winexe/signpost.exe">signpost.exe</a> | <a href="winexe/singles.exe">singles.exe</a> | <a href="winexe/sixteen.exe">sixteen.exe</a><br /><a href="winexe/slant.exe">slant.exe</a> | <a href="winexe/solo.exe">solo.exe</a> | <a href="winexe/tents.exe">tents.exe</a> | <a href="winexe/towers.exe">towers.exe</a> | <a href="winexe/tracks.exe">tracks.exe</a><br /><a href="winexe/twiddle.exe">twiddle.exe</a> | <a href="winexe/undead.exe">undead.exe</a> | <a href="winexe/unequal.exe">unequal.exe</a> | <a href="winexe/unruly.exe">unruly.exe</a> | <a href="winexe/untangle.exe">untangle.exe</a></code>
+</blockquote>
+
+<p>这里是一个Windows帮助文件。如果你将此安装在可执行文件的同一目录中，那么每个游戏都应该显示一个"帮助"菜单，提供关于整个游戏集合和特定游戏的帮助。你也可以在<a href="help_cn/doc/">HTML格式的在线文档</a>中浏览相同的文档。
+
+<blockquote>
+<p>
+<code>
+<a href="winexe/puzzles.chm">puzzles.chm</a>
+</code>
+</blockquote>
+
+<p>这里是一个<code>.zip</code>文件，包含上述所有Windows二进制文件和帮助文件。
+
+<blockquote>
+<p>
+<code>
+<a href="winexe/puzzles.zip">puzzles.zip</a>
+</code>
+</blockquote>
+
+<p>这里是一个Windows MSI安装程序。
+
+<blockquote>
+<p>
+<a href="winexe/puzzles-installer.msi"><code>puzzles-</code><em>version</em><code>-installer.msi</code></a>
+</blockquote>
+
+<p>（不幸的是，这个MSI安装程序与我过去在这里提供的旧Windows可执行安装程序包不兼容，所以如果你仍然安装了旧版本，你必须在安装MSI版本之前卸载它。对此我感到抱歉。）
+
+<p>这里是集合的源代码归档，应该允许你在支持GTK的任何Unix系统上编译游戏。（至少，我希望如此；我到目前为止只在Linux上测试过，我不排除在其他类型的Unix上存在可移植性问题。）
+
+<blockquote>
+<p>
+<a href="winexe/puzzles.tar.gz"><code>puzzles-</code><em>version</em><code>.tar.gz</code></a>
+</blockquote>
+
+<p>
+一些人已经将这个益智游戏集合移植到了各种移动设备上。以下是他们的移植页面链接：
+<ul>
+<li>
+<a href="winexe/https://www.chiark.greenend.org.uk/~jharvey/puzzles/">移植到Palm</a>，由James Harvey完成。
+<li>
+<a href="winexe/http://chris.boyle.name/projects/android-puzzles/">移植到Google Android</a>，由Chris Boyle完成。
+<li>
+<a href="winexe/http://code.google.com/p/puzzless60/">移植到Symbian S60</a>，由Tiago Donizio完成。
+<li>
+<a href="winexe/http://hewgill.com/puzzles/">移植到iPhone和iPad</a>，由Greg Hewgill完成。
+<li>
+<a href="winexe/http://puzzles.codeplex.com/">移植到Windows Store</a>，由Lennard Sprong完成。
+<li>
+<a href="winexe/https://www.rockbox.org/wiki/PluginPuzzles">移植到Rockbox</a>，由Franklin Wei完成。
+</ul>
+（请注意，这些是第三方移植，不由我维护。如果你在其中一个方面遇到问题，你应该首先跟随链接到适当的维护者页面并与他们联系。）
+
+<p>这是MacOS拼图的最后一个版本，以磁盘映像的形式，包含一个名为"Puzzles"的单一整体应用程序。你应该能够下载并打开磁盘映像，然后将Puzzles应用程序拖到你想要保留的任何地方；它应该是完全自包含的。然而，<strong>这不再更新</strong>，因为我的Mac构建机器不再工作了。
+
+<blockquote>
+<p>
+<code>
+<a href="winexe/Puzzles.dmg">Puzzles.dmg</a>, 截至2023-09-20
+</code>
+</blockquote>
+
+<h2>开发</h2>
+
+<p>
+所有这些拼图都是用C语言编写的，带有移植接口，以便相同的后端拼图代码可以与完全不同的图形前端通信。上面的源归档包括Windows和Mac OS X的原生GUI前端，使用<a href="winexe/http://www.gtk.org/">GTK+</a>库的X前端，以及用于使用<a href="winexe/http://nestedvm.ibex.org/">NestedVM</a>将拼图编译为Java小程序的混合C/Java前端。
+
+<p>
+有广泛的<a href="help_cn/devel/">开发者文档</a>描述跨平台接口。如果你想编写新的拼图或新的前端（使所有这些游戏在另一个平台上运行），这可能是开始的地方。
+
+<p>
+如果你想查看开发的最新状态，你可以从我的<code>git</code>存储库中检出开发源代码：
+<pre><code>git clone https://git.tartarus.org/simon/puzzles.git</code></pre>
+
+<p>
+或者，你可以在网上浏览存储库，<a href="winexe/https://git.tartarus.org/?p=simon/puzzles.git">这里</a>。
+</p>
+
+<h2>反馈</h2>
+
+<p>
+请向<a href="winexe/mailto:&#97;&#110;&#97;&#107;&#105;&#110;&#64;&#112;&#111;&#98;&#111;&#120;&#46;&#99;&#111;&#109;">&#97;&#110;&#97;&#107;&#105;&#110;&#64;&#112;&#111;&#98;&#111;&#120;&#46;&#99;&#111;&#109;</a>报告错误。
+
+<p>
+如果你的错误报告涉及特定拼图有问题（如果你认为它没有解决方案，或有多个解决方案），<b>请尽可能发送保存的游戏文件</b>，使用'游戏&gt;保存'菜单选项或等效选项。保存的游戏文件比图形屏幕截图更有用（且更小）：它们包含我需要重现游戏生成并找出问题所在的所有信息。
+
+<p>
+如果你不能这样做（例如，如果你在网络上玩，它没有保存游戏功能），请至少复制并粘贴随机种子和游戏描述（从'随机种子'和'特定'菜单选项，或Javascript游戏中的'输入游戏ID'和'输入随机种子'按钮）。
+
+<p>
+此外，你可能会发现在报告错误之前阅读<a href="bugs_report/bugs.html">这篇文章</a>会有所帮助。
+
+<p>
+欢迎提交补丁。
+
+<hr>
+(评论请发送至 <a href="winexe/mailto:&#97;&#110;&#97;&#107;&#105;&#110;&#64;&#112;&#111;&#98;&#111;&#120;&#46;&#99;&#111;&#109;">&#97;&#110;&#97;&#107;&#105;&#110;&#64;&#112;&#111;&#98;&#111;&#120;&#46;&#99;&#111;&#109;</a>)
+<br>
+(感谢<a href="winexe/https://www.chiark.greenend.org.uk/">chiark</a>托管此页面)
+<br>
+(最后修改于 <!--LASTMOD-->Mon Mar  9 01:42:11 2026<!--END-->)
+</body>
+</html>

@@ -1,0 +1,59 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN"
+"http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+<meta name="generator" content="Halibut, unidentified version">
+<title>多米诺骨牌</title>
+<link rel="previous" href="pegs.html">
+<link rel="ToC" href="index.html">
+<link rel="up" href="index.html">
+<link rel="index" href="indexpage.html">
+<link rel="next" href="untangle.html">
+</head>
+<body>
+<p><a href="pegs.html">上一篇</a> | <a href="index.html">目录</a> | <a href="indexpage.html">索引</a> | <a href="untangle.html">下一篇</a></p>
+<h1><a name="dominosa"></a>第 17 章：<a name="i0"></a>多米诺骨牌</h1>
+<p>
+一套普通的多米诺骨牌 —— 即从 0 到 6 的每对（无序）数字各有一个实例 —— 被不规则地排列成一个矩形；然后每个方块中的数字被写下，多米诺骨牌本身被移除。你的任务是通过排列多米诺骨牌组以匹配提供的数字数组来重建图案。
+</p>
+<p>
+这个拼图被广泛认为是 O. S. Adler 的作品，其名称的一部分来自这些首字母。
+</p>
+<h2><a name="dominosa-controls"></a>17.1 <a name="i1"></a>多米诺骨牌控制</h2>
+<p>
+左键点击任意两个相邻数字之间，会放置一个覆盖它们的多米诺骨牌，如果已经存在则移除。尝试放置与现有多米诺骨牌重叠的多米诺骨牌会移除它所重叠的骨牌。
+</p>
+<p>
+右键点击两个相邻数字之间会在它们之间画一条线，你可以用它来提醒自己，你知道这两个数字<em>不是</em>由单个多米诺骨牌覆盖的。再次右键点击会移除这条线。
+</p>
+<p>
+你也可以使用光标键在网格周围移动光标。当光标位于两个相邻数字之间的中间时，按回车键会放置一个覆盖这些数字的多米诺骨牌，或按空格键会在两个方块之间画线。重复任一操作会移除多米诺骨牌或线。
+</p>
+<p>
+按数字键或右键点击一个数字会高亮该数字的所有出现。再次按或右键点击该数字会清除高亮。任何时候最多可以高亮两个不同的数字。
+</p>
+<p>
+（<a href="common.html#common-actions">第 2.1 节</a> 中描述的所有操作也可用。）
+</p>
+<h2><a name="dominosa-parameters"></a>17.2 <a name="i2"></a>多米诺骨牌参数</h2>
+<p>
+这些参数可从“类型”菜单的“自定义...”选项获得。
+</p>
+<dl><dt>
+<em>多米诺骨牌上的最大数字</em>
+</dt>
+<dd>
+通过控制用于制作拼图的多米诺骨牌组的大小来控制拼图的大小。数字达到 N 的多米诺骨牌将产生一个 (N+2) × (N+1) 的矩形；因此，特别是，默认值 6 会给出一个 8×7 的网格。
+</dd>
+<dt>
+<em>确保唯一解</em>
+</dt>
+<dd>
+通常，多米诺骨牌会确保它呈现的拼图只有一个解。具有歧义部分的拼图可能更困难，有时更微妙，所以如果你喜欢，你可以关闭这个功能。此外，找到<em>所有</em>可能的解决方案对高级玩家来说可能是一个额外的挑战。关闭此选项还可以加快拼图生成速度。
+</dd>
+</dl>
+
+<hr><address>
+[Simon Tatham's Portable Puzzle Collection, version 20260309.06e37f1]</address></body>
+</html>

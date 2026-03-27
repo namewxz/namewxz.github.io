@@ -1,0 +1,102 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN"
+"http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+<meta name="generator" content="Halibut, unidentified version">
+<title>高塔</title>
+<link rel="previous" href="keen.html">
+<link rel="ToC" href="index.html">
+<link rel="up" href="index.html">
+<link rel="index" href="indexpage.html">
+<link rel="next" href="singles.html">
+</head>
+<body>
+<p><a href="keen.html">上一篇</a> | <a href="index.html">目录</a> | <a href="indexpage.html">索引</a> | <a href="singles.html">下一篇</a></p>
+
+<ul>
+<li><a href="#towers">第 31 章：高塔</a>
+<ul>
+<li><a href="#towers-controls">31.1 高塔控制</a></li>
+<li><a href="#towers-parameters">31.2 高塔参数</a></li>
+<li><a href="#towers-prefs">31.3 高塔用户首选项</a></li>
+</ul></li>
+</ul>
+<h1><a name="towers"></a>第 31 章：<a name="i0"></a>高塔</h1>
+<p>
+你有一个正方形网格。在网格的每个正方形上，你可以建造一座塔，其高度从 1 到网格的大小不等。网格边缘有一些数字线索。
+</p>
+<p>
+你的任务是在每个正方形上建造一座塔，方式如下：
+</p>
+<ul><li>
+每一行包含每种可能高度的塔一次
+</li>
+<li>
+每一列包含每种可能高度的塔一次
+</li>
+<li>
+每个数字线索描述了如果你从那个方向看进正方形时可以看到的塔的数量，假设较矮的塔被较高的塔遮挡。例如，在 5×5 网格中，标记为 '5' 的线索表示五个塔的高度必须按递增顺序出现（否则你将无法看到所有五个塔），而标记为 '1' 的线索表示最高的塔（标记为 5 的塔）必须排在第一位。
+</li>
+</ul>
+<p>
+在更难或更大的拼图中，除了边缘的线索外，一些塔会为你指定，一些边缘线索可能会缺失。
+</p>
+<p>
+这个拼图在网络上以各种名称出现，特别是“<a name="i1"></a>Skyscrapers”，但我不知道谁首先发明了它。
+</p>
+<h2><a name="towers-controls"></a>31.1 <a name="i2"></a>高塔控制</h2>
+<p>
+高塔与 Solo、Unequal 和 Keen 共享其大部分控制系统。
+
+要玩高塔，只需在任何空方块中点击鼠标，然后在键盘上输入一个数字，用给定高度的塔填充该方块。如果你犯了错误，在错误的方块中点击鼠标，然后按空格键再次清除它（或使用撤销功能）。
+</p>
+<p>
+如果你在方块中<em>右键</em>点击然后输入一个数字，该数字将作为“铅笔标记”输入到方块中。你可以在同一个方块中有多个数字的铅笔标记。包含塔的方块不能同时包含铅笔标记。
+</p>
+<p>
+游戏不关注铅笔标记，所以你用它们做什么完全取决于你：你可以用它们作为提醒，一旦你对特定数字了解更多，特定方块需要重新检查，或者你可以用它们作为给定方块中可能数字的列表，或者任何你喜欢的其他东西。
+</p>
+<p>
+要擦除单个铅笔标记，右键点击方块并再次输入相同的数字。
+</p>
+<p>
+当你左键点击并输入数字，或者左键点击并按空格时，方块中的所有铅笔标记都会被擦除。右键点击并按空格也会擦除铅笔标记。
+</p>
+<p>
+对于 Solo，可以将光标键与数字键结合使用来设置数字或铅笔标记。使用光标键在网格周围移动高亮，然后输入一个数字将其输入到高亮的方块中。按回车键将高亮切换到可以输入或移除铅笔标记的模式。
+</p>
+<p>
+按 M 将在每个没有主数字的方块中填入一整套铅笔标记。
+</p>
+<p>
+左键点击线索将其标记为完成（灰色显示），如果它已经被标记，则取消标记。按住 Control 或 Shift 并按箭头键同样标记给定方向的任何线索。
+</p>
+<p>
+（<a href="common.html#common-actions">第 2.1 节</a> 中描述的所有操作也可用。）
+</p>
+<h2><a name="towers-parameters"></a>31.2 <a name="i3"></a>高塔参数</h2>
+<p>
+这些参数可从“类型”菜单的“自定义...”选项获得。
+</p>
+<dl><dt>
+<em>网格大小</em>
+</dt>
+<dd>
+指定网格的大小。下限为 3；上限为 9（因为当“数字”大于 9 时，用户界面会变得更加困难！）。
+</dd>
+<dt>
+<em>难度</em>
+</dt>
+<dd>
+控制生成的拼图的难度。在不合理级别，需要一些回溯，但解决方案仍然应该是唯一的。其余级别需要越来越复杂的推理以避免必须回溯。
+</dd>
+</dl>
+<h2><a name="towers-prefs"></a>31.3 <a name="i4"></a>高塔用户首选项</h2>
+<p>
+在支持用户首选项的平台上，“游戏”菜单上的“首选项”选项将允许你配置游戏显示的样式。如果你不喜欢三维模式，选择“2D”将切换到更简单的显示样式，其中塔通过在方块中写入其高度来显示。
+</p>
+
+<hr><address>
+[Simon Tatham's Portable Puzzle Collection, version 20260309.06e37f1]</address></body>
+</html>

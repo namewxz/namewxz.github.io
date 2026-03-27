@@ -1,0 +1,56 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN"
+"http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+<meta name="generator" content="Halibut, unidentified version">
+<title>惯性</title>
+<link rel="previous" href="loopy.html">
+<link rel="ToC" href="index.html">
+<link rel="up" href="index.html">
+<link rel="index" href="indexpage.html">
+<link rel="next" href="tents.html">
+</head>
+<body>
+<p><a href="loopy.html">上一篇</a> | <a href="index.html">目录</a> | <a href="indexpage.html">索引</a> | <a href="tents.html">下一篇</a></p>
+<h1><a name="inertia"></a>第 24 章：<a name="i0"></a>惯性</h1>
+<p>
+你是一个坐在充满障碍物的网格中的小绿球。你的目标是收集所有宝石而不碰到任何地雷。
+</p>
+<p>
+你可以在任何正交<em>或对角线</em>方向移动球。一旦球开始移动，它将继续移动直到被什么东西阻止。直接在其路径上的墙会阻止它（但如果它对角线移动，它会穿过两个其他墙之间的对角线间隙而不停止）。此外，一些方块是“停止”；当球移动到停止方块上时，无论它朝哪个方向移动，都会停止移动。宝石<em>不会</em>停止球；它会捡起宝石并继续前进。
+</p>
+<p>
+碰到地雷是致命的。即使你在同一个移动中捡起了最后一颗宝石，然后碰到了地雷，游戏也会将你算作死亡而不是胜利。
+</p>
+<p>
+这个游戏最初是由 Ben Olmstead <a href="#p0">[11]</a> 为 Windows 实现的，他很友善地应要求发布了他的源代码，以便可以为这个集合重新实现它。
+</p>
+<p><a name="p0"></a>
+[11] <a href="http://xn13.com/"><code>http://xn13.com/</code></a>
+</p>
+<h2><a name="inertia-controls"></a>24.1 <a name="i1"></a>惯性控制</h2>
+<p>
+你可以使用数字键盘在八个方向中的任何一个方向移动球。或者，如果你在网格上左键点击，球将开始向你点击的大致方向移动。
+</p>
+<p>
+如果你在这个游戏上使用“解决”功能，程序将计算一条通过网格的路径，收集所有剩余的宝石并返回当前位置。球上会出现一个提示箭头，指示你应该移动的方向以开始这条路径。如果你然后向那个方向移动，箭头会更新以指示路径上的下一个方向。你也可以按空格键自动向提示箭头的方向移动。如果你向箭头所示的方向以外的方向移动，只有当拼图仍然可解时才会显示箭头。
+</p>
+<p>
+<a href="common.html#common-actions">第 2.1 节</a> 中描述的所有操作也可用。特别是，如果你确实碰到地雷并死亡，你可以使用撤销功能并从致命移动之前恢复游戏。游戏会记录你这样做的次数。
+</p>
+<h2><a name="inertia-parameters"></a>24.2 <a name="i2"></a>惯性参数</h2>
+<p>
+这些参数可从“类型”菜单的“自定义...”选项获得。
+</p>
+<dl><dt>
+<em>宽度</em>，<em>高度</em>
+</dt>
+<dd>
+网格的大小（以方块为单位）。
+</dd>
+</dl>
+
+<hr><address>
+[Simon Tatham's Portable Puzzle Collection, version 20260309.06e37f1]</address></body>
+</html>

@@ -1,0 +1,1099 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN"
+"http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+<meta http-equiv="content-type" content="text/html; charset=US-ASCII">
+<meta name="generator" content="Halibut, unidentified version">
+<title>Utility APIs</title>
+<link rel="previous" href="midend.html">
+<link rel="ToC" href="index.html">
+<link rel="up" href="index.html">
+<link rel="next" href="writing.html">
+</head>
+<body>
+<p><a href="midend.html">Previous</a> | <a href="index.html">Contents</a> | <a href="writing.html">Next</a></p>
+
+<ul>
+<li><a href="#utils">Chapter 5: Utility APIs</a>
+<ul>
+<li><a href="#utils-random">5.1 Random number generation</a>
+<ul>
+<li><a href="#utils-random-init">5.1.1 <code>random_new()</code></a></li>
+<li><a href="#utils-random-copy">5.1.2 <code>random_copy()</code></a></li>
+<li><a href="#utils-random-free">5.1.3 <code>random_free()</code></a></li>
+<li><a href="#utils-random-bits">5.1.4 <code>random_bits()</code></a></li>
+<li><a href="#utils-random-upto">5.1.5 <code>random_upto()</code></a></li>
+<li><a href="#utils-random-state-encode">5.1.6 <code>random_state_encode()</code></a></li>
+<li><a href="#utils-random-state-decode">5.1.7 <code>random_state_decode()</code></a></li>
+<li><a href="#utils-shuffle">5.1.8 <code>shuffle()</code></a></li>
+</ul></li>
+<li><a href="#utils-presets">5.2 Presets menu management</a>
+<ul>
+<li><a href="#utils-preset-menu-new">5.2.1 <code>preset_menu_new()</code></a></li>
+<li><a href="#utils-preset-menu-add_submenu">5.2.2 <code>preset_menu_add_submenu()</code></a></li>
+<li><a href="#utils-preset-menu-add-preset">5.2.3 <code>preset_menu_add_preset()</code></a></li>
+<li><a href="#utils-preset-menu-lookup-by-id">5.2.4 <code>preset_menu_lookup_by_id()</code></a></li>
+</ul></li>
+<li><a href="#utils-alloc">5.3 Memory allocation</a>
+<ul>
+<li><a href="#utils-snew">5.3.1 <code>snew()</code></a></li>
+<li><a href="#utils-snewn">5.3.2 <code>snewn()</code></a></li>
+<li><a href="#utils-sresize">5.3.3 <code>sresize()</code></a></li>
+<li><a href="#utils-sfree">5.3.4 <code>sfree()</code></a></li>
+<li><a href="#utils-dupstr">5.3.5 <code>dupstr()</code></a></li>
+<li><a href="#utils-free-cfg">5.3.6 <code>free_cfg()</code></a></li>
+<li><a href="#utils-free-keys">5.3.7 <code>free_keys()</code></a></li>
+</ul></li>
+<li><a href="#utils-tree234">5.4 Sorted and counted tree functions</a>
+<ul>
+<li><a href="#utils-newtree234">5.4.1 <code>newtree234()</code></a></li>
+<li><a href="#utils-freetree234">5.4.2 <code>freetree234()</code></a></li>
+<li><a href="#utils-add234">5.4.3 <code>add234()</code></a></li>
+<li><a href="#utils-addpos234">5.4.4 <code>addpos234()</code></a></li>
+<li><a href="#utils-index234">5.4.5 <code>index234()</code></a></li>
+<li><a href="#utils-find234">5.4.6 <code>find234()</code></a></li>
+<li><a href="#utils-findrel234">5.4.7 <code>findrel234()</code></a></li>
+<li><a href="#utils-findpos234">5.4.8 <code>findpos234()</code></a></li>
+<li><a href="#utils-findrelpos234">5.4.9 <code>findrelpos234()</code></a></li>
+<li><a href="#utils-del234">5.4.10 <code>del234()</code></a></li>
+<li><a href="#utils-delpos234">5.4.11 <code>delpos234()</code></a></li>
+<li><a href="#utils-count234">5.4.12 <code>count234()</code></a></li>
+<li><a href="#utils-splitpos234">5.4.13 <code>splitpos234()</code></a></li>
+<li><a href="#utils-split234">5.4.14 <code>split234()</code></a></li>
+<li><a href="#utils-join234">5.4.15 <code>join234()</code></a></li>
+<li><a href="#utils-join234r">5.4.16 <code>join234r()</code></a></li>
+<li><a href="#utils-copytree234">5.4.17 <code>copytree234()</code></a></li>
+</ul></li>
+<li><a href="#utils-dsf">5.5 Disjoint set forests</a>
+<ul>
+<li><a href="#utils-dsf-new">5.5.1 <code>dsf_new()</code>, <code>dsf_new_flip()</code>, <code>dsf_new_min()</code></a></li>
+<li><a href="#utils-dsf-free">5.5.2 <code>dsf_free()</code></a></li>
+<li><a href="#utils-dsf-reinit">5.5.3 <code>dsf_reinit()</code></a></li>
+<li><a href="#utils-dsf-copy">5.5.4 <code>dsf_copy()</code></a></li>
+<li><a href="#utils-dsf-merge">5.5.5 <code>dsf_merge()</code></a></li>
+<li><a href="#utils-dsf-canonify">5.5.6 <code>dsf_canonify()</code></a></li>
+<li><a href="#utils-dsf-size">5.5.7 <code>dsf_size()</code></a></li>
+<li><a href="#utils-dsf-merge-flip">5.5.8 <code>dsf_merge_flip()</code></a></li>
+<li><a href="#utils-dsf-canonify-flip">5.5.9 <code>dsf_canonify_flip()</code></a></li>
+<li><a href="#utils-dsf-minimal">5.5.10 <code>dsf_minimal()</code></a></li>
+</ul></li>
+<li><a href="#utils-tdq">5.6 To-do queues</a>
+<ul>
+<li><a href="#utils-tdq-new">5.6.1 <code>tdq_new()</code></a></li>
+<li><a href="#utils-tdq-free">5.6.2 <code>tdq_free()</code></a></li>
+<li><a href="#utils-tdq-add">5.6.3 <code>tdq_add()</code></a></li>
+<li><a href="#utils-tdq-remove">5.6.4 <code>tdq_remove()</code></a></li>
+<li><a href="#utils-tdq-fill">5.6.5 <code>tdq_fill()</code></a></li>
+</ul></li>
+<li><a href="#utils-findloop">5.7 Finding loops in graphs and grids</a>
+<ul>
+<li><a href="#utils-findloop-new-state">5.7.1 <code>findloop_new_state()</code></a></li>
+<li><a href="#utils-findloop-free-state">5.7.2 <code>findloop_free_state()</code></a></li>
+<li><a href="#utils-findloop-run">5.7.3 <code>findloop_run()</code></a></li>
+<li><a href="#utils-findloop-is-loop-edge">5.7.4 <code>findloop_is_loop_edge()</code></a></li>
+<li><a href="#utils-findloop-is-bridge">5.7.5 <code>findloop_is_bridge()</code></a></li>
+</ul></li>
+<li><a href="#utils-combi">5.8 Choosing r things out of n</a>
+<ul>
+<li><a href="#utils-combi-new">5.8.1 <code>new_combi()</code></a></li>
+<li><a href="#utils-combi-free">5.8.2 <code>free_combi()</code></a></li>
+<li><a href="#utils-combi-reset">5.8.3 <code>reset_combi()</code></a></li>
+<li><a href="#utils-combi-next">5.8.4 <code>next_combi()</code></a></li>
+</ul></li>
+<li><a href="#utils-misc">5.9 Miscellaneous utility functions and macros</a>
+<ul>
+<li><a href="#utils-maxmin">5.9.1 <code>max()</code> and <code>min()</code></a></li>
+<li><a href="#utils-max-digits">5.9.2 <code>MAX_DIGITS()</code></a></li>
+<li><a href="#utils-pi">5.9.3 <code>PI</code></a></li>
+<li><a href="#utils-obfuscate-bitmap">5.9.4 <code>obfuscate_bitmap()</code></a></li>
+<li><a href="#utils-bin2hex">5.9.5 <code>bin2hex()</code></a></li>
+<li><a href="#utils-hex2bin">5.9.6 <code>hex2bin()</code></a></li>
+<li><a href="#utils-fgetline">5.9.7 <code>fgetline()</code></a></li>
+<li><a href="#utils-arraysort">5.9.8 <code>arraysort()</code></a></li>
+<li><a href="#utils-colour-mix">5.9.9 <code>colour_mix()</code></a></li>
+<li><a href="#utils-game-mkhighlight">5.9.10 <code>game_mkhighlight()</code></a></li>
+<li><a href="#utils-game-mkhighlight-specific">5.9.11 <code>game_mkhighlight_specific()</code></a></li>
+<li><a href="#utils-button2label">5.9.12 <code>button2label()</code></a></li>
+<li><a href="#utils-move-cursor">5.9.13 <code>move_cursor()</code></a></li>
+<li><a href="#utils-divvy-rectangle">5.9.14 <code>divvy_rectangle()</code></a></li>
+<li><a href="#utils-domino-layout">5.9.15 <code>domino_layout()</code></a></li>
+<li><a href="#utils-domino-layout-prealloc">5.9.16 <code>domino_layout_prealloc()</code></a></li>
+<li><a href="#utils-strip-button-modifiers">5.9.17 <code>STRIP_BUTTON_MODIFIERS()</code></a></li>
+<li><a href="#utils-swap-regions">5.9.18 <code>swap_regions()</code></a></li>
+<li><a href="#utils-compare-integers">5.9.19 <code>compare_integers()</code></a></li>
+<li><a href="#utils-get-handle-as-type">5.9.20 <code>GET_HANDLE_AS_TYPE()</code></a></li>
+<li><a href="#utils-getenv-bool">5.9.21 <code>getenv_bool()</code></a></li>
+</ul></li>
+</ul></li>
+</ul>
+<h1><a name="utils"></a>Chapter 5: Utility APIs</h1>
+<p>
+This chapter documents a variety of utility APIs provided for the general use of the rest of the Puzzles code.
+</p>
+<h2><a name="utils-random"></a>5.1 Random number generation</h2>
+<p>
+Platforms' local random number generators vary widely in quality and seed size. Puzzles therefore supplies its own high-quality random number generator, with the additional advantage of giving the same results if fed the same seed data on different platforms. This allows game random seeds to be exchanged between different ports of Puzzles and still generate the same games.
+</p>
+<p>
+Unlike the ANSI C <code>rand()</code> function, the Puzzles random number generator has an <em>explicit</em> state object called a <code>random_state</code>. One of these is managed by each mid-end, for example, and passed to the back end to generate a game with.
+</p>
+<h3><a name="utils-random-init"></a>5.1.1 <code>random_new()</code></h3>
+<pre><code>random_state *random_new(char *seed, int len);
+</code></pre>
+<p>
+Allocates, initialises and returns a new <code>random_state</code>. The input data is used as the seed for the random number stream (i.e. using the same seed at a later time will generate the same stream).
+</p>
+<p>
+The seed data can be any data at all; there is no requirement to use printable ASCII, or NUL-terminated strings, or anything like that.
+</p>
+<h3><a name="utils-random-copy"></a>5.1.2 <code>random_copy()</code></h3>
+<pre><code>random_state *random_copy(random_state *tocopy);
+</code></pre>
+<p>
+Allocates a new <code>random_state</code>, copies the contents of another <code>random_state</code> into it, and returns the new state. If exactly the same sequence of functions is subsequently called on both the copy and the original, the results will be identical. This may be useful for speculatively performing some operation using a given random state, and later replaying that operation precisely.
+</p>
+<h3><a name="utils-random-free"></a>5.1.3 <code>random_free()</code></h3>
+<pre><code>void random_free(random_state *state);
+</code></pre>
+<p>
+Frees a <code>random_state</code>.
+</p>
+<h3><a name="utils-random-bits"></a>5.1.4 <code>random_bits()</code></h3>
+<pre><code>unsigned long random_bits(random_state *state, int bits);
+</code></pre>
+<p>
+Returns a random number from 0 to <code>2^bits-1</code> inclusive. <code>bits</code> should be between 1 and 32 inclusive.
+</p>
+<h3><a name="utils-random-upto"></a>5.1.5 <code>random_upto()</code></h3>
+<pre><code>unsigned long random_upto(random_state *state, unsigned long limit);
+</code></pre>
+<p>
+Returns a random number from 0 to <code>limit-1</code> inclusive. <code>limit</code> may not be zero.
+</p>
+<h3><a name="utils-random-state-encode"></a>5.1.6 <code>random_state_encode()</code></h3>
+<pre><code>char *random_state_encode(random_state *state);
+</code></pre>
+<p>
+Encodes the entire contents of a <code>random_state</code> in printable ASCII. Returns a dynamically allocated string containing that encoding. This can subsequently be passed to <code>random_state_decode()</code> to reconstruct the same <code>random_state</code>.
+</p>
+<h3><a name="utils-random-state-decode"></a>5.1.7 <code>random_state_decode()</code></h3>
+<pre><code>random_state *random_state_decode(char *input);
+</code></pre>
+<p>
+Decodes a string generated by <code>random_state_encode()</code> and reconstructs an equivalent <code>random_state</code> to the one encoded, i.e. it should produce the same stream of random numbers.
+</p>
+<p>
+This function has no error reporting; if you pass it an invalid string it will simply generate an arbitrary random state, which may turn out to be noticeably non-random.
+</p>
+<h3><a name="utils-shuffle"></a>5.1.8 <code>shuffle()</code></h3>
+<pre><code>void shuffle(void *array, int nelts, int eltsize, random_state *rs);
+</code></pre>
+<p>
+Shuffles an array into a random order. The interface is much like ANSI C <code>qsort()</code>, except that there's no need for a compare function.
+</p>
+<p>
+<code>array</code> is a pointer to the first element of the array. <code>nelts</code> is the number of elements in the array; <code>eltsize</code> is the size of a single element (typically measured using <code>sizeof</code>). <code>rs</code> is a <code>random_state</code> used to generate all the random numbers for the shuffling process.
+</p>
+<h2><a name="utils-presets"></a>5.2 Presets menu management</h2>
+<p>
+The function <code>midend_get_presets()</code> (<a href="midend.html#midend-get-presets">section 4.17</a>) returns a data structure describing a menu hierarchy. Back ends can also choose to provide such a structure to the mid-end, if they want to group their presets hierarchically. To make this easy, there are a few utility functions to construct preset menu structures, and also one intended for front-end use.
+</p>
+<h3><a name="utils-preset-menu-new"></a>5.2.1 <code>preset_menu_new()</code></h3>
+<pre><code>struct preset_menu *preset_menu_new(void);
+</code></pre>
+<p>
+Allocates a new <code>struct preset_menu</code>, and initialises it to hold no menu items.
+</p>
+<h3><a name="utils-preset-menu-add_submenu"></a>5.2.2 <code>preset_menu_add_submenu()</code></h3>
+<pre><code>struct preset_menu *preset_menu_add_submenu
+    (struct preset_menu *parent, char *title);
+</code></pre>
+<p>
+Adds a new submenu to the end of an existing preset menu, and returns a pointer to a newly allocated <code>struct preset_menu</code> describing the submenu.
+</p>
+<p>
+The string parameter &#8216;<code>title</code>&#8217; must be dynamically allocated by the caller. The preset-menu structure will take ownership of it, so the caller must not free it.
+</p>
+<h3><a name="utils-preset-menu-add-preset"></a>5.2.3 <code>preset_menu_add_preset()</code></h3>
+<pre><code>void preset_menu_add_preset
+    (struct preset_menu *menu, char *title, game_params *params);
+</code></pre>
+<p>
+Adds a preset game configuration to the end of a preset menu.
+</p>
+<p>
+Both the string parameter &#8216;<code>title</code>&#8217; and the game parameter structure &#8216;<code>params</code>&#8217; itself must be dynamically allocated by the caller. The preset-menu structure will take ownership of it, so the caller must not free it.
+</p>
+<h3><a name="utils-preset-menu-lookup-by-id"></a>5.2.4 <code>preset_menu_lookup_by_id()</code></h3>
+<pre><code>game_params *preset_menu_lookup_by_id
+    (struct preset_menu *menu, int id);
+</code></pre>
+<p>
+Given a numeric index, searches recursively through a preset menu hierarchy to find the corresponding menu entry, and returns a pointer to its existing <code>game_params</code> structure.
+</p>
+<p>
+This function is intended for front end use (but front ends need not use it if they prefer to do things another way). If a front end finds it inconvenient to store anything more than a numeric index alongside each menu item, then this function provides an easy way for the front end to get back the actual game parameters corresponding to a menu item that the user has selected.
+</p>
+<h2><a name="utils-alloc"></a>5.3 Memory allocation</h2>
+<p>
+Puzzles has some central wrappers on the standard memory allocation functions, which provide compile-time type checking, and run-time error checking by means of quitting the application if it runs out of memory. This doesn't provide the best possible recovery from memory shortage, but on the other hand it greatly simplifies the rest of the code, because nothing else anywhere needs to worry about <code>NULL</code> returns from allocation.
+</p>
+<h3><a name="utils-snew"></a>5.3.1 <code>snew()</code></h3>
+<pre><code><em>var</em> = snew(<em>type</em>);
+</code></pre>
+<p>
+This macro takes a single argument which is a <em>type name</em>. It allocates space for one object of that type. If allocation fails it will call <code>fatal()</code> and not return; so if it does return, you can be confident that its return value is non-<code>NULL</code>.
+</p>
+<p>
+The return value is cast to the specified type, so that the compiler will type-check it against the variable you assign it into. Thus, this ensures you don't accidentally allocate memory the size of the wrong type and assign it into a variable of the right one (or vice versa!).
+</p>
+<h3><a name="utils-snewn"></a>5.3.2 <code>snewn()</code></h3>
+<pre><code><em>var</em> = snewn(<em>n</em>, <em>type</em>);
+</code></pre>
+<p>
+This macro is the array form of <code>snew()</code>. It takes two arguments; the first is a number, and the second is a type name. It allocates space for that many objects of that type, and returns a type-checked non-<code>NULL</code> pointer just as <code>snew()</code> does.
+</p>
+<h3><a name="utils-sresize"></a>5.3.3 <code>sresize()</code></h3>
+<pre><code><em>var</em> = sresize(<em>var</em>, <em>n</em>, <em>type</em>);
+</code></pre>
+<p>
+This macro is a type-checked form of <code>realloc()</code>. It takes three arguments: an input memory block, a new size in elements, and a type. It re-sizes the input memory block to a size sufficient to contain that many elements of that type. It returns a type-checked non-<code>NULL</code> pointer, like <code>snew()</code> and <code>snewn()</code>.
+</p>
+<p>
+The input memory block can be <code>NULL</code>, in which case this function will behave exactly like <code>snewn()</code>. (In principle any ANSI-compliant <code>realloc()</code> implementation ought to cope with this, but I've never quite trusted it to work everywhere.)
+</p>
+<h3><a name="utils-sfree"></a>5.3.4 <code>sfree()</code></h3>
+<pre><code>void sfree(void *p);
+</code></pre>
+<p>
+This function is pretty much equivalent to <code>free()</code>. It is provided with a dynamically allocated block, and frees it.
+</p>
+<p>
+The input memory block can be <code>NULL</code>, in which case this function will do nothing. (In principle any ANSI-compliant <code>free()</code> implementation ought to cope with this, but I've never quite trusted it to work everywhere.)
+</p>
+<h3><a name="utils-dupstr"></a>5.3.5 <code>dupstr()</code></h3>
+<pre><code>char *dupstr(const char *s);
+</code></pre>
+<p>
+This function dynamically allocates a duplicate of a C string. Like the <code>snew()</code> functions, it guarantees to return non-<code>NULL</code> or not return at all.
+</p>
+<p>
+(Many platforms provide the function <code>strdup()</code>. As well as guaranteeing never to return <code>NULL</code>, my version has the advantage of being defined <em>everywhere</em>, rather than inconveniently not quite everywhere.)
+</p>
+<h3><a name="utils-free-cfg"></a>5.3.6 <code>free_cfg()</code></h3>
+<pre><code>void free_cfg(config_item *cfg);
+</code></pre>
+<p>
+This function correctly frees an array of <code>config_item</code>s, including walking the array until it gets to the end and freeing any subsidiary data items in each <code>u</code> sub-union which are expected to be dynamically allocated.
+</p>
+<p>
+(See <a href="backend.html#backend-configure">section 2.3.9</a> for details of the <code>config_item</code> structure.)
+</p>
+<h3><a name="utils-free-keys"></a>5.3.7 <code>free_keys()</code></h3>
+<pre><code>void free_keys(key_label *keys, int nkeys);
+</code></pre>
+<p>
+This function correctly frees an array of <code>key_label</code>s, including the dynamically allocated label string for each key.
+</p>
+<p>
+(See <a href="backend.html#backend-request-keys">section 2.10.7</a> for details of the <code>key_label</code> structure.)
+</p>
+<h2><a name="utils-tree234"></a>5.4 Sorted and counted tree functions</h2>
+<p>
+Many games require complex algorithms for generating random puzzles, and some require moderately complex algorithms even during play. A common requirement during these algorithms is for a means of maintaining sorted or unsorted lists of items, such that items can be removed and added conveniently.
+</p>
+<p>
+For general use, Puzzles provides the following set of functions which maintain 2-3-4 trees in memory. (A 2-3-4 tree is a balanced tree structure, with the property that all lookups, insertions, deletions, splits and joins can be done in <code>O(log N)</code> time.)
+</p>
+<p>
+All these functions expect you to be storing a tree of <code>void *</code> pointers. You can put anything you like in those pointers.
+</p>
+<p>
+By the use of per-node element counts, these tree structures have the slightly unusual ability to look elements up by their numeric index within the list represented by the tree. This means that they can be used to store an unsorted list (in which case, every time you insert a new element, you must explicitly specify the position where you wish to insert it). They can also do numeric lookups in a sorted tree, which might be useful for (for example) tracking the median of a changing data set.
+</p>
+<p>
+As well as storing sorted lists, these functions can be used for storing &#8216;maps&#8217; (associative arrays), by defining each element of a tree to be a (key, value) pair.
+</p>
+<h3><a name="utils-newtree234"></a>5.4.1 <code>newtree234()</code></h3>
+<pre><code>tree234 *newtree234(cmpfn234 cmp);
+</code></pre>
+<p>
+Creates a new empty tree, and returns a pointer to it.
+</p>
+<p>
+The parameter <code>cmp</code> determines the sorting criterion on the tree. Its prototype is
+</p>
+<pre><code>typedef int (*cmpfn234)(void *, void *);
+</code></pre>
+<p>
+If you want a sorted tree, you should provide a function matching this prototype, which returns like <code>strcmp()</code> does (negative if the first argument is smaller than the second, positive if it is bigger, zero if they compare equal). In this case, the function <code>addpos234()</code> will not be usable on your tree (because all insertions must respect the sorting order).
+</p>
+<p>
+If you want an unsorted tree, pass <code>NULL</code>. In this case you will not be able to use either <code>add234()</code> or <code>del234()</code>, or any other function such as <code>find234()</code> which depends on a sorting order. Your tree will become something more like an array, except that it will efficiently support insertion and deletion as well as lookups by numeric index.
+</p>
+<h3><a name="utils-freetree234"></a>5.4.2 <code>freetree234()</code></h3>
+<pre><code>void freetree234(tree234 *t);
+</code></pre>
+<p>
+Frees a tree. This function will not free the <em>elements</em> of the tree (because they might not be dynamically allocated, or you might be storing the same set of elements in more than one tree); it will just free the tree structure itself. If you want to free all the elements of a tree, you should empty it before passing it to <code>freetree234()</code>, by means of code along the lines of
+</p>
+<pre><code>while ((element = delpos234(tree, 0)) != NULL)
+    sfree(element); <em>/* or some more complicated free function */</em>
+</code></pre>
+<h3><a name="utils-add234"></a>5.4.3 <code>add234()</code></h3>
+<pre><code>void *add234(tree234 *t, void *e);
+</code></pre>
+<p>
+Inserts a new element <code>e</code> into the tree <code>t</code>. This function expects the tree to be sorted; the new element is inserted according to the sort order.
+</p>
+<p>
+If an element comparing equal to <code>e</code> is already in the tree, then the insertion will fail, and the return value will be the existing element. Otherwise, the insertion succeeds, and <code>e</code> is returned.
+</p>
+<h3><a name="utils-addpos234"></a>5.4.4 <code>addpos234()</code></h3>
+<pre><code>void *addpos234(tree234 *t, void *e, int index);
+</code></pre>
+<p>
+Inserts a new element into an unsorted tree. Since there is no sorting order to dictate where the new element goes, you must specify where you want it to go. Setting <code>index</code> to zero puts the new element right at the start of the list; setting <code>index</code> to the current number of elements in the tree puts the new element at the end.
+</p>
+<p>
+Return value is <code>e</code>, in line with <code>add234()</code> (although this function cannot fail except by running out of memory, in which case it will bomb out and die rather than returning an error indication).
+</p>
+<h3><a name="utils-index234"></a>5.4.5 <code>index234()</code></h3>
+<pre><code>void *index234(tree234 *t, int index);
+</code></pre>
+<p>
+Returns a pointer to the <code>index</code>th element of the tree, or <code>NULL</code> if <code>index</code> is out of range. Elements of the tree are numbered from zero.
+</p>
+<h3><a name="utils-find234"></a>5.4.6 <code>find234()</code></h3>
+<pre><code>void *find234(tree234 *t, void *e, cmpfn234 cmp);
+</code></pre>
+<p>
+Searches for an element comparing equal to <code>e</code> in a sorted tree.
+</p>
+<p>
+If <code>cmp</code> is <code>NULL</code>, the tree's ordinary comparison function will be used to perform the search. However, sometimes you don't want that; suppose, for example, each of your elements is a big structure containing a <code>char *</code> name field, and you want to find the element with a given name. You <em>could</em> achieve this by constructing a fake element structure, setting its name field appropriately, and passing it to <code>find234()</code>, but you might find it more convenient to pass <em>just</em> a name string to <code>find234()</code>, supplying an alternative comparison function which expects one of its arguments to be a bare name and the other to be a large structure containing a name field.
+</p>
+<p>
+Therefore, if <code>cmp</code> is not <code>NULL</code>, then it will be used to compare <code>e</code> to elements of the tree. The first argument passed to <code>cmp</code> will always be <code>e</code>; the second will be an element of the tree.
+</p>
+<p>
+(See <a href="#utils-newtree234">section 5.4.1</a> for the definition of the <code>cmpfn234</code> function pointer type.)
+</p>
+<p>
+The returned value is the element found, or <code>NULL</code> if the search is unsuccessful.
+</p>
+<h3><a name="utils-findrel234"></a>5.4.7 <code>findrel234()</code></h3>
+<pre><code>void *findrel234(tree234 *t, void *e, cmpfn234 cmp, int relation);
+</code></pre>
+<p>
+This function is like <code>find234()</code>, but has the additional ability to do a <em>relative</em> search. The additional parameter <code>relation</code> can be one of the following values:
+</p>
+<dl><dt>
+<code>REL234_EQ</code>
+</dt>
+<dd>
+Find only an element that compares equal to <code>e</code>. This is exactly the behaviour of <code>find234()</code>.
+</dd>
+<dt>
+<code>REL234_LT</code>
+</dt>
+<dd>
+Find the greatest element that compares strictly less than <code>e</code>. <code>e</code> may be <code>NULL</code>, in which case it finds the greatest element in the whole tree (which could also be done by <code>index234(t, count234(t)-1)</code>).
+</dd>
+<dt>
+<code>REL234_LE</code>
+</dt>
+<dd>
+Find the greatest element that compares less than or equal to <code>e</code>. (That is, find an element that compares equal to <code>e</code> if possible, but failing that settle for something just less than it.)
+</dd>
+<dt>
+<code>REL234_GT</code>
+</dt>
+<dd>
+Find the smallest element that compares strictly greater than <code>e</code>. <code>e</code> may be <code>NULL</code>, in which case it finds the smallest element in the whole tree (which could also be done by <code>index234(t, 0)</code>).
+</dd>
+<dt>
+<code>REL234_GE</code>
+</dt>
+<dd>
+Find the smallest element that compares greater than or equal to <code>e</code>. (That is, find an element that compares equal to <code>e</code> if possible, but failing that settle for something just bigger than it.)
+</dd>
+</dl>
+<p>
+Return value, as before, is the element found or <code>NULL</code> if no element satisfied the search criterion.
+</p>
+<h3><a name="utils-findpos234"></a>5.4.8 <code>findpos234()</code></h3>
+<pre><code>void *findpos234(tree234 *t, void *e, cmpfn234 cmp, int *index);
+</code></pre>
+<p>
+This function is like <code>find234()</code>, but has the additional feature of returning the index of the element found in the tree; that index is written to <code>*index</code> in the event of a successful search (a non-<code>NULL</code> return value).
+</p>
+<p>
+<code>index</code> may be <code>NULL</code>, in which case this function behaves exactly like <code>find234()</code>.
+</p>
+<h3><a name="utils-findrelpos234"></a>5.4.9 <code>findrelpos234()</code></h3>
+<pre><code>void *findrelpos234(tree234 *t, void *e, cmpfn234 cmp, int relation,
+                    int *index);
+</code></pre>
+<p>
+This function combines all the features of <code>findrel234()</code> and <code>findpos234()</code>.
+</p>
+<h3><a name="utils-del234"></a>5.4.10 <code>del234()</code></h3>
+<pre><code>void *del234(tree234 *t, void *e);
+</code></pre>
+<p>
+Finds an element comparing equal to <code>e</code> in the tree, deletes it, and returns it.
+</p>
+<p>
+The input tree must be sorted.
+</p>
+<p>
+The element found might be <code>e</code> itself, or might merely compare equal to it.
+</p>
+<p>
+Return value is <code>NULL</code> if no such element is found.
+</p>
+<h3><a name="utils-delpos234"></a>5.4.11 <code>delpos234()</code></h3>
+<pre><code>void *delpos234(tree234 *t, int index);
+</code></pre>
+<p>
+Deletes the element at position <code>index</code> in the tree, and returns it.
+</p>
+<p>
+Return value is <code>NULL</code> if the index is out of range.
+</p>
+<h3><a name="utils-count234"></a>5.4.12 <code>count234()</code></h3>
+<pre><code>int count234(tree234 *t);
+</code></pre>
+<p>
+Returns the number of elements currently in the tree.
+</p>
+<h3><a name="utils-splitpos234"></a>5.4.13 <code>splitpos234()</code></h3>
+<pre><code>tree234 *splitpos234(tree234 *t, int index, bool before);
+</code></pre>
+<p>
+Splits the input tree into two pieces at a given position, and creates a new tree containing all the elements on one side of that position.
+</p>
+<p>
+If <code>before</code> is <code>true</code>, then all the items at or after position <code>index</code> are left in the input tree, and the items before that point are returned in the new tree. Otherwise, the reverse happens: all the items at or after <code>index</code> are moved into the new tree, and those before that point are left in the old one.
+</p>
+<p>
+If <code>index</code> is equal to 0 or to the number of elements in the input tree, then one of the two trees will end up empty (and this is not an error condition). If <code>index</code> is further out of range in either direction, the operation will fail completely and return <code>NULL</code>.
+</p>
+<p>
+This operation completes in <code>O(log N)</code> time, no matter how large the tree or how balanced or unbalanced the split.
+</p>
+<h3><a name="utils-split234"></a>5.4.14 <code>split234()</code></h3>
+<pre><code>tree234 *split234(tree234 *t, void *e, cmpfn234 cmp, int rel);
+</code></pre>
+<p>
+Splits a sorted tree according to its sort order.
+</p>
+<p>
+<code>rel</code> can be any of the relation constants described in <a href="#utils-findrel234">section 5.4.7</a>, <em>except</em> for <code>REL234_EQ</code>. All the elements having that relation to <code>e</code> will be transferred into the new tree; the rest will be left in the old one.
+</p>
+<p>
+The parameter <code>cmp</code> has the same semantics as it does in <code>find234()</code>: if it is not <code>NULL</code>, it will be used in place of the tree's own comparison function when comparing elements to <code>e</code>, in such a way that <code>e</code> itself is always the first of its two operands.
+</p>
+<p>
+Again, this operation completes in <code>O(log N)</code> time, no matter how large the tree or how balanced or unbalanced the split.
+</p>
+<h3><a name="utils-join234"></a>5.4.15 <code>join234()</code></h3>
+<pre><code>tree234 *join234(tree234 *t1, tree234 *t2);
+</code></pre>
+<p>
+Joins two trees together by concatenating the lists they represent. All the elements of <code>t2</code> are moved into <code>t1</code>, in such a way that they appear <em>after</em> the elements of <code>t1</code>. The tree <code>t2</code> is freed; the return value is <code>t1</code>.
+</p>
+<p>
+If you apply this function to a sorted tree and it violates the sort order (i.e. the smallest element in <code>t2</code> is smaller than or equal to the largest element in <code>t1</code>), the operation will fail and return <code>NULL</code>.
+</p>
+<p>
+This operation completes in <code>O(log N)</code> time, no matter how large the trees being joined together.
+</p>
+<h3><a name="utils-join234r"></a>5.4.16 <code>join234r()</code></h3>
+<pre><code>tree234 *join234r(tree234 *t1, tree234 *t2);
+</code></pre>
+<p>
+Joins two trees together in exactly the same way as <code>join234()</code>, but this time the combined tree is returned in <code>t2</code>, and <code>t1</code> is destroyed. The elements in <code>t1</code> still appear before those in <code>t2</code>.
+</p>
+<p>
+Again, this operation completes in <code>O(log N)</code> time, no matter how large the trees being joined together.
+</p>
+<h3><a name="utils-copytree234"></a>5.4.17 <code>copytree234()</code></h3>
+<pre><code>tree234 *copytree234(tree234 *t, copyfn234 copyfn,
+                     void *copyfnstate);
+</code></pre>
+<p>
+Makes a copy of an entire tree.
+</p>
+<p>
+If <code>copyfn</code> is <code>NULL</code>, the tree will be copied but the elements will not be; i.e. the new tree will contain pointers to exactly the same physical elements as the old one.
+</p>
+<p>
+If you want to copy each actual element during the operation, you can instead pass a function in <code>copyfn</code> which makes a copy of each element. That function has the prototype
+</p>
+<pre><code>typedef void *(*copyfn234)(void *state, void *element);
+</code></pre>
+<p>
+and every time it is called, the <code>state</code> parameter will be set to the value you passed in as <code>copyfnstate</code>.
+</p>
+<h2><a name="utils-dsf"></a>5.5 Disjoint set forests</h2>
+<p>
+This section describes a set of functions implementing the data structure variously known as &#8216;union-find&#8217; or &#8216;Tarjan's disjoint set forest&#8217;. In this code base, it's universally abbreviated as a &#8216;dsf&#8217;.
+</p>
+<p>
+A dsf represents a collection of elements partitioned into &#8216;equivalence classes&#8217;, in circumstances where equivalences are added incrementally. That is, all elements start off considered to be different, and you gradually declare more and more of them to be equal via the <code>dsf_merge()</code> operation, which says that two particular elements should be regarded as equal from now on.
+</p>
+<p>
+For example, if I start off with A,B,U,V all distinct, and I merge A with B and merge U with V, then the structure will tell me that A and U are not equivalent. But if I then merge B with V, then after that, the structure will tell me that A and U <em>are</em> equivalent, by following the transitive chain of equivalences it knows about.
+</p>
+<p>
+The dsf data structure is therefore ideal for tracking incremental connectivity in an undirected graph (again, &#8216;incremental&#8217; meaning that you only ever add edges, never delete them), and other applications in which you gradually acquire knowledge you didn't previously have about what things are the same as each other. It's used extensively in puzzle solver and generator algorithms, and sometimes during gameplay as well.
+</p>
+<p>
+The time complexity of dsf operations is not <em>quite</em> constant time, in theory, but it's so close to it as to make no difference in practice. In particular, any time a dsf has to do non-trivial work, it updates the structure so that that work won't be needed a second time. Use dsf operations without worrying about how long they take!
+</p>
+<p>
+For some puzzle-game applications, it's useful to augment this data structure with extra information about how the elements of an equivalence class relate to each other. There's more than one way you might do this; the one supported here is useful in cases where the objects you're tracking are going to end up in one of two states (say, black/white, or on/off), and for any two objects you either know that they're in the same one of those states, or you know they're in opposite states, or you don't know which yet. Puzzles calls this a &#8216;flip dsf&#8217;: it tracks whether objects in the same equivalence class are flipped relative to each other.
+</p>
+<p>
+As well as querying whether two elements are equivalent, this dsf implementation also allows you to ask for the number of elements in a given equivalence class, and the smallest element in the class. (The latter is used, for example, to decide which square to print the clue in each region of a Keen puzzle.)
+</p>
+<h3><a name="utils-dsf-new"></a>5.5.1 <code>dsf_new()</code>, <code>dsf_new_flip()</code>, <code>dsf_new_min()</code></h3>
+<pre><code>DSF *dsf_new(int size);
+DSF *dsf_new_flip(int size);
+DSF *dsf_new_min(int size);
+</code></pre>
+<p>
+Each of these functions allocates space for a dsf describing <code>size</code> elements, and initialises it so that every element is in an equivalence class by itself.
+</p>
+<p>
+The elements described by the dsf are represented by the integers from <code>0</code> to <code>size-1</code> inclusive.
+</p>
+<p>
+<code>dsf_new_flip()</code> will create a dsf which has the extra ability to track whether objects in the same equivalence class are flipped relative to each other.
+</p>
+<p>
+<code>dsf_new_min()</code> will create a dsf which has the extra ability to track the smallest element of each equivalence class.
+</p>
+<p>
+The returned object from any of these functions must be freed using <code>dsf_free()</code>.
+</p>
+<h3><a name="utils-dsf-free"></a>5.5.2 <code>dsf_free()</code></h3>
+<pre><code>void dsf_free(DSF *dsf);
+</code></pre>
+<p>
+Frees a dsf allocated by any of the <code>dsf_new()</code> functions.
+</p>
+<h3><a name="utils-dsf-reinit"></a>5.5.3 <code>dsf_reinit()</code></h3>
+<pre><code>void dsf_reinit(DSF *dsf);
+</code></pre>
+<p>
+Reinitialises an existing dsf to the state in which all elements are distinct, without having to free and reallocate it.
+</p>
+<h3><a name="utils-dsf-copy"></a>5.5.4 <code>dsf_copy()</code></h3>
+<pre><code>void dsf_copy(DSF *to, DSF *from);
+</code></pre>
+<p>
+Copies the contents of one dsf over the top of another. Everything previously stored in <code>to</code> is overwritten.
+</p>
+<p>
+The two dsfs must have been created with the same size, and the destination dsf may not have any extra information that the source dsf does not have.
+</p>
+<h3><a name="utils-dsf-merge"></a>5.5.5 <code>dsf_merge()</code></h3>
+<pre><code>void dsf_merge(DSF *dsf, int v1, int v2);
+</code></pre>
+<p>
+Updates a dsf so that elements <code>v1</code> and <code>v2</code> will now be considered to be in the same equivalence class. If they were already in the same class, this function will safely do nothing.
+</p>
+<p>
+This function may not be called on a flip dsf. Use <code>dsf_merge_flip</code> instead.
+</p>
+<h3><a name="utils-dsf-canonify"></a>5.5.6 <code>dsf_canonify()</code></h3>
+<pre><code>int dsf_canonify(DSF *dsf, int val);
+</code></pre>
+<p>
+Returns the &#8216;canonical&#8217; element of the equivalence class in the dsf containing <code>val</code>. This will be some element of the same equivalence class. So in order to determine whether two elements are in the same equivalence class, you can call <code>dsf_canonify</code> on both of them, and compare the results.
+</p>
+<p>
+Canonical elements don't necessarily stay the same if the dsf is mutated via <code>dsf_merge</code>. But between two calls to <code>dsf_merge</code>, they stay the same.
+</p>
+<h3><a name="utils-dsf-size"></a>5.5.7 <code>dsf_size()</code></h3>
+<pre><code>int dsf_size(DSF *dsf, int val);
+</code></pre>
+<p>
+Returns the number of elements currently in the equivalence class containing <code>val</code>.
+</p>
+<p>
+<code>val</code> itself counts, so in a newly created dsf, the return value will be 1.
+</p>
+<h3><a name="utils-dsf-merge-flip"></a>5.5.8 <code>dsf_merge_flip()</code></h3>
+<pre><code>void edsf_merge(DSF *dsf, int v1, int v2, bool flip);
+</code></pre>
+<p>
+Updates a flip dsf so that elements <code>v1</code> and <code>v2</code> are in the same equivalence class. If <code>flip</code> is <code>false</code>, they will be regarded as in the same state as each other; if <code>flip</code> is <code>true</code> then they will be regarded as being in opposite states.
+</p>
+<p>
+If <code>v1</code> and <code>v2</code> were already in the same equivalence class, then the new value of <code>flip</code> will be checked against what the edsf previously believed, and an assertion failure will occur if you contradict that.
+</p>
+<p>
+For example, if you start from a blank flip dsf and do this:
+</p>
+<pre><code>dsf_merge_flip(dsf, 0, 1, false);
+dsf_merge_flip(dsf, 1, 2, true);
+</code></pre>
+<p>
+then it will create a dsf in which elements 0,1,2 are all in the same class, with 0,1 in the same state as each other and 2 in the opposite state from both. And then this call will do nothing, because it agrees with what the dsf already knew:
+</p>
+<pre><code>dsf_merge_flip(dsf, 0, 2, true);
+</code></pre>
+<p>
+But this call will fail an assertion:
+</p>
+<pre><code>dsf_merge_flip(dsf, 0, 2, false);
+</code></pre>
+<h3><a name="utils-dsf-canonify-flip"></a>5.5.9 <code>dsf_canonify_flip()</code></h3>
+<pre><code>int dsf_canonify_flip(DSF *dsf, int val, bool *inverse);
+</code></pre>
+<p>
+Like <code>dsf_canonify()</code>, this returns the canonical element of the equivalence class of a dsf containing <code>val</code>.
+</p>
+<p>
+However, it may only be called on a flip dsf, and it also fills in <code>*flip</code> with a flag indicating whether <code>val</code> and the canonical element are in opposite states: <code>true</code> if they are in opposite states, or <code>false</code> if they're in the same state.
+</p>
+<p>
+So if you want to know the relationship between <code>v1</code> and <code>v2</code>, you can do this:
+</p>
+<pre><code>bool inv1, inv2;
+int canon1 = dsf_canonify_flip(dsf, v1, &amp;inv1);
+int canon2 = dsf_canonify_flip(dsf, v2, &amp;inv2);
+if (canon1 != canon2) {
+    // v1 and v2 have no known relation
+} else if (inv1 == inv2) {
+    // v1 and v2 are known to be in the same state as each other
+} else {
+    // v1 and v2 are known to be in opposite states
+}
+</code></pre>
+<h3><a name="utils-dsf-minimal"></a>5.5.10 <code>dsf_minimal()</code></h3>
+<pre><code>int dsf_minimal(DSF *dsf, int val);
+</code></pre>
+<p>
+Returns the smallest element of the equivalence class in the dsf containing <code>val</code>.
+</p>
+<p>
+For this function to work, the dsf must have been created using <code>dsf_new_min()</code>.
+</p>
+<h2><a name="utils-tdq"></a>5.6 To-do queues</h2>
+<p>
+This section describes a set of functions implementing a &#8216;to-do queue&#8217;, a simple de-duplicating to-do list mechanism. The code calls this a &#8216;tdq&#8217;.
+</p>
+<p>
+A tdq can store integers up to a given size (specified at creation time). But it can't store the same integer more than once. So you can quickly <em>make sure</em> an integer is in the queue (which will do nothing if it's already there), and you can quickly pop an integer from the queue and return it, both in constant time.
+</p>
+<p>
+The idea is that you might use this in a game solver, in the kind of game where updating your knowledge about one square of a grid means there's a specific other set of squares (such as its neighbours) where it's now worth attempting further deductions. So you keep a tdq of all the grid squares you plan to look at next, and every time you make a deduction in one square, you add the neighbouring squares to the tdq to make sure they get looked at again after that.
+</p>
+<p>
+In solvers where deductions are mostly localised, this avoids the slowdown of having to find the next thing to do every time by looping over the whole grid: instead, you can keep checking the tdq for <em>specific</em> squares to look at, until you run out.
+</p>
+<p>
+However, it's common to have games in which <em>most</em> deductions are localised, but not all. In that situation, when your tdq is empty, you can re-fill it with every square in the grid using <code>tdq_fill()</code>, which will force an iteration over everything again. And then if the tdq becomes empty <em>again</em> without you having made any progress, give up.
+</p>
+<h3><a name="utils-tdq-new"></a>5.6.1 <code>tdq_new()</code></h3>
+<pre><code>tdq *tdq_new(int n);
+</code></pre>
+<p>
+Allocates space for a tdq that tracks items from <code>0</code> to <code>size-1</code> inclusive.
+</p>
+<h3><a name="utils-tdq-free"></a>5.6.2 <code>tdq_free()</code></h3>
+<pre><code>void tdq_free(tdq *tdq);
+</code></pre>
+<p>
+Frees a tdq.
+</p>
+<h3><a name="utils-tdq-add"></a>5.6.3 <code>tdq_add()</code></h3>
+<pre><code>void tdq_add(tdq *tdq, int k);
+</code></pre>
+<p>
+Adds the value <code>k</code> to a tdq. If <code>k</code> was already in the to-do list, does nothing.
+</p>
+<h3><a name="utils-tdq-remove"></a>5.6.4 <code>tdq_remove()</code></h3>
+<pre><code>int tdq_remove(tdq *tdq);
+</code></pre>
+<p>
+Removes one item from the tdq, and returns it. If the tdq is empty, returns <code>-1</code>.
+</p>
+<h3><a name="utils-tdq-fill"></a>5.6.5 <code>tdq_fill()</code></h3>
+<pre><code>void tdq_fill(tdq *tdq);
+</code></pre>
+<p>
+Fills a tdq with every element it can possibly keep track of.
+</p>
+<h2><a name="utils-findloop"></a>5.7 Finding loops in graphs and grids</h2>
+<p>
+Many puzzles played on grids or graphs have a common gameplay element of connecting things together into paths in such a way that you need to avoid making loops (or, perhaps, making the <em>wrong</em> kind of loop).
+</p>
+<p>
+Just determining <em>whether</em> a loop exists in a graph is easy, using a dsf tracking connectivity between the vertices. Simply iterate over each edge of the graph, merging the two vertices at each end of the edge &#8211; but before you do that, check whether those vertices are <em>already</em> known to be connected to each other, and if they are, then the new edge is about to complete a loop.
+</p>
+<p>
+But if you also want to identify <em>exactly</em> the set of edges that are part of any loop, e.g. to highlight the whole loop red during gameplay, then that's a harder problem. This API is provided here for all puzzles to use for that purpose.
+</p>
+<h3><a name="utils-findloop-new-state"></a>5.7.1 <code>findloop_new_state()</code></h3>
+<pre><code>struct findloopstate *findloop_new_state(int nvertices);
+</code></pre>
+<p>
+Allocates a new state structure for the findloop algorithm, capable of handling a graph with up to <code>nvertices</code> vertices. The vertices will be represented by integers between <code>0</code> and <code>nvertices-1</code> inclusive.
+</p>
+<h3><a name="utils-findloop-free-state"></a>5.7.2 <code>findloop_free_state()</code></h3>
+<pre><code>void findloop_free_state(struct findloopstate *state);
+</code></pre>
+<p>
+Frees a state structure allocated by <code>findloop_new_state()</code>.
+</p>
+<h3><a name="utils-findloop-run"></a>5.7.3 <code>findloop_run()</code></h3>
+<pre><code>bool findloop_run(struct findloopstate *state, int nvertices,
+                  neighbour_fn_t neighbour, void *ctx);
+</code></pre>
+<p>
+Runs the loop-finding algorithm, which will explore the graph and identify whether each edge is or is not part of any loop.
+</p>
+<p>
+The algorithm will call the provided function <code>neighbour</code> to list the neighbouring vertices of each vertex. It should have this prototype:
+</p>
+<pre><code>int neighbour(int vertex, void *ctx);
+</code></pre>
+<p>
+In this callback, <code>vertex</code> will be the index of a vertex when the algorithm <em>first</em> calls it for a given vertex. The function should return the index of one of that vertex's neighbours, or a negative number if there are none.
+</p>
+<p>
+If the function returned a vertex, the algorithm will then call <code>neighbour</code> again with a <em>negative</em> number as the <code>vertex</code> parameter, which means &#8216;please give me another neighbour of the same vertex as last time&#8217;. Again, the function should return a vertex index, or a negative number to indicate that there are no more vertices.
+</p>
+<p>
+The <code>ctx</code> parameter passed to <code>findloop_run()</code> is passed on unchanged to <code>neighbour</code>, so you can point that at your game state or solver state or whatever.
+</p>
+<p>
+The return value is <code>true</code> if at least one loop exists in the graph, and <code>false</code> if no loop exists. Also, the algorithm state will have been filled in with information that the following query functions can use to ask about individual graph edges.
+</p>
+<h3><a name="utils-findloop-is-loop-edge"></a>5.7.4 <code>findloop_is_loop_edge()</code></h3>
+<pre><code>bool findloop_is_loop_edge(struct findloopstate *state,
+                           int u, int v);
+</code></pre>
+<p>
+Queries whether the graph edge between vertices <code>u</code> and <code>v</code> is part of a loop. If so, the return value is <code>true</code>, otherwise <code>false</code>.
+</p>
+<h3><a name="utils-findloop-is-bridge"></a>5.7.5 <code>findloop_is_bridge()</code></h3>
+<pre><code>bool findloop_is_bridge(struct findloopstate *pv,
+    int u, int v, int *u_vertices, int *v_vertices);
+</code></pre>
+<p>
+Queries whether the graph edge between vertices <code>u</code> and <code>v</code> is a &#8216;bridge&#8217;, i.e. an edge which would break the graph into (more) disconnected components if it were removed.
+</p>
+<p>
+This is the exact inverse of the &#8216;loop edge&#8217; criterion: a vertex returns <code>true</code> from <code>findloop_is_loop_edge()</code> if and only if it returns <code>false</code> from <code>findloop_is_bridge()</code>, and vice versa.
+</p>
+<p>
+However, <code>findloop_is_bridge()</code> returns more information. If it returns <code>true</code>, then it also fills in <code>*u_vertices</code> and <code>*v_vertices</code> with the number of vertices connected to the <code>u</code> and <code>v</code> sides of the bridge respectively.
+</p>
+<p>
+For example, if you have three vertices A,B,C all connected to each other, and four vertices U,V,W,X all connected to each other, and a single edge between A and V, then calling <code>findloop_is_bridge()</code> on the pair A,V will return true (removing that edge would separate the two sets from each other), and will report that there are three vertices on the A side and four on the V side.
+</p>
+<h2><a name="utils-combi"></a>5.8 Choosing r things out of n</h2>
+<p>
+This section describes a small API for iterating over all combinations of r things out of n.
+</p>
+<p>
+For example, if you asked for all combinations of 3 things out of 5, you'd get back the sets {0,1,2}, {0,1,3}, {0,1,4}, {0,2,3}, {0,2,4}, {0,3,4}, {1,2,3}, {1,2,4}, {1,3,4}, and {2,3,4}.
+</p>
+<p>
+These functions use a structure called a <code>combi_ctx</code>, which contains an element <code>int *a</code> holding each returned combination, plus other fields for implementation use only.
+</p>
+<h3><a name="utils-combi-new"></a>5.8.1 <code>new_combi()</code></h3>
+<pre><code>combi_ctx *new_combi(int r, int n);
+</code></pre>
+<p>
+Allocates a new <code>combi_ctx</code> structure for enumerating r things out of n.
+</p>
+<h3><a name="utils-combi-free"></a>5.8.2 <code>free_combi()</code></h3>
+<pre><code>void free_combi(combi_ctx *combi);
+</code></pre>
+<p>
+Frees a <code>combi_ctx</code> structure.
+</p>
+<h3><a name="utils-combi-reset"></a>5.8.3 <code>reset_combi()</code></h3>
+<pre><code>void reset_combi(combi_ctx *combi);
+</code></pre>
+<p>
+Resets an existing <code>combi_ctx</code> structure to the start of its iteration
+</p>
+<h3><a name="utils-combi-next"></a>5.8.4 <code>next_combi()</code></h3>
+<pre><code>combi_ctx *next_combi(combi_ctx *combi);
+</code></pre>
+<p>
+Requests a combination from a <code>combi_ctx</code>.
+</p>
+<p>
+If there are none left to return, the return value is <code>NULL</code>. Otherwise, it returns the input structure <code>combi</code>, indicating that it has filled in <code>combi-&gt;a[0]</code>, <code>combi-&gt;a[1]</code>, ..., <code>combi-&gt;a[r-1]</code> with an increasing sequence of distinct integers from <code>0</code> to <code>n-1</code> inclusive.
+</p>
+<h2><a name="utils-misc"></a>5.9 Miscellaneous utility functions and macros</h2>
+<p>
+This section contains all the utility functions which didn't sensibly fit anywhere else.
+</p>
+<h3><a name="utils-maxmin"></a>5.9.1 <code>max()</code> and <code>min()</code></h3>
+<p>
+The main Puzzles header file defines the pretty standard macros <code>max()</code> and <code>min()</code>, each of which is given two arguments and returns the one which compares greater or less respectively.
+</p>
+<p>
+These macros may evaluate their arguments multiple times. Avoid side effects.
+</p>
+<h3><a name="utils-max-digits"></a>5.9.2 <code>MAX_DIGITS()</code></h3>
+<p>
+The <code>MAX_DIGITS()</code> macro, defined in the main Puzzles header file, takes a type (or a variable of that type) and expands to an integer constant representing a reasonable upper bound on the number of characters that a number of that type could expand to when formatted as a decimal number using the <code>%u</code> or <code>%d</code> format of <code>printf()</code>. This is useful for allocating a fixed-size buffer that's guaranteed to be big enough to <code>sprintf()</code> a value into. Don't forget to add one for the trailing <code>'\0'</code>!
+</p>
+<h3><a name="utils-pi"></a>5.9.3 <code>PI</code></h3>
+<p>
+The main Puzzles header file defines a macro <code>PI</code> which expands to a floating-point constant representing pi.
+</p>
+<p>
+(I've never understood why ANSI's <code>&lt;math.h&gt;</code> doesn't define this. It'd be so useful!)
+</p>
+<h3><a name="utils-obfuscate-bitmap"></a>5.9.4 <code>obfuscate_bitmap()</code></h3>
+<pre><code>void obfuscate_bitmap(unsigned char *bmp, int bits, bool decode);
+</code></pre>
+<p>
+This function obscures the contents of a piece of data, by cryptographic methods. It is useful for games of hidden information (such as Mines, Guess or Black Box), in which the game ID theoretically reveals all the information the player is supposed to be trying to guess. So in order that players should be able to send game IDs to one another without accidentally spoiling the resulting game by looking at them, these games obfuscate their game IDs using this function.
+</p>
+<p>
+Although the obfuscation function is cryptographic, it cannot properly be called encryption because it has no key. Therefore, anybody motivated enough can re-implement it, or hack it out of the Puzzles source, and strip the obfuscation off one of these game IDs to see what lies beneath. (Indeed, they could usually do it much more easily than that, by entering the game ID into their own copy of the puzzle and hitting Solve.) The aim is not to protect against a determined attacker; the aim is simply to protect people who wanted to play the game honestly from <em>accidentally</em> spoiling their own fun.
+</p>
+<p>
+The input argument <code>bmp</code> points at a piece of memory to be obfuscated. <code>bits</code> gives the length of the data. Note that that length is in <em>bits</em> rather than bytes: if you ask for obfuscation of a partial number of bytes, then you will get it. Bytes are considered to be used from the top down: thus, for example, setting <code>bits</code> to 10 will cover the whole of <code>bmp[0]</code> and the <em>top two</em> bits of <code>bmp[1]</code>. The remainder of a partially used byte is undefined (i.e. it may be corrupted by the function).
+</p>
+<p>
+The parameter <code>decode</code> is <code>false</code> for an encoding operation, and <code>true</code> for a decoding operation. Each is the inverse of the other. (There's no particular reason you shouldn't obfuscate by decoding and restore cleartext by encoding, if you really wanted to; it should still work.)
+</p>
+<p>
+The input bitmap is processed in place.
+</p>
+<h3><a name="utils-bin2hex"></a>5.9.5 <code>bin2hex()</code></h3>
+<pre><code>char *bin2hex(const unsigned char *in, int inlen);
+</code></pre>
+<p>
+This function takes an input byte array and converts it into an ASCII string encoding those bytes in (lower-case) hex. It returns a dynamically allocated string containing that encoding.
+</p>
+<p>
+This function is useful for encoding the result of <code>obfuscate_bitmap()</code> in printable ASCII for use in game IDs.
+</p>
+<h3><a name="utils-hex2bin"></a>5.9.6 <code>hex2bin()</code></h3>
+<pre><code>unsigned char *hex2bin(const char *in, int outlen);
+</code></pre>
+<p>
+This function takes an ASCII string containing hex digits, and converts it back into a byte array of length <code>outlen</code>. If there aren't enough hex digits in the string, the contents of the resulting array will be undefined.
+</p>
+<p>
+This function is the inverse of <code>bin2hex()</code>.
+</p>
+<h3><a name="utils-fgetline"></a>5.9.7 <code>fgetline()</code></h3>
+<pre><code>char *fgetline(FILE *fp);
+</code></pre>
+<p>
+This function reads a single line of text from a standard C input stream, and returns it as a dynamically allocated string. The returned string still has a newline on the end.
+</p>
+<h3><a name="utils-arraysort"></a>5.9.8 <code>arraysort()</code></h3>
+<p>
+Sorts an array, with slightly more flexibility than the standard C <code>qsort()</code>.
+</p>
+<p>
+This function is really implemented as a macro, so it doesn't have a prototype as such. But you could imagine it having a prototype like this:
+</p>
+<pre><code>void arraysort(element_t *array, size_t nmemb,
+               arraysort_cmpfn_t cmp, void *ctx);
+</code></pre>
+<p>
+in which <code>element_t</code> is an unspecified type.
+</p>
+<p>
+(Really, there's an underlying function that takes an extra parameter giving the size of each array element. But callers are encouraged to use this macro version, which fills that in automatically using <code>sizeof</code>.)
+</p>
+<p>
+This function behaves essentially like <code>qsort()</code>: it expects <code>array</code> to point to an array of <code>nmemb</code> elements, and it will sort them in place into the order specified by the comparison function <code>cmp</code>.
+</p>
+<p>
+The comparison function should have this prototype:
+</p>
+<pre><code>int cmp(const void *a, const void *b, void *ctx);
+</code></pre>
+<p>
+in which <code>a</code> and <code>b</code> point at the two elements to be compared, and the return value is negative if <code>a&lt;b</code> (that is, <code>a</code> should appear before <code>b</code> in the output array), positive if <code>a&gt;b</code>, or zero if <code>a=b</code>.
+</p>
+<p>
+The <code>ctx</code> parameter to <code>arraysort()</code> is passed directly to the comparison function. This is the feature that makes <code>arraysort()</code> more flexible than standard <code>qsort()</code>: it lets you vary the sorting criterion in a dynamic manner without having to write global variables in the caller for the compare function to read.
+</p>
+<h3><a name="utils-colour-mix"></a>5.9.9 <code>colour_mix()</code></h3>
+<pre><code>void colour_mix(const float src1[3], const float src2[3], float p,
+                float dst[3]);
+</code></pre>
+<p>
+This function mixes the colours <code>src1</code> and <code>src2</code> in specified proportions, producing <code>dst</code>. <code>p</code> is the proportion of <code>src2</code> in the result. So if <code>p</code> is <code>1.0</code>, <code>dst</code> will be the same as <code>src2</code>. If <code>p</code> is <code>0.0</code>, <code>dst</code> will be the same as <code>src1</code>. And if <code>p</code> is somewhere in between, so will <code>dst</code> be. <code>p</code> is not restricted to the range <code>0.0</code> to <code>1.0</code>. Values outside that range will produce extrapolated colours, which may be useful for some purposes, but may also produce impossible colours.
+</p>
+<h3><a name="utils-game-mkhighlight"></a>5.9.10 <code>game_mkhighlight()</code></h3>
+<pre><code>void game_mkhighlight(frontend *fe, float *ret,
+                      int background, int highlight, int lowlight);
+</code></pre>
+<p>
+It's reasonably common for a puzzle game's graphics to use highlights and lowlights to indicate &#8216;raised&#8217; or &#8216;lowered&#8217; sections. Fifteen, Sixteen and Twiddle are good examples of this.
+</p>
+<p>
+Puzzles using this graphical style are running a risk if they just use whatever background colour is supplied to them by the front end, because that background colour might be too light or dark to see any highlights on at all. (In particular, it's not unheard of for the front end to specify a default background colour of white.)
+</p>
+<p>
+Therefore, such puzzles can call this utility function from their <code>colours()</code> routine (<a href="backend.html#backend-colours">section 2.8.6</a>). You pass it your front end handle, a pointer to the start of your return array, and three colour indices. It will:
+</p>
+<ul><li>
+call <code>frontend_default_colour()</code> (<a href="midend.html#frontend-default-colour">section 4.45</a>) to fetch the front end's default background colour
+</li>
+<li>
+alter the brightness of that colour if it's unsuitable
+</li>
+<li>
+define brighter and darker variants of the colour to be used as highlights and lowlights
+</li>
+<li>
+write those results into the relevant positions in the <code>ret</code> array.
+</li>
+</ul>
+<p>
+Thus, <code>ret[background*3]</code> to <code>ret[background*3+2]</code> will be set to RGB values defining a sensible background colour, and similary <code>highlight</code> and <code>lowlight</code> will be set to sensible colours.
+</p>
+<p>
+Either <code>highlight</code> or <code>lowlight</code> may be passed in as <code>-1</code> to indicate that the back-end does not require a highlight or lowlight colour, respectively.
+</p>
+<h3><a name="utils-game-mkhighlight-specific"></a>5.9.11 <code>game_mkhighlight_specific()</code></h3>
+<pre><code>void game_mkhighlight_specific(frontend *fe, float *ret,
+    int background, int highlight, int lowlight);
+</code></pre>
+<p>
+This function behaves exactly like <code>game_mkhighlight()</code>, except that it expects the background colour to have been filled in <em>already</em> in the elements <code>ret[background*3]</code> to <code>ret[background*3+2]</code>. It will fill in the other two colours as brighter and darker versions of that.
+</p>
+<p>
+This is useful if you want to show relief sections of a puzzle in more than one base colour.
+</p>
+<h3><a name="utils-button2label"></a>5.9.12 <code>button2label()</code></h3>
+<pre><code>char *button2label(int button);
+</code></pre>
+<p>
+This function generates a descriptive text label for certain generic values of <code>button</code>, which are button codes that can be passed to the midend.
+</p>
+<p>
+The allowable values of <code>button</code> are <code>A-Z, a-z, 0-9, CURSOR_{UP,DOWN,LEFT,RIGHT,SELECT}</code>, and <code>'\b'</code>. No other values are allowed. Passing an unsupported value will produce a fatal error.
+</p>
+<p>
+The intended use of this function is to generate strings which keyboard-less front ends can present to the user as keys which can be sent to the back end. For example, <code>CURSOR_UP</code> produces <code>"Up"</code>. Upper- and lowercase alphanumeric characters produce a singleton string containing that character. The backspace character <code>'\b'</code> produces <code>"Clear"</code>.
+</p>
+<p>
+This function should only be called when the <code>key_label</code> item returned by a backend's <code>request_keys()</code> (<a href="backend.html#backend-request-keys">section 2.10.7</a>) function has its <code>label</code> field set to <code>NULL</code>; in this case, the corresponding <code>button</code> field can be passed to this function to obtain an appropriate generic label. If, however, the <code>label</code> field is not <code>NULL</code>, this function should not be used.
+</p>
+<p>
+The returned string is dynamically allocated and should be <code>sfree</code>'d by the caller.
+</p>
+<h3><a name="utils-move-cursor"></a>5.9.13 <code>move_cursor()</code></h3>
+<pre><code>char *move_cursor(int button, int *x, int *y, int w, int h,
+                  bool wrap, bool *visible);
+</code></pre>
+<p>
+This function can be called by <code>interpret_move()</code> to implement the default keyboard API for moving a cursor around a grid.
+</p>
+<p>
+<code>button</code> is the same value passed in to <code>interpret_move()</code>. If it's not any of <code>CURSOR_UP</code>, <code>CURSOR_DOWN</code>, <code>CURSOR_LEFT</code> or <code>CURSOR_RIGHT</code>, the function will do nothing.
+</p>
+<p>
+<code>x</code> and <code>y</code> point to two integers which on input give the current location of a cursor in a square grid. <code>w</code> and <code>h</code> give the dimensions of the grid. On return, <code>x</code> and <code>y</code> are updated to give the cursor's new position according to which arrow key was pressed.
+</p>
+<p>
+This function assumes that the grid coordinates run from <code>0</code> to <code>w-1</code> inclusive (left to right), and from <code>0</code> to <code>h-1</code> inclusive (top to bottom).
+</p>
+<p>
+If <code>wrap</code> is <code>true</code>, then trying to move the cursor off any edge of the grid will result in it wrapping round to the corresponding square on the opposite edge. If <code>wrap</code> is <code>false</code>, such a move will have no effect.
+</p>
+<p>
+If <code>visible</code> is not <code>NULL</code>, it points to a flag indicating whether the cursor is visible. This will be set to <code>true</code> if <code>button</code> represents a cursor-movement key.
+</p>
+<p>
+The function returns one of the special constants that can be returned by <code>interpret_move()</code>. The return value is <code>MOVE_UNUSED</code> if <code>button</code> is unrecognised, <code>MOVE_UI_UPDATE</code> if <code>x</code>, <code>y</code>, or <code>visible</code> was updated, and <code>MOVE_NO EFFECT</code> otherwise.
+</p>
+<h3><a name="utils-divvy-rectangle"></a>5.9.14 <code>divvy_rectangle()</code></h3>
+<pre><code>int *divvy_rectangle(int w, int h, int k, random_state *rs);
+</code></pre>
+<p>
+Invents a random division of a rectangle into same-sized polyominoes, such as is found in the block layout of a Solo puzzle in jigsaw mode, or the solution to a Palisade puzzle.
+</p>
+<p>
+<code>w</code> and <code>h</code> are the dimensions of the rectangle. <code>k</code> is the size of polyomino desired. It must be a factor of <code>w*h</code>.
+</p>
+<p>
+<code>rs</code> is a <code>random_state</code> used to supply the random numbers to select a random division of the rectangle.
+</p>
+<p>
+The return value is a dsf (see <a href="#utils-dsf">section 5.5</a>) whose equivalence classes correspond to the polyominoes that the rectangle is divided into. The indices of the dsf are of the form <code>y*w+x</code>, for the cell with coordinates <code>x,y</code>.
+</p>
+<h3><a name="utils-domino-layout"></a>5.9.15 <code>domino_layout()</code></h3>
+<pre><code>int *domino_layout(int w, int h, random_state *rs);
+</code></pre>
+<p>
+Invents a random tiling of a rectangle with dominoes.
+</p>
+<p>
+<code>w</code> and <code>h</code> are the dimensions of the rectangle. If they are both odd, then one square will be left untiled.
+</p>
+<p>
+<code>rs</code> is a <code>random_state</code> used to supply the random numbers to select a random division of the rectangle.
+</p>
+<p>
+The return value is an array in which element <code>y*w+x</code> represents the cell with coordinates <code>x,y</code>. Each element of the array gives the index (in the same representation) of the other end of its domino. If there's a left-over square, then that element contains its own index.
+</p>
+<h3><a name="utils-domino-layout-prealloc"></a>5.9.16 <code>domino_layout_prealloc()</code></h3>
+<pre><code>void domino_layout_prealloc(int w, int h, random_state *rs,
+                            int *grid, int *grid2, int *list);
+</code></pre>
+<p>
+Just like <code>domino_layout()</code>, but does no memory allocation. You can use this to save allocator overhead if you expect to need to generate many domino tilings of the same grid.
+</p>
+<p>
+<code>grid</code> and <code>grid2</code> should each have space for <code>w*h</code> ints. <code>list</code> should have space for <code>2*w*h</code> ints.
+</p>
+<p>
+The returned array is delivered in <code>grid</code>.
+</p>
+<h3><a name="utils-strip-button-modifiers"></a>5.9.17 <code>STRIP_BUTTON_MODIFIERS()</code></h3>
+<p>
+This macro, defined in the main Puzzles header file, strips the modifier flags from the key code passed as an argument. It is equivalent to a bitwise-AND with <code>~MOD_MASK</code>.
+</p>
+<h3><a name="utils-swap-regions"></a>5.9.18 <code>swap_regions()</code></h3>
+<pre><code>void swap_regions(void *av, void *bv, size_t size);
+</code></pre>
+<p>
+Swap two regions of memory of <code>size</code> bytes. The two regions must not overlap.
+</p>
+<h3><a name="utils-compare-integers"></a>5.9.19 <code>compare_integers()</code></h3>
+<pre><code>int compare_integers(const void *av, const void *bv);
+</code></pre>
+<p>
+Compare the ints pointed to by <code>av</code> and <code>bv</code>. It returns an integer less than, equal to, or greater than zero if the first argument is respectively less than, equal to, or greater than the second. This function is intended to be passed to <code>qsort()</code> for sorting ints in ascending order.
+</p>
+<h3><a name="utils-get-handle-as-type"></a>5.9.20 <code>GET_HANDLE_AS_TYPE()</code></h3>
+<pre><code>#define GET_HANDLE_AS_TYPE(dr, type) ((type*)((dr)-&gt;handle))
+</code></pre>
+<p>
+This macro, defined in the main Puzzles header file, retrieves the <code>handle</code> field from a <code>drawing *</code> pointer and casts it to <code>type *</code>. It is intended for use in implementations of drawing API functions, where this operation is idiomatic.
+</p>
+<h3><a name="utils-getenv-bool"></a>5.9.21 <code>getenv_bool()</code></h3>
+<pre><code>bool getenv_bool(const char *name, bool dflt)
+</code></pre>
+<p>
+This is a simple wrapper around the standard library function <code>getenv()</code>. It queries the environment variable named <code>name</code> and returns <code>true</code> if the variable exists and looks kind of true (any value beginning with <code>y</code>, <code>Y</code>, <code>t</code>, or <code>T</code>). If the variable is defined with some other value, it returns <code>false</code>, and if it's not defined, the function returns <code>dflt</code>. This can be used for implementing preferences that are too obscure for the standard preferences mechanism (see <a href="backend.html#backend-get-prefs">section 2.3.11</a>).
+</p>
+
+<hr><address>
+[Simon Tatham's Portable Puzzle Collection, version 20260309.06e37f1]</address></body>
+</html>

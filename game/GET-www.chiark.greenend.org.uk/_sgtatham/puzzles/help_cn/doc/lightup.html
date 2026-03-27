@@ -1,0 +1,113 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN"
+"http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+<meta name="generator" content="Halibut, unidentified version">
+<title>点灯</title>
+<link rel="previous" href="slant.html">
+<link rel="ToC" href="index.html">
+<link rel="up" href="index.html">
+<link rel="index" href="indexpage.html">
+<link rel="next" href="map.html">
+</head>
+<body>
+<p><a href="slant.html">上一篇</a> | <a href="index.html">目录</a> | <a href="indexpage.html">索引</a> | <a href="map.html">下一篇</a></p>
+
+<ul>
+<li><a href="#lightup">第 21 章：点灯</a>
+<ul>
+<li><a href="#lightup-controls">21.1 点灯控制</a></li>
+<li><a href="#lightup-parameters">21.2 点灯参数</a></li>
+<li><a href="#lightup-prefs">21.3 点灯用户首选项</a></li>
+</ul></li>
+</ul>
+<h1><a name="lightup"></a>第 21 章：<a name="i0"></a>点灯</h1>
+<p>
+你有一个方格网格。一些被填充为黑色；一些黑色方格标有数字。你的目标是通过在其中一些方格中放置灯泡来“照亮”所有空方格。
+</p>
+<p>
+每个灯泡照亮它所在的方格，以及与它水平或垂直成一直线的所有方格，除非黑色方格挡住了去路。
+</p>
+<p>
+要赢得游戏，你必须满足以下条件：
+</p>
+<ul><li>
+所有非黑色方格都被照亮。
+</li>
+<li>
+没有灯被其他灯照亮。
+</li>
+<li>
+所有带数字的黑色方格恰好有该数量的灯与其相邻（在上方、下方和侧面的四个方格中）。
+</li>
+</ul>
+<p>
+未编号的黑色方格可以有任意数量的相邻灯。
+</p>
+<p>
+这个拼图的功劳归于 <a name="i1"></a>Nikoli <a href="#p0">[9]</a>。
+</p>
+<p>
+点灯由 James Harvey 贡献到这个集合中。
+</p>
+<p><a name="p0"></a>
+[9] <a href="https://www.nikoli.co.jp/en/puzzles/akari/"><code>https://www.nikoli.co.jp/en/puzzles/akari/</code></a>
+</p>
+<h2><a name="lightup-controls"></a>21.1 <a name="i2"></a>Light Up 控制</h2>
+<p>
+左键点击非黑色方格将切换该方格中灯的存在。右键点击非黑色方格会切换那里的标记以帮助解决；例如，它可以用于高亮显示无法被照亮的方格。
+</p>
+<p>
+你不能在标记的方格中放置灯，也不能在有灯的方格中放置标记。
+</p>
+<p>
+游戏会用红色高亮显示明显的错误。被其他灯照亮的灯以及没有（或不能）有正确数量相邻灯的编号方格都会以这种方式高亮显示。
+</p>
+<p>
+因此，当所有非黑色方格都有黄色高亮且没有红色灯时，网格就被解决了。
+</p>
+<p>
+（<a href="common.html#common-actions">第 2.1 节</a> 中描述的所有操作也可用。）
+</p>
+<h2><a name="lightup-parameters"></a>21.2 <a name="i3"></a>Light Up 参数</h2>
+<p>
+这些参数可从“类型”菜单的“自定义...”选项获得。
+</p>
+<dl><dt>
+<em>宽度</em>，<em>高度</em>
+</dt>
+<dd>
+网格的大小（以方块为单位）。
+</dd>
+<dt>
+<em>黑色方格的百分比</em>
+</dt>
+<dd>
+网格中黑色方格的大致百分比。
+<p>
+这是一个提示而不是指令。如果网格生成器无法按照这个精确规格生成拼图，它会增加黑色方格的比例直到可以。
+</p>
+
+</dd>
+<dt>
+<em>对称性</em>
+</dt>
+<dd>
+允许你指定网格中黑色方格所需的对称性。（这不会明显影响拼图的难度。）
+</dd>
+<dt>
+<em>难度</em>
+</dt>
+<dd>
+“简单”意味着拼图应该可以在不回溯或猜测的情况下解决，“困难”意味着可能需要一些猜测。
+</dd>
+</dl>
+<h2><a name="lightup-prefs"></a>21.3 <a name="i4"></a>Light Up 用户首选项</h2>
+<p>
+在支持用户首选项的平台上，“游戏”菜单上的“首选项”选项将允许你配置当方格也被照亮时是否显示“这不是灯”标记。
+</p>
+
+<hr><address>
+[Simon Tatham's Portable Puzzle Collection, version 20260309.06e37f1]</address></body>
+</html>

@@ -1,0 +1,65 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN"
+"http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+<meta name="generator" content="Halibut, unidentified version">
+<title>星系</title>
+<link rel="previous" href="unequal.html">
+<link rel="ToC" href="index.html">
+<link rel="up" href="index.html">
+<link rel="index" href="indexpage.html">
+<link rel="next" href="filling.html">
+</head>
+<body>
+<p><a href="unequal.html">上一篇</a> | <a href="index.html">目录</a> | <a href="indexpage.html">索引</a> | <a href="filling.html">下一篇</a></p>
+<h1><a name="galaxies"></a>第 28 章：<a name="i0"></a>星系</h1>
+<p>
+你有一个包含多个点的矩形网格。你的目标是将矩形划分为相连的方格区域，使得每个区域都是 180° 旋转对称的，并且恰好包含一个位于其对称中心的点。
+</p>
+<p>
+要输入你的解决方案，你沿着网格边缘绘制线条来标记区域的边界。当网格上的标记线条恰好是分隔属于不同区域的两个方格的线条时，拼图就完成了。
+</p>
+<p>
+这个拼图是由 <a name="i1"></a>Nikoli <a href="#p0">[13]</a> 发明的，名称为“Tentai Show”；它的名称通常被翻译为英文的“Spiral Galaxies”。
+</p>
+<p>
+星系由 James Harvey 贡献到这个集合中。
+</p>
+<p><a name="p0"></a>
+[13] <a href="https://www.nikoli.co.jp/en/puzzles/tentai_show/"><code>https://www.nikoli.co.jp/en/puzzles/tentai_show/</code></a>
+</p>
+<h2><a name="galaxies-controls"></a>28.1 <a name="i2"></a>星系控制</h2>
+<p>
+左键点击任何网格线，如果还没有边缘就绘制一个边缘，如果有就移除一个边缘。当你创建一个有效区域（一个封闭的、恰好包含一个点、关于该点 180° 对称、且在其自己的两个方格之间没有多余边缘的区域）时，它会自动被高亮显示；因此，你的目标是让整个网格以这种方式被高亮显示。
+</p>
+<p>
+在解决过程中，你可能知道特定的网格方格属于特定的点，但不确定边缘在哪里以及哪些其他方格连接到该点。为了标记这一点，以免忘记，你可以右键点击该点并拖动，这将创建一个指向该点的箭头标记。将其放在你选择的方格中，它会提醒你它与哪个点相关联。你也可以右键点击现有箭头来拾取并移动它们，或者通过将它们拖出网格边缘来销毁它们。（另外，如果你不确定箭头指向哪个点，你可以拾取它并移动它以使其更清晰。当你拖动它时，它会不断旋转，以保持指向其父点。）
+</p>
+<p>
+你也可以使用光标键在网格方格和线条周围移动。当位于网格线上时按回车键将绘制或清除其边缘，如上所述。当位于点上时按回车键将拾取一个箭头，以便下次按回车键时放下；这也可用于移动现有箭头，通过将它们放在点或另一个箭头上移除它们。
+</p>
+<p>
+（<a href="common.html#common-actions">第 2.1 节</a> 中描述的所有操作也可用。）
+</p>
+<h2><a name="galaxies-parameters"></a>28.2 <a name="i3"></a>星系参数</h2>
+<p>
+这些参数可从“类型”菜单的“自定义...”选项获得。
+</p>
+<dl><dt>
+<em>宽度</em>，<em>高度</em>
+</dt>
+<dd>
+网格的大小（以方块为单位）。
+</dd>
+<dt>
+<em>难度</em>
+</dt>
+<dd>
+控制生成的拼图的难度。更困难的拼图需要更复杂的推理，而“不合理”的难度级别可能需要回溯。
+</dd>
+</dl>
+
+<hr><address>
+[Simon Tatham's Portable Puzzle Collection, version 20260309.06e37f1]</address></body>
+</html>
