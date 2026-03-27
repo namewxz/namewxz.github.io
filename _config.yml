@@ -72,3 +72,7 @@ nav:
    subnav:
    - name: 隐私政策
      link: /privacy-zh/
+
+
+encoding: UTF-8
+filesystem_encoding: UTF-8
