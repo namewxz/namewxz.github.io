@@ -1,15 +1,10 @@
 {
-  "$schema": "node_modules/wrangler/config-schema.json",
   "name": "namewxz1123",
   "compatibility_date": "2025-03-27",
-  "observability": {
-    "enabled": true
-  },
   "assets": {
-    "directory": "." // 发布当前目录所有静态文件（html/css/js等）
+    "directory": "_site"
   },
-  // 禁用自动构建命令，这是最关键的修复
   "build": {
-    "command": ""
+    "command": "bundle exec jekyll build"
   }
 }
