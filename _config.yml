@@ -27,7 +27,7 @@ nav:
     - name: 6818开发板使用网络
       link: /[13]6818开发板使用网络/
     - name: 6818视频传输开发记录
-      link: /[14]6818视频传输开发记录
+      link: /[14]6818视频传输开发记录/
  - name: 内功修炼
    subnav:
    - name: C语言基础复习
@@ -56,6 +56,14 @@ nav:
   #    link:
  - name: 项目实践
    subnav:
+   - name: 奥普特培训工程笔记
+     link: /[OPT]奥普特培训工程笔记/
+   - name: 机器视觉基础
+     link: /[OPT]机器视觉基础-镜头、相机、光源/
+   - name: OPT小讲堂
+     link: /[OPT]OPT小讲堂/
+   - name: smart3实践
+     link: /[OPT]smart3实践/
    - name: 2048（c|ARM|Linux|底层开发）
      link: /privacy-zh/
    - name: 2048（c|ARM|Linux|LVGL）

@@ -1,3 +1,8 @@
+---
+description: 6818开发板使用网络
+title: 6818开发板使用网络
+permalink: /[15]无QT_Creater创建qt项目/
+---
 编译指令
 
 qmake MJPEGViewer.pro
