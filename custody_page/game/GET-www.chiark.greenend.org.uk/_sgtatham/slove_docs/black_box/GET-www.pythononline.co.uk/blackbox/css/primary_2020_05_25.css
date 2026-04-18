@@ -1,0 +1,275 @@
+@font-face
+{
+	font-family: fancy;
+	src: url('../fonts/luna.ttf'),
+	     url('../fonts/luna.eot');
+}
+
+.fancyfont
+{
+	font-family: fancy, "century gothic", verdana, sans-serif;
+}
+
+body
+{
+	font-family: verdana, arial, sans-serif;
+}
+
+h1
+{
+	background: #000;
+	color: #fff;
+	font-family: fancy, verdana, arial, sans-serif;
+	font-size: 2em;
+	padding: .5em 0 .2em 0;
+	text-align: center;
+}
+
+/**********************************
+***       GENERAL CLASSES       ***
+**********************************/
+
+.section
+{
+	clear: both;
+}
+
+.container
+{
+	background: #f0f0f0;
+	margin: 0 auto;
+	padding: 2em;
+	width: 1110px;
+}
+
+img.autosize
+{
+	box-sizing: border-box;
+	height: 100%;
+	margin-bottom: 1em;
+	width: 100%;
+}
+
+/**********************************
+***          SECTION2		***
+**********************************/
+#section2 .container
+{
+	border: 1px solid #ccc;
+	border-top: none;
+	border-bottom-left-radius: 10px;
+	border-bottom-right-radius: 10px;
+	overflow: auto;
+}
+
+#panel_left
+{
+	float: left;
+	width: 355px;
+}
+
+#panel_left > div
+{
+	background: #e8e8e8;
+	border-radius: 10px;
+	box-shadow: 3px 3px 3px rgba(0, 0, 0, 0.3);
+	box-sizing: border-box;
+	border: 1px solid #aaa;
+	padding: 20px;
+}
+
+#panel_molecule
+{
+	box-shadow: 3px 3px 3px rgba(0, 0, 0, 0.3);
+	float: left;
+}
+
+#panel_controls
+{
+	margin-bottom: 30px;
+}
+
+#panel_guide p
+{
+	font-size: 0.8em;
+	margin-bottom: 1em;
+}
+
+#auto_setup,
+#manual_setup
+{
+	float: left;
+}
+
+#start_game,
+#reset
+{
+	float: right;
+}
+
+#marbles_box
+{
+	background: #fff;
+	border: 1px solid #aaa;
+	border-radius: 31px;
+	height: 62px;
+	margin-bottom: 12px;
+	width: 310px;
+}
+
+#marbles
+{
+	background: url(../files/atom_guess.jpg);
+	border-radius: 31px;
+	height: 62px;
+	width: 248px;
+}
+
+th
+{
+	background: #ddd;
+	border: 1px solid #aaa;
+	height: 70px;
+	width: 70px;
+}
+
+td
+{
+	background: #fff;
+	border: 1px solid #aaa;
+	height: 70px;
+	width: 70px;
+}
+
+table th div
+{
+	border-radius: 100%;
+	height: 60%;
+	margin: 0 auto;
+	width: 60%;
+
+	transition: 0.3s;
+	-webkit-transition: 0.3s;
+}
+
+table td div
+{
+	background: no-repeat center center;
+	height: 100%;
+	width: 100%;
+
+	transition: 0.2s;
+	-webkit-transition: 0.2s;
+}
+
+table th div:hover
+{
+	background-color: #999;
+}
+
+table td div:hover
+{
+	background-color: #eee;
+}
+
+table tr.end_row th:first-child,
+table tr.end_row th:last-child
+{
+	background: #ccc;
+}
+
+#panel_molecule
+{
+	margin-left: 40px;
+}
+
+#panel_controls p
+{
+	margin-bottom: 20px;
+}
+
+#declare
+{
+	width: 100%;
+}
+
+#score
+{
+	font-family: fancy, verdana, arial, sans-serif;
+	font-size: 1.25em;
+	text-align: center;
+}
+
+/**********************************
+***            FOOTER           ***
+**********************************/
+#footer
+{
+	background-color: #f0f0f0;
+	border-top: 3px solid #aaa;
+	clear: both;
+	color: #888;
+	font-size: 0.8em;
+	margin-top: 30px;
+}
+
+#footer ul
+{
+	text-align: center;
+}
+
+#footer li
+{
+	padding: 20px 10px;
+}
+
+#footer h3
+{
+	font-size: 1.3em !important;
+	margin: 0 0 10px 0;
+}
+
+#footer_bottom
+{
+/*	border-top: 2px solid #ccc; */
+	clear: both;
+	margin: 0 2em;
+	padding: 70px 0;
+}
+
+#footer_bottom a
+{
+	color: #3D93DB;
+}
+
+#footer_bottom a:hover
+{
+	text-decoration: underline;
+}
+
+#footer_top
+{
+	margin: 0 2em;
+	padding: 70px 0;
+	text-align: center;
+}
+
+
+#footer_top a
+{
+	color: #444;
+	font-size: 3em;
+}
+
+
+/********** max 1024 - iPad **********/
+@media screen and (max-width: 1024px)
+{
+
+	/* #section2
+	{
+		margin: -60px 0 0 -74px;
+		transform: scale(.9, .9);
+	} */
+
+}

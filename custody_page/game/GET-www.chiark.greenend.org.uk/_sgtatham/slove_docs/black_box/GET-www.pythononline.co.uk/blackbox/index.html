@@ -1,0 +1,659 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<meta name="format-detection" content="telephone=no">
+
+<title>Black Box</title>
+<meta name="description" content="A recreation of the classic game" />
+
+<link href="css/base.css" type="text/css" rel="stylesheet" />
+<link href="css/primary_2020_05_25.css" type="text/css" rel="stylesheet" />
+
+<script type="text/javascript">
+var color_path = new Array("#E02064", "#20E09A", "#8320E0", "#20DEE0", "#F07328", "#CC20E0", "#2096E0", "#FFFF00", "#37E020", "#204DE0", "#FF0000", "#E020AC", "#C7E020", "#7FE020", "#3B20E0", "#20E052")
+var next_color_pawn = 0
+
+var color_absorbed = "#000"
+var color_reflected = "#fff"
+var color_debug = "#00ff00"
+
+var launchbutton
+var launchpointID
+
+var atoms_placed
+var game_mode = 0
+var game_mode_at_start = 0
+var game_mode_playing = 1
+var game_mode_manual_setup = 2
+var game_mode_game_over = 3
+var max_atoms = 4
+var pawncounter = 0
+var playspace = new Array(9)
+
+var startside
+var startnbr
+
+var trace_x
+var trace_y
+
+var vector_x
+var vector_y
+
+function resetGame()
+{
+	game_mode = game_mode_at_start
+	
+	for (x = 1; x <= 8; x++)
+	{
+		pawn = document.getElementById('t' + x)
+		pawn.style.backgroundColor = ""
+		pawn = document.getElementById('b' + x)
+		pawn.style.backgroundColor = ""
+		pawn = document.getElementById('l' + x)
+		pawn.style.backgroundColor = ""
+		pawn = document.getElementById('r' + x)
+		pawn.style.backgroundColor = ""
+
+		for (y = 1; y <= 8; y++)
+		{
+			atom = document.getElementById('m' + x + '-' + y)
+			atom.style.backgroundImage = ""
+		}
+	}
+	
+	pawncounter = 0
+	next_color_pawn = 0
+
+	document.getElementById("pawncount").innerHTML = 100
+	document.getElementById("marbles").style.width = max_atoms * 62 + 'px'
+
+	document.getElementById("start_game").disabled = 'disabled'
+	document.getElementById("advanced").disabled = ''
+	document.getElementById("auto_setup").disabled = ''
+	document.getElementById("manual_setup").disabled = ''
+	document.getElementById("advanced").disabled = ''
+	document.getElementById("declare").disabled = 'disabled'
+}
+
+function autoSetup()
+{
+	prepareMolecule()
+	autoCreateMolecule()
+	startGame()
+}
+
+function manualSetup()
+{
+	prepareMolecule()
+	manualCreateMolecule()
+}
+
+function prepareMolecule()
+{
+	document.getElementById("auto_setup").disabled = 'disabled'
+	document.getElementById("manual_setup").disabled = 'disabled'
+	document.getElementById("advanced").disabled = 'disabled'
+
+	atoms_placed = 0
+
+	for (var i = 0; i<= 9; i++)
+	{
+		playspace[i] = new Array(9)
+		for (var j = 0; j <= 9; j++)
+		{
+			playspace[i][j] = 0
+		}
+	}
+}
+
+function autoCreateMolecule()
+{
+	for (i = 0; i < max_atoms; )
+	{
+		x = Math.floor(Math.random() * 8) + 1
+		y = Math.floor(Math.random() * 8) + 1
+		if (playspace[x][y] == 0)
+		{
+			playspace[x][y] = 1
+			i++
+		}
+	}
+}
+
+function manualCreateMolecule()
+{
+	alert('Select the start positions for your atoms')
+	game_mode = game_mode_manual_setup
+}
+
+function startGame()
+{
+	document.getElementById("start_game").disabled = 'disabled'
+
+	for (x = 1; x <= 8; x++)
+	{
+		for (y = 1; y <= 8; y++)
+		{
+			atom = document.getElementById('m' + x + '-' + y)
+			atom.style.backgroundImage = ""
+		}
+	}
+
+	atoms_placed = 0
+	document.getElementById("marbles").style.width = (max_atoms - atoms_placed) * 62 + 'px'
+
+	game_mode = game_mode_playing
+
+	document.getElementById("declare").disabled = ''
+}
+
+function up_the_ante(b)
+{
+	if (b.checked == true)
+	{
+		max_atoms = 5
+	}
+	else
+	{
+		max_atoms = 4
+	}
+
+	document.getElementById("marbles").style.width = max_atoms * 62 + 'px'
+}
+
+function mark(markpoint)
+{
+	if (game_mode == game_mode_manual_setup)
+	{
+		placeAtom(markpoint)
+		return
+	}
+
+	if (game_mode != game_mode_playing && game_mode != game_mode_manual_setup) return
+
+	atom = document.getElementById(markpoint.id)
+	if (atom.style.backgroundImage == "")
+	{
+		if (atoms_placed == max_atoms)
+		{
+			alert('You already have the maximum number of atoms placed - remove one if you want to place another')
+			return
+		}
+
+		atom.style.backgroundImage = "url(files/atom_guess.jpg)"
+		atoms_placed++
+	}
+	else
+	{
+		atom.style.backgroundImage = ""
+		atoms_placed--
+	}
+
+	document.getElementById("marbles").style.width = (max_atoms - atoms_placed) * 62 + 'px'
+}
+
+function placeAtom(markpoint)
+{
+	atom = document.getElementById(markpoint.id)
+	x = parseInt(markpoint.id.substr(1,1), 10)
+	y = parseInt(markpoint.id.substr(3,1), 10)
+	
+	if (atom.style.backgroundImage == "")
+	{
+		if (atoms_placed == max_atoms)
+		{
+			alert('You already have the maximum number of atoms placed - remove one if you want to place another')
+			return
+		}
+
+		playspace[x][y] = 1
+
+		atom.style.backgroundImage = "url(files/atom_guess.jpg)"
+		atoms_placed++
+	}
+	else
+	{
+		playspace[x][y] = 0
+
+		atom.style.backgroundImage = ""
+		atoms_placed--
+	}
+
+	if (atoms_placed == max_atoms)
+	{
+		document.getElementById("start_game").disabled = ''
+	}
+	else
+	{
+		document.getElementById("start_game").disabled = 'disabled'
+	}
+
+	document.getElementById("marbles").style.width = (max_atoms - atoms_placed) * 62 + 'px'
+}
+
+function declare()
+{
+	if (atoms_placed != max_atoms)
+	{
+		alert('You cannot declare the molecule until all ' + max_atoms + ' atoms have been placed')
+		return
+	}
+
+	game_mode = game_mode_game_over
+	document.getElementById("declare").disabled = 'disabled'
+
+	for (x = 1; x <= 8; x++)
+	{
+		for (y = 1; y <= 8; y++)
+		{
+			atom = document.getElementById('m' + x + '-' + y)
+
+			if (playspace[x][y] == 1)
+			{
+				if (atom.style.backgroundImage == "")
+				{
+					atom.style.backgroundImage = "url(files/atom_guess.jpg)"
+				}
+				else
+				{
+					atom.style.backgroundImage = "url(files/atom_correct.jpg)"
+				}
+			}
+			else
+			{
+				if (atom.style.backgroundImage != "")
+				{
+					atom.style.backgroundImage = "url(files/atom_incorrect.jpg)"
+					pawncounter += 10
+					document.getElementById("pawncount").innerHTML = 100 - pawncounter
+				}
+			}
+		}
+	}
+}
+
+function fire(launchpoint)
+{
+	if (game_mode != game_mode_playing && game_mode != game_mode_manual_setup) return
+
+	launchpointID = launchpoint.id
+	launchbutton = document.getElementById(launchpointID)
+	if (launchbutton.style.backgroundColor == "")
+	{
+		determine_startpoint()
+		launchbutton.style.backgroundColor = tracepath()
+		document.getElementById("pawncount").innerHTML = 100 - ++pawncounter
+	}
+}
+
+function determine_startpoint()
+{
+	startside = launchpointID.substr(0,1)
+	startnbr = parseInt(launchpointID.substr(1,1), 10)
+
+	switch(startside)
+	{
+		case 'l':
+			trace_x = 0
+			trace_y = startnbr
+			
+			vector_x = 1
+			vector_y = 0
+		break
+		
+		case 'r':
+			trace_x = 9
+			trace_y = startnbr
+
+			vector_x = -1
+			vector_y = 0
+		break
+
+		case 't':
+			trace_x = startnbr
+			trace_y = 0
+
+			vector_x = 0
+			vector_y = 1
+		break
+
+		case 'b':
+			trace_x = startnbr
+			trace_y = 9
+
+			vector_x = 0
+			vector_y = -1
+		break
+	}
+}
+
+function tracepath()
+{
+/*	Starting check: we want to look at the 3 spaces in front of our vector, middle first	*/
+
+	x = trace_x + vector_x
+	y = trace_y + vector_y
+
+	if (playspace[x][y] == 1)
+	{
+		return color_absorbed
+	}
+	
+	if (vector_x == 0)
+	/*	look left and right	*/
+	{
+		x --
+		if (playspace[x][y] == 1)
+		{
+			return color_reflected
+		}
+		x += 2
+		if (playspace[x][y] == 1)
+		{
+			return color_reflected
+		}
+		x --
+	}
+	else
+	/* look above and below	*/
+	{
+		y --
+		if (playspace[x][y] == 1)
+		{
+			return color_reflected
+		}
+		y += 2
+		if (playspace[x][y] == 1)
+		{
+			return color_reflected
+		}
+		y --
+	}
+	
+/*	The initial 3 spaces in front are clear, proceed with normal processing */
+
+	loopcount = 0
+	do
+	{
+		loopcount++
+		
+		x += vector_x
+		y += vector_y
+	
+/*		alert('checking ' + x + ' ' + y + ' result ' + playspace[x][y]) */
+
+		if (playspace[x][y] == 1)
+		{
+			return color_absorbed
+		}
+
+		if (vector_x == 0)
+		{
+			if (y < 1 || y > 8)
+			/*	We've exited */
+			{
+				if (y < 1)
+				{
+					exitID = 't' + x
+				}
+				else
+				{
+					exitID = 'b' + x
+				}
+				pawncounter++
+
+				document.getElementById(exitID).style.backgroundColor = color_path[next_color_pawn]
+				return color_path[next_color_pawn++]
+			}
+
+			/*	look left and right	*/
+			x1 = x - 1
+			x2 = x + 1
+
+			if (playspace[x1][y] == 1 && playspace[x2][y] == 1)
+			{
+				return color_reflected
+			}
+
+			if (playspace[x1][y] == 1)
+			/*	turn right	*/
+			{
+				y -= vector_y
+
+				vector_x = 1
+				vector_y = 0
+			}
+			if (playspace[x2][y] == 1)
+			/*	turn left	*/
+			{
+				y -= vector_y
+
+				vector_x = -1
+				vector_y = 0
+			}
+		}
+		else
+		{
+			if (x < 1 || x > 8)
+			/*	We've exited */
+			{
+				if (x < 1)
+				{
+					exitID = 'l' + y
+				}
+				else
+				{
+					exitID = 'r' + y
+				}
+				pawncounter++
+
+				document.getElementById(exitID).style.backgroundColor = color_path[next_color_pawn]
+				return color_path[next_color_pawn++]
+			}
+
+			/*	look aove and below	*/
+			{
+				y1 = y - 1
+				y2 = y + 1
+
+				if (playspace[x][y1] == 1 && playspace[x][y2] == 1)
+				{
+					return color_reflected
+				}
+
+				if (playspace[x][y1] == 1)
+				/*	turn down	*/
+				{
+					x -= vector_x
+
+					vector_x = 0
+					vector_y = 1
+				}
+				if (playspace[x][y2] == 1)
+				/*	turn up	*/
+				{
+					x -= vector_x
+
+					vector_x = 0
+					vector_y = -1
+				}
+			}
+		}
+	} while (loopcount < 100)
+}
+
+</script>
+</head>
+
+<body>
+<div id="section1">
+	<h1>Black Box</h1>
+</div>
+
+<div id="section2">
+	<div class="container">
+		<div id="panel_left">
+			<div id="panel_controls">
+				<div id="marbles_box"><div id="marbles"></div></div>
+				<p style="margin-bottom: 25px;">Advanced <input type="checkbox" id="advanced" value="Y" onchange="up_the_ante(this)" /></p>
+				<p>
+					<input type="button" id="auto_setup" value="Quick Start" onclick="autoSetup()" />
+					<input type="button" id="reset" value="Reset" onclick="resetGame()" />
+				</p>
+				<p class="clear">&nbsp;</p>
+				<p>
+					<input type="button" id="manual_setup" value="Manual Setup" onclick="manualSetup()" />
+					<input type="button" id="start_game" value="Start" onclick="startGame()" disabled='disabled' />
+				</p>
+				<p class="clear">&nbsp;</p>
+				<p id="score">Score <span id="pawncount">100</span></p>
+				<p><input type="button" id="declare" value="Declare Molecule" onclick="declare()" disabled='disabled' /></p>
+			</div>
+
+			<div id="panel_guide">
+				<p>To play a solo game click Quick Start or to play against another person, click Manual Setup. Then while one player looks away, click on the centre squares to place/remove atoms and click Start when done.</p>
+				<p>Click on the edge squares to fire rays or on the centre squares to place/remove atoms. Click Declare Molecule when you think you have accurately placed all the atoms.</p>
+				<p>Your score starts at 100 and reduces by 1 for each ray marker placed and, at game end, by 10 for each incorrectly placed atom.</p>
+			</div>
+		</div>
+
+		<div id="panel_molecule">
+		<table>
+			<tr class="end_row">
+				<th></th>
+				<th><div onclick="fire(this)" id="t1"></div></th>
+				<th><div onclick="fire(this)" id="t2"></div></th>
+				<th><div onclick="fire(this)" id="t3"></div></th>
+				<th><div onclick="fire(this)" id="t4"></div></th>
+				<th><div onclick="fire(this)" id="t5"></div></th>
+				<th><div onclick="fire(this)" id="t6"></div></th>
+				<th><div onclick="fire(this)" id="t7"></div></th>
+				<th><div onclick="fire(this)" id="t8"></div></th>
+				<th></th>
+			</tr>
+
+			<tr>
+				<th><div onclick="fire(this)" id="l1"></div></th>
+				<td><div onclick="mark(this)" id="m1-1"></div></td>
+				<td><div onclick="mark(this)" id="m2-1"></div></td>
+				<td><div onclick="mark(this)" id="m3-1"></div></td>
+				<td><div onclick="mark(this)" id="m4-1"></div></td>
+				<td><div onclick="mark(this)" id="m5-1"></div></td>
+				<td><div onclick="mark(this)" id="m6-1"></div></td>
+				<td><div onclick="mark(this)" id="m7-1"></div></td>
+				<td><div onclick="mark(this)" id="m8-1"></div></td>
+				<th><div onclick="fire(this)" id="r1"></div></th>
+			</tr>
+
+			<tr>
+				<th><div onclick="fire(this)" id="l2"></div></th>
+				<td><div onclick="mark(this)" id="m1-2"></div></td>
+				<td><div onclick="mark(this)" id="m2-2"></div></td>
+				<td><div onclick="mark(this)" id="m3-2"></div></td>
+				<td><div onclick="mark(this)" id="m4-2"></div></td>
+				<td><div onclick="mark(this)" id="m5-2"></div></td>
+				<td><div onclick="mark(this)" id="m6-2"></div></td>
+				<td><div onclick="mark(this)" id="m7-2"></div></td>
+				<td><div onclick="mark(this)" id="m8-2"></div></td>
+				<th><div onclick="fire(this)" id="r2"></div></th>
+			</tr>
+
+			<tr>
+				<th><div onclick="fire(this)" id="l3"></div></th>
+				<td><div onclick="mark(this)" id="m1-3"></div></td>
+				<td><div onclick="mark(this)" id="m2-3"></div></td>
+				<td><div onclick="mark(this)" id="m3-3"></div></td>
+				<td><div onclick="mark(this)" id="m4-3"></div></td>
+				<td><div onclick="mark(this)" id="m5-3"></div></td>
+				<td><div onclick="mark(this)" id="m6-3"></div></td>
+				<td><div onclick="mark(this)" id="m7-3"></div></td>
+				<td><div onclick="mark(this)" id="m8-3"></div></td>
+				<th><div onclick="fire(this)" id="r3"></div></th>
+			</tr>
+
+			<tr>
+				<th><div onclick="fire(this)" id="l4"></div></th>
+				<td><div onclick="mark(this)" id="m1-4"></div></td>
+				<td><div onclick="mark(this)" id="m2-4"></div></td>
+				<td><div onclick="mark(this)" id="m3-4"></div></td>
+				<td><div onclick="mark(this)" id="m4-4"></div></td>
+				<td><div onclick="mark(this)" id="m5-4"></div></td>
+				<td><div onclick="mark(this)" id="m6-4"></div></td>
+				<td><div onclick="mark(this)" id="m7-4"></div></td>
+				<td><div onclick="mark(this)" id="m8-4"></div></td>
+				<th><div onclick="fire(this)" id="r4"></div></th>
+			</tr>
+
+			<tr>
+				<th><div onclick="fire(this)" id="l5"></div></th>
+				<td><div onclick="mark(this)" id="m1-5"></div></td>
+				<td><div onclick="mark(this)" id="m2-5"></div></td>
+				<td><div onclick="mark(this)" id="m3-5"></div></td>
+				<td><div onclick="mark(this)" id="m4-5"></div></td>
+				<td><div onclick="mark(this)" id="m5-5"></div></td>
+				<td><div onclick="mark(this)" id="m6-5"></div></td>
+				<td><div onclick="mark(this)" id="m7-5"></div></td>
+				<td><div onclick="mark(this)" id="m8-5"></div></td>
+				<th><div onclick="fire(this)" id="r5"></div></th>
+			</tr>
+
+			<tr>
+				<th><div onclick="fire(this)" id="l6"></div></th>
+				<td><div onclick="mark(this)" id="m1-6"></div></td>
+				<td><div onclick="mark(this)" id="m2-6"></div></td>
+				<td><div onclick="mark(this)" id="m3-6"></div></td>
+				<td><div onclick="mark(this)" id="m4-6"></div></td>
+				<td><div onclick="mark(this)" id="m5-6"></div></td>
+				<td><div onclick="mark(this)" id="m6-6"></div></td>
+				<td><div onclick="mark(this)" id="m7-6"></div></td>
+				<td><div onclick="mark(this)" id="m8-6"></div></td>
+				<th><div onclick="fire(this)" id="r6"></div></th>
+			</tr>
+
+			<tr>
+				<th><div onclick="fire(this)" id="l7"></div></th>
+				<td><div onclick="mark(this)" id="m1-7"></div></td>
+				<td><div onclick="mark(this)" id="m2-7"></div></td>
+				<td><div onclick="mark(this)" id="m3-7"></div></td>
+				<td><div onclick="mark(this)" id="m4-7"></div></td>
+				<td><div onclick="mark(this)" id="m5-7"></div></td>
+				<td><div onclick="mark(this)" id="m6-7"></div></td>
+				<td><div onclick="mark(this)" id="m7-7"></div></td>
+				<td><div onclick="mark(this)" id="m8-7"></div></td>
+				<th><div onclick="fire(this)" id="r7"></div></th>
+			</tr>
+
+			<tr>
+				<th><div onclick="fire(this)" id="l8"></div></th>
+				<td><div onclick="mark(this)" id="m1-8"></div></td>
+				<td><div onclick="mark(this)" id="m2-8"></div></td>
+				<td><div onclick="mark(this)" id="m3-8"></div></td>
+				<td><div onclick="mark(this)" id="m4-8"></div></td>
+				<td><div onclick="mark(this)" id="m5-8"></div></td>
+				<td><div onclick="mark(this)" id="m6-8"></div></td>
+				<td><div onclick="mark(this)" id="m7-8"></div></td>
+				<td><div onclick="mark(this)" id="m8-8"></div></td>
+				<th><div onclick="fire(this)" id="r8"></div></th>
+			</tr>
+
+			<tr class="end_row">
+				<th></th>
+				<th><div onclick="fire(this)" id="b1"></div></th>
+				<th><div onclick="fire(this)" id="b2"></div></th>
+				<th><div onclick="fire(this)" id="b3"></div></th>
+				<th><div onclick="fire(this)" id="b4"></div></th>
+				<th><div onclick="fire(this)" id="b5"></div></th>
+				<th><div onclick="fire(this)" id="b6"></div></th>
+				<th><div onclick="fire(this)" id="b7"></div></th>
+				<th><div onclick="fire(this)" id="b8"></div></th>
+				<th></th>
+			</tr>
+		</table>
+		</div>
+	</div>
+</div>
+
+</body>
+</html>

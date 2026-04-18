@@ -1,0 +1,387 @@
+/*
+	13/ 2/15
+	13/ 3/15	Added color #000 to msg boxes
+	31/ 3/15	Restored photo_left & right
+	 8/ 4/15	Restored float_left & right
+	 6/ 5/15	common images moved to admin/common/images
+	23/11/15	include handheld-only and handheld-hidden for @media 1000
+	 1/ 7/16	Revise search box layout
+*/
+
+*
+{
+	margin: 0;
+	padding: 0;
+}
+
+h1,h2,h3,h4,h5,h6
+{
+	font-size: 1em;
+	font-weight: normal;
+}
+
+table
+{
+	border-collapse: collapse;
+	border-spacing: 0;
+}
+
+caption,th
+{
+	font-weight: normal;
+	text-align: left;
+}
+
+ul
+{
+	list-style: none;
+}
+
+img
+{
+	border: none;
+}
+
+.hr
+{
+	background-image: url(../admin/common/images/divider.gif);
+	background-position: center center;
+	background-repeat: no-repeat;
+	height: 50px;
+}
+
+a
+{
+	text-decoration: none;
+}
+
+input[type="button"],
+input[type="submit"]
+{
+	box-sizing: border-box;
+	font-family: arial, verdana, sans-serif;
+	font-size: 1em;
+	padding: 10px 40px;
+}
+
+input[type="email"],
+input[type="password"],
+input[type="tel"],
+input[type="text"],
+select,
+textarea
+{
+	background-image: url(../admin/common/images/bg_input.gif);
+	background-repeat: repeat-x;
+	border-top: 1px solid #666;
+	border-left: 1px solid #666;
+	border-right: 1px solid #444;
+	border-bottom: 1px solid #444;
+	box-sizing: border-box;
+	font-family: arial, verdana, sans-serif;
+	font-size: 1em;
+	padding: 10px;
+}
+
+select
+{
+	background-color: #fcfcfc;
+	font-family: arial, verdana, sans-serif;
+}
+
+textarea
+{
+	background-color: #fcfcfc;
+	border-bottom: 1px solid #444;
+	border-left: 1px solid #666;
+	border-right: 1px solid #444;
+	border-top: 1px solid #666;
+	font-family: arial, verdana, sans-serif;
+	font-size: 1em;
+}
+
+textarea:hover
+{
+	background-color: #FEFEFA;
+}
+
+.big
+{
+	font-size: 1.5em;
+}
+
+.bottom
+{
+	vertical-align: bottom;
+}
+
+.center
+{
+	text-align: center !important;
+}
+
+.clear
+{
+	clear: both;
+}
+
+.handheld-hidden
+{
+	display: none;
+}
+
+.italic
+{
+	font-style: italic;
+}
+
+.justify
+{
+	text-align: justify;
+}
+
+.magnify
+{
+	border-radius: 5px;
+	box-shadow: 6px 6px 12px rgba(0,0,0,0.6);
+	margin: 0 10px 10px 0;
+}
+
+.nowrap
+{
+	white-space: nowrap;
+}
+
+.right
+{
+	text-align: right !important;
+}
+
+.rounded
+{
+	border-radius: 5px;
+}
+
+.shadowed
+{
+	box-shadow: 6px 6px 12px rgba(0,0,0,0.5);
+}
+
+.small
+{
+	font-size: 0.8em;
+}
+
+.top
+{
+	vertical-align: top;
+}
+
+.photo
+{
+	background-color: #fff;
+	border: 1px solid #888;
+	border-left: 1px solid #ccc;
+	border-top: 1px solid #ccc;
+	box-shadow: 5px 5px 8px rgba(0,0,0,0.3);
+	margin: 0 10px 16px 0;
+	padding: 10px;
+
+}
+
+/* photo_left and _right - redundant? */
+.photo_left
+{
+	background-color: #fff;
+	border: 1px solid #888;
+	border-left: 1px solid #ccc;
+	border-top: 1px solid #ccc;
+	box-shadow: 5px 5px 8px rgba(0,0,0,0.3);
+	float: left;
+	margin: 0 20px 8px 0;
+	padding: 10px;
+}
+
+.photo_right
+{
+	background-color: #fff;
+	border: 1px solid #888;
+	border-left: 1px solid #ccc;
+	border-top: 1px solid #ccc;
+	box-shadow: 5px 5px 8px rgba(0,0,0,0.3);
+	float: right;
+	margin: 0 8px 8px 16px;
+	padding: 10px;
+}
+
+.zoom
+{
+	background-color: #e8e8e8;
+	border: 1px solid #ccc;
+	color: #666;
+	font-size: 0.9em;
+	padding: 2px;
+	text-align: center !important;
+}
+
+.float_left
+{
+	float: left;
+	margin: 0 20px 16px 0;
+}
+
+.float_right
+{
+	float: right;
+	margin: 0 0 16px 20px;
+}
+
+#dhtmltooltip
+{
+	background-color: #f0f0f0;
+	border: 1px solid #20669C;
+	color: #000;
+	font-size: 0.9em;
+	padding: 6px;
+	position: absolute;
+	text-align: center;
+	visibility: hidden;
+	z-index: 100;
+}
+
+.msgbox,
+.msgstyle1
+{
+	background: #E1FFE1 url(../admin/images/tick32.png) no-repeat 10px 10px;
+	border: 1px solid #00ff00;
+	border-radius: 10px;
+	box-shadow: 3px 3px 12px rgba(0,0,0,0.3);
+	color: #000 !important;
+	margin-bottom: 20px;
+	padding: 20px 20px 20px 60px;
+}
+
+.errorbox,
+.msgstyle2
+{
+	background: #FFE1E1 url(../admin/images/cross32.png) no-repeat 10px 10px;
+	border: 1px solid #ff0000;
+	border-radius: 10px;
+	box-shadow: 3px 3px 12px rgba(0,0,0,0.3);
+	color: #000 !important;
+	margin-bottom: 20px;
+	padding: 20px 20px 20px 60px;
+}
+
+.alertbox,
+.msgstyle3
+{
+	background: #FFF1E1 url(../admin/images/alert32.png) no-repeat 10px 10px;
+	border: 1px solid #ff8800;
+	border-radius: 10px;
+	box-shadow: 3px 3px 12px rgba(0,0,0,0.3);
+	color: #000 !important;
+	margin-bottom: 20px;
+	padding: 20px 20px 20px 60px;
+}
+
+.infobox,
+.msgstyle4
+{
+	background: #E7F1F9 url(../admin/images/info.png) no-repeat 10px 10px;
+	border: 1px solid #3786C9;
+	border-radius: 10px;
+	box-shadow: 3px 3px 12px rgba(0,0,0,0.3);
+	color: #000 !important;
+	margin-bottom: 20px;
+	padding: 20px 20px 20px 60px;
+}
+
+.msgstyle1 h3,
+.msgstyle1 h4,
+.msgstyle1 h5,
+.msgstyle1 h6,
+.msgstyle2 h3,
+.msgstyle2 h4,
+.msgstyle2 h5,
+.msgstyle2 h6,
+.msgstyle3 h3,
+.msgstyle3 h4,
+.msgstyle3 h5,
+.msgstyle3 h6,
+.msgstyle4 h3,
+.msgstyle4 h4,
+.msgstyle4 h5,
+.msgstyle4 h6
+{
+	color: #000 !important;
+}
+
+/********** FORM DEFINITIONS **********/
+form.general
+{
+	background: #eee;
+	background: linear-gradient(#f8f8f8, #e4e4e4);
+	border: 1px solid #999;
+	border-radius: 10px;
+	margin-bottom: 10px;
+	max-width: 600px;
+	padding: 1em;
+}
+
+form.general label
+{
+	display: block;
+	padding: 12px 0 4px 0;
+}
+
+form.general input[type="email"],
+form.general input[type="password"],
+form.general input[type="tel"],
+form.general input[type="text"],
+form.general select,
+form.general textarea
+{
+	width: 100%;
+}
+
+form.general input[type="submit"]
+{
+	margin-top: 20px;
+}
+
+form#searchBox label
+{
+	display: inline;
+	padding-left: 6px;
+}
+
+form#searchBox input[type="text"]
+{
+	margin-bottom: 10px;
+}
+
+form#searchBox p
+{
+	padding-top: 10px;
+}
+
+/**********************************
+***            MEDIA            ***
+**********************************/
+
+/********** min 1000 **********/
+@media screen and (min-width: 1000px)
+{
+
+	.handheld-hidden
+	{
+		display: initial;
+	}
+
+	.handheld-only
+	{
+		display: none !important;
+	}
+
+}
