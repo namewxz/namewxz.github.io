@@ -313,3 +313,87 @@ Git入门指南：Gitee基础操作与代码托管实战
 Git简易工作流：从本地配置到Gitee代码推送
 Git极简使用手册：Gitee平台快速上手
 Git基础四步走：安装、配置、推送与Gitee集成
+
+## 6.9 git分支管理
+
+当我们clone一个仓库时默认只clone了master分支
+
+可以使用 ` git branch` 查看本地分支 
+        使用 ` git branch -r` 查看远程分支 
+        使用 ` git branch -a ` 查看所有分支
+
+例如：
+
+使用`git clone git@github.com:lizhu1126/dip-class-demos.git` 获取了一个仓库。
+
+查看分支状态：
+
+```
+PS D:\GEC\QT\opencv\dip-class-demos> git branch
+* master
+PS D:\GEC\QT\opencv\dip-class-demos> git branch -r
+  origin/HEAD -> origin/master
+  origin/feature00.calcPrime
+  origin/feature01.useMat
+  origin/feature02-histogram
+  origin/feature02.drawGraph
+  origin/feature03.Binarization
+  origin/feature04.morphology
+  origin/feature05.filter
+  origin/feature06.Geometrictransformation
+  origin/feature07.houghlines
+  origin/feature08.blobAnalysis
+  origin/feature09.featureDescriptor
+  origin/feature10.DFT
+  origin/feature11.enhanceHist
+  origin/feature12.BackgroundSubtraction
+  origin/feature13.trackingObject
+  origin/feature14.MachineLearning
+  origin/feature15.DeepNeuralNetwork
+  origin/master
+```
+
+发现本地只有master分支，但需要feature03.Binarization分支，我们可以使用 git checkout feature03.Binarization来切换，（注意：必须联网）
+
+我们可以使用下面这行命令来获取所有分支：
+
+```
+git fetch origin; git branch -r | ForEach-Object { $branch = $_.Trim() -replace 'origin/', ''; if ($branch -ne 'HEAD') { git checkout -b $branch $_.Trim() } }
+```
+
+**命令解析**
+
+1. `git fetch origin`: 首先从远程仓库获取所有最新的分支和提交信息，确保你拿到的是最新版本。
+
+2. `git branch -r`: 列出所有远程分支。
+
+3. ```
+   ForEach-Object { ... }
+   ```
+
+   : 这是一个循环，会对列出的每一个远程分支执行花括号里的操作。
+
+   - `$branch = ...`: 提取出纯净的分支名（去掉 `origin/` 前缀）。
+   - `if ($branch -ne 'HEAD')`: 跳过 `origin/HEAD` 这个特殊的引用，因为它不是一个真正的分支。
+   - `git checkout -b $branch $_.Trim()`: 这是核心命令。它会创建一个名为 `$branch` 的新本地分支，并让它追踪对应的远程分支。
+
+执行完毕后，你再输入 `git branch`，就会看到所有的分支都已经出现在你的本地了。
+
+### 创建分支
+
+#### 常规
+
+```
+// 创建
+git branch new.branch.test
+// 切换
+git checkout new.brandch.test
+```
+
+#### 一步
+
+```
+git checkout -b new.brandch.test
+```
+
+- **含义**：`-b` 代表 `branch`（分支）。这条命令的意思是：“创建一个叫 `new.brandch.test` 的新分支，并且立刻**跳过去**”。
